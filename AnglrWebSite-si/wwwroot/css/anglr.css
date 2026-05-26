@@ -1,0 +1,115 @@
+﻿
+.anglr-doc-index {
+	font-size: small;
+}
+
+.anglr-page-index {
+	font-size: small;
+}
+
+.part-token {
+	color: red;
+	font-weight: bold;
+}
+
+.part-name {
+	color: green;
+}
+
+.part-brace {
+	color: black;
+	font-weight: bold;
+}
+
+.regex-ref {
+	color: darkred;
+	font-weight: bold;
+}
+
+.action-token {
+	color: red;
+}
+
+.action-identifier {
+	color: green;
+	font-weight: bold;
+}
+
+.attribute-brace {
+	color: black;
+	font-weight: bold;
+}
+
+.attribute-name {
+	color: blue;
+}
+
+.attribute-val-name {
+	color: orange;
+}
+
+.attribute-val-value {
+	color: black;
+}
+
+.reserved-word {
+	color: red;
+	font-weight: bold;
+}
+
+.regex-name {
+	color: green;
+}
+
+.regex-def {
+	color: blue;
+}
+
+.def-brace {
+	color: black;
+	font-weight: bold;
+}
+
+.def-separator {
+	color: black;
+	font-weight: bold;
+}
+
+.token-name {
+	color: green;
+}
+
+.token-value {
+	color: blue;
+}
+
+.rule-name {
+	color: red;
+	font-weight: bold;
+}
+
+.rule-ref {
+	color: indianred;
+	font-weight: bold;
+}
+
+.group-name {
+	color: mediumblue;
+	font-weight: bold;
+}
+
+.production-name {
+	color: blue;
+}
+
+.marker-name {
+	color: lightblue;
+}
+
+.string-name {
+	color: darkred;
+}
+
+.identifier-name {
+	color: blue;
+}

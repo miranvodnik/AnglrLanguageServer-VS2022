@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <SignAssembly>False</SignAssembly>
+    <Title>Debug bridge between VisualStudio and application being debugged</Title>
+    <Version>$(VersionPrefix)</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants);ANGLR_DBG_SYNC_RPC</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants);ANGLR_DBG_SYNC_RPC</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AnglrBreakPointDB\AnglrBreakPointDB.csproj" />
+    <ProjectReference Include="..\AnglrDebuggerJsonRpcMessages\AnglrDebuggerJsonRpcMessages.csproj" />
+    <ProjectReference Include="..\AnglrLogLibrary\AnglrLogLibrary.csproj" />
+    <ProjectReference Include="..\AnglrParserCore\AnglrParserCore.csproj" />
+  </ItemGroup>
+
+</Project>

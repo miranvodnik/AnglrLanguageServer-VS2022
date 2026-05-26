@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{590115EA-749B-4CE3-86D9-2BE8AE70830E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AnglrLangExtension</RootNamespace>
+    <AssemblyName>AnglrLangExtension</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <GeneratePkgDefFile>true</GeneratePkgDefFile>
+    <UseCodebase>true</UseCodebase>
+    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>true</CopyOutputSymbolsToOutputDirectory>
+    <StartAction>Program</StartAction>
+    <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AnglrDebuggerStackView.xaml.cs">
+      <DependentUpon>AnglrDebuggerStackView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AnglrDebugPanelTab.xaml.cs">
+      <DependentUpon>AnglrDebugPanelTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AnglrDebugPanelTabSession.xaml.cs">
+      <DependentUpon>AnglrDebugPanelTabSession.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AnglrDebugPanelWindow.cs" />
+    <Compile Include="AnglrDebugPanelWindowCommand.cs" />
+    <Compile Include="AnglrDebugPanelWindowControl.xaml.cs">
+      <DependentUpon>AnglrDebugPanelWindowControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AnglrDebugWindow.xaml.cs">
+      <DependentUpon>AnglrDebugWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AnglrDetailsWindow.cs" />
+    <Compile Include="AnglrDetailsWindowCommand.cs" />
+    <Compile Include="AnglrDetailsWindowControl.xaml.cs">
+      <DependentUpon>AnglrDetailsWindowControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AnglrEditorClassifier.cs" />
+    <Compile Include="AnglrEditorClassifierClassificationDefinition.cs" />
+    <Compile Include="AnglrEditorClassifierFormat.cs" />
+    <Compile Include="AnglrEditorClassifierProvider.cs" />
+    <Compile Include="AnglrLangService.cs" />
+    <Compile Include="AnglrLangWindow.cs" />
+    <Compile Include="AnglrLangWindowCommand.cs" />
+    <Compile Include="AnglrLangWindowControl.xaml.cs">
+      <DependentUpon>AnglrLangWindowControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AnglrLspClientAccessPoint.cs" />
+    <Compile Include="AnglrSelectionEvents.cs" />
+    <Compile Include="AnglrStatesWindow.cs" />
+    <Compile Include="AnglrStatesWindowCommand.cs" />
+    <Compile Include="AnglrStatesWindowControl.xaml.cs">
+      <DependentUpon>AnglrStatesWindowControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AnglrStateTab.xaml.cs">
+      <DependentUpon>AnglrStateTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AnglrDetailViewItemWindow.xaml.cs">
+      <DependentUpon>AnglrDetailViewItemWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AnglrSyntaxRuleDetailsWindow.xaml.cs">
+      <DependentUpon>AnglrSyntaxRuleDetailsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AnglrLangExtensionPackage.cs" />
+    <Compile Include="RhsNodeSetToStringConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.Shell.15.0">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.Shell.15.0.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.LanguageServer.Protocol">
+      <Version>17.2.8</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.32112.339" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.6.2164" />
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.4</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="AnglrDebuggerStackView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnglrDebugPanelTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnglrDebugPanelTabSession.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnglrDebugPanelWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnglrDebugWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnglrDetailsWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnglrLangWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnglrStatesWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnglrStateTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnglrDetailViewItemWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnglrSyntaxRuleDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Assembly.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Reference.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <VSCTCompile Include="AnglrLangExtensionPackage.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AnglrBreakPointDB\AnglrBreakPointDB.csproj">
+      <Project>{821ad47e-cab1-4bb2-bf44-d1ebf88aeb8d}</Project>
+      <Name>AnglrBreakPointDB</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\AnglrDebugBridge\AnglrDebugBridge.csproj">
+      <Project>{1a8e218b-5a05-4e96-a5e8-f6565daf0377}</Project>
+      <Name>AnglrDebugBridge</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\AnglrDebuggerJsonRpcMessages\AnglrDebuggerJsonRpcMessages.csproj">
+      <Project>{a684b568-b488-440e-85cb-006ac3c80bdc}</Project>
+      <Name>AnglrDebuggerJsonRpcMessages</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\AnglrItemTemplate\AnglrItemTemplate.csproj">
+      <Project>{29AEE8C2-931F-4946-ABB3-39D2AA907788}</Project>
+      <Name>AnglrItemTemplate</Name>
+      <VSIXSubPath>ItemTemplates</VSIXSubPath>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+    </ProjectReference>
+    <ProjectReference Include="..\AnglrJsonRpcMethods\AnglrJsonRpcMethods.csproj">
+      <Project>{D427059F-5625-4A4F-8535-E179F081D79A}</Project>
+      <Name>AnglrJsonRpcMethods</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\AnglrLogLibrary\AnglrLogLibrary.csproj">
+      <Project>{6d226303-7e91-153c-2c26-a2f5e74b9329}</Project>
+      <Name>AnglrLogLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AnglrLSPServerProcess\AnglrLSPServerProcess.csproj">
+      <Project>{8F5FCEB2-DD20-4FA6-809E-8D6C5335D1B3}</Project>
+      <Name>AnglrLSPServerProcess</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\AnglrParserLibrary\AnglrParserLibrary.csproj">
+      <Project>{C30AFD47-6DF9-467B-8150-86BCBE90A74D}</Project>
+      <Name>AnglrParserLibrary</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\AnglrProjectTemplate\AnglrProjectTemplate.csproj">
+      <Project>{69AECA0B-C885-4ED1-A0D2-3D6E6E21893E}</Project>
+      <Name>AnglrProjectTemplate</Name>
+      <VSIXSubPath>ProjectTemplates</VSIXSubPath>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="SHDocVw">
+      <Guid>{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\AnglrLangWindowCommand.png" />
+    <Resource Include="Resources\AnglrStatesWindowCommand.png" />
+    <Resource Include="Resources\CC.png" />
+    <Resource Include="Resources\CN.png" />
+    <Resource Include="Resources\NC.png" />
+    <Resource Include="Resources\NN.png" />
+    <Resource Include="Resources\CSApplication.png" />
+    <Resource Include="Resources\CSAssembyInfoFile.png" />
+    <Resource Include="Resources\CSBDCModel.png" />
+    <Resource Include="Resources\CSBlankApplication.png" />
+    <Resource Include="Resources\CSBlankFile.png" />
+    <Resource Include="Resources\CSBlankPhone.png" />
+    <Resource Include="Resources\CSBlankWebSite.png" />
+    <Resource Include="Resources\CSClassCollection.png" />
+    <Resource Include="Resources\CSClassFile.png" />
+    <Resource Include="Resources\CSClassLibrary.png" />
+    <Resource Include="Resources\CSCloudBusinessApplication.png" />
+    <Resource Include="Resources\CSCodeTest.png" />
+    <Resource Include="Resources\CSColumn.png" />
+    <Resource Include="Resources\CSConsole.png" />
+    <Resource Include="Resources\CSConsoleTest.png" />
+    <Resource Include="Resources\CSContentType.png" />
+    <Resource Include="Resources\CSDeploymentModule.png" />
+    <Resource Include="Resources\CSDeviceTest.png" />
+    <Resource Include="Resources\CSDynamicWebSite.png" />
+    <Resource Include="Resources\CSEventReceiver.png" />
+    <Resource Include="Resources\CSExtension.png" />
+    <Resource Include="Resources\CSFile.png" />
+    <Resource Include="Resources\CSFileNode.png" />
+    <Resource Include="Resources\CSFixedLayoutApplication.png" />
+    <Resource Include="Resources\CSGridApplication.png" />
+    <Resource Include="Resources\CSHubApplication.png" />
+    <Resource Include="Resources\CSInteractiveWindow.png" />
+    <Resource Include="Resources\CSInterface.png" />
+    <Resource Include="Resources\CSInterfaceCollection.png" />
+    <Resource Include="Resources\CSLibrary.png" />
+    <Resource Include="Resources\CSLightswitch.png" />
+    <Resource Include="Resources\CSLightswitchLibrary.png" />
+    <Resource Include="Resources\CSListDefinition.png" />
+    <Resource Include="Resources\CSMenuItemCustomAction.png" />
+    <Resource Include="Resources\CSNavigationApplication.png" />
+    <Resource Include="Resources\CSPackage.png" />
+    <Resource Include="Resources\CSPhone.png" />
+    <Resource Include="Resources\CSPhoneHub.png" />
+    <Resource Include="Resources\CSPhoneLibrary.png" />
+    <Resource Include="Resources\CSPhonePivot.png" />
+    <Resource Include="Resources\CSPhoneTest.png" />
+    <Resource Include="Resources\CSPhoneWebApplication.png" />
+    <Resource Include="Resources\CSPhoneWebSite.png" />
+    <Resource Include="Resources\CSProjectNode.png" />
+    <Resource Include="Resources\CSRazorFile.png" />
+    <Resource Include="Resources\CSReport.png" />
+    <Resource Include="Resources\CSRibbonCustomAction.png" />
+    <Resource Include="Resources\CSSClass.png" />
+    <Resource Include="Resources\CSSElement.png" />
+    <Resource Include="Resources\CSServiceBusWorker.png" />
+    <Resource Include="Resources\CSSharedProject.png" />
+    <Resource Include="Resources\CSSilverlight.png" />
+    <Resource Include="Resources\CSSilverlightLibrary.png" />
+    <Resource Include="Resources\CSSilverlightPhone.png" />
+    <Resource Include="Resources\CSSilverlightTest.png" />
+    <Resource Include="Resources\CSSilverlightWebSite.png" />
+    <Resource Include="Resources\CSSiteDefinition.png" />
+    <Resource Include="Resources\CSSLink.png" />
+    <Resource Include="Resources\CSSourceFile.png" />
+    <Resource Include="Resources\CSSplitApplication.png" />
+    <Resource Include="Resources\CSSQLLibrary.png" />
+    <Resource Include="Resources\CSSStyleError.png" />
+    <Resource Include="Resources\CSTablet.png" />
+    <Resource Include="Resources\CSTestApplication.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\LS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GT.png" />
+    <Resource Include="Resources\ON.png" />
+    <Resource Include="Resources\ST.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Anglr Explorer View.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="googleb8013ce362172132.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\AnglrDebugPanelWindowCommand.png" />
+    <Content Include="Resources\AnglrDetailsWindowCommand.png" />
+    <Content Include="Resources\ToolWindow1Command.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,590 @@
+﻿@page
+@model ScannerPartModel
+@{
+    ViewData ["Title"] = "Scanner Part of Anglr File";
+    ViewData ["Content"] = "Scanner part of Anglr file: definition of scanners, scanner actions: skip, terminal and event actions";
+}
+            <section id="scanner-part">
+                <h1>Scanner Part of Anglr File</h1>
+                <hr />
+                <h4>Introduction</h4>
+                <p>
+                    The scanner is that part of the lexical analyzer that extracts terminal symbols from the source text. To work,
+                    it uses a set of regular expressions to extract sequences of characters that best match one of them from the source file.
+                    Each regular expression can be a associated with a terminal symbol to create a mapping between the sequences of characters
+                    in the source file and terminal symbols. The names of the terminal symbols and the values of the regular expressions
+                    required by the scanner are found in the declaration parts of anglr file. The link to the declaration parts and the
+                    scanner shall be described by the attributes that precede the part in which the scanner is defined.
+                </p>
+                <p>
+                    Typically, multiple scanners are defined in an anglr file at the same time, and they share work in lexical analysis of a
+                    text. For example, a scanner specializes in detecting content, and another scanner specializes in things that don't matter
+                    to the content itself, such as comments.
+                </p>
+                <h4>Syntax</h4>
+                <p>
+                    The following is a list of syntax rules that define the contents of the scanner part.
+                </p>
+                <hr />
+                <p id="rule-s-1">RULE S-1</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;scanner part&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%scanner&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;%{&#39;</span> <span class="rule-ref">&lt;regular expression list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%}&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-s-2">RULE S-2</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;regular expression list&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;regular expression usage&gt;</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-s-3">RULE S-3</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;regular expression usage&gt;</span>
+    <span class="def-separator">:</span> <span class="identifier-name">&lt;regular expression&gt;</span> <span class="rule-ref">&lt;actions&gt;</span> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-s-4">RULE S-4</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;actions&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;action&gt;</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-s-5">RULE S-5</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;action&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;skip action&gt;</span>
+    <span class="def-separator">|</span> <span class="rule-ref">&lt;terminal action&gt;</span>
+    <span class="def-separator">|</span> <span class="rule-ref">&lt;event action&gt;</span>
+    <span class="def-separator">|</span> <span class="rule-ref">&lt;push action&gt;</span>
+    <span class="def-separator">|</span> <span class="rule-ref">&lt;pop action&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-s-6">RULE S-6</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;skip action&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;skip&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-s-7">RULE S-7</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;terminal action&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;terminal&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-s-8">RULE S-8</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;event action&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;event&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-s-9">RULE S-9</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;push action&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;push&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-s-10">RULE S-10</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;pop action&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;pop&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p>
+                    Here is an example of two scanners:
+                </p>
+                <div class="panel border bg-light" id="example-001">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of scanner, which extracts comments from input string&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CommentRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">commentScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">[\*]+\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[^\*]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\*]+</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of scanner, which extracts terminal symbols from input string&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">mathScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+    <span class="action-token">push</span> <span class="action-identifier">commentScanner</span>
+<span class="regex-ref">{number}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">NUMBER</span>
+<span class="regex-ref">\+</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">add</span>
+<span class="regex-ref">\-</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">sub</span>
+<span class="regex-ref">\*</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">mul</span>
+<span class="regex-ref">\/</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">div</span>
+<span class="regex-ref">\(</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">lb</span>
+<span class="regex-ref">\)</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">rb</span>
+<span class="regex-ref">[ \t]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    In the exaple above two scanners are defined. The first scanner removes comments from the source text. The second scanner, however, reveals "useful" content,
+                    which is sent to syntax analyzer. Lookig closely at the examples above we can see, that they are basicaly some kind of case statements. And they actualy are case
+                    statements since Anglr compiler translates them to case statements of selected programming language.
+                </p>
+                <h2>Discussion</h2>
+                <hr />
+                <h6 style="font-weight:bold">RULE S-1 - Structure of Scanner Part</h6>
+                <p>
+                    Rule <a href="#rule-s-1">RULE S-1</a> defines the top structure of the scanner part:
+                </p>
+                <ul>
+                    <li>
+                        Scanner part is preceded by possibly empty attribute list
+                    </li>
+                    <li>
+                        attribute list is followed by reserved word %scanner and an identifier representing the name of scanner
+                    </li>
+                    <li>
+                        Then there is a list of regular expressions and associated activities between part parentheses %{ ad %}.
+                    </li>
+                </ul>
+                <p>
+                    In example <a href="#example-001">above</a> the first scanner part is preceded by this attribute list:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of scanner, which extracts comments from input string&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CommentRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+                    </pre>
+                </div>
+                <p>
+                    Its name is:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="part-token">%scanner</span> <span class="part-name">commentScanner</span>
+                    </pre>
+                </div>
+                <p>
+                    Then a list of regular expressions and associated actions follows:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="part-brace">%{</span>
+<span class="regex-ref">[\*]+\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[^\*]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\*]+</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    We can read above list as a case statement:
+                </p>
+                <ul>
+                    <li>
+                        If you encounter a non-empty asterisk sequence that ends with the '/' sign, execute pop action. This action deactivate the current scanner
+                        by removing it from the top of scanner stack and activates the scanner which was revealed by this action.
+                    </li>
+                    <li>
+                        if you encounter any other character string, just skip it and try again.
+                    </li>
+                </ul>
+                <p>
+                    This type of scanner is used to detect and extract multi-line comments from source text.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE S-2 - List of Regular Expressions</h6>
+                <p>
+                    Rule <a href="#rule-s-2">RULE S-2</a> defines the list of regular expressions and associated actions. Here is an example of such list:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="regex-ref">\/\*</span>
+    <span class="action-token">push</span> <span class="action-identifier">commentScanner</span>
+<span class="regex-ref">{number}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">NUMBER</span>
+<span class="regex-ref">\+</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">add</span>
+<span class="regex-ref">\-</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">sub</span>
+<span class="regex-ref">\*</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">mul</span>
+<span class="regex-ref">\/</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">div</span>
+<span class="regex-ref">\(</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">lb</span>
+<span class="regex-ref">\)</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">rb</span>
+<span class="regex-ref">[ \t]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE S-3 - Regular Expression Usage</h6>
+                <p>
+                    Rule <a href="#rule-s-3">RULE S-3</a> defines single regular expression with associated actions which should be executed when some piece of source text
+                    matches particular regular expression:
+                </p>
+                <ul>
+                    <li>
+                        the regular expression shall first be given.
+                    </li>
+                    <li>
+                        followed by a list of actions, which may also be empty.
+                    </li>
+                </ul>
+                <p>
+                    Example: return terminal symbol NUMBER, if you encounter regular expression {number} defined in <a href="~/Language/DeclarationPart/#example-001">this</a> declaration part.
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="regex-ref">{number}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">NUMBER</span>
+                    </pre>
+                </div>
+                <p>
+                    Regular expressions must always be listed at the beginning of the line, otherwise the anglr compiler does not recognize them.
+                    By the contrary, actions must be indented by at least one space character from the beginning of the line, otherwise they will
+                    be treated as regular expressions.
+                </p>
+                <p>
+                    Examples of ill-formed usages:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+    <span class="regex-ref">{number}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">NUMBER</span>
+                    </pre>
+                </div>
+                <p>
+                    The above example will treat regular expression as an unknown action statement
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="regex-ref">{number}</span>
+<span class="action-token">terminal</span> <span class="action-identifier">NUMBER</span>
+                    </pre>
+                </div>
+                <p>
+                    The above example will always skip all text matching first regular expression <span class="regex-ref">{number}</span> since it has no explicitely stated actions. On the other side,
+                    terminal action <span class="action-token">terminal</span> <span class="action-identifier">NUMBER</span> will be treated as regular expression and skiped as well.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE S-4 - List of Actions</h6>
+                <p>
+                    Rule <a href="#rule-s-4">RULE S-4</a> defines list of actions. All examples of action lists in this part have only one action. But in the definition of Anglr language
+                    itself there are examples of action lists with more actions. For example:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="regex-ref">{identifier}</span>
+    <span class="action-token">push</span> <span class="action-identifier">scanner_part_ctx</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">&lt;identifier&gt;</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE S-5 - Kind of Action</h6>
+                <p>
+                    Rule <a href="#rule-s-5">RULE S-5</a> defines action types:
+                </p>
+                <ul>
+                    <li>
+                        skip action
+                    </li>
+                    <li>
+                        terminal action
+                    </li>
+                    <li>
+                        event action
+                    </li>
+                    <li>
+                        push action
+                    </li>
+                    <li>
+                        pop action
+                    </li>
+                </ul>
+                <p>
+                    Skip, terminal and event actions terminate execution of action list. Any actions mentioned after them are ignored.
+                    One of these actions should end every action list. If this is not the case, skip action is implied. In example
+                    <a href="#example-001">above</a>, where <span class="action-identifier">commentScanner</span> is defined, first action
+                    list terminate with pop action. In this case, skip action is silently executed immediately after execution of
+                    pop action:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="regex-ref">[\*]+\/</span>
+    <span class="action-token">pop</span>
+                    </pre>
+                </div>
+                <p>
+                    is terminated by an implicit skip action and should be writen in this way:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="regex-ref">[\*]+\/</span>
+    <span class="action-token">pop</span>
+    <span class="action-token">skip</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE S-6 - Skip Action</h6>
+                <p>
+                    Rule <a href="#rule-s-6">RULE S-6</a> defines skip action. This action causes the character sequence which matches
+                    regular expression associated with action list containing skip action, to be discarded. However, there are also
+                    mechanisms that allow it to be detected which part of the text has been discarded. After the skip action is executed,
+                    the scanner will not return to the calling environment (typically syntax analyser) but will repeat the text scan.
+                </p>
+                <p>
+                    Skip action plays similar role as the continue statement in moder programming languages.
+                </p>
+                <p>
+                    Example of skip action:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+                    </pre>
+                </div>
+                <p>
+                    Above action will discard all new line characters, probably because they are not important for syntax analyze of given text.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE S-7 - Terminal Action</h6>
+                <p>
+                    Rule <a href="#rule-s-7">RULE S-7</a> defines terminal action. This action establishes mapping between terminal symbol
+                    returned by that action and text that matches associated regular expression. After this action finished executing,
+                    we know the following things:
+                </p>
+                <ul>
+                    <li>
+                        the content of terminal: character string which matches regular expression
+                    </li>
+                    <li>
+                        the meanning of that text: terminal symbol.
+                    </li>
+                </ul>
+                <p>
+                    Action is composed in that way:
+                </p>
+                <ul>
+                    <li>
+                        first, we mention the word terminal.
+                    </li>
+                    <li>
+                        followed by the name of the terminal. This name must be defined in one of declaration parts. This action is the
+                        final action, so we should not cite other actions after it.
+                    </li>
+                </ul>
+                <p>
+                    Action terminal has similar role as return statement in modern programming langages, for example:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="regex-ref">{number}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">NUMBER</span>
+                    </pre>
+                </div>
+                <p>
+                    will be compiled to:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+    return NUMBER;
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE S-8 - Event Action</h6>
+                <p>
+                    Rule <a href="#rule-s-8">RULE S-8</a> defines event action. This action is used in more complex cases, when we canoot use
+                    other actions to handle text, which matches regular expression. This action defines an event that will help us deal with
+                    the text, which matches regular expression. The function that handles this event must be implemented in a some application
+                    library. Action is composed in that way:
+                </p>
+                <ul>
+                    <li>
+                        first, we mention the word event.
+                    </li>
+                    <li>
+                        followed by the name of event. By mentioning the name on this place, we have defined a new event, so it doesn't have
+                        to be defined somewhere else.
+                    </li>
+                </ul>
+                <p>
+                    Event action can be compared to the calculated case statement. If calculation returns less than or equal to zero, continue
+                    statement is executed, otherwise the calcuated code is returned. Example of a function which handles event action:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+    private int AsnRegex__identifier__Event (AsnLexer_AsnRegex regex, AsnLexer scanner)
+    {
+        int t;
+        if ((t = AsnKeywordDB.FindKeyword (regex.text)) < 0)
+            return AsnDeclarations.tokens.identifier;
+        return t;
+    }
+                    </pre>
+                </div>
+                <p>
+                    In the above routine if text matched by regular expression appears to be keyword, specific keyword code is returned, otherwise
+                    identifier code is returned. This code (identifier or specific keyword) is then returned to the syntax analyzer. Event action
+                    is similar to returning a result of function call, for example (above event):
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+    return AsnRegex__identifier__Event (regex, scanner);
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE S-9 - Push Action</h6>
+                <p>
+                    Rule <a href="#rule-s-9">RULE S-9</a> defines push action. This action activates a new scanner. Each lexical analyzer contains
+                    a stack of scanners. Active scanner sits at the top of the stack. Push action puts a new scanner at the top of the stack. Push
+                    action is composed on that way:
+                </p>
+                <ul>
+                    <li>
+                        first, we mention the word push
+                    </li>
+                    <li>
+                        followed by the name of the scanner part defined elswhere in anglr file.
+                    </li>
+                </ul>
+                <p>
+                    Example: one of the actions of mathScanner from example <a href="#example-001">above</a> executes this push action
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="regex-ref">\/\*</span>
+    <span class="action-token">push</span> <span class="action-identifier">commentScanner</span>
+                    </pre>
+                </div>
+                <p>
+                    It discards first two characters <span class="regex-ref">/*</span> at the beginning of multi-line comment and activates scanner <span class="action-identifier">commentScanner</span> which
+                    will read the remaining characters of comment.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE S-10 - Pop Action</h6>
+                <p>
+                    Rule <a href="#rule-s-10">RULE S-10</a> defines pop action. This action removes the current scanner from the top of the scanner
+                    stack. The scanner located just below the top becomes an active scanner.
+                </p>
+                <p>
+                    Example: one of the actions of commentScanner from example <a href="#example-001">above</a> executes this pop action:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="regex-ref">[\*]+\/</span>
+    <span class="action-token">pop</span>
+                    </pre>
+                </div>
+                <p>
+                    Scanner commentScanner executes this action every time it encounters an end of multi-line comment string, removing itself from the
+                    scanner stack and reviling scanner immediately below it, mathScanner in this case.
+                </p>
+                <p>
+                    Push and pop actions must be balanced. At no time there should be more pop than push actions.
+                </p>
+                <h2>Attributes</h2>
+                <p>
+                    These attributes are mandatory for scanner part:
+                </p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Value Name</th>
+                            <th>Value</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>Declarations</td>
+                            <td>Id</td>
+                            <td>part name</td>
+                            <td>
+                                Declarations id is name of some declaration part within anglr file. Regular expressions and terminal symbols
+                                referenced in scanner part should be defined in this declaration part.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CompilationInfo</td>
+                            <td>ClassName</td>
+                            <td>class name</td>
+                            <td>name of class generated by anglr compiler containing implementation of scanner</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>NameSpace</td>
+                            <td>namespace name</td>
+                            <td>namespce used by anglr compiler when generating scanner class</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Access</td>
+                            <td>class access</td>
+                            <td>class access should be one of these keywords: public, private or internal</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>CodeDir</td>
+                            <td>directory path</td>
+                            <td>directory path which will be used to save generated scanner class</td>
+                        </tr>
+                    </thead>
+                </table>
+            </section>

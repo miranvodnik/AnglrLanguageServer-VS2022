@@ -1,0 +1,154 @@
+﻿@page
+@model LexerPartModel
+@{
+    ViewData ["Title"] = "Lexical Part of Anglr File";
+    ViewData ["Content"] = "Lexer part of Anglr file: set of scanners used to form lexical analyzer";
+}
+            <section id="lexer-part">
+                <h1>Lexer Part of Anglr File</h1>
+                <hr />
+                <h4>Introduction</h4>
+                <p>
+                    A lexical analyser is that part of the text analyser (e.g. the compiler) that transmits terminal symbols to the syntax analyser.
+                    It's composed from any number of scanners. One of them must be an initial scanner and must never be removed from the stack
+                    unless it is replaced immediately by another scanner.
+                </p>
+                <h4>Syntax</h4>
+                <p>
+                    The syntax of the lexical part is very simple. It has no content. The list of scanners it needs for
+                    its operation is defined by attributes. The followining syntax rule defines the structure of lexer part:
+                </p>
+                <hr />
+                <p id="rule-l-1">RULE L-1</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;lexer part&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%lexer&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;%{&#39;</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%}&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p>
+                    Here is an example of lexer part:
+                </p>
+                <div class="panel border bg-light" id="example-001">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Lexer for anglr file&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span>
+    <span class="attribute-name">UseScanner</span>
+        <span class="attribute-val-name">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;commentScanner&#39;</span>
+        <span class="attribute-val-name">InitialScanner</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathScanner&#39;</span>
+        <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathLexer&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Lexer&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%lexer</span> <span class="part-name">mathLexer</span>
+<span class="part-brace">%{</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <h4>Discussion</h4>
+                <h6 style="font-weight:bold">RULE L-1 - Structure of lexer part</h6>
+                <p>
+                    Rule <a href="#rule-l-1">RULE L-1</a> defines the structure of the lexer part:
+                </p>
+                <ul>
+                    <li>
+                        Lexer part is preceded by possibly empty attribute list
+                    </li>
+                    <li>
+                        attribute list is followed by reserved word %lexer and an identifier representing the name of lexer
+                    </li>
+                    <li>
+                        Then there is another possibly empty list of attribute list between part parentheses %{ ad %}.
+                    </li>
+                </ul>
+                <p>
+                    In example <a href="#example-001">above</a> lexer part is preceded by this attribute list:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Lexer for anglr file&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span>
+    <span class="attribute-name">UseScanner</span>
+        <span class="attribute-val-name">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;commentScanner&#39;</span>
+        <span class="attribute-val-name">InitialScanner</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathScanner&#39;</span>
+        <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathLexer&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Lexer&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+                    </pre>
+                </div>
+                <p>
+                    Name of lexer part is:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="part-token">%lexer</span> <span class="part-name">mathLexer</span>
+                    </pre>
+                </div>
+                <p>
+                    and its body is empty:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="part-brace">%{</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <h4>Attributes</h4>
+                <p>
+                    The list of attributes specified before the lexical part must contain attributes describing which scanners
+                    contain the lexical analyser. Attributes located between %{ and %} are not important.
+                </p>
+                <p>
+                    These attributes are mandatory for lexer part:
+                </p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Value Name</th>
+                            <th>Value</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>UseScanner</td>
+                            <td>ScannerId</td>
+                            <td>scanner id</td>
+                            <td>
+                                Scanner id is equal to some name of scanner part within anglr file. We can specify multiple ScannerId values. As many as we need them.
+                                For each scanner contained in the lexical analyzer, one ScannerId value must be specified.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>InitialScanner</td>
+                            <td>scanner id</td>
+                            <td>
+                                this is id of scanner which will be loaded by lexical analyzer at the beginnig of its operation. If we don't mention initial scanner,
+                                the first ScannerId value will be used for initial scanner. InitialScanner value need not be one of ScannerId values. If it is not,
+                                additional scanner will be added to the set of scanners used by lexical analyzer: the one with InitialScanner id.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CompilationInfo</td>
+                            <td>ClassName</td>
+                            <td>name of C# class</td>
+                            <td>this name will be used by anglr compiler to generate class which will implement this lexical analyzer</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>NameSpace</td>
+                            <td>namespace of C# class</td>
+                            <td>namespce generated by anglr compiler</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Access</td>
+                            <td>class access</td>
+                            <td>class access should be one of these keywords: public, private or internal</td>
+                        </tr>
+                    </thead>
+                </table>
+            </section>

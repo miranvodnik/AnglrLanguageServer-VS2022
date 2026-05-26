@@ -1,0 +1,305 @@
+﻿@page
+@model AnglrWebSite.Pages.Compiler.DeclarationsModel
+@{
+    ViewData ["Title"] = "Declarations Source Code";
+    ViewData ["Content"] = "Declarations of terminal symbols and regular expressions used in Anglr files";
+}
+<section id="declarations">
+    <h1>Declarations Source Code</h1>
+    <hr />
+    <h4>Introduction</h4>
+    <p class="anglr-p">
+        Anglr compiler translates every declaration part found in Anglr file into a set of declarations. These declarations can be later used by lexical
+        and syntax analyzer and in general by any software component which uses information found in these parts. Generated code depends on the settings
+        found in the CompilationInfo attribute preceeding declaration part.
+    </p>
+    <h4>CompilationInfo attribute</h4>
+    <p class="anglr-p">
+        Attribute CompilationInfo is quasi-mandatory attribute of every declaration part. If it is not present the necessary information needed to generate
+        the source code is found elsewhere as it will be noted below. As we already know every attribute contains a set of name-value pairs. CompilationInfo
+        attribute of can contain these name-value pairs:
+        <table class="table anglr-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ClassName</td>
+                    <td>name of generated class</td>
+                    <td>
+                        this name will be used by Anglr compiler to create a class which will contain definitions of terminal symbols and regular expressions
+                        found in declaration part of Anglr file. If this setting is not found in the CompilationInfo attribute, the declaration part name
+                        will be used for the name of generated class
+                    </td>
+                </tr>
+                <tr>
+                    <td>NameSpace</td>
+                    <td>namespace of generated class</td>
+                    <td>
+                        this name will be used by Anglr compiler as the name of namespace containg the generated class. If this setting is not found in the
+                        CompilationInfo attribute, the namespace name found in the setting NameSpace of the CompilationInfo of the general part of Anglr file
+                        will be used instead if there is one. Otherwise the name of Anglr file will be taken for the name of namespace.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Access</td>
+                    <td>access of generated class</td>
+                    <td>
+                        Access can have one of the following three values: internal, public and private of which internal and public are preffered, since
+                        private access will make generated class unaccessible.
+                    </td>
+                </tr>
+                <tr>
+                    <td>TokenPrefix</td>
+                    <td>prefix of generated field names</td>
+                    <td>
+                        Sometime the names of fields found in the generated class associated with the declarations part of Anglr file does not
+                        comply with the selected programming language. In this case it is often usefull to rename the names of some or all fields
+                        in the generated class. This setting is provided just for this purpose: it prepends the given prefix to every field name
+                        found in generated class being it terminal symbol name or reqular expression symbol name. It is currently impossible to
+                        rename selected terminal or regular expression names, except by renaming it in the Anglr file itself. That means that
+                        with this setting you can rename all field names or none at all if this option does not exist or if its value is an empty
+                        string.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </p>
+    <h4>Generated Code</h4>
+    <p class="anglr-p">
+        Anglr compiler assignes one class to every declaration part found in Anglr file. The name of this class must be specified in the CompilationInfo
+        attribute, which is located before the declaration part definition. The best way to understand the material presented is to present it with an example.
+        Let's take this declaration part for an example:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definitions of tokens and regular expressions used to define syntax&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;of simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathDecls&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Declarations&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%declarations</span> <span class="part-name">mathDecls</span>
+<span class="part-brace">%{</span>
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+        <span class="regex-name">add</span> <span class="regex-def">\+</span>
+        <span class="regex-name">sub</span> <span class="regex-def">\-</span>
+        <span class="regex-name">mul</span> <span class="regex-def">\*</span>
+        <span class="regex-name">div</span> <span class="regex-def">\/</span>
+        <span class="regex-name">shl</span> <span class="regex-def">\&lt;\&lt;</span>
+        <span class="regex-name">shr</span> <span class="regex-def">\&gt;\&gt;</span>
+        <span class="regex-name">lb</span> <span class="regex-def">\(</span>
+        <span class="regex-name">rb</span> <span class="regex-def">\)</span>
+    <span class="def-separator">}</span>
+
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">shl</span> <span class="token-value">&#39;&lt;&lt;&#39;</span>
+        <span class="token-name">shr</span> <span class="token-value">&#39;&gt;&gt;&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+<span class="part-brace">%}</span>
+        </pre>
+    </div>
+    <p class="anglr-p">
+        Above declaration part willl be compiled into this piece of source code:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+namespace Math.Declarations
+{
+    public class MathDecls
+    {
+        // values of terminal symbols
+        public class tokens
+        {
+            public const int NUMBER = 258;
+            public const int add = 259;
+            public const int sub = 260;
+            public const int mul = 261;
+            public const int div = 262;
+            public const int shl = 263;
+            public const int shr = 264;
+            public const int lb = 265;
+            public const int rb = 266;
+            public const int unknown = 267;
+        }
+
+        // values of regular expressions
+        public class regex
+        {
+            public const string decimal_digit = &#64;"[0-9]";
+            public const string number = &#64;"[0-9]+";
+            public const string add = &#64;"\+";
+            public const string sub = &#64;"\-";
+            public const string mul = &#64;"\*";
+            public const string div = &#64;"\/";
+            public const string shl = &#64;"\&lt;\&gt;";
+            public const string shr = &#64;"\&lt;\&gt;";
+            public const string lb = &#64;"\(";
+            public const string rb = &#64;"\)";
+        }
+    }
+}
+        </pre>
+    </div>
+    <p class="anglr-p">
+        In the example above, we notice the following:
+        <ul class="anglr-ul">
+            <li>
+                the name of the generated class <span class="attribute-val-value">&#39;MathDecls&#39;</span> is equal to the value of the
+                <span class="attribute-val-name">ClassName</span> setting in the attribute <span class="attribute-name">CompilationInfo</span>:
+                <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span>
+                <span class="attribute-val-value">&#39;MathDecls&#39;</span>
+            </li>
+            <li>
+                the name of the namespace <span class="attribute-val-value">&#39;Math.Declarations&#39;</span> is equal to the value of the
+                <span class="attribute-val-name">NameSpace</span> setting in the attribute <span class="attribute-name">CompilationInfo</span>:
+                <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span>
+                <span class="attribute-val-value">&#39;Math.Declarations&#39;</span>
+            </li>
+            <li>
+                terminal definitions are collected in the inner class named tokens. Their names are the same as names in terminal definitions in the declaration part of Anglr file.
+                They are defined in that way:
+                <ul class="anglr-ul">
+                    <li>
+                        public: any class has access to them
+                    </li>
+                    <li>
+                        const: they are constants and thus cannot be changed - they are read only properties of class tokens.
+                    </li>
+                    <li>
+                        int: they are integer constants. In fact they are allways greater than zero, so they should be defined as an unsigned int instead. But since they often
+                        appear in the terms where the validity of certain variables is verified they are defined as integers. These variables are usually initialized with negative
+                        values, which means that they have invalid values at the start of application. Later when they are assigned terminal values they become valid. Checking their
+                        values against negative values verifies their validity.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Regular expressions are collected in the inner class named regex. Their names are also the same as names in the definitions of regular expressions in the
+                declaration part of Anglr file. They are defined in that way:
+                <ul class="anglr-ul">
+                    <li>
+                        public: any class has access to them
+                    </li>
+                    <li>
+                        const: they are constants and thus cannot be changed - they are read only properties of class regex.
+                    </li>
+                    <li>
+                        string: they are string constants. Their values are expressed in expanded form, where all references to other regular expressions are resolved. For instance,
+                        number is not defined as:
+                        <div class="panel border bg-light">
+                            <pre>
+public const string number = &#64;"{decimal-digit}+";
+                            </pre>
+                        </div>
+                        but in an expanded form, where {decimal-digit} is exchaged with its value [0-9]:
+                        <div class="panel border bg-light">
+                            <pre>
+public const string number = &#64;"[0-9]+";
+                            </pre>
+                        </div>
+                        where we took into account the definitions of regular expressions <span class="regex-name">number</span> and <span class="regex-name">decimal-digit</span>
+                        in the declaration part of Anglr file.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </p>
+    <p class="anglr-p">
+        Sometimes the generated code does not comply with the programming language. Let's take a look at the C# syntax rules represented in <a href="~/Appendix-E">Appendix-E</a>, for example.
+        At the beginning of the declaration part there is this block definition of terminal symbols:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">namespace</span> <span class="token-name">identifier</span> <span class="token-name">extern</span> <span class="token-name">alias</span> <span class="token-name">using</span> <span class="token-name">float</span> <span class="token-name">double</span> <span class="token-name">sbyte</span> <span class="token-name">byte</span> <span class="token-name">short</span> <span class="token-name">ushort</span> <span class="token-name">int</span> <span class="token-name">uint</span>
+        <span class="token-name">long</span> <span class="token-name">ulong</span> <span class="token-name">char</span> <span class="token-name">decimal</span> <span class="token-name">bool</span> <span class="token-name">nullable-value-type</span> <span class="token-name">ref</span> <span class="token-name">out</span> <span class="token-name">object</span> <span class="token-name">string</span> <span class="token-name">base</span> <span class="token-name">this</span>
+        <span class="token-name">new</span> <span class="token-name">typeof</span> <span class="token-name">void</span> <span class="token-name">await</span> <span class="token-name">checked</span> <span class="token-name">default</span> <span class="token-name">unchecked</span> <span class="token-name">delegate</span> <span class="token-name">async</span> <span class="token-name">from</span> <span class="token-name">in</span> <span class="token-name">group</span> <span class="token-name">by</span> <span class="token-name">join</span>
+        <span class="token-name">on</span> <span class="token-name">equals</span> <span class="token-name">into</span> <span class="token-name">let</span> <span class="token-name">orderby</span> <span class="token-name">ascending</span> <span class="token-name">descending</span> <span class="token-name">is</span> <span class="token-name">as</span> <span class="token-name">select</span> <span class="token-name">where</span> <span class="token-name">break</span> <span class="token-name">continue</span> <span class="token-name">do</span>
+        <span class="token-name">while</span> <span class="token-name">finally</span> <span class="token-name">for</span> <span class="token-name">foreach</span> <span class="token-name">catch</span> <span class="token-name">goto</span> <span class="token-name">case</span> <span class="token-name">if</span> <span class="token-name">else</span> <span class="token-name">const</span> <span class="token-name">var</span> <span class="token-name">lock</span> <span class="token-name">return</span> <span class="token-name">switch</span> <span class="token-name">throw</span>
+        <span class="token-name">try</span> <span class="token-name">yield</span> <span class="token-name">class</span> <span class="token-name">partial</span> <span class="token-name">public</span> <span class="token-name">protected</span> <span class="token-name">internal</span> <span class="token-name">private</span> <span class="token-name">abstract</span> <span class="token-name">sealed</span> <span class="token-name">static</span> <span class="token-name">struct</span>
+        <span class="token-name">readonly</span> <span class="token-name">volatile</span> <span class="token-name">virtual</span> <span class="token-name">override</span> <span class="token-name">get</span> <span class="token-name">params</span> <span class="token-name">set</span> <span class="token-name">add</span> <span class="token-name">event</span> <span class="token-name">remove</span> <span class="token-name">operator</span> <span class="token-name">implicit</span>
+        <span class="token-name">explicit</span> <span class="token-name">true</span> <span class="token-name">false</span> <span class="token-name">interface</span> <span class="token-name">enum</span> <span class="token-name">unsafe</span> <span class="token-name">fixed</span> <span class="token-name">stackalloc</span> <span class="token-name">dynamic</span> <span class="token-name">sizeof</span> <span class="token-name">null</span>
+        <span class="token-name">right-shift</span> <span class="token-name">right-shift-assignment</span>
+    <span class="def-separator">}</span>
+        </pre>
+    </div>
+    <p class="anglr-p">
+        This piece of Anglr code contains definitions of terminal symbols which represent C# keywords. Their names are equal to C# keywords, too, which is perfectly legal, since Anglr does not know
+        nothing about C# and its keywords. When we compile this Anglr file using Anglr compiler, we get the following C# code:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+        public class tokens
+        {
+            public const int <span class="reserved-word">namespace</span> = 258;
+            public const int identifier = 259;
+            public const int <span class="reserved-word">extern</span> = 260;
+            public const int <span class="reserved-word">alias</span> = 261;
+            public const int <span class="reserved-word">using</span> = 262;
+            public const int <span class="reserved-word">float</span> = 263;
+            public const int <span class="reserved-word">double</span> = 264;
+            public const int <span class="reserved-word">sbyte</span> = 265;
+            public const int <span class="reserved-word">byte</span> = 266;
+            // and many other definitions of public const int fields
+        </pre>
+    </div>
+    <p class="anglr-p">
+        The words colored <span class="reserved-word">red</span> are reserved words in C# and will not compile, since reserved words cannot be used as names in the definitions of class fields.
+        We have two solutions for this problem. We can redefine the names of the terminal symbols or we can use a far better solution to this problem, to use the
+        <span class="attribute-val-name">TokenPrefix</span> option of <span class="attribute-name">CompilationInfo</span> attribute like in this example:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CsharpDeclarations&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Csharp.Declarations&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">TokenPrefix</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;token_&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%declarations</span> <span class="part-name">csharpDecls</span>
+<span class="part-brace">%{</span>
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">namespace</span> <span class="token-name">identifier</span> <span class="token-name">extern</span> <span class="token-name">alias</span> <span class="token-name">using</span> <span class="token-name">float</span> <span class="token-name">double</span> <span class="token-name">sbyte</span> <span class="token-name">byte</span> <span class="token-name">short</span> <span class="token-name">ushort</span> <span class="token-name">int</span> <span class="token-name">uint</span>
+        <span class="token-name">long</span> <span class="token-name">ulong</span> <span class="token-name">char</span> <span class="token-name">decimal</span> <span class="token-name">bool</span> <span class="token-name">nullable-value-type</span> <span class="token-name">ref</span> <span class="token-name">out</span> <span class="token-name">object</span> <span class="token-name">string</span> <span class="token-name">base</span> <span class="token-name">this</span>
+        <span class="token-name">new</span> <span class="token-name">typeof</span> <span class="token-name">void</span> <span class="token-name">await</span> <span class="token-name">checked</span> <span class="token-name">default</span> <span class="token-name">unchecked</span> <span class="token-name">delegate</span> <span class="token-name">async</span> <span class="token-name">from</span> <span class="token-name">in</span> <span class="token-name">group</span> <span class="token-name">by</span> <span class="token-name">join</span>
+        <span class="token-name">on</span> <span class="token-name">equals</span> <span class="token-name">into</span> <span class="token-name">let</span> <span class="token-name">orderby</span> <span class="token-name">ascending</span> <span class="token-name">descending</span> <span class="token-name">is</span> <span class="token-name">as</span> <span class="token-name">select</span> <span class="token-name">where</span> <span class="token-name">break</span> <span class="token-name">continue</span> <span class="token-name">do</span>
+        <span class="token-name">while</span> <span class="token-name">finally</span> <span class="token-name">for</span> <span class="token-name">foreach</span> <span class="token-name">catch</span> <span class="token-name">goto</span> <span class="token-name">case</span> <span class="token-name">if</span> <span class="token-name">else</span> <span class="token-name">const</span> <span class="token-name">var</span> <span class="token-name">lock</span> <span class="token-name">return</span> <span class="token-name">switch</span> <span class="token-name">throw</span>
+        <span class="token-name">try</span> <span class="token-name">yield</span> <span class="token-name">class</span> <span class="token-name">partial</span> <span class="token-name">public</span> <span class="token-name">protected</span> <span class="token-name">internal</span> <span class="token-name">private</span> <span class="token-name">abstract</span> <span class="token-name">sealed</span> <span class="token-name">static</span> <span class="token-name">struct</span>
+        <span class="token-name">readonly</span> <span class="token-name">volatile</span> <span class="token-name">virtual</span> <span class="token-name">override</span> <span class="token-name">get</span> <span class="token-name">params</span> <span class="token-name">set</span> <span class="token-name">add</span> <span class="token-name">event</span> <span class="token-name">remove</span> <span class="token-name">operator</span> <span class="token-name">implicit</span>
+        <span class="token-name">explicit</span> <span class="token-name">true</span> <span class="token-name">false</span> <span class="token-name">interface</span> <span class="token-name">enum</span> <span class="token-name">unsafe</span> <span class="token-name">fixed</span> <span class="token-name">stackalloc</span> <span class="token-name">dynamic</span> <span class="token-name">sizeof</span> <span class="token-name">null</span>
+        <span class="token-name">right-shift</span> <span class="token-name">right-shift-assignment</span>
+    <span class="def-separator">}</span>
+        </pre>
+    </div>
+    <p class="anglr-p">
+        where we used this setting <span class="attribute-val-name">TokenPrefix</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;token_&#39;</span>
+        of attribute <span class="attribute-name">CompilationInfo</span> to produce the following code:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+        public class tokens
+        {
+            public const int <span class="reserved-word">token_namespace</span> = 258;
+            public const int token_identifier = 259;
+            public const int <span class="reserved-word">token_extern</span> = 260;
+            public const int <span class="reserved-word">token_alias</span> = 261;
+            public const int <span class="reserved-word">token_using</span> = 262;
+            public const int <span class="reserved-word">token_float</span> = 263;
+            public const int <span class="reserved-word">token_double</span> = 264;
+            public const int <span class="reserved-word">token_sbyte</span> = 265;
+            public const int <span class="reserved-word">token_byte</span> = 266;
+            // and many other definitions of public const int fields
+        </pre>
+    </div>
+</section>

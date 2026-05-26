@@ -1,0 +1,742 @@
+﻿@page
+@model DeclarationPartModel
+@{
+    ViewData ["Title"] = "Declaration Part of Anglr File";
+    ViewData ["Content"] = "Declaration part of Anglr file: definitions of terminal symbols and regular expressions used in Anglr files";
+}
+            <section id="declaration-part">
+                <h1>Declaration Part of Anglr File</h1>
+                <hr />
+                <h4>Introduction</h4>
+                <p>
+                    The contents of anglr files consist of sequences of characters that are separated by spaces. These character sequences are words in Anglr.
+                    Lexical analyzer of anglr language needs to know how these words are composed. On the other hand, an Anglr language syntax analyzer needs
+                    to know what these words mean. These things, the structure of words and their meaning, are defined in the declaration part of anglr file.
+                    The structure of words is defined by regular expressions and their meaning is defined by terminal symbols. The declaration part therefore
+                    contains definitions of regular expressions and terminal symbols.
+                </p>
+                <h4>Syntax</h4>
+                <p>
+                    The following is a list of syntax rules that define the contents of the declaration anglr file part.
+                </p>
+                <hr />
+                <p id="rule-d-1">RULE D-1</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;declaration part&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%declarations&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;%{&#39;</span> <span class="rule-ref">&lt;anglr definition list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%}&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-d-2">RULE D-2</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;anglr definition list&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;anglr definition with attribute&gt;</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-d-3">RULE D-3</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;anglr definition with attribute&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="rule-ref">&lt;anglr definition&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-d-4">RULE D-4</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;anglr definition&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;single terminal definition&gt;</span>
+    <span class="def-separator">|</span> <span class="rule-ref">&lt;single regex definition&gt;</span>
+    <span class="def-separator">|</span> <span class="rule-ref">&lt;block of terminal definitions&gt;</span>
+    <span class="def-separator">|</span> <span class="rule-ref">&lt;block of regex definitions&gt;</span>
+    <span class="def-separator">;</span>
+                   </pre>
+                </div>
+                <hr />
+                <p id="rule-d-5">RULE D-5</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;single terminal definition&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;%terminal&#39;</span> <span class="rule-ref">&lt;terminal definition&gt;</span>
+    <span class="def-separator">;</span>
+                   </pre>
+                </div>
+                <hr />
+                <p id="rule-d-6">RULE D-6</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;single regex definition&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;%regex&#39;</span> <span class="rule-ref">&lt;regex definition&gt;</span>
+    <span class="def-separator">;</span>
+                   </pre>
+                </div>
+                <hr />
+                <p id="rule-d-7">RULE D-7</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;block of terminal definitions&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;%terminal&#39;</span> <span class="string-name">&#39;{&#39;</span> <span class="rule-ref">&lt;block terminal definitions&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+                   </pre>
+                </div>
+                <hr />
+                <p id="rule-d-8">RULE D-8</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;block of regex definitions&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;%regex&#39;</span> <span class="string-name">&#39;{&#39;</span> <span class="rule-ref">&lt;block regex definitions&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+                   </pre>
+                </div>
+                <hr />
+                <p id="rule-d-9">RULE D-9</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;terminal definition&gt;</span>
+    <span class="def-separator">:</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="identifier-name">&lt;cstring&gt;</span> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-d-10">RULE D-10</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;regex definition&gt;</span>
+    <span class="def-separator">:</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="identifier-name">&lt;regular expression&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-d-11">RULE D-11</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;block terminal definitions&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;block terminal definition&gt;</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-d-12">RULE D-12</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;block terminal definition&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="rule-ref">&lt;terminal definition&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-d-13">RULE D-13</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;block regex definitions&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;block regex definition&gt;</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-d-14">RULE D-14</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;block regex definition&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="rule-ref">&lt;regex definition&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p>
+                    Here is an example of declaration part:
+                </p>
+                <div class="panel border bg-light" id="example-001">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definitions of tokens and regular expressions used to define syntax&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;of simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathDecls&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Declarations&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%declarations</span> <span class="part-name">mathDecls</span>
+<span class="part-brace">%{</span>
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+    <span class="def-separator">}</span>
+
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    Every declaration part is very similar to one defined immediately above. What is interesting is that the declaration part has relatively simple structure,
+                    yet we still need a relatively large number of syntax rules to describe its syntax.
+                </p>
+                <h4>Discussion</h4>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-1 - Structure of Declaration Part</h6>
+                <p>
+                    Rule <a href="#rule-d-1">RULE D-1</a> defines the top structure of the declaration part:
+                </p>
+                <ul>
+                    <li>
+                        Before declaration part, there is a list of attributes, which may also be empty.
+                    </li>
+                    <li>
+                        Attribute list is followed by reserved word %declarations and an identifier which represents the name of declaration part
+                    </li>
+                    <li>
+                        between part separators %{ and %} is, possibly empty, list of declarations
+                    </li>
+                </ul>
+                <p>
+                    In example <a href="#example-001">above</a>, declaration part is preceeded by three attributes:
+                </p>
+                <div class="panel border bg-light" id="example-002">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definitions of tokens and regular expressions used to define sntax&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;of simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathDecls&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Declarations&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+                    </pre>
+                </div>
+                <p>
+                    Name of declaration part is:
+                </p>
+                <div class="panel border bg-light" id="example-003">
+                    <pre>
+<span class="part-token">%declarations</span> <span class="part-name">mathDecls</span>
+                    </pre>
+                </div>
+                <p>
+                    and contains two declarations:
+                </p>
+                <div class="panel border bg-light" id="example-004">
+                    <pre>
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+    <span class="def-separator">}</span>
+
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+                    </pre>
+                </div>
+                <p>
+                    First declaration is block declaration of regular expressions and the second one is te block declaration of terminal symbols.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-2 - List of Anglr Definitions</h6>
+                <p>
+                    Rule <a href="#rule-d-2">RULE D-2</a> defines the list of declarations. It is the sequence of declarations, following one another, delimited by space characters.
+                    In example <a href="#example-001">above</a>, there are two declarations. The first one is block declaration of regular expressions and it is followed by block
+                    declaration of terminal symbols. Order of declarations is not important. It would be absolutely none of the same if the above declarations were listed in such an order:
+                </p>
+                <div class="panel border bg-light" id="example-005">
+                    <pre>
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+    <span class="def-separator">}</span>
+                    </pre>
+                </div>
+                <p>
+                    The same declarations can be specified using single form equivalents of block declarations:
+                </p>
+                <div class="panel border bg-light" id="example-004">
+                    <pre>
+    <span class="reserved-word">%regex</span> <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+    <span class="reserved-word">%regex</span> <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+
+    <span class="reserved-word">%terminal</span> <span class="token-name">NUMBER</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">unknown</span>
+                    </pre>
+                </div>
+                <p>
+                    First list (block form) contains two definitions, each defininig multiple terminal symbols and regular expressions. The second list (single form)
+                    contains ten definitions, each defining single entity.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-3 - Anglr Definition</h6>
+                <p>
+                    Rule <a href="#rule-d-3">RULE D-3</a> defines the structure of each declaration and states that before the declaration itself, there can be a list of attributes.
+                    In example <a href="#example-001">above</a>, no declaration is preceeded by attribute set, but it should be, like this:
+                </p>
+                <div class="panel border bg-light" id="example-006">
+                    <pre>
+    <span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regular expressions&#39;</span><span class="attribute-brace">]</span>
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+    <span class="def-separator">}</span>
+
+    <span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;terminal symbols&#39;</span><span class="attribute-brace">]</span>
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-4 - Kinds of Anglr Definition</h6>
+                <p>
+                    Rule <a href="#rule-d-4">RULE D-4</a> lists all possible sorts of declarations. They are listed in the same order as productions of that rule:
+                </p>
+                <ul>
+                    <li>
+                        single terminal definition, defined by syntax rule <span class="rule-ref">&lt;single terminal definition&gt;</span>
+                    </li>
+                    <li>
+                        single regular expression definition, defined by syntax rule <span class="rule-ref">&lt;single regex definition&gt;</span>
+                    </li>
+                    <li>
+                        block of termial definitions, defined by syntax rule <span class="rule-ref">&lt;block of terminal definitions&gt;</span>
+                    </li>
+                    <li>
+                        block of regular expression definitions, defined by syntax rule <span class="rule-ref">&lt;block of regex definitions&gt;</span>
+                    </li>
+                </ul>
+                <p>
+                    From the discussion of RULE D-2 we can select these examples of different definitions:
+                </p>
+                <ul>
+                    <li>
+                        example of single terminal definition <span class="rule-ref">&lt;single terminal definition&gt;</span>:
+                        <div class="panel border bg-light" id="example-007">
+                            <pre>
+    <span class="reserved-word">%terminal</span> <span class="token-name">NUMBER</span>
+                            </pre>
+                        </div>
+                    </li>
+                    <li>
+                        example of single regular expression definition <span class="rule-ref">&lt;single regex definition&gt;</span>:
+                        <div class="panel border bg-light" id="example-007">
+                            <pre>
+    <span class="reserved-word">%regex</span> <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+                            </pre>
+                        </div>
+                    </li>
+                    <li>
+                        example of block of termial definitions <span class="rule-ref">&lt;block of terminal definitions&gt;</span>:
+                <div class="panel border bg-light" id="example-005">
+                    <pre>
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+                    </pre>
+                </div>
+                    </li>
+                    <li>
+                        example of block of regular expression definitions <span class="rule-ref">&lt;block of regex definitions&gt;</span>:
+                <div class="panel border bg-light" id="example-005">
+                    <pre>
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+    <span class="def-separator">}</span>
+                    </pre>
+                </div>
+                    </li>
+                </ul>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-5 - Single terminal definition</h6>
+                <p>
+                    Rule <a href="#rule-d-5">RULE D-5</a> defines structure of single terminal definition:
+                </p>
+                <ul>
+                    <li>
+                        it begins with reserved word %terminal
+                    </li>
+                    <li>
+                        reserved word terminal is followe by definition of terminal symbol
+                    </li>
+                </ul>
+                <p>
+                    Single terminal declarations look like these:
+                </p>
+                <div class="panel border bg-light" id="example-008">
+                    <pre>
+    <span class="reserved-word">%terminal</span> <span class="token-name">NUMBER</span>
+    or
+    <span class="reserved-word">%terminal</span> <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-6 - Single Regular Expression Definition</h6>
+                <p>
+                    Rule <a href="#rule-d-6">RULE D-6</a> defines structure of single regular expression definition:
+                </p>
+                <ul>
+                    <li>
+                        it begins with reserved word %regex
+                    </li>
+                    <li>
+                        followed by definition of regular expression
+                    </li>
+                </ul>
+                <p>
+                    Examples of single regular expression definitions are following specifications:
+                </p>
+                <div class="panel border bg-light" id="example-009">
+                    <pre>
+    <span class="reserved-word">%regex</span> <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+    <span class="reserved-word">%regex</span> <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+                    </pre>
+                </div>
+                <p>
+                    Care should be taken in specifying regular expression definitions: they should be specified in the same line as
+                    %regex reserved word. They should not span more than one line. All characters following %regex, except initial spaces,
+                    are taken into the account of regular expression definition. Definition of regular expression should not be followed
+                    by comment in the same line, since it will be treated as part of definition. In the following example
+                </p>
+                <div class="panel border bg-light" id="example-010">
+                    <pre>
+    <span class="reserved-word">%regex</span> <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span> // decimal digits
+                    </pre>
+                </div>
+                <p>
+                    decimal-digit will not match what one would expect:
+                    <ul>
+                        <li>
+                            0
+                        </li>
+                        <li>
+                            1
+                        </li>
+                        <li>
+                            2
+                        </li>
+                        <li>
+                            etc.
+                        </li>
+                    </ul>
+                    but
+                    <ul>
+                        <li>
+                            0 // decimal digits
+                        </li>
+                        <li>
+                            1 // decimal digits
+                        </li>
+                        <li>
+                            2 // decimal digits
+                        </li>
+                        <li>
+                            etc.
+                        </li>
+                    </ul>
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-7 - Block of Terminal Definitions</h6>
+                <p>
+                    Rule <a href="#rule-d-7">RULE D-7</a> defines structure of whole block of terminal definitions:
+                </p>
+                <ul>
+                    <li>
+                        if begins with reserved word %terminal
+                    </li>
+                    <li>
+                        followed by block of terminal definitions enclosed with curly braces { and }
+                    </li>
+                </ul>
+                <p>
+                    An example of block declaration is this excerpt already repeated many times:
+                </p>
+                <div class="panel border bg-light" id="example-011">
+                    <pre>
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-8 - Block of Regular Expression Definitions</h6>
+                <p>
+                    Rule <a href="#rule-d-8">RULE D-8</a> defines structure of a whole block of regular expression definitions:
+                </p>
+                <ul>
+                    <li>
+                        definition begins with reserved word
+                    </li>
+                    <li>
+                        followed by a block of regular expression definitions enclosed with curly braces { and }
+                    </li>
+                </ul>
+                <p>
+                    Example of block declarations:
+                </p>
+                <div class="panel border bg-light" id="example-012">
+                    <pre>
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+    <span class="def-separator">}</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-9 - Terminal Definition</h6>
+                <p>
+                    Rule <a href="#rule-d-9">RULE D-9</a> defines the structure of terminal definition, wether it be part of single or block definition:
+                </p>
+                <ul>
+                    <li>
+                        terminal name, which is in fact the value wthin an enumeration
+                    </li>
+                    <li>
+                        terminal name should be followed by text representation of terminal symbol
+                    </li>
+                </ul>
+                <p>
+                    In example <a href="#example-001">above</a>, eight terminal symbols are defined. Six of them are specified together with its textual representation,
+                    because they have always only one value, the one specified in the declaration.
+                </p>
+                <div class="panel border bg-light" id="example-013">
+                    <pre>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+                    </pre>
+                </div>
+                <p>
+                    The NUMBER terminal symbol is defined without a text presentation because it has an infinite pool of different values.
+                    However, we could still give him a text presentation, e.g. the sign '0'. With such a sign, the terminal symbol could also appear in the syntax rules.
+                    However, such a method of using terminal symbols is not advised, as it may lead to ambiguity.
+                </p>
+                <p>
+                    At this point, the difference between the number of definitions that appear in the declaration part and the number of definitions of terminal symbols
+                    and regular expressions must be added. As we can see, the declaration part contains two definitions in which eight terminal symbols and two regular
+                    expressions are defined.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-10 - Regular Expression Definition</h6>
+                <p>
+                    Rule <a href="#rule-d-10">RULE D-10</a> defines structure of regular expression definition, wether it be part of single or block definition. It consists of:
+                </p>
+                <ul>
+                    <li>
+                        regular expression name
+                    </li>
+                    <li>
+                        followed by regular expression itself. Everything spanning from regular expression name to the end of line is treated as part of regular expression except
+                        space characters immediately following regular expression name
+                    </li>
+                </ul>
+                <p>
+                    Regular expressions are composed according to the rules defined on this <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expressions">web page</a>:
+                </p>
+                <p>
+                    In example <a href="#example-001">above</a>, two regular expressions are defined:
+                </p>
+                <div class="panel border bg-light" id="example-014">
+                    <pre>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+                    </pre>
+                </div>
+                <p>
+                    As we can see, a regular expression can be defined by other regular expressions. For example: regular expression <span class="regex-name">number</span>
+                    is definied with regular expression <span class="regex-name">decimal-digit</span>. We did this by writing down the definition of the regular expression
+                    <span class="regex-name">decimal-digit</span> in the definition of the regular expression <span class="regex-name">number</span> between the curly braces.
+                    This technique can be used without any specific restrictions:
+                </p>
+                <ul>
+                    <li>
+                        The order of the definitions of regular expressions is not important. The regular expression used in the definition of another regular expression can be
+                        defined after its use.
+                    </li>
+                    <li>
+                        There is no limit to the number of regular expressions used. In the definition of a regular expression, you can use as many other regular expressions as necessary.
+                    </li>
+                </ul>
+                <p>
+                    However, care should be taken to the following:
+                </p>
+                <ul>
+                    <li>
+                        the regular expression must not be defined by itself, neither explicitly nor implicitly, e.g. by a circular definition of regular expressions: A is defined by B, B with C and C by A.
+                    </li>
+                </ul>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-11 - List of Terminal Definitions</h6>
+                <p>
+                    Rule <a href="#rule-d-11">RULE D-11</a> defines a block of terminal definitions as nonempty contiguous list of terminal definitions separated by space characters, for example:
+                </p>
+                <div class="panel border bg-light" id="example-015">
+                    <pre>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-12 - Terminal Definition within Block</h6>
+                <p>
+                    Rule <a href="#rule-d-12">RULE D-12</a> defines terminal definition within list of terminal definitions. It is similar to single terminal definition.
+                    Since it is defined within block of terminals it need not be preceded by reserved word %terminal, since this word precedes block. Like single terminal
+                    definitions, block terminal definitions should also be prceded by attribute list
+                </p>
+                <p>
+                    For example, this block definition:
+                </p>
+                <div class="panel border bg-light" id="example-006">
+                    <pre>
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;adition operator&#39;</span><span class="attribute-brace">]</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+                    </pre>
+                </div>
+                <p>
+                    and these terminal definitions:
+                </p>
+                <div class="panel border bg-light" id="example-006">
+                    <pre>
+    <span class="reserved-word">%terminal</span> <span class="token-name">NUMBER</span>
+    <span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;adition operator&#39;</span><span class="attribute-brace">]</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+    <span class="reserved-word">%terminal</span> <span class="token-name">unknown</span>
+                    </pre>
+                </div>
+                <p>
+                    are equivalent. We can also see how to specifiy attributes for single terminal definitions and for terminal definitions within
+                    block of terminal definitions.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-13 - List of Regular Expression Definitions in Block</h6>
+                <p>
+                    Rule <a href="#rule-d-13">RULE D-13</a> defines block of regular expressions. It is a sequence of regular expression definitions separated with space symbols,
+                    like in this example:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE D-14 - Regular Expression Definition in Block</h6>
+                <p>
+                    Rule <a href="#rule-d-14">RULE D-14</a> defines regular expression definition within block of regular expressions. It should be preceded by
+                    attribute list, like in this example:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+        <span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;number is composed of sequence of consequtive decimal digits&#39;</span><span class="attribute-brace">]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+                    </pre>
+                </div>
+                <h4>Attributes</h4>
+                <p>
+                    The Anglr compiler requires that the attribute list belonging to the declaration part contains the CompilationInfo attribute, like in this example:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathDecls&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Declarations&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+                    </pre>
+                </div>
+                <p>
+                    These named values should be used in <span class="attribute-name">CompilationInfo</span> attribute:
+                </p>
+                <ul>
+                    <li>
+                        <span class="attribute-val-name">ClassName</span>: name of class which will be generated for particular declaration part.
+                    </li>
+                    <li>
+                        <span class="attribute-val-name">NameSpace</span>: namespace for class which will be generated for particular declaration part.
+                    </li>
+                    <li>
+                        <span class="attribute-val-name">CodeDir</span>: name of directory which will contain source code for class which will be generated for particular declaration part.
+                    </li>
+                    <li>
+                        <span class="attribute-val-name">Access</span>: access specifier for class which will be generated for particular declaration part.
+                    </li>
+                </ul>
+            </section>

@@ -1,0 +1,707 @@
+﻿@page
+@model AnglrWebSite.Pages.ScannerModel
+@{
+}
+<div>
+    <section>
+        <div class="col-xl-12">
+            <h1>Definicije leksikalnih analizatorjev</h1>
+            <hr />
+        </div>
+    </section>
+    <div class="row">
+        <div class="col-xl-2 anglr-doc-index">
+            <nav class="sticky-top">
+                <div class="container-fluid">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a href="#overview">Uvod</a></li>
+                        <li class="nav-item"><a href="#syntax">Sintaksna pravila</a></li>
+                        <li class="nav-item"><a href="#scanner_part">Leksikalni analizator</a></li>
+                        <li class="nav-item"><a href="#regular_expression_list">Spisek regularnih izrazov</a></li>
+                        <li class="nav-item"><a href="#regular_expression_usage">Uporaba regularnega izraza</a></li>
+                        <li class="nav-item"><a href="#actions">Spisek akcij</a></li>
+                        <li class="nav-item"><a href="#action">Vrste akcij</a></li>
+                        <li class="nav-item"><a href="#skip_action">Akcija skip</a></li>
+                        <li class="nav-item"><a href="#token_action">Akcija token</a></li>
+                        <li class="nav-item"><a href="#event_action">Akcija event</a></li>
+                        <li class="nav-item"><a href="#push_action">Akcija push</a></li>
+                        <li class="nav-item"><a href="#pop_action">Akcija pop</a></li>
+                        <li class="nav-item"><a href="#semantics_of_actions">Semantika leksikalnih akcij</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="col-xl-8">
+            <section id="overview">
+                <h2>Uvod</h2>
+                <p>
+                    Na tej strani so opisana sintaksna pravila za tvorbo tistega odstavka anglr datoteke,
+                    v katerem se definira leksikalni analizator.
+                </p>
+                <p>
+                    Leksikalni analizator je programski pripomoček, s pomočjo katerega sintaksni analizator
+                    pridobiva terminalne simbole. To pa ni edina njegova naloga. Velikokrat se v izvornem
+                    tekstu nahajajo informacije, ki na nek način ne spadajo v izvorni tekst. Tak primer so npr.
+                    komentarji. Le-ti ponavadi niso opisani s sintaksnimi pravili dotičnega teksta in jih je
+                    potrebno med obravnavo izločiti.
+                </p>
+                <p>
+                    Sintaksni analizator lahko, zato da uspešno analizira tekst, uporablja več leksikalnih
+                    analizatorjev hkrati. Velikokrat se ravno za izločanje komentarjev uporablja en
+                    sintaksni analizator, za branje 'običajne' vsebine pa se uporablja drug.
+                </p>
+                <p>
+                    Primer:
+                </p>
+                <div class="alert alert-primary" role="alert" id="primer_001">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of scanner, which extracts comments from input string&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CommentRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">commentScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\*\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of scanner, which extracts terminal symbols from input string&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">mathScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+    <span class="action-token">push</span> <span class="action-identifier">commentScanner</span>
+<span class="regex-ref">{number}</span>
+    <span class="action-token">token</span> <span class="action-identifier">NUMBER</span>
+<span class="regex-ref">\+</span>
+    <span class="action-token">token</span> <span class="action-identifier">add</span>
+<span class="regex-ref">\-</span>
+    <span class="action-token">token</span> <span class="action-identifier">sub</span>
+<span class="regex-ref">\*</span>
+    <span class="action-token">token</span> <span class="action-identifier">mul</span>
+<span class="regex-ref">\/</span>
+    <span class="action-token">token</span> <span class="action-identifier">div</span>
+<span class="regex-ref">\(</span>
+    <span class="action-token">token</span> <span class="action-identifier">lb</span>
+<span class="regex-ref">\)</span>
+    <span class="action-token">token</span> <span class="action-identifier">rb</span>
+<span class="regex-ref">[ \t]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    V gornjem primeru, ki je del anglr datoteke navedene <a href="/Documentation/#primer_001">tukaj</a>, sta definirana dva leksikalna analizatorja:
+                </p>
+                <ul>
+                    <li>
+                        prvemu je ime commentScanner. Ta iz izvornega teksta izloča vse komentarje, ki se začnejo z /*
+                        in končajo z */
+                    </li>
+                    <li>
+                        drugemu je ime mathScanner. Ta iz izvornega teksta izloča terminalne simbole, ki jih potrebuje
+                        sintaksni analizator.
+                    </li>
+                </ul>
+                <hr />
+            </section>
+            <section id="syntax">
+                <h4>Sintaksna pravila</h4>
+                <p>
+                    Sintaksna pravila, ki opisujejo zgradbo odstavka anglr datoteke, v katerem je definiran leksikalni
+                    analizator, so:
+                </p>
+                <div class="alert alert-primary" role="alert" id="scanner_part_rule">
+                    <pre>
+<span class="rule-name">&lt;scanner part&gt;</span>
+	<span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%scanner&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;%{&#39;</span> <span class="rule-ref">&lt;regular expression list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%}&#39;</span>
+	<span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <div class="alert alert-primary" role="alert" id="regular_expression_list_rule">
+                    <pre>
+<span class="rule-name">&lt;regular expression list&gt;</span>
+	<span class="def-separator">:</span> <span class="rule-ref">&lt;regular expression usage&gt;</span> <span class="reserved-word">+</span>
+	<span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <div class="alert alert-primary" role="alert" id="regular_expression_usage_rule">
+                    <pre>
+<span class="rule-name">&lt;regular expression usage&gt;</span>
+	<span class="def-separator">:</span> <span class="identifier-name">&lt;regular expression&gt;</span> <span class="rule-ref">&lt;actions&gt;</span> <span class="reserved-word">?</span>
+	<span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <div class="alert alert-primary" role="alert" id="actions_rule">
+                    <pre>
+<span class="rule-name">&lt;actions&gt;</span>
+	<span class="def-separator">:</span> <span class="rule-ref">&lt;action&gt;</span> <span class="reserved-word">+</span>
+	<span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <div class="alert alert-primary" role="alert" id="action_rule">
+                    <pre>
+<span class="rule-name">&lt;action&gt;</span>
+	<span class="def-separator">:</span> <span class="rule-ref">&lt;skip action&gt;</span>
+	<span class="def-separator">|</span> <span class="rule-ref">&lt;token action&gt;</span>
+	<span class="def-separator">|</span> <span class="rule-ref">&lt;event action&gt;</span>
+	<span class="def-separator">|</span> <span class="rule-ref">&lt;push action&gt;</span>
+	<span class="def-separator">|</span> <span class="rule-ref">&lt;pop action&gt;</span>
+	<span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <div class="alert alert-primary" role="alert" id="skip_action_rule">
+                    <pre>
+<span class="rule-name">&lt;skip action&gt;</span>
+	<span class="def-separator">:</span> <span class="identifier-name">&lt;skip&gt;</span>
+	<span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <div class="alert alert-primary" role="alert" id="token_action_rule">
+                    <pre>
+<span class="rule-name">&lt;token action&gt;</span>
+	<span class="def-separator">:</span> <span class="identifier-name">&lt;ttoken&gt;</span> <span class="identifier-name">&lt;identifier&gt;</span>
+	<span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <div class="alert alert-primary" role="alert" id="event_action_rule">
+                    <pre>
+<span class="rule-name">&lt;event action&gt;</span>
+	<span class="def-separator">:</span> <span class="identifier-name">&lt;event&gt;</span> <span class="identifier-name">&lt;identifier&gt;</span>
+	<span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <div class="alert alert-primary" role="alert" id="push_action_rule">
+                    <pre>
+<span class="rule-name">&lt;push action&gt;</span>
+	<span class="def-separator">:</span> <span class="identifier-name">&lt;push&gt;</span> <span class="identifier-name">&lt;identifier&gt;</span>
+	<span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <div class="alert alert-primary" role="alert" id="pop_action_rule">
+                    <pre>
+<span class="rule-name">&lt;pop action&gt;</span>
+	<span class="def-separator">:</span> <span class="identifier-name">&lt;pop&gt;</span>
+	<span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+            </section>
+            <section id="scanner_part">
+                <h4>Leksikalni analizator</h4>
+                <p>
+                    Odstavek anglr datoteke, v katerem je definirano leksikalno pravilo, je definiran s sintaksnim pravilom <a href="#scanner_part_rule"><span class="rule-name">&lt;scanner part&gt;</span></a>.
+                    To pravilo pravi, da se odstavek navede tako:
+                </p>
+                <ul>
+                    <li>
+                        Pred odstavkom se lahko nahaja spisek atributov. Anglr prevajalnik pričakuje, da sta navedena naslednja atributa:
+                        <ul>
+                            <li>
+                                Declarations - predstavlja ime definicijskega odstavka, v katerem so definirani terminalni simboli in
+                                regularni izrazi, ki se uporabljajo za definicijo leksikalnega analizatorja
+                            </li>
+                            <li>
+                                CompilationInfo - definira ime razreda, ki predstavlja leksikalni analizator v generirani izvorni kodi.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        sledi beseda %scanner s katero povemo, da je v tem odstavku definiran sintaksni analizator.
+                    </li>
+                    <li>
+                        nato je navedeno ime odstavka
+                    </li>
+                    <li>
+                        na koncu pa se med oklepajema %{ in %} nahaja, lahko tudi prazen, spisek definicij regularnih izrazov s spiski pripadajočih akcij,
+                        ki sestavljajo definicijo leksikalnega analizatorja.
+                    </li>
+                </ul>
+                <p>
+                    Primer:
+                </p>
+                <div class="alert alert-primary" role="alert" id="primer_002">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of scanner, which extracts comments from input string&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CommentRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">commentScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\*\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    Odstavek je naveden v skladu s sintaksnimi pravili:
+                </p>
+                <ul>
+                    <li>
+                        pred odstavkom so navedeni trije atributi, dva od njih sta obvezna
+                    </li>
+                    <li>
+                        sledi beseda %scanner z imenom odstvka commentScanner
+                    </li>
+                    <li>
+                        med oklepajema %{ in %} pa se nahajajo definicije regularnih izrazov. Vsak od njih ima po eno akcijo
+                    </li>
+                </ul>
+                <hr />
+            </section>
+            <section id="regular_expression_list">
+                <h4>Spisek regularnih izrazov</h4>
+                <p>
+                    Spisek regularnih izrazov je definiran s sintaksnim pravilom <a href="#regular_expression_list_rule"><span class="rule-name">&lt;regular expression list&gt;</span></a>.
+                    Ta spisek je zaporedje, v katerem so navedene uporabe regularnh izrazov in njim pripadajoče akcije.
+                </p>
+                <p>
+                    V zgoraj omenjenem <a href="#primer_002">primeru</a> se spisek glasi takole:
+                </p>
+                <div class="alert alert-primary" role="alert" id="primer_003">
+                    <pre>
+<span class="regex-ref">\*\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+                    </pre>
+                </div>
+                <p>
+                    V spisku so navedeni trije regularni izrazi. Vsakemu sledi po ena akcija.
+                </p>
+                <div class="alert alert-primary" role="alert">
+                    <span><img src="~/images/icons8-info-squared-48.png" /></span><br />
+                    <p>
+                        Vrstni red regularnih izrazov je zelo pomemben. Če bi v zgornjem spisku regularnih
+                        izrazov zadnjega prestavili na začetek:
+                    </p>
+                    <div class="alert alert-primary" role="alert" id="primer_003">
+                        <pre>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">\*\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+                        </pre>
+                    </div>
+                    <p>
+                        bi se vedno izvajal samo prvi skip, drugi skip in akcija pop pa nikoli.
+                    </p>
+                </div>
+                <hr />
+            </section>
+            <section id="regular_expression_usage">
+                <h4>Uporaba regularnega izraza</h4>
+                <p>
+                    Sintaksno pravilo <a href="#regular_expression_usage_rule"><span class="rule-name">&lt;regular expression usage&gt;</span></a>
+                    opisuje, kako mora biti navedena uporaba sintaksnega pravila:
+                </p>
+                <ul>
+                    <li>
+                        najprej mora biti naveden regularni izraz
+                    </li>
+                    <li>
+                        sledi mu neprazen spisek akcij.
+                    </li>
+                </ul>
+                <p>
+                    Pri tem veljajo naslednje omejitve:
+                </p>
+                <ul>
+                    <li>
+                        regularni izraz mora biti naveden na začetku vrstice. Do konca vrstice se za njim ne sme nahajati ničesar več,
+                        ne presledki, ne komentarji, skratka samo še konec vrstice.
+                    </li>
+                    <li>
+                        v vrsticah, ki sledijo, se lahko nahaja ena ali več akcij. Vsaka vrstica, v kateri se nahajajo akcije, se mora
+                        začeti s poljubnim znakom za presledek
+                    </li>
+                </ul>
+                <p>
+                    V prejšnjem <a href="#primer_003">primeru</a> se, med drugimi, nahaja tudi naslednja uporaba regularnega izraza:
+                </p>
+                <div class="alert alert-primary" role="alert" id="primer_004">
+                    <pre>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+                    </pre>
+                </div>
+                <p>
+                    Ta navedba pomeni nasednje: ko bo leksikalni analizator naletel na tekst, ki ustreza regularnemu izrazu <span class="regex-ref">[\n\r]</span>,
+                    bo izvedel akcijo <span class="action-token">skip</span>.
+                </p>
+                <hr />
+            </section>
+            <sections id="actions">
+                <h4>Spisek akcij</h4>
+                <p>
+                    Spisek akcij opisuje sintaksno pravilo <a href="#actions_rule"><span class="rule-name">&lt;actions&gt;</span></a>. To
+                    pravilo pravi, da mora spisek vsebovati vsaj eno akcijo. Za navedbo akcij veljajo omejitve, ki so navedene v <a href="#regular_expression_list">prejšnjem</a> odstavku.
+                </p>
+                <hr />
+            </sections>
+            <section id="action">
+                <h4>Vrste akcij</h4>
+                <p>
+                    Pravilo <a href="#action_rule"><span class="rule-name">&lt;action&gt;</span></a>določa vrste akcij. Obstajajo naslednje akcije:
+                </p>
+                <ul>
+                    <li>
+                        skip
+                    </li>
+                    <li>
+                        token
+                    </li>
+                    <li>
+                        event
+                    </li>
+                    <li>
+                        push
+                    </li>
+                    <li>
+                        pop
+                    </li>
+                </ul>
+                <hr />
+            </section>
+            <section id="skip_action">
+                <h4>Akcija skip</h4>
+                <p>
+                    Pravilo <a href="#skip_action_rule"><span class="rule-name">&lt;skip action&gt;</span></a> pove, kako 
+                    navajamo akcijo skip. Preprosto tako, da jo navedemo v vrstici, ki sledi regularnemu izrazu. S to akcijo
+                    povemo, naj se tekst, ki ustreza regularnemu izrazu, zavrže.
+                </p>
+                <p>
+                    Akcijo skip običajno uporabljamo za izločanje delov teksta, ki za sintaksni analizator niso zanimivi. Z
+                    njeno pomočjo iz teksta izločamo presledke, komentarje, znake za novo vrstico, itd.
+                </p>
+                <p>
+                    Primer:
+                </p>
+                <div class="alert alert-primary" role="alert" id="primer_001">
+                    <pre>
+<span class="part-token">%scanner</span> <span class="part-name">commentScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\*\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    Zgornji leksikalni analizator zavrže celotno vsebino izvornega teksta, dokler ne prebere znakov
+                    za konec komentarja '*/'
+                </p>
+                <hr />
+            </section>
+            <section id="token_action">
+                <h4>Akcija token</h4>
+                <p>
+                    Pravilo <a href="#token_action_rule"><span class="rule-name">&lt;token action&gt;</span></a> pove, kako 
+                    navajamo akcijo token:
+                </p>
+                <ul>
+                    <li>
+                        navedemo besedo token
+                    </li>
+                    <li>
+                        sledi ji ime terminalnega simbola. Lahko pa tudi tekstovna predstavitev terminalnega simbola.
+                    </li>
+                </ul>
+                <p>
+                    Ta akcija pove, kaj naj vrne leksikalni analizator, ko odkrije tekst, ki ustreza pripadajočemu
+                    regularnemu izrazu.
+                </p>
+                <p>
+                    Primer:
+                </p>
+                <div class="alert alert-primary" role="alert" id="primer_001">
+                    <pre>
+<span class="regex-ref">\+</span>
+    <span class="action-token">token</span> <span class="action-identifier">add</span>
+<span class="regex-ref">\-</span>
+    <span class="action-token">token</span> <span class="action-identifier">sub</span>
+                    </pre>
+                </div>
+                <p>
+                    V gornjem primeru sintaksni analizator vrne terminalni simbol add, če se se v tekstu nahaja
+                    znak '+' in sub če se v tekstu nahaja znak '-'.
+                </p>
+                <hr />
+            </section>
+            <section id="event_action">
+                <h4>Akcija event</h4>
+                <p>
+                    To akcijo opisuje sintaksno pravilo <a href="#event_action_rule"><span class="rule-name">&lt;event action&gt;</span></a>. Sestavljena
+                    je tako:
+                </p>
+                <ul>
+                    <li>
+                        začne se z besedo event
+                    </li>
+                    <li>
+                        nadaljuje pa se z imenom dogodka
+                    </li>
+                </ul>
+                <p>
+                    To akcijo se uporablja takrat, ko moramo tekst, ki ustreza regularnemu izrazu, obravnavati v izvorni
+                    kodi. V takem primeru Anglr prevajalnik generira dogodek, za katerega napišemo odzivno metodo, s katero
+                    obravnavamo tekst. Ta metoda se potem odloči, kaj mora v takem primeru vrniti leksikalni analizator.
+                </p>
+                <p>
+                    Primer:
+                </p>
+                <div class="alert alert-primary" role="alert" id="primer_001">
+                    <pre>
+<span class="regex-ref">{identifier}</span>
+    <span class="action-token">event</span> <span class="action-identifier">&lt;identifier&gt;</span>
+                    </pre>
+                </div>
+                <p>
+                    V tem primeru {identifier} predstavlja regularni izraz za odkrivanje besed, ki so sestavljene
+                    iz črk in decimalnih cifer. Tako so običajno sestavljena imena metod ali spremenljivk v veliko
+                    programskih jezikih. Med njimi pa se lahko nahajajo tudi rezervirane besede. Teh ne moremo odkriti
+                    brez algoritmov, ki so napisani v izvorni kodi. Zato za obravnavo tekstov, ki ustrezajo regularnemu
+                    izrazu {identifier}, izberemo akcijo event.
+                </p>
+                <p>
+                    Anglr prevajalnik nam v tem primeru generira dogodek, ki se imenuje _identifier__Event:
+                </p>
+                <div class="alert alert-primary" role="alert" id="primer_001">
+                    <pre>
+    public event scannerCallback _identifier__Event;
+                    </pre>
+                </div>
+                <p>
+                    Temu dogodku priredimo metodo AsnRegex__identifier__Event:
+                </p>
+                <div class="alert alert-primary" role="alert" id="primer_001">
+                    <pre>
+	asnRegex._identifier__Event += AsnRegex__identifier__Event;
+                    </pre>
+                </div>
+                <p>
+                    Izvorna koda metode je:
+                </p>
+                <div class="alert alert-primary" role="alert" id="primer_001">
+                    <pre>
+    private int AsnRegex__identifier__Event (AsnLexer_AsnRegex regex, AsnLexer scanner)
+    {
+        int t;
+        if ((t = scanner.FindKeyword (regex.text)) < 0)
+            return AsnDeclarations.tokens.identifier;
+        return t;
+    }
+                    </pre>
+                </div>
+                <p>
+                    Ta metoda deluje tako:
+                </p>
+                <ul>
+                    <li>
+                        če tekst, ki ustreza regularnemu izrazu, ne predstavlja rezervirane besede, metoda
+                        vrne kodo AsnDeclarations.tokens.identifier.
+                    </li>
+                    <li>
+                        če pa tekst, ki ustreza regularnemu izrazu {identifier}, predstavlja rezervirano besedo,
+                        metoda vrne kodo, ki pripada tej rezervirani besedi.
+                    </li>
+                </ul>
+                <p>
+                    Vrnitveno kodo te metode leksikalni analizator posreduje okolju v katerem se izvaja.
+                </p>
+                <hr />
+            </section>
+            <section id="push_action">
+                <h4>Akcija push</h4>
+                <p>
+                    Akcija push se uporablja takrat, ko želimo, da se tekst, ki sledi, obravnava z drugim leksikalnim analizatorjem.
+                    Sintaksa te akcije je opisana s sintaksnim pravilom <a href="#push_action_rule"><span class="rule-name">&lt;push action&gt;</span></a>:
+                </p>
+                <ul>
+                    <li>
+                        akcija se začne z besedo push
+                    </li>
+                    <li>
+                        sledi ji ime leksikalnega analizatorja, ki mora obravnavati preostanek teksta.
+                    </li>
+                </ul>
+                <p>
+                    Primer:
+                </p>
+                <div class="alert alert-primary" role="alert" id="primer_001">
+                    <pre>
+<span class="regex-ref">\/\*</span>
+    <span class="action-token">push</span> <span class="action-identifier">commentScanner</span>
+                    </pre>
+                </div>
+                <p>
+                    V tem primeru se takrat, ko se v izvornem tekstu pojavi zaporedje znakov za začetek komentarja '/*',
+                    aktivira leksikalni analizator z imenom commentScanner, ki obravnava preostanek teksta, oziroma
+                    tekst, ki pripada komentarju.
+                </p>
+                <div class="alert alert-primary" role="alert">
+                    <span><img src="~/images/icons8-info-squared-48.png" /></span><br />
+                    <p>
+                        Sintaksni analizator (lahko jih je več), ki je bil aktiven pred novim analizatorjem, se ne odstrani iz procesa branja
+                        terminalnih simbolov. Vsi predhodni analizatorji so shranjeni v posebnem skladu in se ponovno aktivirajo, ko se tisti,
+                        ki je trenutno aktiven, deaktivira. Ko se analizator aktivira, se shrani v sklad analizatorjev. Ko se deaktivira, se
+                        odstrani iz sklada, aktivira pa se prvi, ki je bil pod njim.
+                    </p>
+                </div>
+                <hr />
+            </section>
+            <section id="pop_action">
+                <h4>Akcija pop</h4>
+                <p>
+                    Akcija pop se uporablja takrat, ko želimo, da se tekst, ki sledi, obravnava z prejšnjim leksikalnim analizatorjem.
+                    Sintaksa te akcije je opisana s sintaksnim pravilom <a href="#pop_action_rule"><span class="rule-name">&lt;pop action&gt;</span></a>:
+                </p>
+                <p>
+                    Primer:
+                </p>
+                <div class="alert alert-primary" role="alert" id="primer_001">
+                    <pre>
+<span class="regex-ref">\*\/</span>
+    <span class="action-token">pop</span>
+                    </pre>
+                </div>
+                <p>
+                    V tem primeru se takrat, ko se v izvornem tekstu pojavi zaporedje znakov za konec komentarja '*/',
+                    preostanek teksta obravnava s prejšnjim sintaksnim analizatorjem.
+                </p>
+                <div class="alert alert-primary" role="alert">
+                    <span><img src="~/images/icons8-general-warning-sign-48.png" /></span><br />
+                    <p>
+                        Akciji push in pop morata biti medsebojno usklajeni v tem smislu, da pop akcij v nobenem trenutku
+                        med analizo teksta ne sme biti več kot akcij push. Če se število pop akcij izenači s številom
+                        push akcij, leksikalni analizator ne deluje več.
+                    </p>
+                </div>
+                <hr />
+            </section>
+            <section id="semantics_of_actions">
+                <h4>Semantika leksikalnih akcij</h4>
+                <p>
+                    Za vse akcije, s katerimi obravnavamo ujemanje v regularnih izrazih, velja naslednje:
+                </p>
+                <ul>
+                    <li>
+                        Zaporedje akcij, ki sestavljajo spisek akcij za obravnavo teksta, ki ustreza nekemu regularnemu izrazu, naj bi
+                        se vedno zaključila z eno od akcij, skip, token ali event. Če se ne zaključi tako, prevajalnik samodejno
+                        generira akcjo skip.
+                        <p>
+                            Primer: akcija
+                        </p>
+                        <div class="alert alert-primary" role="alert" id="primer_001">
+                            <pre>
+<span class="regex-ref">\*\/</span>
+    <span class="action-token">pop</span>
+                            </pre>
+                        </div>
+                        <p>
+                            je enaka tej akciji:
+                        </p>
+                        <div class="alert alert-primary" role="alert" id="primer_001">
+                            <pre>
+<span class="regex-ref">\*\/</span>
+    <span class="action-token">pop</span>
+    <span class="action-token">skip</span>
+                            </pre>
+                        </div>
+                        <p>
+                            V tem primeru Anglr prevajalnik samodejno generira akcijo skip.
+                        </p>
+                    </li>
+                    <li>
+                        Vse te akcije so na nek način enakovredne stavku return v programskih jezikih kot so C++, Java, C#, itd. Zato so
+                        vse akcije, ki morebiti nastopajo za eno od teh akcij, nedosegljive oziroma se ne morejo izvajati.
+                        <p>
+                            Primer: akcija token je nedosegljiva
+                        </p>
+                        <div class="alert alert-primary" role="alert" id="primer_001">
+                            <pre>
+<span class="regex-ref">\+</span>
+    <span class="action-token">event</span> <span class="action-identifier">add_detected</span>
+    <span class="action-token">token</span> <span class="action-identifier">add</span>
+                            </pre>
+                        </div>
+                        <p>
+                            zaporedje akcij je enako:
+                        </p>
+                        <div class="alert alert-primary" role="alert" id="primer_001">
+                            <pre>
+<span class="regex-ref">\+</span>
+    <span class="action-token">event</span> <span class="action-identifier">add_detected</span>
+                            </pre>
+                        </div>
+                    </li>
+                    <li>
+                        Vse akcije se lahko zamenjajo z akcijo event.
+                        <p>
+                            Primer: akcijo
+                        </p>
+                        <div class="alert alert-primary" role="alert" id="primer_001">
+                            <pre>
+<span class="regex-ref">\+</span>
+    <span class="action-token">token</span> <span class="action-identifier">add</span>
+                            </pre>
+                        </div>
+                        <p>
+                            lahko zamenjamo z akcijo:
+                        </p>
+                        <div class="alert alert-primary" role="alert" id="primer_001">
+                            <pre>
+<span class="regex-ref">\+</span>
+    <span class="action-token">event</span> <span class="action-identifier">add_detected</span>
+                            </pre>
+                        </div>
+                        <p>
+                            če v metodi, ki obravnava dogodek add_detected_Event, vrnemo kodo add
+                        </p>
+                        <div class="alert alert-primary" role="alert" id="primer_001">
+                            <pre>
+    public event scannerCallback add_detected_Event;
+    asnRegex.add_detected_Event += MathScanner_add_detected_Event;
+    private int MathScanner_add_detected_Event (MathLexer_MathScanner regex, MathLexer scanner)
+    {
+        return AsnDeclarations.tokens.add;
+    }
+                            </pre>
+                        </div>
+                        <p>
+                            Taka zamenjava pa ni ravno primerna, ker smo navaden return stavek zamenjali s klicem metode. Zato
+                            akcijo event uporabljajmo samo takrat, kadar obravnave regularnega izraza ne moremo izpeljati z
+                            ostalimi akcijami.
+                        </p>
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <div class="col-xl-2 anglr-page-index">
+            <nav class="sticky-top">
+                <div class="container-fluid">
+                    <ul class="nav flex-column">
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>

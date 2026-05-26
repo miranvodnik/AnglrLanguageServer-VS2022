@@ -1,0 +1,81 @@
+﻿
+%general mathSettings
+%{
+	[ Parser NameSpace='Math.Parser' ClassName='MathParser' ]
+	[ Scanner NameSpace='Math.Scanner' ClassName='MathScanner' ]
+%}
+
+%declarations anglrDecls
+%{
+	%regex add-sign \+
+	%regex sub-sign \-
+	%regex mul-sign \*
+	%regex div-sign \/
+	%regex lb-sign \(
+	%regex rb-sign \)
+
+	%token NUMBER
+	%token add '+'
+	%token sub '-'
+	%token mul '*'
+	%token div '/'
+	%token lb '('
+	%token rb ')'
+	%token unknown
+%}
+
+
+[ RegexCompilationInfo ClassName='MathRegex' Namespace='Math.RegexLib' Public='true']
+[ ScannerClassInfo ClassName='MathMainScanner' InitFunction='Init' DisposeFunction='Dispose' TokenFunction='FirstToken']
+%scanner mathScanner
+%{
+[0-9]+
+	token NUMBER
+{add-sign}
+	token add
+{sub-sign}
+	token sub
+{mul-sign}
+	token mul
+{div-sign}
+	token div
+{lb-sign}
+	token lb
+{rb-sign}
+	token rb
+[ \t]+
+	skip
+\n
+	skip
+.
+	token unknown
+%}
+
+[ Scanner Id='mathScanner' ]
+%parser mathParser
+%{
+
+[ Start ]
+expr
+	:	plus-expr
+	;
+	
+plus-expr
+	:	mul-expr
+	|	plus-expr '+' mul-expr
+	|	plus-expr '-' mul-expr
+	;
+
+mul-expr
+	:	simple-expr
+	|	mul-expr '*' simple-expr
+	|	mul-expr '/' simple-expr
+	;
+
+simple-expr
+	:	NUMBER
+	|	'(' expr ')'
+	;
+
+
+%}

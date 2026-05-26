@@ -1,0 +1,1239 @@
+﻿@page
+@model TutorialModel
+@{
+    ViewData ["Title"] = "Anglr Language Tutorial";
+    ViewData ["Content"] = "Anglr file tutorial: create Anglr file, advanced features like operator priority, associativity laws";
+}
+<section id="tutorial">
+    <h1>Anglr Language Tutorial</h1>
+    <hr />
+    <h4>Introduction</h4>
+    <p>
+        This paragraph will present the process of creating anglr file, in which the syntax rules for the language of the simple arithmetic expressions
+        will be stored. Arithmetic expressions will be used for adding, subtracting, multiplying, and division of integers.
+    </p>
+    <hr />
+    <h4>Problem Description</h4>
+    <p>
+        We must identify and discuss the following things:
+        <ul>
+            <li>
+                operands used in arithmetic expressions
+            </li>
+            <li>
+                arithmetic operators
+            </li>
+            <li>
+                arithmetic operators priority
+            </li>
+            <li>
+                arithmetic operators associativity laws
+            </li>
+            <li>
+                ability to use comments
+            </li>
+        </ul>
+    </p>
+    <p>
+        After that we will be able to define:
+        <ul>
+            <li>
+                terminal symbols and regular expressions associated with them
+            </li>
+            <li>
+                scanners: for the elimination of syntax-insignificant parts of text and to extract terminal symbol values
+            </li>
+            <li>
+                lexical analyzer for our compiler
+            </li>
+            <li>
+                syntax rules of arithmetic expressions where things identified above will be taken into account
+            </li>
+        </ul>
+    </p>
+    <hr />
+    <h4>Problem Analysis</h4>
+    <h6>Operands</h6>
+    <p>
+        Basic operands will be:
+        <ul>
+            <li>
+                natural numbers, those whole numbers that are greater or equal to zero.
+                for example 1, -3, +7 and even --4 or +-+-7 and so on In fact, all integer numbers unsigned and signed, no matter
+                how many times we specify the sign + or -.
+            </li>
+            <li>
+                nested arithmetic expressions, those appearing between rounded braces, characters ( and ), will also be treated as basic operands.
+                The reason is in the fact that no matter of its internal structure according to the arithmetic expression in which it is nested,
+                it acts as a unit.
+            </li>
+        </ul>
+    </p>
+    <h6>Arithmetic operators</h6>
+    <p>
+        It is not hard to immagine which arithmetic operators will be used in our expressions. They are:
+        <ul>
+            <li>
+                unary operators represened with characters &#39;+&#39; and &#39;-&#39; used for signing basic operands
+            </li>
+            <li>
+                operator for addition. It will be represented with character string &#39;+&#39;
+            </li>
+            <li>
+                operator for subtraction. It will be represented with character string &#39;-&#39;
+            </li>
+            <li>
+                operator for multiplication. It will be represented with character string &#39;*&#39;
+            </li>
+            <li>
+                operator for division. It will be represented with character string &#39;/&#39;
+            </li>
+        </ul>
+        Note that arithmetic operators for addition and subtraction are spelled the same as sign operators.
+    </p>
+    <h6>Priority of arithmetic operators</h6>
+    <p>
+        We will apply already well known rules for arithmetic operators priorities. However, let us list them again:
+        <ul>
+            <li>
+                The hieghest priority have unary operators acting on basic operands.
+            </li>
+            <li>
+                Multiplication and division have equal priorities but lower than 
+            </li>
+            <li>
+                The lowes priority have addition and subtraction
+            </li>
+            <li>
+                natural numbers and nested expressions have no priority
+            </li>
+        </ul>
+    </p>
+    <p>
+        Let's take a look at the operators' priorities a little bit closer. Suppose that signing basic operands has lower priority than addition and observe
+        the following expression:
+        <div class="panel border bg-light">
+            <pre>
+    -1 + 2
+            </pre>
+        </div>
+        Depending on the operator priority assumption, you should first add 1 and 2, and then you should execute the sign operation, obtaining the
+        result -3. However, if we take into account the agreed operator priorities, we see that the result is 1. To someone, like a kid who's never
+        heard of it, that wouldn't seem any weird. However, for an adult who has already learned the agreed rules for calculation in primary school,
+        this is highly unusual. As we see, all of this is a matter of agreements, which are deeply rooted in the human mind and taken as a fact.
+    </p>
+    <p>
+        Take another example:
+        <div class="panel border bg-light">
+            <pre>
+    1 + 2 * 3
+            </pre>
+        </div>
+        and suppose that addition has higher priority than multiplication. Then we first obtain the intermediate result of 1 + 2, which is equal to 3,
+        and finally obtaing the result of 9 after multiplying intermediate result with 3. But again, taking into account agreed operator priorities
+        the result would be equal to 7.
+    </p>
+    <p>
+        But remember, however, that these things are not strange in themselves, but because of the subconscious perception of the arrangements that
+        we are no longer aware of.
+    </p>
+    <p>
+        Operator priorities highly influence the format of syntax rules that define arithmetic expressions. Let's take a look at this example:
+        <div class="panel border bg-light">
+            <pre>
+    1 * 2 + 3 * 4 + 5 * 6
+            </pre>
+        </div>
+        It is an example of addition. Multiplications which act in this expression are taken as units. No matter how complicated terms form adders
+        with a higher priority, it's always an arithmetic expression for adding. In fact, it is a list of terms separated with operator for addition.
+        This is an important fact: expressions with lower priority can be expressed as a list of expressions with higher priority separated by
+        operators which belong to lower priority expression. This list can also be trivial, consisting of only one element. But we cannot say the
+        contraray, that the above expression is list of terms with lower priority connected with operator for multiplication, unless we changed the
+        priorities of operators, which we all agree on. Let's take arbitrary number of multiplicative expressions Mi (1 &lt; i &lt; n; n &gt; 0),
+        no matter how complicated they are, they can allways be summed as units, basically as a results of multiplication of expression Mi. In the
+        example above we have three multiplicative expressions summed together, no matter how complicated they are. They should be expressed in any
+        of the following (and arbitrary number of other) ways:
+        <div class="panel border bg-light">
+            <pre>
+    1 * 2 + 3 * 4 + 5 * 6
+    1 * 2 + 3 * 2 * 2 + 5 * 2 * 3
+    2 + 12 + 30
+            </pre>
+        </div>
+    </p>
+    <p>
+        The same arguments should be used when we observe the relationship between the multiplicative and unary expressions: multiplicative expressions
+        are lists of unary expressions separated with multiplicative operators for multiplication and division ( * and / ).
+    </p>
+    <h6>Associativity laws</h6>
+    <p>
+        There is another aspect concerning the syntax rules and in particular the arithemtic expressions. It's about associativity laws. For some
+        arithmetical operations, it is important in what order they are computed. Let's take a look at this example:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+    1 - 2 - 3
+            </pre>
+    </div>
+    <p>
+        If we compute it from the left to the right (1 - 2) - 3, we get -4. If we compute it from the right to the left 1 - (2 - 3), we get 0. This means that
+        subtraction is not associative operation. On the other side we allways get the same result with addition operator. Therefore, we distinguish
+        computational operations into those that are associative from the left or right side, and those that are associative from both sides. By agreement,
+        the subtraction is defined as an operation that is associative from the left side. Since it doesn't matter what order of the calculation is
+        performed for addition, we'll use left associativity rules for addition too.
+    </p>
+    <p>
+        The same observation is true for multiplication and divison. Multiplication is associative operation while division is not. Like subtraction, the
+        division is also defined as an operation associative from the left side. Also for multiplicative expression we will use left associativity rules.
+    </p>
+    <p>
+        Also associativity laws influence the format of syntax rules that define arithmetic expressions. Let's take a look at this example again:
+        <div class="panel border bg-light">
+            <pre>
+    1 * 2 + 3 * 4 + 5 * 6
+            </pre>
+        </div>
+        It is computed on this way:
+        <div class="panel border bg-light">
+            <pre>
+    (1 * 2 + 3 * 4) + 5 * 6
+            </pre>
+        </div>
+    </p>
+    <p id="intermediate-result">
+        This can be read as follows: to the intermediate result located on the left side of operator + add the value of expression located on the right side of it.
+        In fact, it is a description of the syntax rule for addition that respects the law of left associativity: to the left side is intermediate result, to the right
+        is the reminder which will give us the final result. In this way also the syntax rules for subtraction, multiplication and division can be described.
+    </p>
+    <h6>Comments</h6>
+    <p>
+        Comments can be found anywhere in the arithmetic expression: before it, behind it, between the operator and the operand, etc. Comments
+        represent any text located between /* and */, like:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+    /* before */ 1 * 2 /* between */ + 3 * 4 + 5 /* between */ * 6 /* behind */
+            </pre>
+    </div>
+    <hr />
+    <h4>Anglr File Construction</h4>
+    <p>
+        Now we have enough information to begin with construction of anglr rules for compiler of our simple arithmetic expressions.
+    </p>
+    <hr />
+    <h5>Declaration part</h5>
+    <p>
+        As we know from the description of <a href="DeclarationPart">Declaration Part of Anglr File</a> in this part we define:
+        <ul>
+            <li>
+                Terminal symbols used by syntax rules defined in parser part of Anglr file. Terminal symbols can be defined together with their
+                character string representations where it makes sense.
+            </li>
+            <li>
+                Regular expressions. Regular expressions are most often associated with terminal symbols, but they can also use be connected to
+                other content in the analyzed text. It is a good practice to define regular expression for every terminal symbol used by syntax
+                rules. The reason is that things are defined in one place and can be reused.
+            </li>
+        </ul>
+    </p>
+    <p>
+        From the problem analyzes we know that text containing simple arithmetic expressions contains the following things:
+        <ul>
+            <li>
+                natural numbers. They are associated with the terminal symbol NUMBER. They will not be associated with their character string
+                representations since it does not make sense because of the simple reason: cardinality of natural numbers set is equal to countable
+                infinity. However, terminal symbols with multiple textual representations can also be associated with unique textual representation.
+                But doing this is highly discouraged since it can cause confusion.
+            </li>
+            <li>
+                operators for addition, subtraction, multiplication, division. They are associated with terminal symbols add, sub,
+                mul and div respectivelly and will be also given their character string representations. Operators for signing basic operands will
+                not be associated with additional terminal symbols, since they are equal to arithmetic operators for addition nd subtraction.
+            </li>
+            <li>
+                rounded braces for nested expressions. They will be associated with terminal symbols lb and rb.
+            </li>
+            <li>
+                there are also other parts of text but they are not important for the syntax analyzer like
+                space characters, new line characters, comments, namely things that make text more readable
+                and organised. These parts of text are not associated with terminal symbols. They are simply
+                skipped by lexical analyzer.
+            </li>
+        </ul>
+    </p>
+    <p>
+        Following discussion above we can define the following terminal symbols:
+        <div class="panel border bg-light">
+            <pre>
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+    <span class="def-separator">}</span>
+            </pre>
+        </div>
+    </p>
+    <p>
+        We then also need to define regular expressions by which scanners will extract pieces of text and associate them with terminal symbols.
+        With terminal symbol NUMBER we will associate two regular expressions. Here is the list of regular expressions:
+        <div class="panel border bg-light">
+            <pre>
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+        <span class="regex-name">add</span> <span class="regex-def">\+</span>
+        <span class="regex-name">sub</span> <span class="regex-def">\-</span>
+        <span class="regex-name">mul</span> <span class="regex-def">\*</span>
+        <span class="regex-name">div</span> <span class="regex-def">\/</span>
+        <span class="regex-name">lb</span> <span class="regex-def">\(</span>
+        <span class="regex-name">rb</span> <span class="regex-def">\)</span>
+    <span class="def-separator">}</span>
+            </pre>
+        </div>
+    </p>
+    <p>
+        Note that we used the same names for the terminal symbols and regular expression names. This is perfectly legal since Anglr compiler
+        knows from the usage context which name belongs to terminal symbol and which belongs to regular expression. We should package these
+        definitions into the declaration part of angler file with surrounding them with part parentheses &{ and &} and equipped with appropriate
+        attributes to get the following piece of text:
+        <div class="panel border bg-light">
+            <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathDecls&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Declarations&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%declarations</span> <span class="part-name">mathDecls</span>
+<span class="part-brace">%{</span>
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+    <span class="def-separator">}</span>
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+        <span class="regex-name">add</span> <span class="regex-def">\+</span>
+        <span class="regex-name">sub</span> <span class="regex-def">\-</span>
+        <span class="regex-name">mul</span> <span class="regex-def">\*</span>
+        <span class="regex-name">div</span> <span class="regex-def">\/</span>
+        <span class="regex-name">lb</span> <span class="regex-def">\(</span>
+        <span class="regex-name">rb</span> <span class="regex-def">\)</span>
+    <span class="def-separator">}</span>
+<span class="part-brace">%}</span>
+            </pre>
+        </div>
+    </p>
+    <p>
+        We created declaration part of anglr file with the following properties:
+        <ul>
+            <li>
+                its name is <span class="part-name">mathDecls</span>
+            </li>
+            <li>
+                generated class will be named <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathDecls&#39;</span> and
+                will be part of namespace <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Declarations&#39;</span>.
+            </li>
+        </ul>
+    </p>
+    <hr />
+    <h5>Scanner part</h5>
+    <p>
+        Let's start by saying we're going to need two scanners to analyze the text. The reason is simply that comments can also appear in the text.
+        Suppose that in text we encounter a sequence of characters that represents a natural number. If we had a single scanner, we'd have to ask
+        ourselves where we find that number: inside or outside of comment. If we find it inside comment we should skip it otherwise we should
+        return terminal code NUMBER to the calling environment (usually a syntax analyzer). This should be done for every terminal symbol every
+        time we came across with it. But if we have two scanners, things get a lot simpler. The scanner that analyzes comments ignores the content
+        of the text at all, except for the one that represents the beginning or end of the comment. On the other side, the scanner, which analyses
+        the arithmetic expression, unconditionally recognizes the terminal symbol it encountered.
+    </p>
+    <h6>Comment scanner</h6>
+    <p>
+        Let's start with the definition of the comment scanner. This scanner does not start automatically. It is run by a scanner that reads the
+        contents of an arithmetic expression when it encounters characters that indicate the beginning of a comment. The beginning of comment is
+        thus not read by comment scanner. The main work of the scanner is to keep an eye on when the sequence of characters that indicate the end
+        of the comment will appear, when it pops itself from the scanner stack uncovering the scanner that reads the contents of arithmetic
+        expression. Text appearing before the end of comment is simply skipped by comment scanner.
+    </p>
+    <p>
+        Let's describe the algorithem for comment scanner:
+        <ul>
+            <li>
+                if scanner encounters character string indicating end of comment it must pop itself from the scanner stack
+            </li>
+            <li>
+                if it encounters everything else it should skip it
+            </li>
+        </ul>
+        This algorithem defines case statement with two possibilitie. From the description of the <a href="ScannerPart">scanner part of Anglr file</a>
+        we know, that we should define regular expression and action list for every possibility of scanner case statement. Let's do it:
+        <ul>
+            <li>
+                regular expresion \*\/ represents character sequence indicating end of comment
+            </li>
+            <li>
+                regular expression . indicates everything else
+            </li>
+        </ul>
+        Actions associated with above regular expressions are:
+        <ul>
+            <li>
+                pop, when we encounter end of comment
+            </li>
+            <li>
+                skip, for every other character
+            </li>
+        </ul>
+        Now it's time to create comment scanner:
+        <ul>
+            <li>
+                using CompilationInfo attribute we should specify the name of class generated by Anglr compiler for comment scanner:
+                <div class="panel border bg-light">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CommentRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+                    </pre>
+                </div>
+            </li>
+            <li>
+                we give the name to the comment scanner:
+                <div class="panel border bg-light">
+                    <pre>
+<span class="part-token">%scanner</span> <span class="part-name">commentScanner</span>
+                    </pre>
+                </div>
+            </li>
+            <li>
+                and combine regular expressions with actions:
+                <div class="panel border bg-light">
+                    <pre>
+<span class="regex-ref">\*\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+                    </pre>
+                </div>
+            </li>
+        </ul>
+        Comment scanner is thus defined with the following scanner part:
+        <div class="panel border bg-light">
+            <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CommentRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">commentScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\*\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+            </pre>
+        </div>
+        Note, that this scanner is very simple and is not suitable for serious use. It should be designe so that it would skip as many text as
+        posssible in single iteration of its invocation.
+    </p>
+    <h6>Scanner for arithmetic expression</h6>
+    <p>
+        Scanner for arithmetic expressions is very simple. Its algorithm should be defined on that way:
+        <ul>
+            <li>
+                if it encounters character sequence for the beginning of the comment it pushes comment scanner into the scanner stack
+            </li>
+            <li>
+                when it matches sequence of digits it should return terminal code NUMBER
+            </li>
+            <li>
+                when it matches character sequence of arithmetic operator it should return terminal code for that operator
+            </li>
+            <li>
+                when it matches character sequence of any rounded brace it should return its code
+            </li>
+            <li>
+                it should skip all spaces and new line character sequences
+            </li>
+            <li>
+                other character sequences should be skipped as well
+            </li>
+        </ul>
+        It can be specified with the following scanner part:
+        <div class="panel border bg-light">
+            <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">mathScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+    <span class="action-token">push</span> <span class="action-identifier">commentScanner</span>
+<span class="regex-ref">{number}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">NUMBER</span>
+<span class="regex-ref">{add}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">add</span>
+<span class="regex-ref">{sub}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">sub</span>
+<span class="regex-ref">{mul}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">mul</span>
+<span class="regex-ref">{div}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">div</span>
+<span class="regex-ref">{lb}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">lb</span>
+<span class="regex-ref">{rb}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">rb</span>
+<span class="regex-ref">[ \t]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+            </pre>
+        </div>
+    </p>
+    <p>
+        In the scanner part above:
+        <ul>
+            <li>
+                Attribute <span class="attribute-name">Declarations</span> specifies id of declarations part (namely <span class="attribute-val-value">&#39;mathDecls&#39;</span>)
+                which contains definitions of terminal symbols and associated regular expressions used by the scanner for arithmetic expressions.
+            </li>
+            <li>
+                Attribute <span class="attribute-name">CompilationInfo</span> specifies class name (namely <span class="attribute-val-value">MathRegex</span>) which will be
+                generated by Anglr compiler for this scanner.
+            </li>
+            <li>
+                name of this scanner part is <span class="part-name">mathScanner</span>
+            </li>
+        </ul>
+    </p>
+    <p>
+        Note the notation of regular expressions associated with terminal symbols: they are specified with their variables not by their values.
+        This is the preffered way of regular expressions usage. Also, if we look closely at the definition of the scanner, we notice that it is
+        essentially a function that maps text (or pieces of text) into terminal symbols.
+    </p>
+    <hr />
+    <h5>Lexer part</h5>
+    <p>
+        Lexer part is one of the easiest parts of Anglr file. All we need to do is to provide two lexer attributes:
+        <ul>
+            <li>
+                UseScanner, where we list all scanners and initial scanner used by lexical analyzer
+            </li>
+            <li>
+                CompilationInfo, where we provide the name of class, namespace name and access specifier which will be used by Anglr compiler when
+                generating soure code for lexical analyzer
+            </li>
+        </ul>
+        Let's just write it down:
+        <div class="panel border bg-light">
+            <pre>
+<span class="attribute-brace">[</span>
+    <span class="attribute-name">UseScanner</span>
+        <span class="attribute-val-name">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;commentScanner&#39;</span>
+        <span class="attribute-val-name">InitialScanner</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathScanner&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathLexer&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Lexer&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-val-name">CodeDir</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;.&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%lexer</span> <span class="part-name">mathLexer</span>
+<span class="part-brace">%{</span>
+
+<span class="part-brace">%}</span>
+            </pre>
+        </div>
+        In above lexer we specified the following:
+        <ul>
+            <li>
+                both scanners defined in this tutorial are used by this lexical analyzer, mathScanner is initial scanner, the one which will be used
+                by lexical analyzer at start up. The other scanner, commentScanner, will be activated by mathScanner when needed: at the beginning
+                of each comment.
+            </li>
+            <li>
+                name of class implementing lexical analyzer is <span class="attribute-val-value">MathLexer</span>
+            </li>
+            <li>
+                name of lexer part is <span class="part-name">mathLexer</span>
+            </li>
+        </ul>
+    </p>
+    <hr />
+    <h5>Parser part</h5>
+    <p>
+        We've come to the last, most important part. In the analysis of the problem, too, we have mostly dealt with the things we need in this part.
+        In parser part we need to:
+        <ul>
+            <li>
+                select a declaration part in which terminal symbols are defined. There is only one declaration section defined in this tutorial,
+                named mathDecls, and is quite suitable for this parser part.
+            </li>
+            <li>
+                determine the lexer that we will use to extract terminal symbols. This parser part will use mathLexer
+            </li>
+            <li>
+                the main thing is the definition of syntax rules for simple arithmetic expressions.
+            </li>
+        </ul>
+    </p>
+    <h6>Definition of syntax rules</h6>
+    <p>
+        Let us briefly repeat the findings from the analyses of the problem, which we must take into account when building syntax rules:
+        <ul>
+            <li>
+                basic operands are natural numbers and nested expressions
+            </li>
+            <li>
+                the highest priority operators are signing operators, which change the sign of basic operands. They are right associative operators
+            </li>
+            <li>
+                followed by multiplication and division operators. They are left associative operators
+            </li>
+            <li>
+                the lowest priority have the addition and subtraction operators. They are left associative operators, too.
+            </li>
+        </ul>
+    </p>
+    <p>
+        In the construction of syntax rules we will follow these steps:
+        <ul>
+            <li>
+                every syntax rule will be given unique name, with which will be introduced (and defined) new non-terminal symbol
+            </li>
+            <li>
+                short description of how the syntax rule will be built
+            </li>
+            <li>
+                definition of syntax rule in canonical form
+            </li>
+        </ul>
+    </p>
+    <p style="font-weight:bold">
+        syntax rule for basic operand:
+        <br />
+        <table class="table">
+            <tr>
+                <td style="font-weight:bold">name</td>
+                <td>basic-operand</td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold">discussion</td>
+                <td>
+                    The basic operand defines two options: the use of natural numbers and nested expressions. In the definition of basic operand we
+                    use the name of syntax rule <span class="rule-ref">expression</span> which will be defined later
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold">syntax rule</td>
+                <td>
+                    <div class="panel border bg-light">
+                        <pre>
+<span class="rule-name">basic-operand</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </p>
+    <p style="font-weight:bold">
+        syntax rule for signing operators:
+        <table class="table">
+            <tr>
+                <td style="font-weight:bold">name</td>
+                <td>signing-expression</td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold">discussion</td>
+                <td>
+                    The signing operators with character string representations <span class="string-name">&#39;+&#39;</span> and <span class="string-name">&#39;-&#39;</span>,
+                    change the sign of basic operand. It can be applied as many time as needed, even zero times is allowed, which is indicated by the
+                    first production of the syntax rule <span class="rule-name">signing-expression</span>. As we can see this syntax rule defines right
+                    associativity law for the signing operator, since expression:
+                    <div class="panel border bg-light">
+                        <pre>
+    -+-+3
+                        </pre>
+                    </div>
+                    is actually computed from the right to the left:
+                    <div class="panel border bg-light">
+                        <pre>
+    -(+(-(+3)))
+                        </pre>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold">syntax rule</td>
+                <td>
+                    <div class="panel border bg-light">
+                        <pre>
+<span class="rule-name">signing-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">basic-operand</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </p>
+    <p style="font-weight:bold">
+        syntax rule for multiplication and division:
+        <table class="table">
+            <tr>
+                <td style="font-weight:bold">name</td>
+                <td>multiplicative-expression</td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold">discussion</td>
+                <td>
+                    From the discussion of the problem we know that the multiplicative expressions are actually strings of signed operands
+                    (trivialy or not trivialy) separated with operators for multiplication and division, including trivial case which is
+                    composed of single signed expression. Since multiplicative expressions are left associative, we express the
+                    <a href="#intermediate-result">intermediate result</a> (<span class="rule-ref">multiplicative-expression</span>) at the
+                    left side of operators <span class="string-name">&#39;*&#39;</span> and <span class="string-name">&#39;/&#39;</span> and
+                    the reminder of expression (<span class="rule-ref">signing-expression</span>) to the right side.
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold">syntax rule</td>
+                <td>
+                    <div class="panel border bg-light">
+                        <pre>
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </p>
+    <p style="font-weight:bold">
+        syntax rule for addition and subtraction:
+        <table class="table">
+            <tr>
+                <td style="font-weight:bold">name</td>
+                <td>additive-expression</td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold">discussion</td>
+                <td>
+                    The reasons we have given for constructing multiplicative expressions also apply to additive expressions.
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold">syntax rule</td>
+                <td>
+                    <div class="panel border bg-light">
+                        <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </p>
+    <p>
+        The syntax rule <span class="rule-name">expression</span>, used in the second production of <span class="rule-name">basic-operand</span> has not yet been defined.
+        Since we've defined all the syntax rules we need, <span class="rule-name">expression</span> has to be one of them. The most appropriate candidate is
+        <span class="rule-name">additive-expression</span> since it is the "outermost" syntax rule, the one which generates all others with using trivial syntax
+        rules in succession in the derivation of first production (the trivial one) of <span class="rule-name">additive-expression</span>. For example, we can derive
+        all syntax rules defined above:
+        <div class="panel border bg-light">
+            <pre>
+<span class="rule-name">additive-expression</span> --&gt; <span class="rule-ref">multiplicative-expression</span> --&gt; <span class="rule-ref">signing-expression</span> --&gt; <span class="rule-ref">basic-operand</span>
+            </pre>
+        </div>
+        by using these productions in succession:
+        <div class="panel border bg-light">
+            <pre>
+<span class="rule-name">additive-expression</span> <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">;</span>
+<span class="rule-name">multiplicative-expression</span> <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span> <span class="def-separator">;</span>
+<span class="rule-name">signing-expression</span> <span class="def-separator">:</span> <span class="rule-ref">basic-operand</span> <span class="def-separator">;</span>
+            </pre>
+        </div>
+        The problem can be solved in two ways:
+        <ul>
+            <li>
+                we can use this identity:
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">expression</span> <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span> <span class="def-separator">;</span>
+                    </pre>
+                </div>
+            </li>
+            <li>
+                or we can redefine the second production of <span class="rule-name">basic-operand</span>:
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">basic-operand</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+            </li>
+        </ul>
+        Let's select the first solution - identity syntax rule
+    </p>
+    <p>
+        The parser section is almost complete. We have to do the following:
+        <ul>
+            <li>
+                define attributes <span class="attribute-name">Declarations</span>, <span class="attribute-name">Lexer</span> and <span class="attribute-name">CompilationInfo</span>,
+                which will help define declaration part containing definitions of terminal symbols, lexical analyzer and class name which will be used by Anglr compiler
+                to store implementation of parser based on syntax rules specified in this parser part.
+            </li>
+            <li>
+                define the name of parser part
+            </li>
+            <li>
+                Collect all syntax rules and publish them in one place.
+            </li>
+            <li>
+                By using the <span class="attribute-name">Start</span> attribute, we declare syntax rule <span class="rule-name">expression</span> as the
+                starting rule of language of simple arithmetic expressions.
+            </li>
+        </ul>
+    </p>
+    <p>
+        Let's do it:
+    </p>
+    <p>
+        <div class="panel border bg-light">
+            <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">CodeDir</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathParser&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">signing-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">basic-operand</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">basic-operand</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+            </pre>
+        </div>
+    </p>
+    <hr />
+    <h4>Anglr File Contents</h4>
+    <p>
+        This is the final content of Anglr file, which defines language for simple arithmetic expressions:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathDecls&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Declarations&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%declarations</span> <span class="part-name">mathDecls</span>
+<span class="part-brace">%{</span>
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+    <span class="def-separator">}</span>
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+        <span class="regex-name">add</span> <span class="regex-def">\+</span>
+        <span class="regex-name">sub</span> <span class="regex-def">\-</span>
+        <span class="regex-name">mul</span> <span class="regex-def">\*</span>
+        <span class="regex-name">div</span> <span class="regex-def">\/</span>
+        <span class="regex-name">lb</span> <span class="regex-def">\(</span>
+        <span class="regex-name">rb</span> <span class="regex-def">\)</span>
+    <span class="def-separator">}</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CommentRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">commentScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\*\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">mathScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+    <span class="action-token">push</span> <span class="action-identifier">commentScanner</span>
+<span class="regex-ref">{number}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">NUMBER</span>
+<span class="regex-ref">{add}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">add</span>
+<span class="regex-ref">{sub}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">sub</span>
+<span class="regex-ref">{mul}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">mul</span>
+<span class="regex-ref">{div}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">div</span>
+<span class="regex-ref">{lb}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">lb</span>
+<span class="regex-ref">{rb}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">rb</span>
+<span class="regex-ref">[ \t]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span>
+    <span class="attribute-name">UseScanner</span>
+        <span class="attribute-val-name">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;commentScanner&#39;</span>
+        <span class="attribute-val-name">InitialScanner</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathScanner&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathLexer&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Lexer&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-val-name">CodeDir</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;.&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%lexer</span> <span class="part-name">mathLexer</span>
+<span class="part-brace">%{</span>
+
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">CodeDir</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathParser&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">signing-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">basic-operand</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">basic-operand</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+        </pre>
+    </div>
+    <hr />
+    <h4>Advanced Features</h4>
+    <p>
+        As we know from the discussion of the <a href="~/Language/ParserPart">parser part</a> of Anglr file and particulary from the discussion of
+        <a href="~/Language/ParserPart/#rule-p-14">cardinality operators</a>, the syntax rules can be expressed in more compact form by using cardinality operators.
+        Cardinality operators are used to represent recursive syntax rules in the form of the sequences. This fact can alo be used in this tutorial.
+    </p>
+    <p>
+        When looking at the syntax rules constructed above we can see some interesting things:
+        <ul>
+            <li>
+                syntax rules <span class="rule-name">additive-expression</span>, <span class="rule-name">multiplicative-expression</span> and
+                <span class="rule-name">signing-expression</span> are actually lists of expressions with higher priority. For example:
+                <span class="rule-name">additive-expression</span> is a list of <span class="rule-name">multiplicative-expression</span>s,
+                <span class="rule-name">multiplicative-expression</span> is a list of <span class="rule-name">signing-expression</span>s and so on.
+            </li>
+            <li>
+                this lists are delimited with arithmetical operators like <span class="string-name">&#39;+&#39;</span> and <span class="string-name">&#39;-&#39;</span> in the
+                case of <span class="rule-name">additive-expression</span>, <span class="string-name">&#39;*&#39;</span> and <span class="string-name">&#39;/&#39;</span> in the
+                case of <span class="rule-name">multiplicative-expression</span> and so on.
+            </li>
+            <li>
+                Some of these syntax rules are expressed using left recursions and the others are expressed using right recursions.
+            </li>
+        </ul>
+        These things are terms concerning the cardinality operators. Obeying them and taking into account the definitions of cardinality operators represented
+        in the <a href="~/Language/AnglrLanguage">introductory chapter</a> of this web site, we can rewrite the above syntax rules, which are represented
+        in canonical form, in this way:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">|</span> <span class="rule-ref">signing-expression</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">signing-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">basic-operand</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">basic-operand</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <p>
+        This can be further reduced in the following form:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">signing-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">basic-operand</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">basic-operand</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <p>
+        Using nested rules we can achieve greater compactness of the specifications of syntax rules. If we replace standalone rule for <span class="rule-name">basic-operand</span>
+        with its nested rule equivalent, for example, we get:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">signing-expression</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-ref">basic-operand</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <p>
+        Following this way we can replace all standalone rules, except starting rule, with their nested rule equivalents, geting in succession:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-ref">basic-operand</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">signing-expression</span><span class="def-separator">)</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-ref">basic-operand</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">signing-expression</span><span class="def-separator">)</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span><span class="def-separator">)</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-ref">basic-operand</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">signing-expression</span><span class="def-separator">)</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span><span class="def-separator">)</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span><span class="def-separator">)</span> 
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <p>
+        Using anonymous syntax rules for all nested syntax rules which are not referenced by other syntax rules, we get:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">(</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">signing-expression</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">signing-expression</span><span class="def-separator">)</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span><span class="def-separator">)</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span><span class="def-separator">)</span> 
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <p>
+        Eliminating unnecessary rounded brackets and puting everything in the single line, we get the final and most compact specification of syntax rules for simple arithmetical expressions:
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span> <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">signing-expression</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">signing-expression</span><span class="def-separator">)</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <p>
+        If we carefully examine the last syntax rule we can see that is composed of:
+        <ul>
+            <li>
+                some ugly stuff which is difficult to understand. In fact it is nothing but a <span class="rule-ref">signing-expression</span> expressed in the form of nested syntax rule
+            </li>
+            <li>
+                the other part following the ugly stuff is more interesting: <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span> <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+                It is the sequence of cardinality operators whose delimiters are arithmetical operators with descending priority. Let us imagine that in our simple arithmetic expressions
+                we use arithmetic operators, which are known in modern programming languages. The sequence of cardinality operators whose delimiters are arithmetic operators used in most
+                modern programming languages counted with their descending priorities could then look something like this:<br />
+                <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+                <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+                <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&lt;&lt;&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&gt;&gt;&#39;</span> <span class="def-separator">]</span>
+                <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&lt;&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&lt;&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&lt;=&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&gt;=&#39;</span> <span class="def-separator">]</span>
+                <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;==&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;!=&#39;</span> <span class="def-separator">]</span>
+                <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&amp;&#39;</span> <span class="def-separator">]</span>
+                <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;^&#39;</span> <span class="def-separator">]</span>
+                <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;|&#39;</span> <span class="def-separator">]</span>
+                <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&amp;&amp;&#39;</span> <span class="def-separator">]</span>
+                <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;||&#39;</span> <span class="def-separator">]</span><br />
+                That's no longer a joke, because we get a recipe of how to replace a set of possibly few dozens of syntax rules with only one in concise and easy to understand form, namely:
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">signing-expression</span> 
+        <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&lt;&lt;&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&gt;&gt;&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&lt;&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&gt;&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&lt;=&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&gt;=&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;==&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;!=&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&amp;&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;^&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;|&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&amp;&amp;&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;||&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+            </li>
+        </ul>
+    </p>
+    <p>
+        We can read above syntax rule in the following way:
+        <ul>
+            <li>
+                basic arithmetic expressions are <span class="rule-name">signing-expression</span>: signed or unsigned numeres and nested expresions as well, those enclosed with rounded braces.
+            </li>
+            <li>
+                basic expressions can be multiplyed and divided
+            </li>
+            <li>
+                results of multiplication and division and basic expressions themself can be furder added and subtructed
+            </li>
+            <li>
+                the results of all previous expressions: basic expressions, multiplyed, divided, added and subtructed can be shifted left or right
+            </li>
+            <li>
+                following this way we can continue till the end syntax rule where we can say that the results of all previous arithmetic operations can be logically "or"-ed
+            </li>
+            <li>
+                we can also observe the ordering of priorities: multiplication and divison have higher priority, they are followed by addition and subtraction and so on.
+                The lowes priority has operator logical or with character representation <span class="string-name">&#39;||&#39;</span>.
+            </li>
+            <li>
+                we can also observe the un-natural ordering of priorities for arithmetical-and <span class="string-name">&#39;&amp;&#39;</span>,
+                arithmetical-xor <span class="string-name">&#39;^&#39;</span> and arithmetical-or <span class="string-name">&#39;|&#39;</span> operators, whose priorities are
+                lower than that of relational <span class="string-name">&#39;&lt;&#39;</span>, <span class="string-name">&#39;&gt;&#39;</span>, <span class="string-name">&#39;&lt;=&#39;</span>,
+                <span class="string-name">&#39;&gt;=&#39;</span> and equality <span class="string-name">&#39;==&#39;</span>, <span class="string-name">&#39;!=&#39;</span> operators.
+            </li>
+        </ul>
+    </p>
+    <p>
+        The following should be mentioned here:
+        <ul>
+            <li>
+                it is completely unnecessary to strive to achieve maximum compactness.
+            </li>
+            <li>
+                be careful when applying anonymous rules.
+            </li>
+        </ul>
+    </p>
+</section>

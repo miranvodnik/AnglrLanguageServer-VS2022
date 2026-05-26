@@ -1,0 +1,11 @@
+[
+	Description Hover='true'
+	Text='''generalized'' name should be one of'
+	Text='- simple name'
+	Text='- nested anglr syntax production list enclosed with ''('' and '')'''
+	Text='- any of above possibilities followd by any number of cardinality spcifications'
+]
+[
+	Iterator
+	Text='generate iterative traversial methods for this syntax rule'
+]

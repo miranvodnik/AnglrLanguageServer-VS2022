@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<settings>
+  <PartToken Color="DarkRed"></PartToken>
+  <PartName Color="Black"></PartName>
+  <PartBrace Color="DarkCyan"></PartBrace>
+  <RegexRef Color="DarkMagenta"></RegexRef>
+  <ActionToken Color="DarkSalmon"></ActionToken>
+  <ActionIdentifier Color="Chocolate"></ActionIdentifier>
+  <AttributeBrace Color="DarkTurquoise"></AttributeBrace>
+  <AttributeName Color="Firebrick"></AttributeName>
+  <AttributeValName Color="Goldenrod"></AttributeValName>
+  <AttributeValValue Color="IndianRed"></AttributeValValue>
+  <ReservedWord Color="LawnGreen"></ReservedWord>
+  <RegexName Color="LightGray"></RegexName>
+  <RegexDef Color="LightSkyBlue"></RegexDef>
+  <DefBrace Color="Magenta"></DefBrace>
+  <DefSeparator Color="MediumPurple"></DefSeparator>
+  <TokenName Color="MidnightBlue"></TokenName>
+  <TokenValue Color="NavajoWhite"></TokenValue>
+  <RuleName Color="Olive"></RuleName>
+  <GroupName Color="Peru"></GroupName>
+  <ProductionName Color="Red"></ProductionName>
+  <MarkerName Color="SeaGreen"></MarkerName>
+  <AnyName Color="SteelBlue"></AnyName>
+  <StringName Color="DarkBlue"></StringName>
+  <IdentifierName Color="Black"></IdentifierName>
+</settings>

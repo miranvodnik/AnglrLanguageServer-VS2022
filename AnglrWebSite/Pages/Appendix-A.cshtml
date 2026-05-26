@@ -1,0 +1,1382 @@
+﻿@page
+@model AnglrWebSite.Pages.Appendix_AModel
+@{
+    ViewData ["Title"] = "Appendix A - Anglr Syntax for Anglr Language";
+    ViewData ["Content"] = "Official definition of Anglr language by Anglr itself";
+}
+<section id="anglr-language-syntax">
+    <h1>Anglr Language Syntax Rules</h1>
+    <hr />
+    <h4>Introduction</h4>
+    <p class="anglr-p">
+        This paragraph contains complete set of specifications for Anglr Language. These specifications are writen in Anglr Language: Anglr Language is defined
+        with Anglr Language itself. Since source code for any application based on Anglr specifications is strictly separated from these specifications,
+        the same Anglr specifications, presented on this page are used to form all tools regarding Anglr Language, including Anglr compiler itself.
+        Syntax, lexical and semantic analyzers for Anglr compiler are made with Anglr compiler itself. Another Anglr application based on Anglr Language
+        is Anglr Html Colorizer. Anglr Html Colorizer is used to colorize the Anglr specifications used to implement Anglr compiler and Anglr Html Colorizer
+        itself. Colorized Anglr specifications for Anglr Language are presented below.
+    </p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;General settings&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr&#39;</span> <span class="attribute-val-name" id="CodeDir">CodeDir</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;.&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%general</span> <span class="part-name" id="anglrSettings">anglrSettings</span>
+<span class="part-brace">%{</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Declarations&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;AnglrDeclarations&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.Declarations&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%declarations</span> <span class="part-name" id="anglrDecls">anglrDecls</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regular expressions representing constant terminal identifiers&#39;</span>
+<span class="attribute-brace">]</span>
+
+        <span class="reserved-word">%regex</span>
+        <span class="def-separator">{</span>
+        <span class="regex-name" id="vertical-bar">vertical-bar</span>           <span class="regex-def">\|</span>
+        <span class="regex-name" id="comma">comma</span>                  <span class="regex-def">\,</span>
+        <span class="regex-name" id="colon">colon</span>                  <span class="regex-def">\:</span>
+        <span class="regex-name" id="semicolon">semicolon</span>              <span class="regex-def">\;</span>
+        <span class="regex-name" id="left-curly-bracket">left-curly-bracket</span>     <span class="regex-def">\{</span>
+        <span class="regex-name" id="right-curly-bracket">right-curly-bracket</span>    <span class="regex-def">\}</span>
+        <span class="regex-name" id="left-bracket">left-bracket</span>           <span class="regex-def">\(</span>
+        <span class="regex-name" id="right-bracket">right-bracket</span>          <span class="regex-def">\)</span>
+        <span class="regex-name" id="left-scanner-bracket">left-scanner-bracket</span>   <span class="regex-def">\%\{</span>
+        <span class="regex-name" id="right-scanner-bracket">right-scanner-bracket</span>  <span class="regex-def">\%\}</span>
+        <span class="regex-name" id="left-square-bracket">left-square-bracket</span>    <span class="regex-def">\[</span>
+        <span class="regex-name" id="right-square-bracket">right-square-bracket</span>   <span class="regex-def">\]</span>
+        <span class="regex-name" id="at-sign">at-sign</span>                <span class="regex-def">\&#64</span>
+        <span class="regex-name" id="double-at-sign">double-at-sign</span>         <span class="regex-def">\&#64\&#64</span>
+        <span class="regex-name" id="equals-sign">equals-sign</span>            <span class="regex-def">\=</span>
+        <span class="regex-name" id="question-mark">question-mark</span>          <span class="regex-def">\?</span>
+        <span class="regex-name" id="plus-sign">plus-sign</span>              <span class="regex-def">\+</span>
+        <span class="regex-name" id="minus-sign">minus-sign</span>             <span class="regex-def">\-</span>
+        <span class="regex-name" id="asterisk">asterisk</span>               <span class="regex-def">\*</span>
+        <span class="regex-name" id="slash">slash</span>                  <span class="regex-def">\/</span>
+        <span class="regex-name" id="inv-plus-sign">inv-plus-sign</span>          <span class="regex-def">\~\+</span>
+        <span class="regex-name" id="inv-minus-sign">inv-minus-sign</span>         <span class="regex-def">\~\-</span>
+        <span class="regex-name" id="inv-asterisk">inv-asterisk</span>           <span class="regex-def">\~\*</span>
+        <span class="regex-name" id="inv-slash">inv-slash</span>              <span class="regex-def">\~\/</span>
+        <span class="def-separator">}</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regular expressions representing anglr directives&#39;</span>
+<span class="attribute-brace">]</span>
+
+        <span class="reserved-word">%regex</span>
+        <span class="def-separator">{</span>
+        <span class="regex-name" id="empty">empty</span>         <span class="regex-def">%[ \t]*empty</span>
+        <span class="regex-name" id="terminal">terminal</span>      <span class="regex-def">%[ \t]*terminal</span>
+        <span class="regex-name" id="general">general</span>       <span class="regex-def">%[ \t]*general</span>
+        <span class="regex-name" id="declarations">declarations</span>  <span class="regex-def">%[ \t]*declarations</span>
+        <span class="regex-name" id="rregex">rregex</span>        <span class="regex-def">%[ \t]*regex</span>
+        <span class="regex-name" id="scanner">scanner</span>       <span class="regex-def">%[ \t]*scanner</span>
+        <span class="regex-name" id="lexer">lexer</span>         <span class="regex-def">%[ \t]*lexer</span>
+        <span class="regex-name" id="parser">parser</span>        <span class="regex-def">%[ \t]*parser</span>
+        <span class="regex-name" id="priority">priority</span>      <span class="regex-def">%[ \t]*prio(rity)?</span>
+        <span class="regex-name" id="associativity">associativity</span> <span class="regex-def">%[ \t]*assoc(iativity)?</span>
+        <span class="regex-name" id="skip">skip</span>          <span class="regex-def">skip</span>
+        <span class="regex-name" id="ttoken">ttoken</span>        <span class="regex-def">terminal</span>
+        <span class="regex-name" id="revent">revent</span>        <span class="regex-def">event</span>
+        <span class="regex-name" id="push">push</span>          <span class="regex-def">push</span>
+        <span class="regex-name" id="pop">pop</span>           <span class="regex-def">pop</span>
+        <span class="def-separator">}</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regular expressions representing&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- identifier names&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- character strings&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- decimal numbers&#39;</span>
+<span class="attribute-brace">]</span>
+
+        <span class="reserved-word">%regex</span>
+        <span class="def-separator">{</span>
+        <span class="regex-name" id="letter">letter</span>        <span class="regex-def">[a-zA-Z_]</span>
+        <span class="regex-name" id="digit">digit</span>         <span class="regex-def">[0-9]</span>
+        <span class="regex-name" id="identifier">identifier</span>    <span class="regex-def">{letter}({letter}|{digit}|[-\.])*|&lt;{letter}({letter}|{digit}|[-\. ])*&gt;</span>
+        <span class="regex-name" id="cstring">cstring</span>       <span class="regex-def">\&quot;([^&quot;]|\&quot;\&quot;)*\&quot;|\&#39;([^&#39;]|\&#39;\&#39;)*\&#39;</span>
+        <span class="regex-name" id="number">number</span>        <span class="regex-def">{digit}+</span>
+        <span class="def-separator">}</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;all regular expressions together&#39;</span>
+<span class="attribute-brace">]</span>
+
+        <span class="reserved-word">%regex</span> <span class="regex-name" id="lexical-unit">lexical-unit</span>  <span class="regex-def">{vertical-bar}|{comma}|{colon}|{semicolon}|{left-curly-bracket}|{right-curly-bracket}|{left-scanner-bracket}|{right-scanner-bracket}|{left-square-bracket}|{right-square-bracket}|{equals-sign}|{empty}|{terminal}|{declarations}|{general}|{rregex}|{scanner}|{parser}|{identifier}|{cstring}</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;terminal identifiers. Most of them are specified with actual string representations&#39;</span>
+<span class="attribute-brace">]</span>
+
+        <span class="reserved-word">%terminal</span>
+        <span class="def-separator">{</span>
+        <span class="token-name" id="-vertical-bar-">&lt;vertical bar&gt;</span> <span class="token-value" id="-vertical-bar-">&#39;|&#39;</span>
+        <span class="token-name" id="-comma-">&lt;comma&gt;</span> <span class="token-value" id="-comma-">&#39;,&#39;</span>
+        <span class="token-name" id="-left-curly-bracket-">&lt;left curly bracket&gt;</span> <span class="token-value" id="-left-curly-bracket-">&#39;{&#39;</span>
+        <span class="token-name" id="-right-curly-bracket-">&lt;right curly bracket&gt;</span> <span class="token-value" id="-right-curly-bracket-">&#39;}&#39;</span>
+        <span class="token-name" id="-left-bracket-">&lt;left bracket&gt;</span> <span class="token-value" id="-left-bracket-">&#39;(&#39;</span>
+        <span class="token-name" id="-right-bracket-">&lt;right bracket&gt;</span> <span class="token-value" id="-right-bracket-">&#39;)&#39;</span>
+        <span class="token-name" id="-left-part-bracket-">&lt;left part bracket&gt;</span> <span class="token-value" id="-left-part-bracket-">&#39;%{&#39;</span>
+        <span class="token-name" id="-right-part-bracket-">&lt;right part bracket&gt;</span> <span class="token-value" id="-right-part-bracket-">&#39;%}&#39;</span>
+        <span class="token-name" id="-left-square-bracket-">&lt;left square bracket&gt;</span> <span class="token-value" id="-left-square-bracket-">&#39;[&#39;</span>
+        <span class="token-name" id="-right-square-bracket-">&lt;right square bracket&gt;</span> <span class="token-value" id="-right-square-bracket-">&#39;]&#39;</span>
+        <span class="token-name" id="-double-at-sign-">&lt;double at sign&gt;</span> <span class="token-value" id="-double-at-sign-">&#39;&#64&#64&#39;</span>
+        <span class="token-name" id="-at-sign-">&lt;at sign&gt;</span> <span class="token-value" id="-at-sign-">&#39;&#64&#39;</span>
+        <span class="token-name" id="-equals-sign-">&lt;equals sign&gt;</span> <span class="token-value" id="-equals-sign-">&#39;=&#39;</span>
+        <span class="token-name" id="-colon-">&lt;colon&gt;</span> <span class="token-value" id="-colon-">&#39;:&#39;</span>
+        <span class="token-name" id="-semicolon-">&lt;semicolon&gt;</span> <span class="token-value" id="-semicolon-">&#39;;&#39;</span>
+        <span class="token-name" id="-question-mark-">&lt;question mark&gt;</span> <span class="token-value" id="-question-mark-">&#39;?&#39;</span>
+        <span class="token-name" id="-plus-sign-">&lt;plus sign&gt;</span> <span class="token-value" id="-plus-sign-">&#39;+&#39;</span>
+        <span class="token-name" id="-minus-sign-">&lt;minus sign&gt;</span> <span class="token-value" id="-minus-sign-">&#39;-&#39;</span>
+        <span class="token-name" id="-asterisk-">&lt;asterisk&gt;</span> <span class="token-value" id="-asterisk-">&#39;*&#39;</span>
+        <span class="token-name" id="-slash-">&lt;slash&gt;</span> <span class="token-value" id="-slash-">&#39;/&#39;</span>
+        <span class="token-name" id="-inv-plus-sign-">&lt;inv plus sign&gt;</span> <span class="token-value" id="-inv-plus-sign-">&#39;~+&#39;</span>
+        <span class="token-name" id="-inv-minus-sign-">&lt;inv minus sign&gt;</span> <span class="token-value" id="-inv-minus-sign-">&#39;~-&#39;</span>
+        <span class="token-name" id="-inv-asterisk-">&lt;inv asterisk&gt;</span> <span class="token-value" id="-inv-asterisk-">&#39;~*&#39;</span>
+        <span class="token-name" id="-inv-slash-">&lt;inv slash&gt;</span> <span class="token-value" id="-inv-slash-">&#39;~/&#39;</span>
+        <span class="token-name" id="-any-">&lt;any&gt;</span>
+        <span class="token-name" id="-cstring-">&lt;cstring&gt;</span>
+        <span class="token-name" id="-empty-">&lt;empty&gt;</span> <span class="token-value" id="-empty-">&#39;%empty&#39;</span>
+        <span class="token-name" id="-identifier-">&lt;identifier&gt;</span>
+        <span class="token-name" id="-terminal-">&lt;terminal&gt;</span> <span class="token-value" id="-terminal-">&#39;%terminal&#39;</span>
+        <span class="token-name" id="-general-">&lt;general&gt;</span> <span class="token-value" id="-general-">&#39;%general&#39;</span>
+        <span class="token-name" id="-declarations-">&lt;declarations&gt;</span> <span class="token-value" id="-declarations-">&#39;%declarations&#39;</span>
+        <span class="token-name" id="-regex-">&lt;regex&gt;</span> <span class="token-value" id="-regex-">&#39;%regex&#39;</span>
+        <span class="token-name" id="-scanner-">&lt;scanner&gt;</span> <span class="token-value" id="-scanner-">&#39;%scanner&#39;</span>
+        <span class="token-name" id="-lexer-">&lt;lexer&gt;</span> <span class="token-value" id="-lexer-">&#39;%lexer&#39;</span>
+        <span class="token-name" id="-parser-">&lt;parser&gt;</span> <span class="token-value" id="-parser-">&#39;%parser&#39;</span>
+        <span class="token-name" id="-priority-">&lt;priority&gt;</span> <span class="token-value" id="-priority-">&#39;%priority&#39;</span>
+        <span class="token-name" id="-associativity-">&lt;associativity&gt;</span> <span class="token-value" id="-associativity-">&#39;%associativity&#39;</span>
+        <span class="token-name" id="-regular-expression-">&lt;regular expression&gt;</span>
+        <span class="token-name" id="-number-">&lt;number&gt;</span>
+        <span class="token-name" id="-skip-">&lt;skip&gt;</span> <span class="token-value" id="-skip-">&#39;skip&#39;</span>
+        <span class="token-name" id="-ttoken-">&lt;ttoken&gt;</span> <span class="token-value" id="-ttoken-">&#39;terminal&#39;</span>
+        <span class="token-name" id="-event-">&lt;event&gt;</span> <span class="token-value" id="-event-">&#39;event&#39;</span>
+        <span class="token-name" id="-push-">&lt;push&gt;</span> <span class="token-value" id="-push-">&#39;push&#39;</span>
+        <span class="token-name" id="-pop-">&lt;pop&gt;</span> <span class="token-value" id="-pop-">&#39;pop&#39;</span>
+        <span class="def-separator">}</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;The following terminals are used in &lt;anglr file fragment&gt; syntax rule and are associated&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;with different fragments of anglr file. They have no textual representation. They&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;are always used to distinguish fragments of anglr file. They shall be used by first&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;indicating the terminal symbol followed by the text of the fragment. Examples are&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;all productions of &lt;anglr file fragment&gt; syntax rule. The lexical and yntax analysers must&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;address these rules in a specific way:&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39; 1) the task of the leading terminal is that the syntax analyzer correctly selects&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;    the production of &lt;anglr soure&gt; syntax rule by which to analyze the text&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;    belonging to the fragment.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39; 2) The lexical analyser must generate the leading terminal on the first run, enabling&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;    the syntax analyzer to make the right decision when selecting the rule to use for&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;    the analysis of the fragment. Other terminal symbols are obtained in the usual&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;    way by lexical analysis of the text belonging to the fragment.&#39;</span>
+<span class="attribute-brace">]</span>
+
+        <span class="reserved-word">%terminal</span>
+        <span class="def-separator">{</span>
+        <span class="token-name" id="-anglr-file-terminal-">&lt;anglr file terminal&gt;</span>
+        <span class="token-name" id="-anglr-file-part-list-terminal-">&lt;anglr file part list terminal&gt;</span>
+        <span class="token-name" id="-anglr-file-part-terminal-">&lt;anglr file part terminal&gt;</span>
+        <span class="token-name" id="-general-part-terminal-">&lt;general part terminal&gt;</span>
+        <span class="token-name" id="-declaration-part-terminal-">&lt;declaration part terminal&gt;</span>
+        <span class="token-name" id="-scanner-part-terminal-">&lt;scanner part terminal&gt;</span>
+        <span class="token-name" id="-regular-expression-list-terminal-">&lt;regular expression list terminal&gt;</span>
+        <span class="token-name" id="-regular-expression-usage-terminal-">&lt;regular expression usage terminal&gt;</span>
+        <span class="token-name" id="-actions-terminal-">&lt;actions terminal&gt;</span>
+        <span class="token-name" id="-action-terminal-">&lt;action terminal&gt;</span>
+        <span class="token-name" id="-skip-action-terminal-">&lt;skip action terminal&gt;</span>
+        <span class="token-name" id="-terminal-action-terminal-">&lt;terminal action terminal&gt;</span>
+        <span class="token-name" id="-event-action-terminal-">&lt;event action terminal&gt;</span>
+        <span class="token-name" id="-push-action-terminal-">&lt;push action terminal&gt;</span>
+        <span class="token-name" id="-pop-action-terminal-">&lt;pop action terminal&gt;</span>
+        <span class="token-name" id="-lexer-part-terminal-">&lt;lexer part terminal&gt;</span>
+        <span class="token-name" id="-parser-part-terminal-">&lt;parser part terminal&gt;</span>
+        <span class="token-name" id="-attribute-list-terminal-">&lt;attribute list terminal&gt;</span>
+        <span class="token-name" id="-attribute-terminal-">&lt;attribute terminal&gt;</span>
+        <span class="token-name" id="-name-value-list-terminal-">&lt;name value list terminal&gt;</span>
+        <span class="token-name" id="-name-value-pair-terminal-">&lt;name value pair terminal&gt;</span>
+        <span class="token-name" id="-anglr-definition-list-terminal-">&lt;anglr definition list terminal&gt;</span>
+        <span class="token-name" id="-anglr-definition-with-attribute-list-terminal-">&lt;anglr definition with attribute list terminal&gt;</span>
+        <span class="token-name" id="-anglr-definition-terminal-">&lt;anglr definition terminal&gt;</span>
+        <span class="token-name" id="-single-terminal-definition-terminal-">&lt;single terminal definition terminal&gt;</span>
+        <span class="token-name" id="-single-regex-definition-terminal-">&lt;single regex definition terminal&gt;</span>
+        <span class="token-name" id="-block-of-terminal-definitions-terminal-">&lt;block of terminal definitions terminal&gt;</span>
+        <span class="token-name" id="-block-of-regex-definitions-terminal-">&lt;block of regex definitions terminal&gt;</span>
+        <span class="token-name" id="-terminal-definition-terminal-">&lt;terminal definition terminal&gt;</span>
+        <span class="token-name" id="-regex-definition-terminal-">&lt;regex definition terminal&gt;</span>
+        <span class="token-name" id="-block-terminal-definitions-terminal-">&lt;block terminal definitions terminal&gt;</span>
+        <span class="token-name" id="-block-terminal-definition-terminal-">&lt;block terminal definition terminal&gt;</span>
+        <span class="token-name" id="-block-regex-definitions-terminal-">&lt;block regex definitions terminal&gt;</span>
+        <span class="token-name" id="-block-regex-definition-terminal-">&lt;block regex definition terminal&gt;</span>
+        <span class="token-name" id="-anglr-syntax-rule-list-terminal-">&lt;anglr syntax rule list terminal&gt;</span>
+        <span class="token-name" id="-anglr-syntax-rule-terminal-">&lt;anglr syntax rule terminal&gt;</span>
+        <span class="token-name" id="-anglr-syntax-production-list-terminal-">&lt;anglr syntax production list terminal&gt;</span>
+        <span class="token-name" id="-anglr-syntax-production-terminal-">&lt;anglr syntax production terminal&gt;</span>
+        <span class="token-name" id="-priority-assoc-specification-terminal-">&lt;priority assoc specification terminal&gt;</span>
+        <span class="token-name" id="-priority-specification-terminal-">&lt;priority specification terminal&gt;</span>
+        <span class="token-name" id="-associativity-specification-terminal-">&lt;associativity specification terminal&gt;</span>
+        <span class="token-name" id="-anglr-nested-rule-terminal-">&lt;anglr nested rule terminal&gt;</span>
+        <span class="token-name" id="-anglr-syntax-production-list-name-terminal-">&lt;anglr syntax production list name terminal&gt;</span>
+        <span class="token-name" id="-name-list-terminal-">&lt;name list terminal&gt;</span>
+        <span class="token-name" id="-production-name-terminal-">&lt;production name terminal&gt;</span>
+        <span class="token-name" id="-marker-list-terminal-">&lt;marker list terminal&gt;</span>
+        <span class="token-name" id="-marker-terminal-">&lt;marker terminal&gt;</span>
+        <span class="token-name" id="-g-name-terminal-">&lt;g name terminal&gt;</span>
+        <span class="token-name" id="-name-terminal-">&lt;name terminal&gt;</span>
+        <span class="token-name" id="-cardinality-delimiter-terminal-">&lt;cardinality delimiter terminal&gt;</span>
+        <span class="token-name" id="-cardinality-terminal-">&lt;cardinality terminal&gt;</span>
+        <span class="token-name" id="-delimiter-terminal-">&lt;delimiter terminal&gt;</span>
+        <span class="token-name" id="-cardinality-name-terminal-">&lt;cardinality name terminal&gt;</span>
+
+        <span class="token-name" id="-attribute-list-optional-terminal-">&lt;attribute list optional terminal&gt;</span>
+        <span class="token-name" id="-name-value-list-optional-terminal-">&lt;name value list optional terminal&gt;</span>
+        <span class="token-name" id="-anglr-file-part-list-optional-terminal-">&lt;anglr file part list optional terminal&gt;</span>
+        <span class="token-name" id="-anglr-definition-list-optional-terminal-">&lt;anglr definition list optional terminal&gt;</span>
+        <span class="token-name" id="-block-terminal-definitions-optional-terminal-">&lt;block terminal definitions optional terminal&gt;</span>
+        <span class="token-name" id="-block-regex-definitions-optional-terminal-">&lt;block regex definitions optional terminal&gt;</span>
+        <span class="token-name" id="-regular-expression-list-optional-terminal-">&lt;regular expression list optional terminal&gt;</span>
+        <span class="token-name" id="-actions-optional-terminal-">&lt;actions optional terminal&gt;</span>
+        <span class="token-name" id="-anglr-syntax-rule-list-optional-terminal-">&lt;anglr syntax rule list optional terminal&gt;</span>
+        <span class="token-name" id="-anglr-syntax-production-list-name-optional-terminal-">&lt;anglr syntax production list name optional terminal&gt;</span>
+        <span class="token-name" id="-production-name-optional-terminal-">&lt;production name optional terminal&gt;</span>
+        <span class="token-name" id="-priority-assoc-specification-optional-terminal-">&lt;priority assoc specification optional terminal&gt;</span>
+        <span class="token-name" id="-marker-list-optional-terminal-">&lt;marker list optional terminal&gt;</span>
+        <span class="token-name" id="-delimiter-optional-terminal-">&lt;delimiter optional terminal&gt;</span>
+        <span class="token-name" id="-cardinality-name-optional-terminal-">&lt;cardinality name optional terminal&gt;</span>
+        <span class="token-name" id="-cstring-optional-terminal-">&lt;cstring optional terminal&gt;</span>
+        <span class="token-name" id="-number-optional-terminal-">&lt;number optional terminal&gt;</span>
+        <span class="def-separator">}</span>
+
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Scanner for multi-line comment&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CommentRegex&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.RegexLib&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name" id="comment_ctx">comment_ctx</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\*+\/</span>
+        <span class="action-token">pop</span>
+<span class="regex-ref">\*+[^\*\/]</span>
+        <span class="action-token">skip</span>
+<span class="regex-ref">[^\*]+</span>
+        <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Scanner for single-line comment&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;LineCommentRegex&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.RegexLib&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name" id="line_comment_ctx">line_comment_ctx</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">[^\n]*\n</span>
+        <span class="action-token">pop</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Scanner for hidden attribute&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;AttributeRegex&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.RegexLib&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name" id="attribute_ctx">attribute_ctx</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\]\]</span>
+        <span class="action-token">pop</span>
+<span class="regex-ref">{identifier}</span>
+        <span class="action-token">skip</span>
+<span class="regex-ref">{equals-sign}</span>
+        <span class="action-token">skip</span>
+<span class="regex-ref">{cstring}</span>
+        <span class="action-token">skip</span>
+<span class="regex-ref">[ \t\n\r]</span>
+        <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Scanner for %scanner directive&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;ScannerIdRegex&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.RegexLib&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name" id="scanner_id_ctx">scanner_id_ctx</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+        <span class="action-token">push</span> <a href="#comment_ctx"><span class="action-identifier">comment_ctx</span></a>
+<span class="regex-ref">\[\[</span>
+        <span class="action-token">push</span> <a href="#attribute_ctx"><span class="action-identifier">attribute_ctx</span></a>
+<span class="regex-ref">\/\/</span>
+        <span class="action-token">push</span> <a href="#line_comment_ctx"><span class="action-identifier">line_comment_ctx</span></a>
+<span class="regex-ref">{identifier}</span>
+        <span class="action-token">push</span> <a href="#scanner_part_ctx"><span class="action-identifier">scanner_part_ctx</span></a>
+        <span class="action-token">terminal</span> <a href="#-identifier-"><span class="action-identifier">&lt;identifier&gt;</span></a>
+<span class="regex-ref">[ \t]+</span>
+        <span class="action-token">skip</span>
+<span class="regex-ref">[\n\r]</span>
+        <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Scanner for body of %scanner directive (text between %{ and %} )&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;ScannerPartRegex&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.RegexLib&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name" id="scanner_part_ctx">scanner_part_ctx</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+        <span class="action-token">push</span> <a href="#comment_ctx"><span class="action-identifier">comment_ctx</span></a>
+<span class="regex-ref">\[\[</span>
+        <span class="action-token">push</span> <a href="#attribute_ctx"><span class="action-identifier">attribute_ctx</span></a>
+<span class="regex-ref">\/\/</span>
+        <span class="action-token">push</span> <a href="#line_comment_ctx"><span class="action-identifier">line_comment_ctx</span></a>
+<span class="regex-ref">{left-scanner-bracket}</span>
+        <span class="action-token">terminal</span> <a href="#-left-part-bracket-"><span class="action-identifier">&lt;left part bracket&gt;</span></a>
+<span class="regex-ref">{right-scanner-bracket}</span>
+        <span class="action-token">pop</span>
+        <span class="action-token">pop</span>
+        <span class="action-token">terminal</span> <a href="#-right-part-bracket-"><span class="action-identifier">&lt;right part bracket&gt;</span></a>
+<span class="regex-ref">{skip}</span>
+        <span class="action-token">terminal</span> <a href="#-skip-"><span class="action-identifier">&lt;skip&gt;</span></a>
+<span class="regex-ref">{ttoken}</span>
+        <span class="action-token">terminal</span> <a href="#-ttoken-"><span class="action-identifier">&lt;ttoken&gt;</span></a>
+<span class="regex-ref">{revent}</span>
+        <span class="action-token">terminal</span> <a href="#-event-"><span class="action-identifier">&lt;event&gt;</span></a>
+<span class="regex-ref">{push}</span>
+        <span class="action-token">terminal</span> <a href="#-push-"><span class="action-identifier">&lt;push&gt;</span></a>
+<span class="regex-ref">{pop}</span>
+        <span class="action-token">terminal</span> <a href="#-pop-"><span class="action-identifier">&lt;pop&gt;</span></a>
+<span class="regex-ref">{identifier}</span>
+        <span class="action-token">terminal</span> <a href="#-identifier-"><span class="action-identifier">&lt;identifier&gt;</span></a>
+<span class="regex-ref">[ \t]+</span>
+        <span class="action-token">skip</span>
+<span class="regex-ref">.+</span>
+        <span class="action-token">terminal</span> <a href="#-regular-expression-"><span class="action-identifier">&lt;regular expression&gt;</span></a>
+<span class="regex-ref">[\n\r]</span>
+        <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Scanner for %regex directive&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;RegexIdRegex&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.RegexLib&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name" id="regex_id_ctx">regex_id_ctx</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+        <span class="action-token">push</span> <a href="#comment_ctx"><span class="action-identifier">comment_ctx</span></a>
+<span class="regex-ref">\[\[</span>
+        <span class="action-token">push</span> <a href="#attribute_ctx"><span class="action-identifier">attribute_ctx</span></a>
+<span class="regex-ref">\/\/</span>
+        <span class="action-token">push</span> <a href="#line_comment_ctx"><span class="action-identifier">line_comment_ctx</span></a>
+<span class="regex-ref">{identifier}</span>
+        <span class="action-token">push</span> <a href="#regex_part_ctx"><span class="action-identifier">regex_part_ctx</span></a>
+        <span class="action-token">terminal</span> <a href="#-identifier-"><span class="action-identifier">&lt;identifier&gt;</span></a>
+<span class="regex-ref">{left-curly-bracket}</span>
+        <span class="action-token">push</span> <a href="#regex_block_ctx"><span class="action-identifier">regex_block_ctx</span></a>
+        <span class="action-token">terminal</span> <a href="#-left-curly-bracket-"><span class="action-identifier">&lt;left curly bracket&gt;</span></a>
+<span class="regex-ref">{right-scanner-bracket}</span>
+        <span class="action-token">pop</span>
+        <span class="action-token">terminal</span> <a href="#-right-part-bracket-"><span class="action-identifier">&lt;right part bracket&gt;</span></a>
+<span class="regex-ref">[ \t]+</span>
+        <span class="action-token">skip</span>
+<span class="regex-ref">[\n\r]</span>
+        <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Scanner for body of %regex directive&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;RegexPartRegex&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.RegexLib&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name" id="regex_part_ctx">regex_part_ctx</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+        <span class="action-token">push</span> <a href="#comment_ctx"><span class="action-identifier">comment_ctx</span></a>
+<span class="regex-ref">\[\[</span>
+        <span class="action-token">push</span> <a href="#attribute_ctx"><span class="action-identifier">attribute_ctx</span></a>
+<span class="regex-ref">\/\/</span>
+        <span class="action-token">push</span> <a href="#line_comment_ctx"><span class="action-identifier">line_comment_ctx</span></a>
+<span class="regex-ref">[ \t]+</span>
+        <span class="action-token">skip</span>
+<span class="regex-ref">.+</span>
+        <span class="action-token">pop</span>
+        <span class="action-token">pop</span>
+        <span class="action-token">terminal</span> <a href="#-regular-expression-"><span class="action-identifier">&lt;regular expression&gt;</span></a>
+<span class="regex-ref">[\n\r]</span>
+        <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Scanner for body of %regex directive&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;RegexBlockRegex&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.RegexLib&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name" id="regex_block_ctx">regex_block_ctx</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+        <span class="action-token">push</span> <a href="#comment_ctx"><span class="action-identifier">comment_ctx</span></a>
+<span class="regex-ref">\[\[</span>
+        <span class="action-token">push</span> <a href="#attribute_ctx"><span class="action-identifier">attribute_ctx</span></a>
+<span class="regex-ref">\/\/</span>
+        <span class="action-token">push</span> <a href="#line_comment_ctx"><span class="action-identifier">line_comment_ctx</span></a>
+<span class="regex-ref">[ \t\n]+</span>
+        <span class="action-token">skip</span>
+<span class="regex-ref">{right-curly-bracket}</span>
+        <span class="action-token">pop</span>
+        <span class="action-token">pop</span>
+        <span class="action-token">terminal</span> <a href="#-right-curly-bracket-"><span class="action-identifier">&lt;right curly bracket&gt;</span></a>
+<span class="regex-ref">{identifier}</span>
+        <span class="action-token">push</span> <a href="#regex_block_part_ctx"><span class="action-identifier">regex_block_part_ctx</span></a>
+        <span class="action-token">terminal</span> <a href="#-identifier-"><span class="action-identifier">&lt;identifier&gt;</span></a>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Scanner for body of %regex directive&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;RegexBlockPartRegex&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.RegexLib&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name" id="regex_block_part_ctx">regex_block_part_ctx</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+        <span class="action-token">push</span> <a href="#comment_ctx"><span class="action-identifier">comment_ctx</span></a>
+<span class="regex-ref">\[\[</span>
+        <span class="action-token">push</span> <a href="#attribute_ctx"><span class="action-identifier">attribute_ctx</span></a>
+<span class="regex-ref">\/\/</span>
+        <span class="action-token">push</span> <a href="#line_comment_ctx"><span class="action-identifier">line_comment_ctx</span></a>
+<span class="regex-ref">[ \t]+</span>
+        <span class="action-token">skip</span>
+<span class="regex-ref">.+</span>
+        <span class="action-token">pop</span>
+        <span class="action-token">terminal</span> <a href="#-regular-expression-"><span class="action-identifier">&lt;regular expression&gt;</span></a>
+<span class="regex-ref">[\n\r]</span>
+        <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Scanner for anglr file&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;AnglrRegex&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.RegexLib&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name" id="anglrScanner">anglrScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+        <span class="action-token">push</span> <a href="#comment_ctx"><span class="action-identifier">comment_ctx</span></a>
+<span class="regex-ref">\[\[</span>
+        <span class="action-token">push</span> <a href="#attribute_ctx"><span class="action-identifier">attribute_ctx</span></a>
+<span class="regex-ref">\/\/</span>
+        <span class="action-token">push</span> <a href="#line_comment_ctx"><span class="action-identifier">line_comment_ctx</span></a>
+<span class="regex-ref">{vertical-bar}</span>
+        <span class="action-token">terminal</span> <a href="#-vertical-bar-"><span class="action-identifier">&lt;vertical bar&gt;</span></a>
+<span class="regex-ref">{comma}</span>
+        <span class="action-token">terminal</span> <a href="#-comma-"><span class="action-identifier">&lt;comma&gt;</span></a>
+<span class="regex-ref">{colon}</span>
+        <span class="action-token">terminal</span> <a href="#-colon-"><span class="action-identifier">&lt;colon&gt;</span></a>
+<span class="regex-ref">{semicolon}</span>
+        <span class="action-token">terminal</span> <a href="#-semicolon-"><span class="action-identifier">&lt;semicolon&gt;</span></a>
+<span class="regex-ref">{left-curly-bracket}</span>
+        <span class="action-token">terminal</span> <a href="#-left-curly-bracket-"><span class="action-identifier">&lt;left curly bracket&gt;</span></a>
+<span class="regex-ref">{right-curly-bracket}</span>
+        <span class="action-token">terminal</span> <a href="#-right-curly-bracket-"><span class="action-identifier">&lt;right curly bracket&gt;</span></a>
+<span class="regex-ref">{left-bracket}</span>
+        <span class="action-token">terminal</span> <a href="#-left-bracket-"><span class="action-identifier">&lt;left bracket&gt;</span></a>
+<span class="regex-ref">{right-bracket}</span>
+        <span class="action-token">terminal</span> <a href="#-right-bracket-"><span class="action-identifier">&lt;right bracket&gt;</span></a>
+<span class="regex-ref">{left-scanner-bracket}</span>
+        <span class="action-token">terminal</span> <a href="#-left-part-bracket-"><span class="action-identifier">&lt;left part bracket&gt;</span></a>
+<span class="regex-ref">{right-scanner-bracket}</span>
+        <span class="action-token">terminal</span> <a href="#-right-part-bracket-"><span class="action-identifier">&lt;right part bracket&gt;</span></a>
+<span class="regex-ref">{left-square-bracket}</span>
+        <span class="action-token">terminal</span> <a href="#-left-square-bracket-"><span class="action-identifier">&lt;left square bracket&gt;</span></a>
+<span class="regex-ref">{right-square-bracket}</span>
+        <span class="action-token">terminal</span> <a href="#-right-square-bracket-"><span class="action-identifier">&lt;right square bracket&gt;</span></a>
+<span class="regex-ref">{equals-sign}</span>
+        <span class="action-token">terminal</span> <a href="#-equals-sign-"><span class="action-identifier">&lt;equals sign&gt;</span></a>
+<span class="regex-ref">{double-at-sign}</span>
+        <span class="action-token">terminal</span> <a href="#-double-at-sign-"><span class="action-identifier">&lt;double at sign&gt;</span></a>
+<span class="regex-ref">{at-sign}</span>
+        <span class="action-token">terminal</span> <a href="#-at-sign-"><span class="action-identifier">&lt;at sign&gt;</span></a>
+<span class="regex-ref">{question-mark}</span>
+        <span class="action-token">terminal</span> <a href="#-question-mark-"><span class="action-identifier">&lt;question mark&gt;</span></a>
+<span class="regex-ref">{plus-sign}</span>
+        <span class="action-token">terminal</span> <a href="#-plus-sign-"><span class="action-identifier">&lt;plus sign&gt;</span></a>
+<span class="regex-ref">{minus-sign}</span>
+        <span class="action-token">terminal</span> <a href="#-minus-sign-"><span class="action-identifier">&lt;minus sign&gt;</span></a>
+<span class="regex-ref">{asterisk}</span>
+        <span class="action-token">terminal</span> <a href="#-asterisk-"><span class="action-identifier">&lt;asterisk&gt;</span></a>
+<span class="regex-ref">{slash}</span>
+        <span class="action-token">terminal</span> <a href="#-slash-"><span class="action-identifier">&lt;slash&gt;</span></a>
+<span class="regex-ref">{inv-plus-sign}</span>
+        <span class="action-token">terminal</span> <a href="#-inv-plus-sign-"><span class="action-identifier">&lt;inv plus sign&gt;</span></a>
+<span class="regex-ref">{inv-minus-sign}</span>
+        <span class="action-token">terminal</span> <a href="#-inv-minus-sign-"><span class="action-identifier">&lt;inv minus sign&gt;</span></a>
+<span class="regex-ref">{inv-asterisk}</span>
+        <span class="action-token">terminal</span> <a href="#-inv-asterisk-"><span class="action-identifier">&lt;inv asterisk&gt;</span></a>
+<span class="regex-ref">{inv-slash}</span>
+        <span class="action-token">terminal</span> <a href="#-inv-slash-"><span class="action-identifier">&lt;inv slash&gt;</span></a>
+<span class="regex-ref">{empty}</span>
+        <span class="action-token">terminal</span> <a href="#-empty-"><span class="action-identifier">&lt;empty&gt;</span></a>
+<span class="regex-ref">{terminal}</span>
+        <span class="action-token">terminal</span> <a href="#-terminal-"><span class="action-identifier">&lt;terminal&gt;</span></a>
+<span class="regex-ref">{general}</span>
+        <span class="action-token">terminal</span> <a href="#-general-"><span class="action-identifier">&lt;general&gt;</span></a>
+<span class="regex-ref">{declarations}</span>
+        <span class="action-token">terminal</span> <a href="#-declarations-"><span class="action-identifier">&lt;declarations&gt;</span></a>
+<span class="regex-ref">{rregex}</span>
+        <span class="action-token">push</span> <a href="#regex_id_ctx"><span class="action-identifier">regex_id_ctx</span></a>
+        <span class="action-token">terminal</span> <a href="#-regex-"><span class="action-identifier">&lt;regex&gt;</span></a>
+<span class="regex-ref">{scanner}</span>
+        <span class="action-token">push</span> <a href="#scanner_id_ctx"><span class="action-identifier">scanner_id_ctx</span></a>
+        <span class="action-token">terminal</span> <a href="#-scanner-"><span class="action-identifier">&lt;scanner&gt;</span></a>
+<span class="regex-ref">{lexer}</span>
+        <span class="action-token">terminal</span> <a href="#-lexer-"><span class="action-identifier">&lt;lexer&gt;</span></a>
+<span class="regex-ref">{parser}</span>
+        <span class="action-token">terminal</span> <a href="#-parser-"><span class="action-identifier">&lt;parser&gt;</span></a>
+<span class="regex-ref">{priority}</span>
+        <span class="action-token">terminal</span> <a href="#-priority-"><span class="action-identifier">&lt;priority&gt;</span></a>
+<span class="regex-ref">{associativity}</span>
+        <span class="action-token">terminal</span> <a href="#-associativity-"><span class="action-identifier">&lt;associativity&gt;</span></a>
+<span class="regex-ref">{identifier}</span>
+        <span class="action-token">terminal</span> <a href="#-identifier-"><span class="action-identifier">&lt;identifier&gt;</span></a>
+<span class="regex-ref">{cstring}</span>
+        <span class="action-token">terminal</span> <a href="#-cstring-"><span class="action-identifier">&lt;cstring&gt;</span></a>
+<span class="regex-ref">{number}</span>
+        <span class="action-token">terminal</span> <a href="#-number-"><span class="action-identifier">&lt;number&gt;</span></a>
+<span class="regex-ref">[ \t]+</span>
+        <span class="action-token">skip</span>
+<span class="regex-ref">[\n\r]</span>
+        <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+        <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Lexer for anglr file&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="UseScanner">UseScanner</span>
+        <span class="attribute-val-name" id="ScannerId">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;comment_ctx&#39;</span>
+        <span class="attribute-val-name" id="ScannerId">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;line_comment_ctx&#39;</span>
+        <span class="attribute-val-name" id="ScannerId">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;attribute_ctx&#39;</span>
+        <span class="attribute-val-name" id="ScannerId">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;scanner_id_ctx&#39;</span>
+        <span class="attribute-val-name" id="ScannerId">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;scanner_part_ctx&#39;</span>
+        <span class="attribute-val-name" id="ScannerId">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regex_id_ctx&#39;</span>
+        <span class="attribute-val-name" id="ScannerId">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regex_part_ctx&#39;</span>
+        <span class="attribute-val-name" id="ScannerId">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regex_block_ctx&#39;</span>
+        <span class="attribute-val-name" id="ScannerId">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regex_block_part_ctx&#39;</span>
+        <span class="attribute-val-name" id="InitialScanner">InitialScanner</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrScanner&#39;</span>
+        <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;AnglrLexer&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.Lexer&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%lexer</span> <span class="part-name" id="anglrLexer">anglrLexer</span>
+<span class="part-brace">%{</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Parser for anglr file&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Lexer">Lexer</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrLexer&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;AnglrParser&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.Parser&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name" id="anglrParser">anglrParser</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;ANGLR-FILE-FRAGMENTS is list of syntax rules which&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;define the structure of anglr file fragments.&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="group-name" id="ANGLR-FILE-FRAGMENTS">ANGLR-FILE-FRAGMENTS</span>
+<span class="def-separator">{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Start">Start</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Syntax rule &lt;anglr file fragment&gt; describes syntax of all possible valid&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;fragments of anglr source file. Anglr file fragment is any part of anglr&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;file which should be derived by exactly one syntax rule following syntax&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;rule &lt;anglr file fragment&gt;. For every syntax rule following syntax rule&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;&lt;anglr file fragment&gt; there is one production of syntax rule &lt;anglr file&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;fragment&gt; which should be used to parse part of anglr file which is&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;derived by that production.&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-file-fragment-">&lt;anglr file fragment&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-attribute-list-terminal-"><span class="identifier-name">&lt;attribute list terminal&gt;</span></a> <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-attribute-terminal-"><span class="identifier-name">&lt;attribute terminal&gt;</span></a> <a href="#-attribute-"><span class="rule-ref">&lt;attribute&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-name-value-list-terminal-"><span class="identifier-name">&lt;name value list terminal&gt;</span></a> <a href="#-name-value-list-"><span class="rule-ref">&lt;name value list&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-name-value-pair-terminal-"><span class="identifier-name">&lt;name value pair terminal&gt;</span></a> <a href="#-name-value-pair-"><span class="rule-ref">&lt;name value pair&gt;</span></a>
+
+        <span class="def-separator">|</span>    <a href="#-anglr-file-terminal-"><span class="identifier-name">&lt;anglr file terminal&gt;</span></a> <a href="#-anglr-file-"><span class="rule-ref">&lt;anglr file&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-anglr-file-part-list-terminal-"><span class="identifier-name">&lt;anglr file part list terminal&gt;</span></a> <a href="#-anglr-file-part-list-"><span class="rule-ref">&lt;anglr file part list&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-anglr-file-part-terminal-"><span class="identifier-name">&lt;anglr file part terminal&gt;</span></a> <a href="#-anglr-file-part-"><span class="rule-ref">&lt;anglr file part&gt;</span></a>
+
+        <span class="def-separator">|</span>    <a href="#-general-part-terminal-"><span class="identifier-name">&lt;general part terminal&gt;</span></a> <a href="#-general-part-"><span class="rule-ref">&lt;general part&gt;</span></a>
+
+        <span class="def-separator">|</span>    <a href="#-declaration-part-terminal-"><span class="identifier-name">&lt;declaration part terminal&gt;</span></a> <a href="#-declaration-part-"><span class="rule-ref">&lt;declaration part&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-anglr-definition-list-terminal-"><span class="identifier-name">&lt;anglr definition list terminal&gt;</span></a> <a href="#-anglr-definition-list-"><span class="rule-ref">&lt;anglr definition list&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-anglr-definition-with-attribute-list-terminal-"><span class="identifier-name">&lt;anglr definition with attribute list terminal&gt;</span></a> <a href="#-anglr-definition-with-attribute-"><span class="rule-ref">&lt;anglr definition with attribute&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-anglr-definition-terminal-"><span class="identifier-name">&lt;anglr definition terminal&gt;</span></a> <a href="#-anglr-definition-"><span class="rule-ref">&lt;anglr definition&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-single-terminal-definition-terminal-"><span class="identifier-name">&lt;single terminal definition terminal&gt;</span></a> <a href="#-single-terminal-definition-"><span class="rule-ref">&lt;single terminal definition&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-single-regex-definition-terminal-"><span class="identifier-name">&lt;single regex definition terminal&gt;</span></a> <a href="#-single-regex-definition-"><span class="rule-ref">&lt;single regex definition&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-block-of-terminal-definitions-terminal-"><span class="identifier-name">&lt;block of terminal definitions terminal&gt;</span></a> <a href="#-block-of-terminal-definitions-"><span class="rule-ref">&lt;block of terminal definitions&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-block-of-regex-definitions-terminal-"><span class="identifier-name">&lt;block of regex definitions terminal&gt;</span></a> <a href="#-block-of-regex-definitions-"><span class="rule-ref">&lt;block of regex definitions&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-terminal-definition-terminal-"><span class="identifier-name">&lt;terminal definition terminal&gt;</span></a> <a href="#-terminal-definition-"><span class="rule-ref">&lt;terminal definition&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-regex-definition-terminal-"><span class="identifier-name">&lt;regex definition terminal&gt;</span></a> <a href="#-regex-definition-"><span class="rule-ref">&lt;regex definition&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-block-terminal-definitions-terminal-"><span class="identifier-name">&lt;block terminal definitions terminal&gt;</span></a> <a href="#-block-terminal-definitions-"><span class="rule-ref">&lt;block terminal definitions&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-block-terminal-definition-terminal-"><span class="identifier-name">&lt;block terminal definition terminal&gt;</span></a> <a href="#-block-terminal-definition-"><span class="rule-ref">&lt;block terminal definition&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-block-regex-definitions-terminal-"><span class="identifier-name">&lt;block regex definitions terminal&gt;</span></a> <a href="#-block-regex-definitions-"><span class="rule-ref">&lt;block regex definitions&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-block-regex-definition-terminal-"><span class="identifier-name">&lt;block regex definition terminal&gt;</span></a> <a href="#-block-regex-definition-"><span class="rule-ref">&lt;block regex definition&gt;</span></a>
+
+        <span class="def-separator">|</span>    <a href="#-scanner-part-terminal-"><span class="identifier-name">&lt;scanner part terminal&gt;</span></a> <a href="#-scanner-part-"><span class="rule-ref">&lt;scanner part&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-regular-expression-list-terminal-"><span class="identifier-name">&lt;regular expression list terminal&gt;</span></a> <a href="#-regular-expression-list-"><span class="rule-ref">&lt;regular expression list&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-regular-expression-usage-terminal-"><span class="identifier-name">&lt;regular expression usage terminal&gt;</span></a> <a href="#-regular-expression-usage-"><span class="rule-ref">&lt;regular expression usage&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-actions-terminal-"><span class="identifier-name">&lt;actions terminal&gt;</span></a> <a href="#-actions-"><span class="rule-ref">&lt;actions&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-action-terminal-"><span class="identifier-name">&lt;action terminal&gt;</span></a> <a href="#-action-"><span class="rule-ref">&lt;action&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-skip-action-terminal-"><span class="identifier-name">&lt;skip action terminal&gt;</span></a> <a href="#-skip-action-"><span class="rule-ref">&lt;skip action&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-terminal-action-terminal-"><span class="identifier-name">&lt;terminal action terminal&gt;</span></a> <a href="#-terminal-action-"><span class="rule-ref">&lt;terminal action&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-event-action-terminal-"><span class="identifier-name">&lt;event action terminal&gt;</span></a> <a href="#-event-action-"><span class="rule-ref">&lt;event action&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-push-action-terminal-"><span class="identifier-name">&lt;push action terminal&gt;</span></a> <a href="#-push-action-"><span class="rule-ref">&lt;push action&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-pop-action-terminal-"><span class="identifier-name">&lt;pop action terminal&gt;</span></a> <a href="#-pop-action-"><span class="rule-ref">&lt;pop action&gt;</span></a>
+
+        <span class="def-separator">|</span>    <a href="#-lexer-part-terminal-"><span class="identifier-name">&lt;lexer part terminal&gt;</span></a> <a href="#-lexer-part-"><span class="rule-ref">&lt;lexer part&gt;</span></a>
+
+        <span class="def-separator">|</span>    <a href="#-parser-part-terminal-"><span class="identifier-name">&lt;parser part terminal&gt;</span></a> <a href="#-parser-part-"><span class="rule-ref">&lt;parser part&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-anglr-syntax-rule-list-terminal-"><span class="identifier-name">&lt;anglr syntax rule list terminal&gt;</span></a> <a href="#-anglr-syntax-rule-list-"><span class="rule-ref">&lt;anglr syntax rule list&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-anglr-syntax-rule-terminal-"><span class="identifier-name">&lt;anglr syntax rule terminal&gt;</span></a> <a href="#-anglr-syntax-rule-"><span class="rule-ref">&lt;anglr syntax rule&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-anglr-nested-rule-terminal-"><span class="identifier-name">&lt;anglr nested rule terminal&gt;</span></a> <a href="#-anglr-nested-rule-"><span class="rule-ref">&lt;anglr nested rule&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-anglr-syntax-production-list-name-terminal-"><span class="identifier-name">&lt;anglr syntax production list name terminal&gt;</span></a> <a href="#-anglr-syntax-production-list-name-"><span class="rule-ref">&lt;anglr syntax production list name&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-anglr-syntax-production-list-terminal-"><span class="identifier-name">&lt;anglr syntax production list terminal&gt;</span></a> <a href="#-anglr-syntax-production-list-"><span class="rule-ref">&lt;anglr syntax production list&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-anglr-syntax-production-terminal-"><span class="identifier-name">&lt;anglr syntax production terminal&gt;</span></a> <a href="#-anglr-syntax-production-"><span class="rule-ref">&lt;anglr syntax production&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-priority-assoc-specification-terminal-"><span class="identifier-name">&lt;priority assoc specification terminal&gt;</span></a> <a href="#-priority-assoc-specification-"><span class="rule-ref">&lt;priority assoc specification&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-priority-specification-terminal-"><span class="identifier-name">&lt;priority specification terminal&gt;</span></a> <a href="#-priority-specification-"><span class="rule-ref">&lt;priority specification&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-associativity-specification-terminal-"><span class="identifier-name">&lt;associativity specification terminal&gt;</span></a> <a href="#-associativity-specification-"><span class="rule-ref">&lt;associativity specification&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-production-name-terminal-"><span class="identifier-name">&lt;production name terminal&gt;</span></a> <a href="#-production-name-"><span class="rule-ref">&lt;production name&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-name-list-terminal-"><span class="identifier-name">&lt;name list terminal&gt;</span></a> <a href="#-name-list-"><span class="rule-ref">&lt;name list&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-marker-list-terminal-"><span class="identifier-name">&lt;marker list terminal&gt;</span></a> <a href="#-marker-list-"><span class="rule-ref">&lt;marker list&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-marker-terminal-"><span class="identifier-name">&lt;marker terminal&gt;</span></a> <a href="#-marker-"><span class="rule-ref">&lt;marker&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-g-name-terminal-"><span class="identifier-name">&lt;g name terminal&gt;</span></a> <a href="#-g-name-"><span class="rule-ref">&lt;g name&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-name-terminal-"><span class="identifier-name">&lt;name terminal&gt;</span></a> <a href="#-name-"><span class="rule-ref">&lt;name&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-cardinality-delimiter-terminal-"><span class="identifier-name">&lt;cardinality delimiter terminal&gt;</span></a> <a href="#-cardinality-delimiter-"><span class="rule-ref">&lt;cardinality delimiter&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-cardinality-terminal-"><span class="identifier-name">&lt;cardinality terminal&gt;</span></a> <a href="#-cardinality-"><span class="rule-ref">&lt;cardinality&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-delimiter-terminal-"><span class="identifier-name">&lt;delimiter terminal&gt;</span></a> <a href="#-delimiter-"><span class="rule-ref">&lt;delimiter&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-cardinality-name-terminal-"><span class="identifier-name">&lt;cardinality name terminal&gt;</span></a> <a href="#-cardinality-name-"><span class="rule-ref">&lt;cardinality name&gt;</span></a>
+
+        <span class="def-separator">|</span>    <a href="#-attribute-list-optional-terminal-"><span class="identifier-name">&lt;attribute list optional terminal&gt;</span></a> <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-name-value-list-optional-terminal-"><span class="identifier-name">&lt;name value list optional terminal&gt;</span></a> <a href="#-name-value-list-"><span class="rule-ref">&lt;name value list&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-anglr-file-part-list-optional-terminal-"><span class="identifier-name">&lt;anglr file part list optional terminal&gt;</span></a> <a href="#-anglr-file-part-list-"><span class="rule-ref">&lt;anglr file part list&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-anglr-definition-list-optional-terminal-"><span class="identifier-name">&lt;anglr definition list optional terminal&gt;</span></a> <a href="#-anglr-definition-list-"><span class="rule-ref">&lt;anglr definition list&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-block-terminal-definitions-optional-terminal-"><span class="identifier-name">&lt;block terminal definitions optional terminal&gt;</span></a> <a href="#-block-terminal-definitions-"><span class="rule-ref">&lt;block terminal definitions&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-block-regex-definitions-optional-terminal-"><span class="identifier-name">&lt;block regex definitions optional terminal&gt;</span></a> <a href="#-block-regex-definitions-"><span class="rule-ref">&lt;block regex definitions&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-regular-expression-list-optional-terminal-"><span class="identifier-name">&lt;regular expression list optional terminal&gt;</span></a> <a href="#-regular-expression-list-"><span class="rule-ref">&lt;regular expression list&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-actions-optional-terminal-"><span class="identifier-name">&lt;actions optional terminal&gt;</span></a> <a href="#-actions-"><span class="rule-ref">&lt;actions&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-anglr-syntax-rule-list-optional-terminal-"><span class="identifier-name">&lt;anglr syntax rule list optional terminal&gt;</span></a> <a href="#-anglr-syntax-rule-list-"><span class="rule-ref">&lt;anglr syntax rule list&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-anglr-syntax-production-list-name-optional-terminal-"><span class="identifier-name">&lt;anglr syntax production list name optional terminal&gt;</span></a> <a href="#-anglr-syntax-production-list-name-"><span class="rule-ref">&lt;anglr syntax production list name&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-production-name-optional-terminal-"><span class="identifier-name">&lt;production name optional terminal&gt;</span></a> <a href="#-production-name-"><span class="rule-ref">&lt;production name&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-priority-assoc-specification-optional-terminal-"><span class="identifier-name">&lt;priority assoc specification optional terminal&gt;</span></a> <a href="#-priority-assoc-specification-"><span class="rule-ref">&lt;priority assoc specification&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-marker-list-optional-terminal-"><span class="identifier-name">&lt;marker list optional terminal&gt;</span></a> <a href="#-marker-list-"><span class="rule-ref">&lt;marker list&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-delimiter-optional-terminal-"><span class="identifier-name">&lt;delimiter optional terminal&gt;</span></a> <a href="#-delimiter-"><span class="rule-ref">&lt;delimiter&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-cardinality-name-optional-terminal-"><span class="identifier-name">&lt;cardinality name optional terminal&gt;</span></a> <a href="#-cardinality-name-"><span class="rule-ref">&lt;cardinality name&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-cstring-optional-terminal-"><span class="identifier-name">&lt;cstring optional terminal&gt;</span></a> <a href="#-cstring-"><span class="identifier-name">&lt;cstring&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <a href="#-number-optional-terminal-"><span class="identifier-name">&lt;number optional terminal&gt;</span></a> <a href="#-number-"><span class="identifier-name">&lt;number&gt;</span></a> <span class="reserved-word">?</span>
+
+        <span class="def-separator">;</span>
+
+<span class="def-separator">}</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;ANGLR-ATTRIBUTES is list of syntax rules which&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;define the structure of anglr file attributes&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="group-name" id="ANGLR-ATTRIBUTES">ANGLR-ATTRIBUTES</span>
+<span class="def-separator">{</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;attribute list is nonempty list of attributes&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-attribute-list-">&lt;attribute list&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-attribute-"><span class="rule-ref">&lt;attribute&gt;</span></a> <span class="reserved-word">+</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;attribute is text between &#39;&#39;[&#39;&#39; and &#39;&#39;]&#39;&#39;. It is composed of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- an identifier representing attribute name&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- optional list of name value pairs&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-attribute-">&lt;attribute&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;[&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a> <a href="#-name-value-list-"><span class="rule-ref">&lt;name value list&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;]&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;list of name value pairs is nonempty list of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;names and associated values&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-name-value-list-">&lt;name value list&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-name-value-pair-"><span class="rule-ref">&lt;name value pair&gt;</span></a> <span class="reserved-word">+</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;name value pair consists of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- identifier representing name&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- equals sign delimiting name and value&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- string representing value associated with name&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-name-value-pair-">&lt;name value pair&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a> <span class="string-name">&#39;=&#39;</span> <a href="#-cstring-"><span class="identifier-name">&lt;cstring&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="def-separator">}</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;ANGLR-FILE-STRUCTURE is colection of syntax rules&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;which describe the structure of anglr file&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="group-name" id="ANGLR-FILE-STRUCTURE">ANGLR-FILE-STRUCTURE</span>
+<span class="def-separator">{</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;this rule describes the syntax of whole anglr file.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr file is an optional list of anglr file parts.&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-file-">&lt;anglr file&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-anglr-file-part-list-"><span class="rule-ref">&lt;anglr file part list&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;List of anglr file parts is nonempty list of anglr file parts&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-file-part-list-">&lt;anglr file part list&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-anglr-file-part-"><span class="rule-ref">&lt;anglr file part&gt;</span></a> <span class="reserved-word">+</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglr file part is one of:&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- general part&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- declaration part&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- scanner part&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- lexer part&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- parser part&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-file-part-">&lt;anglr file part&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-general-part-"><span class="rule-ref">&lt;general part&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-declaration-part-"><span class="rule-ref">&lt;declaration part&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-scanner-part-"><span class="rule-ref">&lt;scanner part&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-lexer-part-"><span class="rule-ref">&lt;lexer part&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-parser-part-"><span class="rule-ref">&lt;parser part&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="def-separator">}</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;GENERAL-PART-OF-ANGLR-FILE is collection of syntax rules&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;(only one) used to describe the structure of general part of anglr file&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="group-name" id="GENERAL-PART-OF-ANGLR-FILE">GENERAL-PART-OF-ANGLR-FILE</span>
+<span class="def-separator">{</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;General part has name and list of attribtes which describe:&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- name of resulting assembly&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- namespaces for generated classes&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- names of generated classes&#39;</span>
+<span class="attribute-brace">]</span>
+
+<span class="rule-name" id="-general-part-">&lt;general part&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;%general&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a> <span class="string-name">&#39;%{&#39;</span> <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;%}&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="def-separator">}</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;DECLARATION-PART-OF-ANGLR-FILE is a set of syntax rules&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;used to define the structure of declaration part of anglr file&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="group-name" id="DECLARATION-PART-OF-ANGLR-FILE">DECLARATION-PART-OF-ANGLR-FILE</span>
+<span class="def-separator">{</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Declaration part consists of:&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- optional list of attributes. Attributes for the declaration part do not currently exist&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- name for declaration part&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- optional list of declarations&#39;</span>
+<span class="attribute-brace">]</span>
+
+<span class="rule-name" id="-declaration-part-">&lt;declaration part&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;%declarations&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a> <span class="string-name">&#39;%{&#39;</span> <a href="#-anglr-definition-list-"><span class="rule-ref">&lt;anglr definition list&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;%}&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglr definition list is nonempty list of anglr definitions&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-definition-list-">&lt;anglr definition list&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-anglr-definition-with-attribute-"><span class="rule-ref">&lt;anglr definition with attribute&gt;</span></a> <span class="reserved-word">+</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglr definition should be preceeded with possibly empty attribute list&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-definition-with-attribute-">&lt;anglr definition with attribute&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span> <a href="#-anglr-definition-"><span class="rule-ref">&lt;anglr definition&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglr definition is one of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- single termial declaration&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- single regular expression declaration&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- block of termial declarations&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- block of regular expression declarations&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-definition-">&lt;anglr definition&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-single-terminal-definition-"><span class="rule-ref">&lt;single terminal definition&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-single-regex-definition-"><span class="rule-ref">&lt;single regex definition&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-block-of-terminal-definitions-"><span class="rule-ref">&lt;block of terminal definitions&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-block-of-regex-definitions-"><span class="rule-ref">&lt;block of regex definitions&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;single terminal declaration is composed of:&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- word %terminal&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- followed by definition of terminal symbol&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-single-terminal-definition-">&lt;single terminal definition&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;%terminal&#39;</span> <a href="#-terminal-definition-"><span class="rule-ref">&lt;terminal definition&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;single regular expression declaration is composed of:&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- word %regex&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- followed by definition of regular expression&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-single-regex-definition-">&lt;single regex definition&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;%regex&#39;</span> <a href="#-regex-definition-"><span class="rule-ref">&lt;regex definition&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;block of terminal declarations is composed of:&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- word %terminal&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- followed by block of terminal symbol definitions enclosed between curly braces&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-block-of-terminal-definitions-">&lt;block of terminal definitions&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;%terminal&#39;</span> <span class="string-name">&#39;{&#39;</span> <a href="#-block-terminal-definitions-"><span class="rule-ref">&lt;block terminal definitions&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;block of regular expression declarations is composed of:&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- word %regex&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- followed by block of regular expression definitions enclosed between curly braces&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-block-of-regex-definitions-">&lt;block of regex definitions&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;%regex&#39;</span> <span class="string-name">&#39;{&#39;</span> <a href="#-block-regex-definitions-"><span class="rule-ref">&lt;block regex definitions&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;terminal symbol definition consists of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- terminal symbol name&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- optional string representation of terminal symbol&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  name and string representation are interchangable&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-terminal-definition-">&lt;terminal definition&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a> <a href="#-cstring-"><span class="identifier-name">&lt;cstring&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regular expression definition consists of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- regular expression name&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- string, spanning to the end of line, representing content of regular expression&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-regex-definition-">&lt;regex definition&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a> <a href="#-regular-expression-"><span class="identifier-name">&lt;regular expression&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;block terminal definitions is list of terminals&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-block-terminal-definitions-">&lt;block terminal definitions&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-block-terminal-definition-"><span class="rule-ref">&lt;block terminal definition&gt;</span></a> <span class="reserved-word">+</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;block terminal definition consists of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- possible empty attribute list; Description attribute&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- terminal specification&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-block-terminal-definition-">&lt;block terminal definition&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span> <a href="#-terminal-definition-"><span class="rule-ref">&lt;terminal definition&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;list of block regex definitions&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-block-regex-definitions-">&lt;block regex definitions&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-block-regex-definition-"><span class="rule-ref">&lt;block regex definition&gt;</span></a> <span class="reserved-word">+</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;block regex definition consists of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- possible empty attribute list&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- identifier representing name of regular expression&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- character string representing regular expression&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-block-regex-definition-">&lt;block regex definition&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span> <a href="#-regex-definition-"><span class="rule-ref">&lt;regex definition&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="def-separator">}</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;SCANNER-PART-OF-ANGLR-FILE is a set of syntax rules&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;used to define the structure of scanner part of anglr file&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="group-name" id="SCANNER-PART-OF-ANGLR-FILE">SCANNER-PART-OF-ANGLR-FILE</span>
+<span class="def-separator">{</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;scanner part consists of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- optional attribute list. CompilationInfo is currently&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  the only attribute used to describe scanner part. This&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  attribute describes compiled regular expression associated&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  with scanner part&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- word %scanner&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- identifier representing name of scanner part&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- optional list of regular expressions constituting scanner part within %{ and %}&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-scanner-part-">&lt;scanner part&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;%scanner&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a> <span class="string-name">&#39;%{&#39;</span> <a href="#-regular-expression-list-"><span class="rule-ref">&lt;regular expression list&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;%}&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;list of regular expressions consists usage specifications of regular expressions&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-regular-expression-list-">&lt;regular expression list&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-regular-expression-usage-"><span class="rule-ref">&lt;regular expression usage&gt;</span></a> <span class="reserved-word">+</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regular expression usage consists of regular expression followed by possibly empty list of actions&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regular expression must be specified at the beginnig of the line&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-regular-expression-usage-">&lt;regular expression usage&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-regular-expression-"><span class="identifier-name">&lt;regular expression&gt;</span></a> <a href="#-actions-"><span class="rule-ref">&lt;actions&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;list of actions associated with text scanned by scanner using particular regular expression&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-actions-">&lt;actions&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-action-"><span class="rule-ref">&lt;action&gt;</span></a> <span class="reserved-word">+</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;an action associated with text scanned by regular expression.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Skip, terminal and event action are mutually exclusive.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Only one of them, last in the list, is taken in effect.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;If there is no skip, terminal or event actions in action list,&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;skip is assumed. Push and pop actions should be balanced.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;During the scanning process there should never be more pop&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;than push actions. At the end of scanning process number of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;push and pop actions should be equal.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Action list must be specified in lines following regular&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;expression, with which it is associated. Lines containing&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;actions must start with at least one space character&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-action-">&lt;action&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-skip-action-"><span class="rule-ref">&lt;skip action&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-terminal-action-"><span class="rule-ref">&lt;terminal action&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-event-action-"><span class="rule-ref">&lt;event action&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-push-action-"><span class="rule-ref">&lt;push action&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-pop-action-"><span class="rule-ref">&lt;pop action&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regular expression action: skip text. Skip, terminal&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;and event actions are mutually exclusive. The last one of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;them si taken in effect.&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-skip-action-">&lt;skip action&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;skip&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regular expression action: report terminal code. Skip, terminal&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;and event actions are mutually exclusive. The last one of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;them si taken in effect.&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-terminal-action-">&lt;terminal action&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;terminal&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regular expression action: fire event associated with scanned text&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Handlers for event actions should be specified in source code&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;associated with scanner. Event actions are used to handle more complex&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;scenarios, when terminal an skip actions are not enough. If event action&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;is not handled, skip action is performed. Skip, terminal and event actions&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;are mutually exclusive. The last one of them si taken in effect.&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-event-action-">&lt;event action&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;event&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regular expression action: activate another scanner&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;more than one push action should be specified in single action list&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-push-action-">&lt;push action&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;push&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;regular expression action: deactivate current scanner&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;more than one pop action should be specified in single&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;action list as long as it is balanced with push actions&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-pop-action-">&lt;pop action&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;pop&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="def-separator">}</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;LEXER-PART-OF-ANGLR-FILE is a set of syntax rules&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;used to define the structure of lexer part of anglr file&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="group-name" id="LEXER-PART-OF-ANGLR-FILE">LEXER-PART-OF-ANGLR-FILE</span>
+<span class="def-separator">{</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;lexer part consists of attribute list which describes lexical analyzer&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-lexer-part-">&lt;lexer part&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;%lexer&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a> <span class="string-name">&#39;%{&#39;</span> <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;%}&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="def-separator">}</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;PARSER-PART-OF-ANGLR-FILE is a set of syntax rules&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;used to define the structure of parser part of anglr file&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="group-name" id="PARSER-PART-OF-ANGLR-FILE">PARSER-PART-OF-ANGLR-FILE</span>
+<span class="def-separator">{</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;parser part consists of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- optional attribute list. Scanner is currently the only&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  attribute used to describe parser part. It defines&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  id of scanner used in generated parser.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- word %parser&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- identifier representing parser name&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- optional list of syntax rules enclosed within %{ and %}&#39;</span>
+<span class="attribute-brace">]</span>
+
+<span class="rule-name" id="-parser-part-">&lt;parser part&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;%parser&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a> <span class="string-name">&#39;%{&#39;</span> <a href="#-anglr-syntax-rule-list-"><span class="rule-ref">&lt;anglr syntax rule list&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;%}&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglr syntax rule list is nonempty list of syntax rule specifications&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-syntax-rule-list-">&lt;anglr syntax rule list&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-anglr-syntax-rule-"><span class="rule-ref">&lt;anglr syntax rule&gt;</span></a> <span class="reserved-word">+</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglr syntax rule specification comes in two flavours. First one is&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;specification of anglr syntax rule. The second one is something completelly&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;different but contextually similar: specification of syntax rules grouping.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;First production defines the syntax of anglr syntax rule. It consists of:&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- optional attribute list. Currently is recognised only Start attribute&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  which should have no parameters&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- name of syntax rule&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- followed by colon&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- syntax production list&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- terminated by semicolon&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;The second production defines the syntax of grouping. It consists of:&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- group name optionally preceeded by attribute list which are currently&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  miningless for grouping&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- possibly empty list of syntax rules and nested groupings (since syntax&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  rule for anglr syntax rule specifies also syntax rule for grouping)&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  enclosed with curly braces.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;The depth of nesting is thus theoretically unlimited.&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-syntax-rule-">&lt;anglr syntax rule&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a> <span class="string-name">&#39;:&#39;</span> <a href="#-anglr-syntax-production-list-"><span class="rule-ref">&lt;anglr syntax production list&gt;</span></a> <span class="string-name">&#39;;&#39;</span>
+        <span class="def-separator">|</span>    <a href="#-attribute-list-"><span class="rule-ref">&lt;attribute list&gt;</span></a> <span class="reserved-word">?</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a> <span class="string-name">&#39;{&#39;</span> <a href="#-anglr-syntax-rule-list-"><span class="rule-ref">&lt;anglr syntax rule list&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Nested anglr syntax production list is used to separate elements in name lists&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;and to specify more compact forms of syntax rules. Optional name specified&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;within it, or generated one if this name is not specified, is used to generate&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;syntax rule for anglr syntax production list specified within it if this list&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;does not represent unnamed single production.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Named nested anglr syntax rules should be used exactly the same way as ordinary&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;syntax rules. Their names should be used as nonterminal symbols in specifications&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;of arbitrary syntax rules.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Nested anglr syntax rule pecification is very similar to syntax rule specification itself,&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;except that its name is optional and specified between two colon signs (&#39;&#39;:&#39;&#39;). It is always&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;specified within other syntax rule specifications. They can be nested to an arbitrary depth:&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;within nested syntax rule there can be any number of other nested syntax rules. In this way&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;the whole grammar of some language can be specified with single syntax rule composed by&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;nested rules of arbitrary depth.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;It consists of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- optional name of syntax rule&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- specified between colon signs&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- syntax production list&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- it is not terminated by semicolon&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-nested-rule-">&lt;anglr nested rule&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-anglr-syntax-production-list-name-"><span class="rule-ref">&lt;anglr syntax production list name&gt;</span></a> <span class="reserved-word">?</span> <a href="#-anglr-syntax-production-list-"><span class="rule-ref">&lt;anglr syntax production list&gt;</span></a>
+        <span class="def-separator">;</span>
+
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;name of nested rule is very similar to name of ordinary rule&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-syntax-production-list-name-">&lt;anglr syntax production list name&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;:&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a> <span class="string-name">&#39;:&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;syntax production list is nonempty list of syntax productions&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;delimited with vertical lines&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-syntax-production-list-">&lt;anglr syntax production list&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-anglr-syntax-production-"><span class="rule-ref">&lt;anglr syntax production&gt;</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;|&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;syntax production should be on of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- name list representing nonempty production&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- string &#39;&#39;%empty&#39;&#39; representing empty production&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;production specified with &#39;&#39;%empty&#39;&#39; always produces&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;empty terminal string. By the contrary, production&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;represented by name list need not to produce nonempty&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;terminal string. Every production of syntax rule should&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;be preceeded with production name&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-anglr-syntax-production-">&lt;anglr syntax production&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-production-name-"><span class="rule-ref">&lt;production name&gt;</span></a> <span class="reserved-word">?</span> <a href="#-name-list-"><span class="rule-ref">&lt;name list&gt;</span></a> <a href="#-priority-assoc-specification-"><span class="rule-ref">&lt;priority assoc specification&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">|</span>    <span class="string-name">&#39;%empty&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Production name should be used to give name to any production&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;of any syntax rule. Exceptions are empty productions which&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;must not be named. These names are composed with two consecutive&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;at-signs (&#64) and an identifier. Different productions of given&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;syntax rule must have different names. These names are used in&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;naming conventions for enums of positional markers. If production&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;has name, enum of positional markers for this production is&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;concatenation with this name and suffix _markers. If production&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;has no name, than name for enum of positional markers is composed&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;with syntax rule name, suffix _markers and relative index of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;production starting with 1. See generated code for an example.&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-production-name-">&lt;production name&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;&#64&#64&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;priority of syntyx rule is composed of two parts&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- priority number of syntax rule which i composed of reserved word&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  %priority and priority number. Smaller numbers represent a higher&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  priority, with 0 as the highest priority&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- optional specification of syntax rule associativity&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-priority-assoc-specification-">&lt;priority assoc specification&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-priority-specification-"><span class="rule-ref">&lt;priority specification&gt;</span></a> <a href="#-associativity-specification-"><span class="rule-ref">&lt;associativity specification&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-associativity-specification-"><span class="rule-ref">&lt;associativity specification&gt;</span></a> <a href="#-priority-specification-"><span class="rule-ref">&lt;priority specification&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-priority-specification-"><span class="rule-ref">&lt;priority specification&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-associativity-specification-"><span class="rule-ref">&lt;associativity specification&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-priority-specification-"><span class="rule-ref">&lt;priority specification&gt;</span></a> <span class="string-name">&#39;,&#39;</span> <a href="#-associativity-specification-"><span class="rule-ref">&lt;associativity specification&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-associativity-specification-"><span class="rule-ref">&lt;associativity specification&gt;</span></a> <span class="string-name">&#39;,&#39;</span> <a href="#-priority-specification-"><span class="rule-ref">&lt;priority specification&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;priority of syntyx rule is composed of two parts&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- priority number of syntax rule which i composed of reserved word&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  %priority and priority number. Smaller numbers represent a higher&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  priority, with 0 as the highest priority&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- optional specification of syntax rule associativity&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-priority-specification-">&lt;priority specification&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-priority-"><span class="identifier-name">&lt;priority&gt;</span></a> <a href="#-number-"><span class="identifier-name">&lt;number&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-priority-"><span class="identifier-name">&lt;priority&gt;</span></a> <span class="string-name">&#39;=&#39;</span> <a href="#-number-"><span class="identifier-name">&lt;number&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;associativity of syntax rule is specified with reserved word&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;%associativity followd by one of these words:&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- left&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- right&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- nonassoc&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-associativity-specification-">&lt;associativity specification&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-associativity-"><span class="identifier-name">&lt;associativity&gt;</span></a> <a href="#-cstring-"><span class="identifier-name">&lt;cstring&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-associativity-"><span class="identifier-name">&lt;associativity&gt;</span></a> <span class="string-name">&#39;=&#39;</span> <a href="#-cstring-"><span class="identifier-name">&lt;cstring&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-associativity-"><span class="identifier-name">&lt;associativity&gt;</span></a> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-associativity-"><span class="identifier-name">&lt;associativity&gt;</span></a> <span class="string-name">&#39;=&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;name list is nonempty list of &#39;&#39;marked&#39;&#39; names&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-name-list-">&lt;name list&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-g-name-"><span class="rule-ref">&lt;g name&gt;</span></a> <span class="reserved-word">-</span> <span class="def-separator">[</span> <a href="#-marker-list-"><span class="rule-ref">&lt;marker list&gt;</span></a> <span class="reserved-word">?</span> <span class="def-separator">]</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;non-empty list of markers&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-marker-list-">&lt;marker list&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-marker-"><span class="rule-ref">&lt;marker&gt;</span></a> <span class="reserved-word">+</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Marker is non-syntactical element of production.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;It is used to enumerate production nodes. Each marker&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;is assigned sequence number of production node immediately&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;following it. Marker names should be different within&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;given syntax rule. Their names are stored in enumeration&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;named markers of class associated with this syntax rule.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;marker should be given in following form: identifier&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;preceeded with at-sign &#64.&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-marker-">&lt;marker&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;&#64&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;&#39;&#39;generalized&#39;&#39; name should be one of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- simple name&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- nested anglr syntax production list enclosed with &#39;&#39;(&#39;&#39; and &#39;&#39;)&#39;&#39;&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- any of above possibilities followd by any number of cardinality spcifications&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Iterator">Iterator</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;generate iterative traversial methods for this syntax rule&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-g-name-">&lt;g name&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-name-"><span class="rule-ref">&lt;name&gt;</span></a>
+        <span class="def-separator">|</span>    <span class="string-name">&#39;(&#39;</span> <a href="#-anglr-nested-rule-"><span class="rule-ref">&lt;anglr nested rule&gt;</span></a> <span class="string-name">&#39;)&#39;</span>
+        <span class="def-separator">|</span>    <a href="#-g-name-"><span class="rule-ref">&lt;g name&gt;</span></a> <a href="#-cardinality-delimiter-"><span class="rule-ref">&lt;cardinality delimiter&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;simple name is one of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- any. This case is currently undefined&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- string of characters enclosed with single or double apostrophes&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- identifier&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-name-">&lt;name&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-any-"><span class="identifier-name">&lt;any&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-cstring-"><span class="identifier-name">&lt;cstring&gt;</span></a>
+        <span class="def-separator">|</span>    <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;specification of cardinality is followed by an optional&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;specification of delimiter between name list elements&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-cardinality-delimiter-">&lt;cardinality delimiter&gt;</span>
+        <span class="def-separator">:</span>    <a href="#-cardinality-"><span class="rule-ref">&lt;cardinality&gt;</span></a> <a href="#-delimiter-"><span class="rule-ref">&lt;delimiter&gt;</span></a> <span class="reserved-word">?</span> <a href="#-cardinality-name-"><span class="rule-ref">&lt;cardinality name&gt;</span></a> <span class="reserved-word">?</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;cardinality is used to specify how many elements should have set of &lt;g name&gt;s&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;preceeding it in the specification of &lt;g name&gt;.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Cardinality is one of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- ? non-mandatory element (list consists of mostly one element)&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- +, -, ~+ and ~- to create nonempty name list&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- *, /, ~* and ~/ to create possibly empty name list&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;- two optional numbers delimited with comma and enclosed with &#39;&#39;{&#39;&#39; and &#39;&#39;}&#39;&#39;&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  possible way to specify optional minimal and maximal number of&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;  element occurances in name list (this case is not yet implemented)&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-cardinality-">&lt;cardinality&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;?&#39;</span>
+        <span class="def-separator">|</span>    <span class="string-name">&#39;+&#39;</span>
+        <span class="def-separator">|</span>    <span class="string-name">&#39;-&#39;</span>
+        <span class="def-separator">|</span>    <span class="string-name">&#39;*&#39;</span>
+        <span class="def-separator">|</span>    <span class="string-name">&#39;/&#39;</span>
+        <span class="def-separator">|</span>    <span class="string-name">&#39;~+&#39;</span>
+        <span class="def-separator">|</span>    <span class="string-name">&#39;~-&#39;</span>
+        <span class="def-separator">|</span>    <span class="string-name">&#39;~*&#39;</span>
+        <span class="def-separator">|</span>    <span class="string-name">&#39;~/&#39;</span>
+        <span class="def-separator">|</span>    <span class="string-name">&#39;{&#39;</span> <a href="#-number-"><span class="identifier-name">&lt;number&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;,&#39;</span> <a href="#-number-"><span class="identifier-name">&lt;number&gt;</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;delimiter is nested anglr syntax production list used to separate elements in name list.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Optional name of anglr nested rule, or generated one if name is not specified, is used to generate&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;syntax rule for anglr syntax production list if this list does not represent unnamed&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;single production. Delimiter can be followed by the name&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-delimiter-">&lt;delimiter&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;[&#39;</span> <a href="#-anglr-nested-rule-"><span class="rule-ref">&lt;anglr nested rule&gt;</span></a> <span class="string-name">&#39;]&#39;</span>
+        <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span>
+        <span class="attribute-name" id="Description">Description</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Name of cardinality operator can be expressed as string or an identifier.&#39;</span>
+        <span class="attribute-val-name" id="Text">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;It should be used to name the generated syntax rule associated with given cardinality operator.&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="rule-name" id="-cardinality-name-">&lt;cardinality name&gt;</span>
+        <span class="def-separator">:</span>    <span class="string-name">&#39;=&#39;</span> <a href="#-cstring-"><span class="identifier-name">&lt;cstring&gt;</span></a>
+        <span class="def-separator">|</span>    <span class="string-name">&#39;=&#39;</span> <a href="#-identifier-"><span class="identifier-name">&lt;identifier&gt;</span></a>
+        <span class="def-separator">;</span>
+
+<span class="def-separator">}</span>
+
+<span class="part-brace">%}</span>
+        </pre>
+    </div>
+</section>

@@ -1,0 +1,69 @@
+﻿
+%general mathSettings
+%{
+	[ Parser NameSpace='Math.Parser' ClassName='MathParser' ]
+	[ Scanner NameSpace='Math.Scanner' ClassName='MathScanner' ]
+%}
+
+%declarations anglrDecls
+%{
+	%token NUMBER
+	%token add '+'
+	%token sub '-'
+	%token mul '*'
+	%token div '/'
+	%token unknown
+
+	%start expr
+%}
+
+
+[ RegexCompilationInfo ClassName='MathRegex' Namespace='Math.RegexLib' Public='true']
+[ ScannerClassInfo ClassName='MathMainScanner' InitFunction='Init' DisposeFunction='Dispose' TokenFunction='FirstToken']
+%scanner mathScanner
+%{
+[0-9]+
+	return token_NUMBER;
+\+
+	return token_add;
+\-
+	return token_sub;
+\*
+	return token_mul;
+\/
+	return token_div;
+[ \t]+
+	continue;
+\n
+	continue;
+.
+	return token_unknown;
+%}
+
+[ Scanner Id='mathScanner' ]
+%parser mathParser
+%{
+
+expr
+	:	plus-expr
+	;
+	
+plus-expr
+	:	mul-expr
+	|	plus-expr '+' mul-expr
+	|	plus-expr '-' mul-expr
+	;
+
+mul-expr
+	:	simple-expr
+	|	mul-expr '*' simple-expr
+	|	mul-expr '/' simple-expr
+	;
+
+simple-expr
+	:	NUMBER
+	|	'(' expr ')'
+	;
+
+
+%}

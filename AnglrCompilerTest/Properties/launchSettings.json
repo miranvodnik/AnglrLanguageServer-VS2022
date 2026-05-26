@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AnglrCompilerTest": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\Users\\Miran\\source\\repos\\CSCProject\\CSharpCompiler\\bin\\Debug\\net8.0\\CSharpCompiler.exe \"-t -l accessor_body.cs\" D:\\Users\\Miran\\source\\repos\\CSCProject\\CSharpLibrary\\syntax"
+    }
+  }
+}

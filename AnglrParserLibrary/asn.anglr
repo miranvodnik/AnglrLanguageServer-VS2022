@@ -1,0 +1,3547 @@
+
+[ Description Text='Declarations' Hover='false' ]
+[ CompilationInfo ClassName='AsnDeclarations' NameSpace='Asn.Declarations' Access='public' Hover='true' ]
+%declarations AsnDeclarations
+%{
+	%regex
+	{
+		white-space	[ \t\b\v]
+		new-line	[\r\f\n]
+		bin-digit	[0-1]
+		oct-digit	[0-7]
+		decimal-digit	[0-9]
+		positive-decimal-digit	[1-9]
+		hex-digit	[0-9A-Fa-f]
+		letter	[a-zA-Z]
+		upper-case-letter	[A-Z]
+		lower-case-letter	[a-z]
+		hyphen-character	[_-]
+		exclamation-mark	\!
+		quotation-mark	\"
+		ampersand	\&
+		apostrophe	\'
+		left-parenthesis	\(
+		right-parenthesis	\)
+		asterisk	\*
+		comma	\,
+		hyphen-minus	\-
+		full-stop	\.
+		solidus	\/
+		colon	\:
+		semicolon	\;
+		less-than-sign	\<
+		equals-sign	\=
+		greater-than-sign	\>
+		commercial-at	\@
+		left-square-bracket	\[
+		right-square-bracket	\]
+		circumflex-accent	\^
+		low-line	\_
+		left-curly-bracket	\{
+		right-curly-bracket	\}
+		vertical-line	\|
+		non-breaking-hyphen	\-
+		alpha-num	({letter}|{decimal-digit})
+		word	{upper-case-letter}+( {upper-case-letter}+)*
+		type-reference	{upper-case-letter}{alpha-num}*({hyphen-character}{alpha-num}+)*
+		identifier	{lower-case-letter}{alpha-num}*({hyphen-character}{alpha-num}+)*
+		positive-number	({positive-decimal-digit}{decimal-digit}*)
+		number	({positive-number}|0)
+		real-number	({positive-number}({full-stop}({positive-number}(E{positive-number})?)?)?)
+		bstring	({apostrophe}{bin-digit}*{apostrophe}B)
+		xmlbstring	({bin-digit}*)
+		hstring	({apostrophe}{hex-digit}*{apostrophe}H)
+		xmlhstring	({hex-digit}*)
+		cstring	({quotation-mark}([^{quotation-mark}]|{quotation-mark}{quotation-mark})*{quotation-mark})
+		assignment-sign	{colon}{colon}{equals-sign}
+		range-separator	{full-stop}{full-stop}
+		ellipses	{full-stop}{full-stop}{full-stop}
+		left-version-brackets	{left-square-bracket}{left-square-bracket}
+		right-version-brackets	{right-square-bracket}{right-square-bracket}
+		integerUnicodeLabel	{number}
+		non-integerUnicodeLabel	{identifier}
+		xml-end-tag-start-item	{less-than-sign}{solidus}
+		xml-single-tag-end-item	{solidus}{greater-than-sign}
+		xml-boolean-true-item	true
+		xml-boolean-extended-true-item	(true|1)
+		xml-boolean-false-item	false
+		xml-boolean-extended-false-item	(false|0)
+		xml-real-not-a-number-item	NaN
+		xml-real-infinity-item	INF
+	}
+
+	%terminal
+	{
+		typereference
+		identifier
+		valuereference
+		modulereference
+
+		comment
+		empty
+		number
+		realnumber
+		bstring
+		xmlbstring
+		hstring
+		xmlhstring
+		cstring
+		xmlcstring
+		simplestring
+		tstring
+		xmltstring
+		psname
+		assignment-sign "::="
+		range-separator ".."
+		ellipses "..."
+		left-version-brackets "[["
+		right-version-brackets "]]"
+		encodingreference
+		integerUnicodeLabel
+		non-integerUnicodeLabel
+		xml-end-tag-start-item "</"
+		xml-single-tag-end-item "/>"
+		xml-boolean-true-item "true"
+		extended-true
+		xml-boolean-false-item "false"
+		extended-false
+		xml-real-not-a-number-item "NaN"
+		xml-real-infinity-item "INF"
+		xmlasn1typename
+		ampersand "&"
+		left-curly-bracket "{"
+		right-curly-bracket "}"
+		less-sign "<"
+		greater-sign ">"
+		comma ","
+		dot "."
+		forward-slash "/"
+		left-round-bracket "("
+		right-round-bracket ")"
+		left-square-bracket "["
+		right-square-bracket "]"
+		minus-sign "-"
+		colon ":"
+		equals-sign "="
+		double-quotes '"'
+		single-quotes "'"
+		space " "
+		semicolon ";"
+		at-sign "@"
+		vertical-bar "|"
+		exclamation-mark "!"
+		accent-sign "^"
+		asterisk "*"
+
+		DESCENDANTS
+		SUCCESSORS
+
+		ABSENT
+		ABSTRACT-SYNTAX
+		ALL
+		APPLICATION
+		AUTOMATIC
+		BEGIN
+		BIT
+		BMPString
+		BOOLEAN
+		BY
+		CHARACTER
+		CHOICE
+		CLASS
+		COMPONENT
+		COMPONENTS
+		CONSTRAINED
+		CONTAINING
+		DATE
+		DATE-TIME
+		DEFAULT
+		DEFINITIONS
+		DURATION
+		EMBEDDED
+		ENCODED
+		ENCODING-CONTROL
+		END
+		ENUMERATED
+		EXCEPT
+		EXPLICIT
+		EXPORTS
+		EXTENSIBILITY
+		EXTERNAL
+		FALSE
+		FROM
+		GeneralizedTime
+		GeneralString
+		GraphicString
+		IA5String
+		IDENTIFIER
+		IMPLICIT
+		IMPLIED
+		IMPORTS
+		INCLUDES
+		INSTANCE
+		INSTRUCTIONS
+		INTEGER
+		INTERSECTION
+		ISO646String
+		MAX
+		MIN
+		MINUS-INFINITY
+		NOT-A-NUMBER
+		NULL
+		NumericString
+		OBJECT
+		ObjectDescriptor
+		OCTET
+		OF
+		OID-IRI
+		OPTIONAL
+		PATTERN
+		PDV
+		PLUS-INFINITY
+		PRESENT
+		PrintableString
+		PRIVATE
+		REAL
+		RELATIVE-OID
+		RELATIVE-OID-IRI
+		SEQUENCE
+		SET
+		SETTINGS
+		SIZE
+		STRING
+		SYNTAX
+		T61String
+		TAGS
+		TeletexString
+		TIME
+		TIME-OF-DAY
+		TRUE
+		TYPE-IDENTIFIER
+		UNION
+		UNIQUE
+		UNIVERSAL
+		UniversalString
+		UTCTime
+		UTF8String
+		VideotexString
+		VisibleString
+		WITH
+
+		ANY
+		DEFINED
+
+		MACRO
+		MACRO-BODY
+		MODULE-IDENTITY
+		OBJECT-IDENTITY
+		OBJECT-TYPE
+		NOTIFICATION-TYPE
+		TEXTUAL-CONVENTION
+		OBJECT-GROUP
+		NOTIFICATION-GROUP
+		MODULE-COMPLIANCE
+		AGENT-CAPABILITIES
+		TRAP-TYPE
+
+		LAST-UPDATED
+		ORGANIZATION
+		CONTACT-INFO
+		DESCRIPTION
+		REVISION
+		STATUS
+		REFERENCE
+		MAX-ACCESS
+		BITS
+		UNITS
+		INDEX
+		AUGMENTS
+		DEFVAL
+		OBJECTS
+		DISPLAY-HINT
+		NOTIFICATIONS
+		MODULE
+		MANDATORY-GROUPS
+		GROUP
+		WRITE-SYNTAX
+		MIN-ACCESS
+		PRODUCT-RELEASE
+		SUPPORTS
+		VARIATION
+		ACCESS
+		CREATION-REQUIRES
+		ENTERPRISE
+		VARIABLES
+
+		objectclassreference
+		objectreference
+		objectsetreference
+		EncodingInstruction
+		SubsequentArcIdentifier
+		typefieldreference
+		valuefieldreference
+		valuesetfieldreference
+		objectfieldreference
+		objectsetfieldreference
+		word
+
+		EncodingInstructionAssignmentList
+
+[ Description Hover='false' 
+	Text='Virtual tokens. They have no textual representation.' 
+	Text='They are generated by ASN compiler itself to achieve different functionalitiy goals.' 
+]
+
+		ModuleDefinitions-token
+		Type-token
+		Value-token
+		ValueSet-token
+		ObjectClass-token
+		Object-token
+		ObjectSet-token
+		ObjectSetAssignment-token
+		ParameterizedType-token
+		ParameterizedValue-token
+		ParameterizedValueSetType-token
+		ParameterizedObjectClass-token
+		ParameterizedObjectSet-token
+		ParameterizedObject-token
+		AssignmentList-token
+		BuiltinValue-token
+		DefaultSyntax-token
+		TypeFieldSpec-token
+		FixedTypeValueFieldSpec-token
+		VariableTypeValueFieldSpec-token
+		FixedTypeValueSetFieldSpec-token
+		VariableTypeValueSetFieldSpec-token
+		ObjectFieldSpec-token
+		ObjectSetFieldSpec-token
+
+		DefinedType-token
+		DefinedValue-token
+		ObjectSetElements-token
+
+		ReferencedValueSetting-token
+
+		TypeSetting-token
+		ValueSetting-token
+		ValueSetSetting-token
+		ObjectSetting-token
+		ObjectSetSetting-token
+
+		BitStringValue-token
+		BooleanValue-token
+		CharacterStringValue-token
+		ChoiceValue-token
+		EmbeddedPDVValue-token
+		EnumeratedValue-token
+		ExternalValue-token
+		IntegerValue-token
+		IRIValue-token
+		NullValue-token
+		ObjectIdentifierValue-token
+		OctetStringValue-token
+		RealValue-token
+		RelativeIRIValue-token
+		RelativeOIDValue-token
+		SequenceValue-token
+		SequenceOfValue-token
+		SetValue-token
+		SetOfValue-token
+		TimeValue-token
+	}
+%}
+
+[ Description Text='Scanner for multi-line comment' Hover='false' ]
+[ Declarations Id='AsnDeclarations' Hover='true' ]
+[ CompilationInfo ClassName='CommentRegex' NameSpace='Asn.RegexLib' Access='public' Hover='true' ]
+%scanner commentScanner
+%{
+\*\/
+		pop
+\n|\r
+		skip
+[^\n\r*]+
+		skip
+.
+		skip
+%}
+
+[ Description Text='Scanner for single-line comment' Hover='false' ]
+[ Declarations Id='AsnDeclarations' Hover='true' ]
+[ CompilationInfo ClassName='LineCommentRegex' NameSpace='Asn.RegexLib' Access='public' Hover='true' ]
+%scanner lineCommentScanner
+%{
+\-\-
+		pop
+\n|\r
+		pop
+[^\n\r-]+
+		skip
+.
+		skip
+%}
+
+[ Description Text='Scanner for multiline strings' Hover='false' ]
+[ Declarations Id='AsnDeclarations' Hover='true' ]
+[ CompilationInfo ClassName='CstringRegex' NameSpace='Asn.RegexLib' Access='public' Hover='true' ]
+%scanner cstringScanner
+%{
+\"\"
+		skip
+\"
+		event <end of string>
+[^"]+
+		skip
+\n|\r
+		skip
+.
+		skip
+%}
+
+[ Description Text='Scanner for MACRO definitions' Hover='false' ]
+[ Declarations Id='AsnDeclarations' Hover='true' ]
+[ CompilationInfo ClassName='MacroRegex' NameSpace='Asn.RegexLib' Access='public' Hover='true' ]
+%scanner macroScanner
+%{
+\/\*
+		push commentScanner
+\-\-
+		push lineCommentScanner
+{type-reference}
+		event <type reference>
+{identifier}
+		skip
+{number}
+		skip
+{real-number}
+		skip
+{bstring}
+		skip
+{hstring}
+		skip
+{quotation-mark}
+		push cstringScanner
+{assignment-sign}
+		skip
+{exclamation-mark}
+		skip
+{ampersand}
+		skip
+{apostrophe}
+		skip
+{left-parenthesis}
+		skip
+{right-parenthesis}
+		skip
+{asterisk}
+		skip
+{comma}
+		skip
+{hyphen-minus}
+		skip
+{full-stop}
+		skip
+{solidus}
+		skip
+{colon}
+		skip
+{semicolon}
+		skip
+{less-than-sign}
+		skip
+{equals-sign}
+		skip
+{greater-than-sign}
+		skip
+{commercial-at}
+		skip
+{left-square-bracket}
+		skip
+{right-square-bracket}
+		skip
+{circumflex-accent}
+		skip
+{left-curly-bracket}
+		skip
+{right-curly-bracket}
+		skip
+{vertical-line}
+		skip
+[ \t]+
+		skip
+\n|\r
+		skip
+.
+		skip
+%}
+
+[ Description Text='Scanner for ASN.1 file' Hover='false' ]
+[ Declarations Id='AsnDeclarations' Hover='true' ]
+[ CompilationInfo ClassName='AsnRegex' NameSpace='Asn.RegexLib' Access='public' Hover='true' ]
+%scanner asnScanner
+%{
+\/\*
+		push commentScanner
+\-\-
+		push lineCommentScanner
+{type-reference}
+		event <type reference>
+{identifier}
+		event <identifier>
+{number}
+		terminal number
+{real-number}
+		terminal realnumber
+{bstring}
+		terminal bstring
+{hstring}
+		terminal hstring
+{quotation-mark}
+		push cstringScanner
+{assignment-sign}
+		terminal assignment-sign
+{exclamation-mark}
+		terminal exclamation-mark
+{ampersand}
+		terminal ampersand
+{apostrophe}
+		terminal single-quotes
+{left-parenthesis}
+		terminal left-round-bracket
+{right-parenthesis}
+		terminal right-round-bracket
+{asterisk}
+		terminal asterisk
+{comma}
+		terminal comma
+{hyphen-minus}
+		terminal minus-sign
+{full-stop}
+		terminal dot
+{solidus}
+		terminal forward-slash
+{colon}
+		terminal colon
+{semicolon}
+		terminal semicolon
+{less-than-sign}
+		terminal less-sign
+{equals-sign}
+		terminal equals-sign
+{greater-than-sign}
+		terminal greater-sign
+{commercial-at}
+		terminal at-sign
+{left-square-bracket}
+		terminal left-square-bracket
+{right-square-bracket}
+		terminal right-square-bracket
+{circumflex-accent}
+		terminal accent-sign
+{left-curly-bracket}
+		terminal left-curly-bracket
+{right-curly-bracket}
+		terminal right-curly-bracket
+{vertical-line}
+		terminal vertical-bar
+
+[ \t]+
+		skip
+\n|\r
+		skip
+.
+		skip
+%}
+
+
+[ Description Text='Lexer for ASN.1 file' Hover='true' ]
+[
+	UseScanner
+		ScannerId='commentScanner'
+		ScannerId='lineCommentScanner'
+		ScannerId='cstringScanner'
+		ScannerId='macroScanner'
+		InitialScanner='asnScanner'
+		Hover='true'
+]
+[ CompilationInfo ClassName='AsnLexer' InheritedClassName='AsnScannerBase' NameSpace='Asn.Lexer' Access='public' Hover='true' ]
+%lexer asnLexer
+%{
+
+%}
+
+[ Description Text='Parser for ASN.1 file' Hover='false' ]
+[ Declarations Id='AsnDeclarations' Hover='true' ]
+[ Lexer Id='asnLexer' Hover='true' ]
+[ CompilationInfo ClassName='AsnParser' NameSpace='Asn.Parser' Access='public' Hover='true' ]
+%parser AsnParser
+%{
+
+[ Description Hover='false' 
+	Text='ASN.1: ASN compiler features.' 
+	Text='Thease features are not part of ASN.1 recommandations' 
+]
+
+ASN-COMPILER-FEATURES
+{
+
+[ Start ]
+asn-features
+	:	ModuleDefinitions-token ModuleDefinitions
+	|	ParameterizedType-token ParameterizedType
+	|	ParameterizedValue-token ParameterizedValue
+	|	ParameterizedValueSetType-token ParameterizedValueSetType
+	|	ParameterizedObjectClass-token ParameterizedObjectClass
+	|	ParameterizedObjectSet-token ParameterizedObjectSet
+	|	ParameterizedObject-token ParameterizedObject
+	|	AssignmentList-token AssignmentList
+	|	BuiltinValue-token BuiltinValue
+	|	Type-token TypeAssignment
+	|	Value-token ValueAssignment
+	|	ValueSet-token ValueSetTypeAssignment
+	|	ObjectClass-token ObjectClassAssignment
+	|	Object-token ObjectAssignment
+	|	ObjectSetAssignment-token ObjectSetAssignment
+	|	ParameterizedType-token ParameterizedTypeAssignment
+	|	ParameterizedValue-token ParameterizedValueAssignment
+	|	ParameterizedValueSetType-token ParameterizedValueSetTypeAssignment
+	|	ParameterizedObjectClass-token ParameterizedObjectClassAssignment
+	|	ParameterizedObject-token ParameterizedObjectAssignment
+	|	ParameterizedObjectSet-token ParameterizedObjectSetAssignment
+	|	DefaultSyntax-token DefaultSyntax
+	|	TypeFieldSpec-token TypeFieldSpec
+	|	FixedTypeValueFieldSpec-token FixedTypeValueFieldSpec
+	|	VariableTypeValueFieldSpec-token VariableTypeValueFieldSpec
+	|	FixedTypeValueSetFieldSpec-token FixedTypeValueSetFieldSpec
+	|	VariableTypeValueSetFieldSpec-token VariableTypeValueSetFieldSpec
+	|	ObjectFieldSpec-token ObjectFieldSpec
+	|	ObjectSetFieldSpec-token ObjectSetFieldSpec
+	|	DefinedType-token DefinedType
+	|	DefinedValue-token DefinedValue
+	|	ObjectClass-token ObjectClass
+	|	ObjectSetElements-token ObjectSetElements
+	|	Object-token Object
+	|	ObjectSet-token ObjectSet
+	|	ReferencedValueSetting-token ReferencedValue
+	|	TypeSetting-token Type
+	|	ValueSetting-token Value
+	|	ValueSetSetting-token ValueSet
+	|	ObjectSetting-token Object
+	|	ObjectSetSetting-token ObjectSet
+	|	BitStringValue-token BitStringValue
+	|	BooleanValue-token BooleanValue
+	|	CharacterStringValue-token CharacterStringValue
+	|	ChoiceValue-token ChoiceValue
+	|	EmbeddedPDVValue-token EmbeddedPDVValue
+	|	EnumeratedValue-token EnumeratedValue
+	|	ExternalValue-token ExternalValue
+	|	IntegerValue-token IntegerValue
+	|	IRIValue-token IRIValue
+	|	NullValue-token NullValue
+	|	ObjectIdentifierValue-token ObjectIdentifierValue
+	|	OctetStringValue-token OctetStringValue
+	|	RealValue-token RealValue
+	|	RelativeIRIValue-token RelativeIRIValue
+	|	RelativeOIDValue-token RelativeOIDValue
+	|	SequenceValue-token SequenceValue
+	|	SequenceOfValue-token SequenceOfValue
+	|	SetValue-token SetValue
+	|	SetOfValue-token SetOfValue
+	|	TimeValue-token TimeValue
+	;
+
+ModuleDefinitions
+	:	ModuleDefinition +
+	;
+
+typereference-token
+	:	typereference
+	;
+
+identifier-token
+	:	identifier
+	;
+
+modulereference-token
+	:	typereference-token
+	;
+
+encodingreference-token
+	:	typereference-token
+	;
+
+valuereference-token
+	:	identifier-token
+	;
+
+objectclassreference-token
+	:	typereference-token
+	;
+
+objectreference-token
+	:	identifier-token
+	;
+
+objectsetreference-token
+	:	typereference-token
+	;
+
+typefieldreference-token
+	:	"&" typereference-token
+	;
+
+valuefieldreference-token
+	:	"&" identifier-token
+	;
+
+valuesetfieldreference-token
+	:	"&" typereference-token
+	;
+
+objectfieldreference-token
+	:	"&" identifier-token
+	;
+
+objectsetfieldreference-token
+	:	"&" typereference-token
+	;
+
+integerUnicodeLabel
+	:	number
+	;
+
+non-integerUnicodeLabel
+	:	identifier-token
+	;
+
+keyword
+	:	DESCENDANTS
+	|	SUCCESSORS
+	|	ABSENT
+	|	ABSTRACT-SYNTAX
+	|	ALL
+	|	APPLICATION
+	|	AUTOMATIC
+	|	BEGIN
+	|	BIT
+	|	BMPString
+	|	BOOLEAN
+	|	BY
+	|	CHARACTER
+	|	CHOICE
+	|	CLASS
+	|	COMPONENT
+	|	COMPONENTS
+	|	CONSTRAINED
+	|	CONTAINING
+	|	DATE
+	|	DATE-TIME
+	|	DEFAULT
+	|	DEFINITIONS
+	|	DURATION
+	|	EMBEDDED
+	|	ENCODED
+	|	ENCODING-CONTROL
+	|	END
+	|	ENUMERATED
+	|	EXCEPT
+	|	EXPLICIT
+	|	EXPORTS
+	|	EXTENSIBILITY
+	|	EXTERNAL
+	|	FALSE
+	|	FROM
+	|	GeneralizedTime
+	|	GeneralString
+	|	GraphicString
+	|	IA5String
+	|	IDENTIFIER
+	|	IMPLICIT
+	|	IMPLIED
+	|	IMPORTS
+	|	INCLUDES
+	|	INSTANCE
+	|	INSTRUCTIONS
+	|	INTEGER
+	|	INTERSECTION
+	|	ISO646String
+	|	MAX
+	|	MIN
+	|	MINUS-INFINITY
+	|	NOT-A-NUMBER
+	|	NULL
+	|	NumericString
+	|	OBJECT
+	|	ObjectDescriptor
+	|	OCTET
+	|	OF
+	|	OID-IRI
+	|	OPTIONAL
+	|	PATTERN
+	|	PDV
+	|	PLUS-INFINITY
+	|	PRESENT
+	|	PrintableString
+	|	PRIVATE
+	|	REAL
+	|	RELATIVE-OID
+	|	RELATIVE-OID-IRI
+	|	SEQUENCE
+	|	SET
+	|	SETTINGS
+	|	SIZE
+	|	STRING
+	|	SYNTAX
+	|	T61String
+	|	TAGS
+	|	TeletexString
+	|	TIME
+	|	TIME-OF-DAY
+	|	TRUE
+	|	TYPE-IDENTIFIER
+	|	UNION
+	|	UNIQUE
+	|	UNIVERSAL
+	|	UniversalString
+	|	UTCTime
+	|	UTF8String
+	|	VideotexString
+	|	VisibleString
+	|	WITH
+	|	ANY
+	|	DEFINED
+	|	MACRO
+	|	MACRO-BODY
+	|	MODULE-IDENTITY
+	|	OBJECT-IDENTITY
+	|	OBJECT-TYPE
+	|	NOTIFICATION-TYPE
+	|	TEXTUAL-CONVENTION
+	|	OBJECT-GROUP
+	|	NOTIFICATION-GROUP
+	|	MODULE-COMPLIANCE
+	|	AGENT-CAPABILITIES
+	|	TRAP-TYPE
+	|	LAST-UPDATED
+	|	ORGANIZATION
+	|	CONTACT-INFO
+	|	DESCRIPTION
+	|	REVISION
+	|	STATUS
+	|	REFERENCE
+	|	MAX-ACCESS
+	|	BITS
+	|	UNITS
+	|	INDEX
+	|	AUGMENTS
+	|	DEFVAL
+	|	OBJECTS
+	|	DISPLAY-HINT
+	|	NOTIFICATIONS
+	|	MODULE
+	|	MANDATORY-GROUPS
+	|	GROUP
+	|	WRITE-SYNTAX
+	|	MIN-ACCESS
+	|	PRODUCT-RELEASE
+	|	SUPPORTS
+	|	VARIATION
+	|	ACCESS
+	|	CREATION-REQUIRES
+	|	ENTERPRISE
+	|	VARIABLES
+	;
+
+}
+
+[ Description Hover='false' 
+	Text='ASN.1: Specification of basic notation' 
+	Text='See: Recommendation ITU-T X.680' 
+]
+
+SPECIFICATION-OF-BASIC-NOTATION
+{
+
+Module-definition
+{
+
+ModuleDefinition
+	:	ModuleIdentifier DefinitionsDefault EncodingReferenceDefault TagDefault ExtensionDefault "::=" BEGIN ModuleBody EncodingControlSections END
+	;
+
+ModuleIdentifier
+	:	modulereference-token DefinitiveIdentification
+	;
+
+DefinitiveIdentification
+	:	DefinitiveOID
+	|	DefinitiveOIDandIRI
+	|	%empty
+	;
+
+DefinitiveOID
+	:	"{" DefinitiveObjIdComponentList "}"
+	;
+
+DefinitiveOIDandIRI
+	:	DefinitiveOID IRIValue
+	;
+
+DefinitiveObjIdComponentList
+	:	DefinitiveObjIdComponent +
+	;
+
+DefinitiveObjIdComponent
+	:	NameForm
+	|	DefinitiveNumberForm
+	|	DefinitiveNameAndNumberForm
+	;
+
+DefinitiveNumberForm
+	:	number
+	;
+
+DefinitiveNameAndNumberForm
+	:	identifier-token "(" DefinitiveNumberForm ")"
+	;
+
+DefinitionsDefault
+	:	DEFINITIONS
+	|	%empty
+	;
+
+EncodingReferenceDefault
+	:	encodingreference-token INSTRUCTIONS
+	|	%empty
+	;
+
+TagDefault
+	:	EXPLICIT TAGS
+	|	IMPLICIT TAGS
+	|	AUTOMATIC TAGS
+	|	%empty
+	;
+
+ExtensionDefault
+	:	EXTENSIBILITY IMPLIED
+	|	%empty
+	;
+
+ModuleBody
+	:	Exports Imports AssignmentList
+	|	%empty
+	;
+
+Exports
+	:	EXPORTS SymbolsExported ";"
+	|	EXPORTS ALL ";"
+	|	%empty
+	;
+
+SymbolsExported
+	:	SymbolList
+	|	%empty
+	;
+
+Imports
+	:	IMPORTS SymbolsImported ";"
+	|	%empty
+	;
+
+SymbolsImported
+	:	SymbolsFromModuleList
+	|	%empty
+	;
+
+SymbolsFromModuleList
+	:	SymbolsFromModule +
+	;
+
+SymbolsFromModule
+	:	SymbolList FROM GlobalModuleReference identifier-token ? SelectionOption
+	;
+
+SelectionOption
+	:	%empty
+	|	WITH SUCCESSORS
+	|	WITH DESCENDANTS
+	;
+
+GlobalModuleReference
+	:	modulereference-token AssignedIdentifier
+	;
+
+AssignedIdentifier
+	:	ObjectIdentifierValue
+	|	DefinedValue
+	|	%empty
+	;
+
+SymbolList
+	:	Symbol + [ "," ]
+	;
+
+Symbol
+	:	Reference
+	|	ParameterizedReference
+	|	MacroName
+	;
+
+Reference
+	:	typereference-token
+	|	valuereference-token
+	|	objectclassreference-token
+	|	objectreference-token
+	|	objectsetreference-token
+	;
+
+AssignmentList
+	:	Assignment +
+	;
+
+Assignment
+	:	TypeAssignment
+	|	ValueAssignment
+	|	XMLValueAssignment
+	|	ValueSetTypeAssignment
+	|	ObjectClassAssignment
+	|	ObjectAssignment
+	|	ObjectSetAssignment
+	|	ParameterizedAssignment
+	|	MacroAssignment
+	|	MacroDefinition
+	;
+}
+
+Referencing-type-and-value-definitions
+{
+
+DefinedType
+	:	ExternalTypeReference
+	|	typereference-token
+	|	ParameterizedType
+	|	ParameterizedValueSetType
+	;
+
+DefinedValue
+	:	ExternalValueReference
+	|	valuereference-token
+	|	ParameterizedValue
+	;
+
+NonParameterizedTypeName
+	:	ExternalTypeReference
+	|	typereference-token
+	|	xmlasn1typename
+	;
+
+ExternalTypeReference
+	:	modulereference-token "." typereference-token
+	;
+
+ExternalValueReference
+	:	modulereference-token "." valuereference-token
+	;
+}
+
+Notation-to-support-references-to-ASN.1-components
+{
+
+AbsoluteReference
+	:	"@" ModuleIdentifier "." ItemSpec
+	;
+
+ItemSpec
+	:	typereference-token
+	|	ItemId "." ComponentId
+	;
+
+ItemId
+	:	ItemSpec
+	;
+
+ComponentId
+	:	identifier-token
+	|	number
+	|	"*"
+	;
+}
+
+Assigning-types-and-values
+{
+
+TypeAssignment
+	:	typereference-token "::=" Type
+	;
+
+ValueAssignment
+	:	@@value valuereference-token Type "::=" @push-governor Value @pop-governor
+	;
+
+XMLValueAssignment
+	:	valuereference-token "::=" XMLTypedValue
+	;
+
+XMLTypedValue
+	:	"<" NonParameterizedTypeName ">" XMLValue "</" NonParameterizedTypeName ">"
+	|	"<" NonParameterizedTypeName "/>"
+	;
+
+ValueSetTypeAssignment
+	:	@@value-set typereference-token Type "::=" @push-governor ValueSet @pop-governor
+	;
+
+ValueSet
+	:	"{" ElementSetSpecs "}"
+	;
+}
+
+Definition-of-types-and-values
+{
+
+Type
+	:	BuiltinType
+	|	ReferencedType
+	|	ConstrainedType
+	;
+
+BuiltinType
+	:	AnyType
+	|	BitStringType
+	|	BooleanType
+	|	CharacterStringType
+	|	ChoiceType
+	|	DateType
+	|	DateTimeType
+	|	DurationType
+	|	EmbeddedPDVType
+	|	EnumeratedType
+	|	ExternalType
+	|	InstanceOfType
+	|	IntegerType
+	|	IRIType
+	|	NullType
+	|	ObjectClassFieldType
+	|	ObjectIdentifierType
+	|	OctetStringType
+	|	RealType
+	|	RelativeIRIType
+	|	RelativeOIDType
+	|	SequenceType
+	|	SequenceOfType
+	|	SetType
+	|	SetOfType
+	|	PrefixedType
+	|	TimeType
+	|	TimeOfDayType
+	;
+
+ReferencedType
+	:	DefinedType
+	|	UsefulType
+	|	SelectionType
+	|	TypeFromObject
+	|	ValueSetFromObjects
+	;
+
+NamedType
+	:	identifier-token Type
+	|	identifier-token Type DEFINED BY defined-identifier-token
+	;
+
+defined-identifier-token
+	:	identifier-token
+	;
+
+Value
+	:	BuiltinValue
+	|	ReferencedValue
+	|	OpenTypeFieldVal
+	;
+
+XMLValue
+	:	XMLBuiltinValue
+	|	XMLObjectClassFieldValue
+	;
+
+BuiltinValue
+	:	BitStringValue
+	|	BooleanValue
+	|	CharacterStringValue
+	|	ChoiceValue
+	|	EmbeddedPDVValue
+	|	EnumeratedValue
+	|	ExternalValue
+	|	IntegerValue
+	|	IRIValue
+	|	NullValue
+	|	ObjectIdentifierValue
+	|	OctetStringValue
+	|	RealValue
+	|	RelativeIRIValue
+	|	RelativeOIDValue
+	|	SequenceValue
+	|	SequenceOfValue
+	|	SetValue
+	|	SetOfValue
+	|	TimeValue
+	;
+
+XMLBuiltinValue
+	:	XMLBitStringValue
+	|	XMLBooleanValue
+	|	XMLCharacterStringValue
+	|	XMLChoiceValue
+	|	XMLEmbeddedPDVValue
+	|	XMLEnumeratedValue
+	|	XMLExternalValue
+	|	XMLInstanceOfValue
+	|	XMLIntegerValue
+	|	XMLIRIValue
+	|	XMLNullValue
+	|	XMLObjectIdentifierValue
+	|	XMLOctetStringValue
+	|	XMLRealValue
+	|	XMLRelativeIRIValue
+	|	XMLRelativeOIDValue
+	|	XMLSequenceValue
+	|	XMLSequenceOfValue
+	|	XMLSetValue
+	|	XMLSetOfValue
+	|	XMLPrefixedValue
+	|	XMLTimeValue
+	;
+
+ReferencedValue
+	:	DefinedValue
+	|	ValueFromObject
+	;
+
+NamedValue
+	:	identifier-token Value
+	;
+
+XMLNamedValue
+	:	"<" identifier-token ">" XMLValue "</" identifier-token ">"
+	;
+}
+
+Notation-for-the-boolean-type
+{
+
+BooleanType
+	:	BOOLEAN
+	;
+
+BooleanValue
+	:	TRUE
+	|	FALSE
+	;
+
+XMLBooleanValue
+	:	EmptyElementBoolean
+	|	TextBoolean
+	;
+
+EmptyElementBoolean
+	:	"<" "true" "/>"
+	|	"<" "false" "/>"
+	;
+
+TextBoolean
+	:	extended-true
+	|	extended-false
+	;
+}
+
+Notation-for-the-integer-type
+{
+
+IntegerType
+	:	INTEGER
+	|	INTEGER "{" NamedNumberList "}"
+	;
+
+NamedNumberList
+	:	NamedNumberItem + [ "," ]
+	;
+
+NamedNumberItem
+	:	identifier-token "(" SignedNumber ")"
+	|	identifier-token "(" DefinedValue ")"
+	;
+
+NamedNumber
+	:	identifier-token "(" SignedNumber ")"
+	|	identifier-token "(" DefinedValue ")"
+	;
+
+SignedNumber
+	:	number
+	|	"-" number
+	;
+
+IntegerValue
+	:	SignedNumber
+	|	identifier-token
+	;
+
+XMLIntegerValue
+	:	XMLSignedNumber
+	|	EmptyElementInteger
+	|	TextInteger
+	;
+
+XMLSignedNumber
+	:	number
+	|	"-" number
+	;
+
+EmptyElementInteger
+	:	%empty
+	|	"<" identifier-token "/>"
+	;
+
+TextInteger
+	:	identifier-token
+	;
+}
+
+Notation-for-the-enumerated-type
+{
+
+EnumeratedType
+	:	ENUMERATED "{" Enumerations "}"
+	;
+
+Enumerations
+	:	RootEnumeration
+	|	RootEnumeration "," "." "." "." ExceptionSpec
+	|	RootEnumeration "," "." "." "." ExceptionSpec "," AdditionalEnumeration
+	;
+
+RootEnumeration
+	:	Enumeration
+	;
+
+AdditionalEnumeration
+	:	Enumeration
+	;
+
+Enumeration
+	:	EnumerationItem + [ "," ]
+	;
+
+EnumerationItem
+	:	identifier-token
+	|	NamedNumber
+	;
+
+EnumeratedValue
+	:	identifier-token
+	;
+
+XMLEnumeratedValue
+	:	EmptyElementEnumerated
+	|	TextEnumerated
+	;
+
+EmptyElementEnumerated
+	:	"<" identifier-token "/>"
+	;
+
+TextEnumerated
+	:	identifier-token
+	;
+}
+
+Notation-for-the-real-type
+{
+
+RealType
+	:	REAL
+	;
+
+RealValue
+	:	NumericRealValue
+	|	SpecialRealValue
+	;
+
+NumericRealValue
+	:	realnumber
+	|	"-" realnumber
+	|	SequenceValue
+	;
+
+SpecialRealValue
+	:	PLUS-INFINITY
+	|	MINUS-INFINITY
+	|	NOT-A-NUMBER
+	;
+
+XMLRealValue
+	:	XMLNumericRealValue
+	|	XMLSpecialRealValue
+	;
+
+XMLNumericRealValue
+	:	realnumber
+	|	"-" realnumber
+	;
+
+XMLSpecialRealValue
+	:	EmptyElementReal
+	|	TextReal
+	;
+
+EmptyElementReal
+	:	"<" PLUS-INFINITY "/>"
+	|	"<" MINUS-INFINITY "/>"
+	|	"<" NOT-A-NUMBER "/>"
+	;
+
+TextReal
+	:	"INF"
+	|	"-" "INF"
+	|	"NaN"
+	;
+}
+
+AnyType
+	:	ANY
+	;
+
+Notation-for-the-bitstring-type
+{
+
+BitStringType
+	:	BIT STRING
+	|	BIT STRING "{" NamedBitList "}"
+	;
+
+NamedBitList
+	:	NamedBit + [ "," ]
+	;
+
+NamedBit
+	:	identifier-token "(" number ")"
+	|	identifier-token "(" DefinedValue ")"
+	;
+
+BitStringValue
+	:	bstring
+	|	hstring
+	|	"{" IdentifierList "}"
+	|	"{" "}"
+	|	CONTAINING Value
+	;
+
+IdentifierList
+	:	identifier-token + [ "," ]
+	;
+
+XMLBitStringValue
+	:	XMLTypedValue
+	|	xmlbstring
+	|	XMLIdentifierList
+	|	%empty
+	;
+
+XMLIdentifierList
+	:	EmptyElementList
+	|	TextList
+	;
+
+EmptyElementList
+	:	( :EmptyElement: "<" identifier-token "/>" ) +
+	;
+
+TextList
+	:	identifier-token +
+	;
+}
+
+Notation-for-the-octetstring-type
+{
+
+OctetStringType
+	:	OCTET STRING
+	;
+
+OctetStringValue
+	:	bstring
+	|	hstring
+	|	CONTAINING Value
+	;
+
+XMLOctetStringValue
+	:	XMLTypedValue
+	|	xmlhstring
+	;
+}
+
+Notation-for-the-null-type
+{
+
+NullType
+	:	NULL
+	;
+
+NullValue
+	:	NULL
+	;
+
+XMLNullValue
+	:	%empty
+	;
+}
+
+Notation-for-sequence-types
+{
+
+SequenceType
+	:	SEQUENCE "{" ComponentTypeLists ? "}"
+	;
+
+ExtensionAndException
+	:	"." "." "." ExceptionSpec
+	;
+
+OptionalExtensionMarker
+	:	"," "." "." "."
+	|	%empty
+	;
+
+ComponentTypeLists
+	:	RootComponentTypeList
+	|	RootComponentTypeList "," ExtensionAndException ExtensionAdditions OptionalExtensionMarker
+	|	RootComponentTypeList "," ExtensionAndException ExtensionAdditions ExtensionEndMarker "," RootComponentTypeList
+	|	ExtensionAndException ExtensionAdditions ExtensionEndMarker "," RootComponentTypeList
+	|	ExtensionAndException ExtensionAdditions OptionalExtensionMarker
+	|	ExtensionAndException OptionalExtensionMarker
+	;
+
+RootComponentTypeList
+	:	ComponentTypeList
+	;
+
+ExtensionEndMarker
+	:	"," "." "." "."
+	;
+
+ExtensionAdditions
+	:	"," ExtensionAdditionList
+	|	%empty
+	;
+
+ExtensionAdditionList
+	:	ExtensionAddition + [ "," ]
+	;
+
+ExtensionAddition
+	:	ComponentType
+	|	ExtensionAdditionGroup
+	;
+
+ExtensionAdditionGroup
+	:	"[" "[" VersionNumber ComponentTypeList "]" "]"
+	;
+
+VersionNumber
+	:	%empty
+	|	number ":"
+	;
+
+ComponentTypeList
+	:	ComponentType + [ "," ]
+	;
+
+ComponentType
+	:	TypeOrNamedType
+	|	TypeOrNamedType OPTIONAL
+	|	@@default-value TypeOrNamedType DEFAULT @push-governor Value @pop-governor
+	|	COMPONENTS OF Type
+	;
+
+TypeOrNamedType
+	:	Type
+	|	NamedType
+	;
+
+SequenceValue
+	:	"{" ComponentValueList ? "}"
+	;
+
+ComponentValueList
+	:	NamedValue + [ "," ]
+	;
+
+XMLSequenceValue
+	:	XMLComponentValueList
+	|	%empty
+	;
+
+XMLComponentValueList
+	:	XMLNamedValue +
+	;
+}
+
+Notation-for-sequence-of-types
+{
+
+SequenceOfType
+	:	SEQUENCE OF Type
+	|	SEQUENCE OF NamedType
+	;
+
+SequenceOfValue
+	:	"{" ValueList "}"
+	|	"{" NamedValueList "}"
+	|	"{" "}"
+	;
+
+ValueList
+	:	Value + [ "," ]
+	;
+
+NamedValueList
+	:	NamedValue + [ "," ]
+	;
+
+XMLSequenceOfValue
+	:	XMLValueList
+	|	XMLDelimitedItemList
+	|	%empty
+	;
+
+XMLValueList
+	:	XMLValueOrEmpty +
+	;
+
+XMLValueOrEmpty
+	:	XMLValue
+	|	"<" NonParameterizedTypeName "/>"
+	;
+
+XMLDelimitedItemList
+	:	XMLDelimitedItem +
+	;
+
+XMLDelimitedItem
+	:	"<" NonParameterizedTypeName ">" XMLValue "</" NonParameterizedTypeName ">"
+	|	"<" identifier-token ">" XMLValue "</" identifier-token ">"
+	;
+}
+
+Notation-for-set-types
+{
+
+SetType
+	:	SET "{" ComponentTypeLists ? "}"
+	;
+
+SetValue
+	:	"{" ComponentValueList ? "}"
+	;
+
+XMLSetValue
+	:	XMLComponentValueList
+	|	%empty
+	;
+}
+
+Notation-for-set-of-types
+{
+
+SetOfType
+	:	SET OF Type
+	|	SET OF NamedType
+	;
+
+SetOfValue
+	:	"{" ValueList "}"
+	|	"{" NamedValueList "}"
+	|	"{" "}"
+	;
+
+XMLSetOfValue
+	:	XMLValueList
+	|	XMLDelimitedItemList
+	|	%empty
+	;
+}
+
+Notation-for-choice-types
+{
+
+ChoiceType
+	:	CHOICE "{" AlternativeTypeLists "}"
+	;
+
+AlternativeTypeLists
+	:	RootAlternativeTypeList
+	|	RootAlternativeTypeList "," ExtensionAndException ExtensionAdditionAlternatives OptionalExtensionMarker
+	;
+
+RootAlternativeTypeList
+	:	AlternativeTypeList
+	;
+
+ExtensionAdditionAlternatives
+	:	"," ExtensionAdditionAlternativesList
+	|	%empty
+	;
+
+ExtensionAdditionAlternativesList
+	:	ExtensionAdditionAlternative + [ "," ]
+	;
+
+ExtensionAdditionAlternative
+	:	ExtensionAdditionAlternativesGroup
+	|	NamedType
+	;
+
+ExtensionAdditionAlternativesGroup
+	:	"[" "[" VersionNumber AlternativeTypeList "]" "]"
+	;
+
+AlternativeTypeList
+	:	AltTypeOrNamedType + [ "," ]
+	;
+
+AltTypeOrNamedType
+	:	TypeOrNamedType
+	;
+
+ChoiceValue
+	:	identifier-token ":" Value
+	;
+
+XMLChoiceValue
+	:	"<" identifier-token ">" XMLValue "</" identifier-token ">"
+	;
+}
+
+Notation-for-selection-types
+{
+SelectionType
+	:	identifier-token "<" Type
+	;
+}
+
+Notation-for-prefixed-types
+{
+
+PrefixedType
+	:	TaggedType
+	|	EncodingPrefixedType
+	;
+
+PrefixedValue
+	:	Value
+	;
+
+XMLPrefixedValue
+	:	XMLValue
+	;
+}
+
+The-tagged-type
+{
+
+TaggedType
+	:	Tag Type
+	|	Tag IMPLICIT Type
+	|	Tag EXPLICIT Type
+	;
+
+Tag
+	:	"[" EncodingReference Class ClassNumber "]"
+	;
+
+EncodingReference
+	:	encodingreference-token ":"
+	|	%empty
+	;
+
+ClassNumber
+	:	number
+	|	DefinedValue
+	;
+
+Class
+	:	UNIVERSAL
+	|	APPLICATION
+	|	PRIVATE
+	|	%empty
+	;
+}
+
+The-encoding-prefixed-type
+{
+
+EncodingPrefixedType
+	:	EncodingPrefix Type
+	;
+
+EncodingPrefix
+	:	"[" EncodingReference EncodingInstruction "]"
+	;
+}
+
+Notation-for-the-object-identifier-type
+{
+
+ObjectIdentifierType
+	:	OBJECT IDENTIFIER
+	;
+
+ObjectIdentifierValue
+	:	"{" ObjIdComponentsList "}"
+	;
+
+ObjIdComponentsList
+	:	ObjIdComponents +
+	;
+
+ObjIdComponents
+	:	NameForm
+	|	NumberForm
+	|	NameAndNumberForm
+	;
+
+NameForm
+	:	identifier-token
+	;
+
+NumberForm
+	:	number
+	|	DefinedValue
+	;
+
+NameAndNumberForm
+	:	identifier-token "(" NumberForm ")"
+	;
+
+XMLObjectIdentifierValue
+	:	XMLObjIdComponentList
+	;
+
+XMLObjIdComponentList
+	:	XMLObjIdComponent + [ "." ]
+	;
+
+XMLObjIdComponent
+	:	NameForm
+	|	XMLNumberForm
+	|	XMLNameAndNumberForm
+	;
+
+XMLNumberForm
+	:	number
+	;
+
+XMLNameAndNumberForm
+	:	identifier-token "(" XMLNumberForm ")"
+	;
+}
+
+Notation-for-the-relative-object-identifier-type
+{
+
+RelativeOIDType
+	:	RELATIVE-OID
+	;
+
+RelativeOIDValue
+	:	"{" RelativeOIDComponentsList "}"
+	;
+
+RelativeOIDComponentsList
+	:	RelativeOIDComponents +
+	;
+
+RelativeOIDComponents
+	:	NumberForm
+	|	NameAndNumberForm
+	;
+
+XMLRelativeOIDValue
+	:	XMLRelativeOIDComponentList
+	;
+
+XMLRelativeOIDComponentList
+	:	XMLRelativeOIDComponent + [ "." ]
+	;
+
+XMLRelativeOIDComponent
+	:	XMLNumberForm
+	|	XMLNameAndNumberForm
+	;
+}
+
+Notation-for-the-OID-internationalized-resource-identifier-type
+{
+
+IRIType
+	:	OID-IRI
+	;
+
+IRIValue
+	:	'"' ( :ArcList: ( :Arc: "/" ArcIdentifier ) + ) '"'
+	;
+
+ArcIdentifier
+	:	integerUnicodeLabel
+	|	non-integerUnicodeLabel
+	;
+
+XMLIRIValue
+	:	ArcList
+	;
+}
+
+Notation-for-the-relative-OID-internationalized-resource-identifier-type
+{
+
+RelativeIRIType
+	:	RELATIVE-OID-IRI
+	;
+
+RelativeIRIValue
+	:	'"'	FirstRelativeArcIdentifier SubsequentArcIdentifier '"'
+	;
+
+FirstRelativeArcIdentifier
+	:	ArcIdentifier
+	;
+
+XMLRelativeIRIValue
+	:	FirstRelativeArcIdentifier SubsequentArcIdentifier
+	;
+}
+
+Notation-for-the-embedded-pdv-type
+{
+
+EmbeddedPDVType
+	:	EMBEDDED PDV
+	;
+
+EmbeddedPDVValue
+	:	SequenceValue
+	;
+
+XMLEmbeddedPDVValue
+	:	XMLSequenceValue
+	;
+}
+
+Notation-for-the-external-type
+{
+
+ExternalType
+	:	EXTERNAL
+	;
+
+ExternalValue
+	:	SequenceValue
+	;
+
+XMLExternalValue
+	:	XMLSequenceValue
+	;
+}
+
+The-time-type
+{
+
+TimeType
+	:	TIME
+	;
+
+TimeValue
+	:	tstring
+	;
+
+XMLTimeValue
+	:	xmltstring
+	;
+
+DateType
+	:	DATE
+	;
+
+TimeOfDayType
+	:	TIME-OF-DAY
+	;
+
+DateTimeType
+	:	DATE-TIME
+	;
+
+DurationType
+	:	DURATION
+	;
+}
+
+The-character-string-types
+{
+
+CharacterStringType
+	:	RestrictedCharacterStringType
+	|	UnrestrictedCharacterStringType
+	;
+
+CharacterStringValue
+	:	RestrictedCharacterStringValue
+	|	UnrestrictedCharacterStringValue
+	;
+
+XMLCharacterStringValue
+	:	XMLRestrictedCharacterStringValue
+	|	XMLUnrestrictedCharacterStringValue
+	;
+
+RestrictedCharacterStringType
+	:	BMPString
+	|	GeneralString
+	|	GraphicString
+	|	IA5String
+	|	ISO646String
+	|	NumericString
+	|	PrintableString
+	|	TeletexString
+	|	T61String
+	|	UniversalString
+	|	UTF8String
+	|	VideotexString
+	|	VisibleString
+	;
+
+RestrictedCharacterStringValue
+	:	cstring
+	|	CharacterStringList
+	|	Quadruple
+	|	Tuple
+	;
+
+CharacterStringList
+	:	"{" CharSyms "}"
+	;
+
+CharSyms
+	:	CharsDefn + [ "," ]
+	;
+
+CharsDefn
+	:	cstring
+	|	Quadruple
+	|	Tuple
+	|	DefinedValue
+	;
+
+Quadruple
+	:	"{" Group "," Plane "," Row "," Cell "}"
+	;
+
+Group
+	:	number
+	;
+
+Plane
+	:	number
+	;
+
+Row
+	:	number
+	;
+
+Cell
+	:	number
+	;
+
+Tuple
+	:	"{" TableColumn "," TableRow "}"
+	;
+
+TableColumn
+	:	number
+	;
+
+TableRow
+	:	number
+	;
+
+XMLRestrictedCharacterStringValue
+	:	xmlcstring
+	;
+
+UnrestrictedCharacterStringType
+	:	CHARACTER STRING
+	;
+
+UnrestrictedCharacterStringValue
+	:	SequenceValue
+	;
+
+XMLUnrestrictedCharacterStringValue
+	:	XMLSequenceValue
+	;
+}
+
+Notation-for-types-defined-in-clauses-46-to-48
+{
+
+UsefulType
+	:	UTF8String
+	|	GraphicString
+	|	NumericString
+	|	VisibleString
+	|	PrintableString
+	|	ISO646String
+	|	TeletexString
+	|	GeneralString
+	|	T61String
+	|	UniversalString
+	|	VideotexString
+	|	BMPString
+	|	IA5String
+	|	GeneralizedTime
+	|	UTCTime
+	|	ObjectDescriptor
+	;
+}
+
+Constrained-types
+{
+
+ConstrainedType
+	:	@@type-constraint Type @push-governor Constraint @pop-governor
+	|	TypeWithConstraint
+	;
+
+TypeWithConstraint
+	:	SET Constraint OF Type
+	|	SET SizeConstraint OF Type
+	|	SEQUENCE Constraint OF Type
+	|	SEQUENCE SizeConstraint OF Type
+	|	SET Constraint OF NamedType
+	|	SET SizeConstraint OF NamedType
+	|	SEQUENCE Constraint OF NamedType
+	|	SEQUENCE SizeConstraint OF NamedType
+	;
+
+Constraint
+	:	"(" ConstraintSpec ExceptionSpec ")"
+	;
+
+ConstraintSpec
+	:	SubtypeConstraint
+	|	GeneralConstraint
+	;
+
+SubtypeConstraint
+	:	ElementSetSpecs
+	;
+}
+
+Element-set-specification
+{
+
+ElementSetSpecs
+	:	RootElementSetSpec
+	|	RootElementSetSpec "," "." "." "."
+	|	RootElementSetSpec "," "." "." "." "," AdditionalElementSetSpec
+	;
+
+RootElementSetSpec
+	:	ElementSetSpec
+	;
+
+AdditionalElementSetSpec
+	:	ElementSetSpec
+	;
+
+ElementSetSpec
+	:	Unions
+	|	ALL Exclusions
+	;
+
+Unions
+	:	Intersections + [ UnionMark ]
+	;
+
+UElems
+	:	Unions
+	;
+
+Intersections
+	:	IntersectionElements + [ IntersectionMark ]
+	;
+
+IElems
+	:	Intersections
+	;
+
+IntersectionElements
+	:	Elements
+	|	Elems Exclusions
+	;
+
+Elems
+	:	Elements
+	;
+
+Exclusions
+	:	EXCEPT Elements
+	;
+
+UnionMark
+	:	"|"
+	|	UNION
+	;
+
+IntersectionMark
+	:	"^"
+	|	INTERSECTION
+	;
+
+Elements
+	:	SubtypeElements
+	|	ObjectSetElements
+	|	"(" ElementSetSpec ")"
+	;
+}
+
+Subtype-elements
+{
+
+SubtypeElements
+	:	SingleValue
+	|	ContainedSubtype
+	|	ValueRange
+	|	PermittedAlphabet
+	|	SizeConstraint
+	|	TypeConstraint
+	|	InnerTypeConstraints
+	|	PatternConstraint
+	|	PropertySettings
+	|	DurationRange
+	|	TimePointRange
+	|	RecurrenceRange
+	;
+
+SingleValue
+	:	Value
+	;
+
+ContainedSubtype
+	:	Includes Type
+	;
+
+Includes
+	:	INCLUDES
+	|	%empty
+	;
+
+ValueRange
+	:	LowerEndpoint "." "." UpperEndpoint
+	;
+
+LowerEndpoint
+	:	LowerEndValue
+	|	LowerEndValue "<"
+	;
+
+UpperEndpoint
+	:	UpperEndValue
+	|	"<" UpperEndValue
+	;
+
+LowerEndValue
+	:	Value
+	|	MIN
+	;
+
+UpperEndValue
+	:	Value
+	|	MAX
+	;
+
+SizeConstraint
+	:	@@size SIZE @push-governor Constraint @pop-governor
+	;
+
+TypeConstraint
+	:	Type
+	;
+
+PermittedAlphabet
+	:	FROM Constraint
+	;
+
+InnerTypeConstraints
+	:	WITH COMPONENT SingleTypeConstraint
+	|	WITH COMPONENTS MultipleTypeConstraints
+	;
+
+SingleTypeConstraint
+	:	Constraint
+	;
+
+MultipleTypeConstraints
+	:	FullSpecification
+	|	PartialSpecification
+	;
+
+FullSpecification
+	:	"{" TypeConstraints "}"
+	;
+
+PartialSpecification
+	:	"{" "." "." "." "," TypeConstraints "}"
+	;
+
+TypeConstraints
+	:	NamedConstraint + [ "," ]
+	;
+
+NamedConstraint
+	:	identifier-token ComponentConstraint
+	;
+
+ComponentConstraint
+	:	ValueConstraint PresenceConstraint
+	;
+
+ValueConstraint
+	:	Constraint
+	|	%empty
+	;
+
+PresenceConstraint
+	:	PRESENT
+	|	ABSENT
+	|	OPTIONAL
+	|	%empty
+	;
+
+PatternConstraint
+	:	PATTERN Value
+	;
+
+PropertySettings
+	:	SETTINGS simplestring
+	;
+
+PropertySettingsList
+	:	PropertyAndSettingPair +
+	;
+
+PropertyAndSettingPair
+	:	PropertyName "=" SettingName
+	;
+
+PropertyName
+	:	psname
+	;
+
+SettingName
+	:	psname
+	;
+
+DurationRange
+	:	ValueRange
+	;
+
+TimePointRange
+	:	ValueRange
+	;
+
+RecurrenceRange
+	:	ValueRange
+	;
+}
+
+ExceptionSpec
+	:	"!" ExceptionIdentification
+	|	%empty
+	;
+
+ExceptionIdentification
+	:	SignedNumber
+	|	DefinedValue
+	|	@@value-with-type Type ":" @push-governor Value @pop-governor
+	;
+
+EncodingControlSections
+	:	EncodingControlSection +
+	|	%empty
+	;
+
+EncodingControlSection
+	:	ENCODING-CONTROL encodingreference-token EncodingInstructionAssignmentList
+	;
+
+}
+
+[ Description Hover='false' 
+	Text='ASN.1: Information object specification' 
+	Text='See: Recommendation ITU-T X.681' 
+]
+
+INFORMATION-OBJECT-SPECIFICATION
+{
+
+Referencing-definitions
+{
+
+DefinedObjectClass
+	:	ExternalObjectClassReference
+	|	objectclassreference-token
+	|	UsefulObjectClassReference
+	;
+
+DefinedObject
+	:	ExternalObjectReference
+	|	objectreference-token
+	;
+
+DefinedObjectSet
+	:	ExternalObjectSetReference
+	|	objectsetreference-token
+	;
+
+ExternalObjectClassReference
+	:	modulereference-token "." objectclassreference-token
+	;
+
+ExternalObjectReference
+	:	modulereference-token "." objectreference-token
+	;
+
+ExternalObjectSetReference
+	:	modulereference-token "." objectsetreference-token
+	;
+
+UsefulObjectClassReference
+	:	TYPE-IDENTIFIER
+	|	ABSTRACT-SYNTAX
+	;
+}
+
+Information-object-class-definition-and-assignment
+{
+
+ObjectClassAssignment
+	:	objectclassreference-token "::=" ObjectClass
+	;
+
+ObjectClass
+	:	DefinedObjectClass
+	|	ObjectClassDefn
+	|	ParameterizedObjectClass
+	;
+
+ObjectClassDefn
+	:	CLASS "{" FieldSpec + [ "," ] "}" WithSyntaxSpec ?
+	;
+
+WithSyntaxSpec
+	:	WITH SYNTAX SyntaxList
+	;
+
+FieldSpec
+	:	TypeFieldSpec
+	|	FixedTypeValueFieldSpec
+	|	VariableTypeValueFieldSpec
+	|	FixedTypeValueSetFieldSpec
+	|	VariableTypeValueSetFieldSpec
+	|	ObjectFieldSpec
+	|	ObjectSetFieldSpec
+	;
+
+TypeFieldSpec
+	:	typefieldreference-token TypeOptionalitySpec ?
+	;
+
+TypeOptionalitySpec
+	:	OPTIONAL
+	|	DEFAULT Type
+	;
+
+FixedTypeValueFieldSpec
+	:	@@field valuefieldreference-token Type UNIQUE ? @push-governor ValueOptionalitySpec ? @pop-governor
+	;
+
+ValueOptionalitySpec
+	:	OPTIONAL
+	|	DEFAULT Value
+	;
+
+VariableTypeValueFieldSpec
+	:	@@field valuefieldreference-token FieldName @push-governor ValueOptionalitySpec ? @pop-governor
+	;
+
+FixedTypeValueSetFieldSpec
+	:	@@field valuesetfieldreference-token Type @push-governor ValueSetOptionalitySpec ? @pop-governor
+	;
+
+ValueSetOptionalitySpec
+	:	OPTIONAL
+	|	DEFAULT ValueSet
+	;
+
+VariableTypeValueSetFieldSpec
+	:	@@field valuesetfieldreference-token FieldName @push-governor ValueSetOptionalitySpec ? @pop-governor
+	;
+
+ObjectFieldSpec
+	:	@@field objectfieldreference-token DefinedObjectClass @push-governor ObjectOptionalitySpec ? @pop-governor
+	;
+
+ObjectOptionalitySpec
+	:	OPTIONAL
+	|	DEFAULT Object
+	;
+
+ObjectSetFieldSpec
+	:	@@field objectsetfieldreference-token DefinedObjectClass @push-governor ObjectSetOptionalitySpec ? @pop-governor
+	;
+
+ObjectSetOptionalitySpec
+	:	OPTIONAL
+	|	DEFAULT ObjectSet
+	;
+
+PrimitiveFieldName
+	:	typefieldreference-token
+	|	valuefieldreference-token
+	|	valuesetfieldreference-token
+	|	objectfieldreference-token
+	|	objectsetfieldreference-token
+	;
+
+FieldName
+	:	PrimitiveFieldName + [ "." ]
+	;
+}
+
+Syntax-List
+{
+
+SyntaxList
+	:	"{" TokenOrGroupSpecBase + "}"
+	;
+
+TokenOrGroupSpecBase
+	:	TokenOrGroupSpec
+	|	TokenOrGroupSpec ","
+	;
+
+TokenOrGroupSpec
+	:	RequiredToken
+	|	OptionalGroup
+	;
+
+OptionalGroup
+	:	LiteralSet "[" TokenOrGroupSpecBase + "]"
+	;
+
+RequiredToken
+	:	LiteralSet PrimitiveFieldName
+	;
+
+LiteralSet
+	:	%empty
+	|	Literal +
+	;
+
+Literal
+	:	typereference-token
+	|	keyword
+	|	","
+	;
+}
+
+Information-object-definition-and-assignment
+{
+
+ObjectAssignment
+	:	@@object objectreference-token DefinedObjectClass "::=" @push-governor Object @pop-governor
+	;
+
+Object
+	:	DefinedObject
+	|	ObjectDefn
+	|	ObjectFromObject
+	|	ParameterizedObject
+	;
+
+ObjectDefn
+	:	DefaultSyntax
+	|	DefinedSyntax
+	;
+
+DefaultSyntax
+	:	"{" "}"
+	|	"{" FieldSetting + [ ( :commas: "," ) * ] "}"
+	;
+
+FieldSetting
+	:	@@field PrimitiveFieldName @push-governor Setting @pop-governor
+	;
+
+DefinedSyntax
+	:	"{" "}"
+	|	"{" DefinedSyntaxToken + "}"
+	;
+
+DefinedSyntaxToken
+	:	Literal
+	|	Setting
+	;
+
+Setting
+	:	Type
+	|	Value
+	|	ValueSet
+	|	Object
+	|	ObjectSet
+	;
+}
+
+Information-object-set-definition-and-assignment
+{
+
+ObjectSetAssignment
+	:	@@object-set objectsetreference-token DefinedObjectClass "::=" @push-governor ObjectSet @pop-governor
+	;
+
+ObjectSet
+	:	"{" ObjectSetSpec "}"
+	;
+
+ObjectSetSpec
+	:	RootElementSetSpec
+	|	RootElementSetSpec "," "." "." "."
+	|	"." "." "."
+	|	"." "." "." "," AdditionalElementSetSpec
+	|	RootElementSetSpec "," "." "." "." "," AdditionalElementSetSpec
+	;
+
+ObjectSetElements
+	:	Object
+	|	DefinedObjectSet
+	|	ObjectSetFromObjects
+	|	ParameterizedObjectSet
+	;
+}
+
+Notation-for-the-object-class-field-type
+{
+
+ObjectClassFieldType
+	:	DefinedObjectClass "." FieldName
+	;
+
+ObjectClassFieldValue
+	:	OpenTypeFieldVal
+	|	FixedTypeFieldVal
+	;
+
+OpenTypeFieldVal
+	:	Type ":" Value
+	;
+
+FixedTypeFieldVal
+	:	BuiltinValue
+	|	ReferencedValue
+	;
+
+XMLObjectClassFieldValue
+	:	XMLOpenTypeFieldVal
+	|	XMLFixedTypeFieldVal
+	;
+
+XMLOpenTypeFieldVal
+	:	XMLTypedValue
+	|	xmlhstring
+	;
+
+XMLFixedTypeFieldVal
+	:	XMLBuiltinValue
+	;
+}
+
+Information-from-objects
+{
+
+InformationFromObjects
+	:	ValueFromObject
+	|	ValueSetFromObjects
+	|	TypeFromObject
+	|	ObjectFromObject
+	|	ObjectSetFromObjects
+	;
+
+ValueFromObject
+	:	ReferencedObjects "." FieldName
+	;
+
+ValueSetFromObjects
+	:	ReferencedObjects "." FieldName
+	;
+
+TypeFromObject
+	:	ReferencedObjects "." FieldName
+	;
+
+ObjectFromObject
+	:	ReferencedObjects "." FieldName
+	;
+
+ObjectSetFromObjects
+	:	ReferencedObjects "." FieldName
+	;
+
+ReferencedObjects
+	:	DefinedObject
+	|	ParameterizedObject
+	|	DefinedObjectSet
+	|	ParameterizedObjectSet
+	;
+}
+
+Instance-of-type
+{
+
+InstanceOfType
+	:	INSTANCE OF DefinedObjectClass
+	;
+
+InstanceOfValue
+	:	Value
+	;
+
+XMLInstanceOfValue
+	:	XMLValue
+	;
+}
+
+}
+
+[ Description Hover='false' 
+	Text='ASN.1: Constraint specification' 
+	Text='See: Recommendation ITU-T X.682' 
+]
+
+CONSTRAINT-SPECIFICATION
+{
+
+General-constraint-specification
+{
+
+GeneralConstraint
+	:	UserDefinedConstraint
+	|	TableConstraint
+	|	ContentsConstraint
+	;
+}
+
+User-defined-constraints
+{
+
+UserDefinedConstraint
+	:	CONSTRAINED BY "{" "}"
+	|	CONSTRAINED BY "{" UserDefinedConstraintParameter + [ "," ] "}"
+	;
+
+UserDefinedConstraintParameter
+	:	Governor ":" Value
+	|	Governor ":" Object
+	|	DefinedObjectSet
+	|	Type
+	|	DefinedObjectClass
+	;
+}
+
+Table-constraints-including-component-relation-constraints
+{
+
+TableConstraint
+	:	SimpleTableConstraint
+	|	ComponentRelationConstraint
+	;
+
+SimpleTableConstraint
+	:	ObjectSet
+	;
+
+ComponentRelationConstraint
+	:	"{" DefinedObjectSet "}" "{" AtNotation + [ "," ] "}"
+	;
+
+AtNotation
+	:	"@" ComponentIdList
+	|	"@" Level ComponentIdList
+	;
+
+Level
+	:	"." +
+	;
+
+ComponentIdList
+	:	identifier-token + [ "." ]
+	;
+}
+
+Contents-constraints
+{
+
+ContentsConstraint
+	:	CONTAINING Type
+	|	ENCODED BY Value
+	|	CONTAINING Type ENCODED BY Value
+	;
+}
+
+}
+
+[ Description Hover='false' 
+	Text='ASN.1: Parameterization of ASN.1 specifications' 
+	Text='See: Recommendation ITU-T X.683' 
+]
+
+PARAMETERIZATION-OF-ASN.1-SPECIFICATIONS
+{
+
+Parameterized-assignments
+{
+
+ParameterizedAssignment
+	:	ParameterizedTypeAssignment
+	|	ParameterizedValueAssignment
+	|	ParameterizedValueSetTypeAssignment
+	|	ParameterizedObjectClassAssignment
+	|	ParameterizedObjectAssignment
+	|	ParameterizedObjectSetAssignment
+	;
+
+ParameterizedTypeAssignment
+	:	typereference-token ParameterList "::=" Type
+	;
+
+ParameterizedValueAssignment
+	:	valuereference-token ParameterList Type "::=" Value
+	;
+
+ParameterizedValueSetTypeAssignment
+	:	typereference-token ParameterList Type "::=" ValueSet
+	;
+
+ParameterizedObjectClassAssignment
+	:	objectclassreference-token ParameterList "::=" ObjectClass
+	;
+
+ParameterizedObjectAssignment
+	:	objectreference-token ParameterList DefinedObjectClass "::=" Object
+	;
+
+ParameterizedObjectSetAssignment
+	:	objectsetreference-token ParameterList DefinedObjectClass "::=" ObjectSet
+	;
+
+ParameterList
+	:	"{" Parameter + [ "," ] "}"
+	;
+
+Parameter
+	:	ParamGovernor ":" DummyReference
+	|	DummyReference
+	;
+
+ParamGovernor
+	:	Governor
+	|	DummyGovernor
+	;
+
+Governor
+	:	Type
+	|	DefinedObjectClass
+	;
+
+DummyGovernor
+	:	DummyReference
+	;
+
+DummyReference
+	:	Reference
+	;
+}
+
+Referencing-parameterized-definitions
+{
+
+ParameterizedReference
+	:	Reference
+	|	Reference "{" "}"
+	;
+
+SimpleDefinedType
+	:	ExternalTypeReference
+	|	typereference-token
+	;
+
+SimpleDefinedValue
+	:	ExternalValueReference
+	|	valuereference-token
+	;
+
+ParameterizedType
+	:	SimpleDefinedType ActualParameterList
+	;
+
+ParameterizedValue
+	:	SimpleDefinedValue ActualParameterList
+	;
+
+ParameterizedValueSetType
+	:	SimpleDefinedType ActualParameterList
+	;
+
+ParameterizedObjectClass
+	:	DefinedObjectClass ActualParameterList
+	;
+
+ParameterizedObjectSet
+	:	DefinedObjectSet ActualParameterList
+	;
+
+ParameterizedObject
+	:	DefinedObject ActualParameterList
+	;
+
+ActualParameterList
+	:	"{" ActualParameter + [ "," ] "}"
+	;
+
+ActualParameter
+	:	Type
+	|	Value
+	|	ValueSet
+	|	DefinedObjectClass
+	|	Object
+	|	ObjectSet
+	;
+}
+
+}
+
+[ Description Hover='false' 
+	Text='SNMP macro definitions' 
+	Text='See: https://snmp.com/protocol/snmp_rfcs.shtml' 
+]
+
+SNMP-MACROS
+{
+
+MacroAssignment
+	:	valuereference-token ModuleIdentityMacro "::=" ObjectIdentifierValue
+	|	valuereference-token ObjectIdentityMacro "::=" ObjectIdentifierValue
+	|	valuereference-token ObjectTypeMacro "::=" ObjectIdentifierValue
+	|	valuereference-token NotificationTypeMacro "::=" ObjectIdentifierValue
+	|	valuereference-token TextualConventionMacro "::=" ObjectIdentifierValue
+	|	valuereference-token ObjectGroupMacro "::=" ObjectIdentifierValue
+	|	valuereference-token NotificationGroupMacro "::=" ObjectIdentifierValue
+	|	valuereference-token ModuleComplianceMacro "::=" ObjectIdentifierValue
+	|	valuereference-token AgentCapabilitiesMacro "::=" ObjectIdentifierValue
+	|	valuereference-token TrapTypeMacro "::=" IntegerValue
+	|	typereference-token "::=" ModuleIdentityMacro
+	|	typereference-token "::=" ObjectIdentityMacro
+	|	typereference-token "::=" ObjectTypeMacro
+	|	typereference-token "::=" NotificationTypeMacro
+	|	typereference-token "::=" TextualConventionMacro
+	|	typereference-token "::=" ObjectGroupMacro
+	|	typereference-token "::=" NotificationGroupMacro
+	|	typereference-token "::=" ModuleComplianceMacro
+	|	typereference-token "::=" AgentCapabilitiesMacro
+	|	typereference-token "::=" TrapTypeMacro
+	;
+
+MacroName
+	:	MODULE-IDENTITY
+	|	OBJECT-IDENTITY
+	|	OBJECT-TYPE
+	|	NOTIFICATION-TYPE
+	|	TEXTUAL-CONVENTION
+	|	OBJECT-GROUP
+	|	NOTIFICATION-GROUP
+	|	MODULE-COMPLIANCE
+	|	AGENT-CAPABILITIES
+	|	TRAP-TYPE
+	;
+
+MODULE-IDENTITY-MACRO
+{
+ModuleIdentityMacro
+	:	MODULE-IDENTITY LAST-UPDATED cstring ORGANIZATION cstring CONTACT-INFO cstring DESCRIPTION cstring MI-RevisionPart
+	;
+
+MI-RevisionPart
+	:	MI-Revisions
+	|	%empty
+	;
+
+MI-Revisions
+	:	MI-Revision +
+	;
+
+MI-Revision
+	:	REVISION cstring DESCRIPTION cstring
+	;
+}
+
+OBJECT-IDENTITY-MACRO
+{
+ObjectIdentityMacro
+	:	OBJECT-IDENTITY STATUS OI-Status DESCRIPTION cstring OI-ReferPart
+	;
+
+OI-Status
+	:	identifier-token
+//	|	current
+//	|	deprecated
+//	|	obsolete
+	;
+
+OI-ReferPart
+	:	REFERENCE cstring
+	|	%empty
+	;
+}
+
+OBJECT-TYPE-MACRO
+{
+ObjectTypeMacro
+	:	OBJECT-TYPE SYNTAX OT-Syntax OT-UnitsPart ( :access-token: MAX-ACCESS | ACCESS ) OT-Access STATUS OT-Status DESCRIPTION cstring OT-ReferPart OT-IndexPart OT-DefValPart
+	;
+
+OT-Syntax
+	:	Type
+	|	BITS "{" OT-NamedBits "}"
+	;
+
+OT-NamedBits
+	:	OT-NamedBit + [ "," ]
+	;
+
+OT-NamedBit
+	:	identifier-token "(" number ")"
+	;
+
+OT-UnitsPart
+	:	UNITS cstring
+	|	%empty
+	;
+
+OT-Access
+	:	identifier-token
+//	|	not-accessible
+//	|	accessible-for-notify
+//	|	read-only
+//	|	read-write
+//	|	read-create
+	;
+
+OT-Status
+	:	identifier-token
+//	|	current
+//	|	deprecated
+//	|	obsolete
+	;
+
+OT-ReferPart
+	:	REFERENCE cstring
+	|	%empty
+	;
+
+OT-IndexPart
+	:	INDEX "{" OT-IndexTypes "}"
+	|	AUGMENTS "{" OT-Entry "}"
+	|	%empty
+	;
+
+OT-IndexTypes
+	:	OT-IndexType + [ "," ]
+	;
+
+OT-IndexType
+	:	IMPLIED OT-Index
+	|	OT-Index
+	;
+
+OT-Index
+	:	Value
+	;
+
+OT-Entry
+	:	Value
+	;
+
+OT-DefValPart
+	:	DEFVAL "{" OT-Defvalue "}"
+	|	%empty
+	;
+
+OT-Defvalue
+	:	Value
+	|	"{" OT-BitsValue "}"
+	;
+
+OT-BitsValue
+	:	OT-BitNames
+	|	%empty
+	;
+
+OT-BitNames
+	:	OT-BitName + [ "," ]
+	;
+
+OT-BitName
+	:	identifier-token
+	;
+}
+
+NOTIFICATION-TYPE-MACRO
+{
+NotificationTypeMacro
+	:	NOTIFICATION-TYPE NT-ObjectsPart STATUS NT-Status DESCRIPTION cstring NT-ReferPart
+	;
+
+NT-ObjectsPart
+	:	OBJECTS "{" NT-Objects "}"
+	|	%empty
+	;
+
+NT-Objects
+	:	NT-Object + [ "," ]
+	;
+
+NT-Object
+	:	Value
+	;
+
+NT-Status
+	:	identifier-token
+//	|	current
+//	|	deprecated
+//	|	obsolete
+	;
+
+NT-ReferPart
+	:	REFERENCE cstring
+	|	%empty
+	;
+}
+
+TEXTUAL-CONVENTION-MACRO
+{
+TextualConventionMacro
+	:	TEXTUAL-CONVENTION TC-DisplayPart STATUS TC-Status DESCRIPTION cstring TC-ReferPart SYNTAX TC-Syntax
+	;
+
+TC-DisplayPart
+	:	DISPLAY-HINT cstring
+	|	%empty
+	;
+
+TC-Status
+	:	identifier-token
+//	|	current
+//	|	deprecated
+//	|	obsolete
+	;
+
+TC-ReferPart
+	:	REFERENCE cstring
+	|	%empty
+	;
+
+TC-Syntax
+	:	Type
+	|	BITS "{" TC-NamedBits "}"
+	;
+
+TC-NamedBits
+	:	TC-NamedBit + [ "," ]
+	;
+
+TC-NamedBit
+	:	identifier-token "(" number ")"
+	;
+}
+
+OBJECT-GROUP-MACRO
+{
+ObjectGroupMacro
+	:	OBJECT-GROUP OG-ObjectsPart STATUS OG-Status DESCRIPTION cstring OG-ReferPart
+	;
+
+OG-ObjectsPart
+	:	OBJECTS "{" OG-Objects "}"
+	;
+
+OG-Objects
+	:	OG-Object + [ "," ]
+	;
+
+OG-Object
+	:	Value
+	;
+
+OG-Status
+	:	identifier-token
+//	|	current
+//	|	deprecated
+//	|	obsolete
+	;
+
+OG-ReferPart
+	:	REFERENCE cstring
+	|	%empty
+	;
+}
+
+NOTIFICATION-GROUP-MACRO
+{
+NotificationGroupMacro
+	:	NOTIFICATION-GROUP NG-NotificationsPart STATUS NG-Status DESCRIPTION cstring NG-ReferPart
+	;
+
+NG-NotificationsPart
+	:	NOTIFICATIONS "{" NG-Notifications "}"
+	;
+
+NG-Notifications
+	:	NG-Notification + [ "," ]
+	;
+
+NG-Notification
+	:	Value
+	;
+
+NG-Status
+	:	identifier-token
+//	|	current
+//	|	deprecated
+//	|	obsolete
+	;
+
+NG-ReferPart
+	:	REFERENCE cstring
+	|	%empty
+	;
+}
+
+MODULE-COMPLIANCE-MACRO
+{
+ModuleComplianceMacro
+	:	MODULE-COMPLIANCE STATUS MC-Status DESCRIPTION cstring MC-ReferPart MC-ModulePart
+	;
+
+MC-Status
+	:	identifier-token
+//	|	current
+//	|	deprecated
+//	|	obsolete
+	;
+
+MC-ReferPart
+	:	REFERENCE cstring
+	|	%empty
+	;
+
+MC-ModulePart
+	:	MC-Modules
+	;
+
+MC-Modules
+	:	MC-Module +
+	;
+
+MC-Module
+	:	MODULE MC-ModuleName MC-MandatoryPart MC-CompliancePart
+	;
+
+MC-ModuleName
+	:	identifier-token MC-ModuleIdentifier
+	|	%empty
+	;
+
+MC-ModuleIdentifier
+	:	Value
+	|	%empty
+	;
+
+MC-MandatoryPart
+	:	MANDATORY-GROUPS "{" MC-Groups "}"
+	|	%empty
+	;
+
+MC-Groups
+	:	MC-Group + [ "," ]
+	;
+
+MC-Group
+	:	Value
+	;
+
+MC-CompliancePart
+	:	MC-Compliances
+	|	%empty
+	;
+
+MC-Compliances
+	:	MC-Compliance +
+	;
+
+MC-Compliance
+	:	MC-ComplianceGroup
+	|	MC-Object
+	;
+
+MC-ComplianceGroup
+	:	GROUP Value DESCRIPTION cstring
+	;
+
+MC-Object
+	:	OBJECT Value MC-SyntaxPart MC-WriteSyntaxPart MC-AccessPart DESCRIPTION cstring
+	;
+
+MC-SyntaxPart
+	:	SYNTAX MC-Syntax
+	|	%empty
+	;
+
+MC-WriteSyntaxPart
+	:	WRITE-SYNTAX MC-Syntax
+	|	%empty
+	;
+
+MC-Syntax
+	:	Type
+	|	BITS "{" MC-NamedBits "}"
+	;
+
+MC-NamedBits
+	:	MC-NamedBit + [ "," ]
+	;
+
+MC-NamedBit
+	:	identifier-token "(" number ")"
+	;
+
+MC-AccessPart
+	:	MIN-ACCESS MC-Access
+	|	%empty
+	;
+
+MC-Access
+	:	identifier-token
+//	|	not-accessible
+//	|	accessible-for-notify
+//	|	read-only
+//	|	read-write
+//	|	read-create
+	;
+}
+
+AGENT-CAPABILITIES-MACRO
+{
+AgentCapabilitiesMacro
+	:	AGENT-CAPABILITIES PRODUCT-RELEASE cstring STATUS AC-Status DESCRIPTION cstring AC-ReferPart AC-ModulePart
+	;
+
+AC-Status
+	:	identifier-token
+//	|	current
+//	|	obsolete
+	;
+
+AC-ReferPart
+	:	REFERENCE cstring
+	|	%empty
+	;
+
+AC-ModulePart
+	:	AC-Modules
+	|	%empty
+	;
+
+AC-Modules
+	:	AC-Module +
+	;
+
+AC-Module
+	:	SUPPORTS AC-ModuleName INCLUDES "{" AC-Groups "}" AC-VariationPart
+	;
+
+AC-ModuleName
+	:	identifier-token AC-ModuleIdentifier
+	;
+
+AC-ModuleIdentifier
+	:	Value
+	|	%empty
+	;
+
+AC-Groups
+	:	AC-Group + [ "," ]
+	;
+
+AC-Group
+	:	Value
+	;
+
+AC-VariationPart
+	:	AC-Variations
+	|	%empty
+	;
+
+AC-Variations
+	:	AC-Variation +
+	;
+
+AC-Variation
+	:	AC-ObjectVariation
+	|	AC-NotificationVariation
+	;
+
+AC-NotificationVariation
+	:	VARIATION Value AC-AccessPart DESCRIPTION cstring
+	;
+
+AC-ObjectVariation
+	:	VARIATION Value AC-SyntaxPart AC-WriteSyntaxPart AC-AccessPart AC-CreationPart AC-DefValPart DESCRIPTION cstring
+	;
+
+AC-SyntaxPart
+	:	SYNTAX AC-Syntax
+	|	%empty
+	;
+
+AC-WriteSyntaxPart
+	:	WRITE-SYNTAX AC-Syntax
+	|	%empty
+	;
+
+AC-Syntax
+	:	Type
+	|	BITS "{" AC-NamedBits "}"
+	;
+
+AC-NamedBits
+	:	AC-NamedBit + [ "," ]
+	;
+
+AC-NamedBit
+	:	identifier-token "(" number ")"
+	;
+
+AC-AccessPart
+	:	ACCESS AC-Access
+	|	%empty
+	;
+
+AC-Access
+	:	identifier-token
+//	|	not-implemented
+//	|	accessible-for-notify
+//	|	read-only
+//	|	read-write
+//	|	read-create
+//	|	write-only
+	;
+
+AC-CreationPart
+	:	CREATION-REQUIRES "{" AC-Cells "}"
+	|	%empty
+	;
+
+AC-Cells
+	:	AC-Cell + [ "," ]
+	;
+
+AC-Cell
+	:	Value
+	;
+
+AC-DefValPart
+	:	DEFVAL "{" AC-Defvalue "}"
+	|	%empty
+	;
+
+AC-Defvalue
+	:	Value
+	|	"{" AC-BitsValue "}"
+	;
+
+AC-BitsValue
+	:	AC-BitNames
+	|	%empty
+	;
+
+AC-BitNames
+	:	AC-BitName + [ "," ]
+	;
+
+AC-BitName
+	:	identifier-token
+	;
+}
+
+TRAP-TYPE-MACRO
+{
+TrapTypeMacro
+	:	TRAP-TYPE ENTERPRISE Value TT-VarPart TT-DescrPart TT-ReferPart
+	;
+
+TT-VarPart
+	:	VARIABLES "{" TT-VarTypes "}"
+	|	%empty
+	;
+
+TT-VarTypes
+	:	TT-VarType + [ "," ]
+	;
+
+TT-VarType
+	:	Value
+	;
+
+TT-DescrPart
+	:	DESCRIPTION cstring
+	|	%empty
+	;
+
+TT-ReferPart
+	:	REFERENCE cstring
+	|	%empty
+	;
+}
+
+MacroDefinition
+	:	MacroIdentifier MACRO "::=" BEGIN END
+	;
+
+MacroIdentifier
+	:	MacroName
+	|	typereference-token
+	;
+
+}
+
+%}

@@ -1,0 +1,1444 @@
+﻿@page
+@model AnglrLanguageModel
+@{
+    ViewData ["Title"] = "Anglr Language";
+    ViewData ["Content"] = "Anglr language introduction: canonical syntax rules, extended syntax rules";
+}
+            <section id="introduction">
+                <h1>Anglr Language</h1>
+                <h2>Introduction</h2>
+                <hr />
+                <p>
+                    This paragraph presents the basic procedures for creating syntax rules that we need to know in order to understand the contents of anglr files. These
+                    files are built from functionally different parts. The contents of these parts shall be drawn up in accordance with the specific syntax rules. For
+                    every part of anglr file there is specific set of rules which describe its syntax. In this paragraph are presented syntax rules with which will be
+                    presented all aspects of anglr file parts including that part which contains syntax rules. The problem is that we have to use syntax rules to describe
+                    the syntax rules themselves.
+                </p>
+                <p>
+                    This part is probably the most difficult because, among other things, it also talks about the syntax of syntax rules. In addition, the syntax rules
+                    of the ANGLR language are written using the syntax rules of the ANGLR language itself. Therefore, it will sometimes be difficult to distinguish between
+                    when we are talking about the syntax of syntax rules and when we are talking about the syntax rules themselves.
+                </p>
+                <p>
+                    The Anglr programming language is used to define the syntax rules that some program uses for text analysis. There are also many other things anglr files,
+                    but they are not important at this moment. With Anglr programming language one can define the syntax rules of a particular programming language such as C#,
+                    Java, etc. It can also be used to define syntax rules for any kind of text analyzers or translators used for different purposes:
+                </p>
+                <ul>
+                    <li>
+                        to check structure of text document
+                    </li>
+                    <li>
+                        to translate text files or part of them into another form
+                    </li>
+                    <li>
+                        to extract interesting pieces of information from text files or text strings
+                    </li>
+                    <li>
+                        to colorize text or to make graphical representations of text files with a given structure
+                    </li>
+                    <li>
+                        in general, every syntax oriented transformation of structured text
+                    </li>
+                </ul>
+                <h2>Canonical form of syntax rules</h2>
+                <p>
+                    Syntax rules are the most important feature of anglr files. They are contained in parser part of anglr file. They are given in a similar way to that in some
+                    other programming languages, such as BNF, Antlr, etc. There are also other parts of anglr files, but to understand them, we must first understand, how to assemble
+                    syntax rules, since all parts of anglr files are defined using syntax rules even that part which cotains syntax rules itself. Syntax rules are defned in the following way:
+                </p>
+                <ul>
+                    <li>
+                        first, we specify the name of the syntax rule. Names of syntax rules are called non-terminal symbols and are
+                        used to form other syntax rules.
+                    </li>
+                    <li>
+                        the name of the syntax rule is followed by a colon character
+                    </li>
+                    <li>
+                        followed by at least one production of that rule. Productions are separated by vertical line characters.
+                        Production is sequence of terminal and nonterminal symbols. Terminal symbols represent lexical tokens of text being analyzed,
+                        nonterminal symbols represent syntax rules.
+                    </li>
+                    <li>
+                        the syntax rule is completed with a semicolon character.
+                    </li>
+                </ul>
+                <p>
+                    Example:
+                </p>
+                <div class="panel border bg-light" id="example-001">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    In above example:
+                </p>
+                <ul>
+                    <li>
+                        syntax rule named <span class="rule-name">additive-expression</span> is defined. Symbols acted that way are pronounced non-terminal symbols. They are identifiers composed
+                        of alphanumerical characters and separators like minus sign and punctuation characters. If they are encircled by &lt; and &gt; characters, they can also contain space characters.
+                        First characer of their name must begin an alphabeical character.
+                    </li>
+                    <li>
+                        it is composed by three productions
+                        <ul>
+                            <li>
+                                <span class="rule-ref">multiplicative-expression</span>
+                            </li>
+                            <li>
+                                <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+                            </li>
+                            <li>
+                                <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        productions contain these terminal symbols: &#39;+&#39; and &#39;-&#39;.
+                    </li>
+                    <li>
+                        two nonterminal symbols appear in all productions: multiplicative-expression (which is not defined in this example) and additive-expression 
+                        itself. The rule is therefore recursively defined, which is perfectly normal.
+                    </li>
+                </ul>
+                <p>
+                    Names of terminal and non-terminal symbols are composed on the same way. They are character strings composed of alphanumerical
+                    characters. First character must be letter, upper or lower case. Between characters should be also separators like minus sign and
+                    punctuation character. Names should also be enclosed with &lt; and &gt; characters. In this case space characters can also appear
+                    in names. Examples of valid names:
+                    <ul>
+                        <li>
+                            additive-expression
+                        </li>
+                        <li>
+                            &lt;additive expression&gt;
+                        </li>
+                    </ul>
+                </p>
+                <p>
+                    Terminal names can also be represented by their character string representations. Character string representations are composed
+                    of any number of characters enclosed between single or double quotation marks. Quotation marks should also appear in character
+                    strings but they must be listed twice.
+                </p>
+                <p>
+                    The syntax rule format is irrelevant. We can use the same format as in the example above, or we can write the whole rule in a single line, or any other form
+                    one can immagine. Everyone should use the form they see most appropriate. In other words, it is not the format that matters, but the content.
+                </p>
+                <p>
+                    In above example we used character representation of terminal symbols. These symbols should be defined somewere else with identifiers. Suppose, tha we
+                    associated identifier <span class="token-name">add</span> with character string <span class="string-name">&#39;+&#39;</span> and
+                    identifier <span class="token-name">sub</span> with character string <span class="string-name">&#39;-&#39;</span>. With these definitions we can rewrite
+                    the above example as follows:
+                </p>
+                <div class="panel border bg-light" id="example-001">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="token-name">add</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="token-name">sub</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    Syntax rules in above examples are given in canonical form.
+                </p>
+                <div class="alert alert-primary" role="alert" id="canonical-form">
+                    <img src="~/images/icons8-info-squared-48.png" />
+                    <p>
+                        Let's define: Canonical syntax rules are those rules the productions of which consist exclusively of terminal (together with their character string representations) and non-termial symbols.
+                    </p>
+                </div>
+                <h2 id="anglr-operators">Extended form of syntax rules</h2>
+                <p>
+                    There are also other constructs, which are used to construct syntax rules of anglr fles.
+                    <ul>
+                        <li>
+                            cardinality operators
+                        </li>
+                        <li>
+                            nested syntax rules. They will be explained later, since we don't need them to explain structure of Anglr files.
+                        </li>
+                    </ul>
+                </p>
+                <h4>Cardinality operators</h4>
+                <p>
+                    In addition to terminal and nonterminal symbols, special operators are also used to form productions of syntax rules.
+                    They are used to turn recursive rules into sequences. Formally speaking, there is no need to use operators.
+                    All productions can be created without the use of operators. Operators are used only to shorten the syntax rule notation.
+                    However, it is always better to use operators because typically syntax analysers made with the help of operators are
+                    faster than those that avoid them. Their names come from their most important property, size of the set of sentential
+                    forms derived by syntax rules associated with them, although they have other properties, too. These properties are:
+                </p>
+                <ul>
+                    <li>
+                        cardinality of derived set of sentential forms:
+                        <ul>
+                            <li>
+                                syntax rule derives set of nonempty sentential forms - positive closure
+                            </li>
+                            <li>
+                                syntax rule derives set of sentential forms with empty sentence included - Kleen closure
+                            </li>
+                            <li>
+                                syntax rule derives set of two sentential forms, one of them is empty - mandatory occurance
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        type of recursion to be taken into account in the syntax rule:
+                        <ul>
+                            <li>
+                                extended syntax rule is expressed with canonical syntax rule using left recursion
+                            </li>
+                            <li>
+                                extended syntax rule is expressed with canonical syntax rule using right recursion
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        usage of separators between listed elements:
+                        <ul>
+                            <li>
+                                separators are located between the elements
+                            </li>
+                            <li>
+                                separators are located around the elements
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <p>
+                    The following table lists all operators together with their properties:
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Cardinality</th>
+                                <th>Recursion</th>
+                                <th>Separators</th>
+                                <th>Usage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>+</td>
+                                <td>positive closure</td>
+                                <td>left</td>
+                                <td>between</td>
+                                <td>object lists, left associative arithmetic expressions</td>
+                            </tr>
+                            <tr>
+                                <td>-</td>
+                                <td>positive closure</td>
+                                <td>left</td>
+                                <td>around</td>
+                                <td>object lists, left associative arithmetic expressions</td>
+                            </tr>
+                            <tr>
+                                <td>~+</td>
+                                <td>positive closure</td>
+                                <td>right</td>
+                                <td>between</td>
+                                <td>right associative arithmetic expressions</td>
+                            </tr>
+                            <tr>
+                                <td>~-</td>
+                                <td>positive closure</td>
+                                <td>right</td>
+                                <td>around</td>
+                                <td>right associative arithmetic expressions</td>
+                            </tr>
+                            <tr>
+                                <td>*</td>
+                                <td>Kleen closure</td>
+                                <td>left</td>
+                                <td>between</td>
+                                <td>object lists, left associative arithmetic expressions</td>
+                            </tr>
+                            <tr>
+                                <td>/</td>
+                                <td>Kleen closure</td>
+                                <td>left</td>
+                                <td>around</td>
+                                <td>object lists, left associative arithmetic expressions</td>
+                            </tr>
+                            <tr>
+                                <td>~*</td>
+                                <td>Kleen closure</td>
+                                <td>right</td>
+                                <td>between</td>
+                                <td>right associative arithmetic expressions</td>
+                            </tr>
+                            <tr>
+                                <td>~/</td>
+                                <td>Kleen closure</td>
+                                <td>right</td>
+                                <td>around</td>
+                                <td>right associative arithmetic expressions</td>
+                            </tr>
+                            <tr>
+                                <td>?</td>
+                                <td>mandatory element</td>
+                                <td></td>
+                                <td></td>
+                                <td>object lists, can be used in combination with positive closures to form Kleen closures</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </p>
+                <p>
+                    In other words, operators can be described as follows:
+                </p>
+                <ul>
+                    <li>
+                        +, -, ~+ and ~- are used to form nonempty sequence of symbols. Operators + an - are related with the left associativity. They
+                        should be used to form syntax rules for arithmetical expressions which are left associative. On the other hand, operators
+                        ~+ and ~- are related with the right associativity and they should be used to form syntax rules for arithmetical expressions
+                        which are right associative. All of them should be used to form syntax rules for lists of objects, but + and - are
+                        preffered since Anglr compiler generates LR parsers. If we use these operators to define syntax rules of arithmetic expressions
+                        we must use them in accordance of associativity rules for these expressions. If we use them to define syntax rules of lists
+                        we should use that operators which are related to left associativity.
+                    </li>
+                    <li>
+                        *, /, ~* and ~/ used to form any (including empty) sequence of symbols. The use of these operators is subject to similar rules
+                        to those discussed above.
+                    </li>
+                    <li>
+                        ? used to form nonmandatory appearance of symbol. Remember that Kleen closure can be expressed as non-mandatory positive closure:
+                        * &lt;==&gt; +? That's why it is sometimes more appropriate to use positive closure in combination with the operator ? instead of
+                        Kleen closure. This is because the Anglr compiler sometimes generates intermediate syntax rules when using Kleen closures, the
+                        names of which are not known to us in advance. But if we instead use the two step approach (syntax rule for positive closure
+                        folowed by non-mandatory syntax rule for previous one), we can define the names of syntax rules by ourself. This will make us
+                        clearer later, where operators using Kleen closures are described in detail.
+                    </li>
+                </ul>
+                <h4>Separators</h4>
+                <p>
+                    Symbols, which are found in productions of syntax rules, are sometimes separated by separators. These separators are also symbols, mostly terminal symbols,
+                    and even most often as regular characters like commas, dots, etc. The operators listed above, however, make a difference between them.
+                    Some operators are defined so that the separators are between symbols and others so that the separators are located around the symbols.
+                    Operators + and * are defined so that the separators are between the symbols, while the operators - and / are defined so that the separators
+                    are located around the symbols. If there are no separators between the symbols, then operators + and - just like * and /, are the same.
+                    However, there is no significant difference between sentential forms derived with operators which define sequences of symbols with
+                    separators between them and sentential forms derived with operators which define sequences of symbols with separators around them.
+                    The difference is in first element and last element of these sequences (sentential forms). If it is separator, then the sentential form
+                    is sequence of symbols with separators around them, otherwise is a sequence of symbols with separators between them. In fact, operators -
+                    and / invert the role of symbols and separators in operators + and *.
+                </p>
+                <h5>Operators without separators</h5>
+                <p>
+                    First will be defined operators which define sequences of symbols without separators and later will be defined the same operators which
+                    define squences of symbols with separators. All operators will be defined with simple example and the rule which translates this example
+                    into canonical form. Note that these definitions are not entirely accurate. They are basically a subset of exact definitions, but wide
+                    enough to use in this paragraph. Exact definitions of cardinality operators are specified in the paragraph about <a href="~/Language/ParserPart">parser part of anglr file</a>.
+                </p>
+                <hr />
+                <h6>Operator +</h6>
+                <p>
+                    Operator + is defined on the following way. Syntax rule using operator +:
+                </p>
+                <div class="panel border bg-light" id="example-003">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-004">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span>
+    <span class="def-separator">|</span> <span class="rule-ref">A</span> <span class="rule-ref">B</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    The set of sentential forms derived by operator + is equal to {B, BB, BBB, ...}
+                </p>
+                <hr />
+                <h6>Operator ~+</h6>
+                <p>
+                    This operator is same as operator + except that it is defined with right recursion. Syntax rule using operator ~+:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">~+</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-004">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span>
+    <span class="def-separator">|</span> <span class="rule-ref">B</span> <span class="rule-ref">A</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    The set of sentential forms derived by operator ~+ is equal to the set of sentential forms derived by operator + namely {B, BB, BBB, ...}
+                </p>
+                <hr />
+                <h6>Operator -</h6>
+                <p>
+                    Operator - without separators, is defined in the same way as operator +. Syntax rule using operator -:
+                </p>
+                </p>
+                <div class="panel border bg-light" id="example-003">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">-</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-004">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span>
+    <span class="def-separator">|</span> <span class="rule-ref">A</span> <span class="rule-ref">B</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    The set of sentential forms derived by operator - is equal to {B, BB, BBB, ...}
+                </p>
+                <hr />
+                <h6>Operator ~-</h6>
+                <p>
+                    This operator is same as operator - except that it is defined with right recursion. Syntax rule using operator ~-:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">~-</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-004">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span>
+    <span class="def-separator">|</span> <span class="rule-ref">B</span> <span class="rule-ref">A</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    The set of sentential forms derived by operator ~- is equal to the set of sentential forms derived by operator - (or +) namely {B, BB, BBB, ...}
+                </p>
+                <hr />
+                <h6>Operator *</h6>
+                <p>
+                    Operator * is definied similarly to operator +. Syntax rule using operator *:
+                </p>
+                <div class="panel border bg-light" id="example-005">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">*</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-006">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">%empty</span>
+    <span class="def-separator">|</span> <span class="rule-ref">A</span> <span class="rule-ref">B</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    The set of sentential forms derived by operator * is equal to {e, B, BB, BBB, ...}. It is equal to the union of set of sentential
+                    forms derived by operator + and an empty string e.
+                </p>
+                <p>
+                    Note that operator * is equivalent to operator ? applied to operator +: <span class="rule-ref">B</span> <span class="reserved-word">*</span> &lt;==&gt;
+                    <span class="rule-ref">B</span> <span class="reserved-word">+</span> <span class="reserved-word">?</span>
+                </p>
+                <h6>Operator ~*</h6>
+                <p>
+                    Operator ~* is definied similarly to operator *, except that is defined with rigt recursion. Syntax rule using operator ~*:
+                </p>
+                <div class="panel border bg-light" id="example-005">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">~*</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-006">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">%empty</span>
+    <span class="def-separator">|</span> <span class="rule-ref">B</span> <span class="rule-ref">A</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    The set of sentential forms derived by operator ~* is equal the set of sentential form derived by operator * namely {e, B, BB, BBB, ...}.
+                    It is equal to the union of set of sentential forms derived by operator + and an empty string e.
+                </p>
+                <p>
+                    Note that operator ~* is equivalent to operator ? applied to operator ~+: <span class="rule-ref">B</span> <span class="reserved-word">~*</span> &lt;==&gt;
+                    <span class="rule-ref">B</span> <span class="reserved-word">~+</span> <span class="reserved-word">?</span>
+                </p>
+                <hr />
+                <h6>Operator /</h6>
+                <p>
+                    Operator / without separators, is definied in the same way as operator *. Syntax rule using operator /:
+                </p>
+                <div class="panel border bg-light" id="example-005">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">/</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-006">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">%empty</span>
+    <span class="def-separator">|</span> <span class="rule-ref">A</span> <span class="rule-ref">B</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    The set of sentential forms derived by operator / is equal to {e, B, BB, BBB, ...}. It is equal to the union of set of sentential
+                    forms derived by operator + and an empty string e.
+                </p>
+                <hr />
+                <h6>Operator ~/</h6>
+                <p>
+                    Operator ~/ without separators, is definied in the same way as operator ~*. Syntax rule using operator ~/:
+                </p>
+                <div class="panel border bg-light" id="example-005">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">~/</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-006">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">%empty</span>
+    <span class="def-separator">|</span> <span class="rule-ref">B</span> <span class="rule-ref">A</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    The set of sentential forms derived by operator / is equal to {e, B, BB, BBB, ...}. It is equal to the union of set of sentential
+                    forms derived by operator + and an empty string e.
+                </p>
+                <hr />
+                <h6>Operator ?</h6>
+                <p>
+                    Operator ? is definied on the following way. Syntax rule using operator ?:
+                </p>
+                <div class="panel border bg-light" id="example-007">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-008">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">%empty</span>
+    <span class="def-separator">|</span> <span class="rule-ref">B</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    The set of sentential forms, derived by operator ?, is equal to {e, B}.
+                </p>
+                <h4>Separators</h4>
+                <p>
+                    Symbols that appear in sequences are often separated by other symbols. We call them separators. Separators are used by
+                    specifying them in square brackets immediately following operators. They should be specified as arbitrary syntax rules,
+                    even syntax rules specified with operators. They should be nested to arbitrary depth - syntax rules used as separators
+                    shold use separators as well.
+                </p>
+                <p>
+                    Using operators and separators, the <a href="#example-001">example above</a> can be rewritten as follows::
+                </p>
+                <div class="panel border bg-light" id="example-009">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <div class="alert alert-primary" role="alert">
+                    <span><img src="~/images/icons8-general-warning-sign-48.png" /></span> Do not replace + with &#39;+&#39;.
+                    The first is the operator, while the second is a terminal symbol. The same is true for other operators -, *, / and ?.
+                </div>
+                <p>
+                    <a href="#example-009">The last example</a> can be rewriten in even shorter form:
+                </p>
+                <div class="panel border bg-light" id="example-010">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    The use of separators changes the definitions of operators. The operator definition of operator + is not significantly changed.
+                </p>
+                <hr />
+                <h6 id="anglr-operator-set-delimiter">Separators used with operator +</h6>
+                <p>
+                    Operator + using separator defines sequence of symbols with separators between them. Syntax rule using operator + with separator
+                    is definied on the following way. Syntax rule using operator + with separator S:
+                </p>
+                <div class="panel border bg-light" id="example-011">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">+</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-012">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span>
+    <span class="def-separator">|</span> <span class="rule-ref">A</span> <span class="rule-ref">S</span> <span class="rule-ref">B</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    Set of sentential forms derived by operator + with separato is equal to {B, BSB, BSBSB, BSBSBSB, ...}
+                </p>
+                <hr />
+                <h6 id="anglr-operator-set-delimiter">Separators used with operator ~+</h6>
+                <p>
+                    Operator ~+ using separator defines sequence of symbols with separators between them. Its canonical form is similar to canonical form of operator +.
+                    The difference is in the type of recursion used to define canonical form. It uses right handed recursion. Syntax rule using operator ~+ with separator S:
+                </p>
+                <div class="panel border bg-light" id="example-011">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">~+</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-012">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span>
+    <span class="def-separator">|</span> <span class="rule-ref">B</span> <span class="rule-ref">S</span> <span class="rule-ref">A</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    Set of sentential forms derived by operator ~+ with separator is equal the set of sentential forms derived by operator + namely {B, BSB, BSBSB, BSBSBSB, ...}
+                </p>
+                <hr />
+                <h6>Separators used with operator -</h6>
+                <p>
+                    Operator - using separator, defines sequence of symbols with separators around them. In fact, it excahnges the roles of symbols and separators
+                    in definition of operator + with minor difference: first member of the sequence must not be taken into account. First member is S, second SBS, and so on.
+                    Sequence must thus be started with member SBS. So let's define: Syntax rule using operator - with separator S:
+                </p>
+                <div class="panel border bg-light" id="example-011">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">-</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-012">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">S</span> <span class="rule-ref">B</span> <span class="rule-ref">S</span>
+    <span class="def-separator">|</span> <span class="rule-ref">A</span> <span class="rule-ref">B</span> <span class="rule-ref">S</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    Set of sentential forms derived by operator - with separato is equal to {SBS, SBSBS, BSBSBS, BSBSBSBS, ...} and is
+                    equal to the set of sentential forms derived by S + [B] without the first member S.
+                </p>
+                <hr />
+                <h6>Separators used with operator ~-</h6>
+                <p>
+                    Operator ~- using separator, defines sequence of symbols with separators around them. Its canonical form is similar to canonical form of operator -,
+                    but writen in right recursive form. Syntax rule using operator ~- with separator S:
+                </p>
+                <div class="panel border bg-light" id="example-011">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">~-</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to the following canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-012">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">S</span> <span class="rule-ref">B</span> <span class="rule-ref">S</span>
+    <span class="def-separator">|</span> <span class="rule-ref">S</span> <span class="rule-ref">B</span> <span class="rule-ref">A</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    Set of sentential forms derived by operator ~- with separator is equal to the set of sentential forms derived by operator - namely {SBS, SBSBS, BSBSBS, BSBSBSBS, ...}
+                </p>
+                <hr />
+                <h6>Separators used with operator *</h6>
+                <p>
+                    Syntax rule using operator * with separator is not definied similarly to operator + with separator, since this would produce intuitively unexpected results.
+                </p>
+                <div class="alert alert-primary" role="alert">
+                    <span><img src="~/images/icons8-general-warning-sign-48.png" /></span> If the operator * were defined in a similar way to the operator +, its definition:
+                    <div class="panel border bg-light" id="example-013">
+                        <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">*</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span>
+    <span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <p>
+                        would be equivalent to the following canonical form:
+                    </p>
+                    <div class="panel border bg-light" id="example-014">
+                        <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">%empty</span>
+    <span class="def-separator">|</span> <span class="rule-ref">A</span> <span class="rule-ref">S</span> <span class="rule-ref">B</span>
+    <span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <p>
+                        Since this syntax rule derives the same set of sentential forms {e, SB, SBSB, SBSBSB, ...} as the following rule:
+                    </p>
+                    <div class="panel border bg-light" id="example-015">
+                        <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">(S B)</span> <span class="reserved-word">*</span>
+    <span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <p>
+                        this is not exactly acceptable. Since B* is in fact equivalent to B+?, we would expect that B*[S] is equivalent to (B+[S])?
+                    </p>
+                </div>
+                <p>
+                    So let us define: Syntax rule using operator * with separator is definied on the following way:
+                </p>
+                <div class="panel border bg-light" id="example-016">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">*</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to syntax rule:
+                </p>
+                <div class="panel border bg-light" id="example-017">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span><span class="rule-ref">B</span> <span class="reserved-word">+</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span><span class="def-separator">)</span> <span class="def-separator">?</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    and to this canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-014">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">%empty</span>
+    <span class="def-separator">|</span> <span class="rule-ref">C</span>
+    <span class="def-separator">;</span>
+<span class="rule-name">C</span>
+    <span class="def-separator">|</span> <span class="rule-ref">B</span>
+    <span class="def-separator">|</span> <span class="rule-ref">C</span> <span class="rule-ref">S</span> <span class="rule-ref">B</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    which derives the same set of sentential forms {e, B, BSB, BSBSB, BSBSBSB, ...} as the union of sentential forms derived by operator + with separator:
+                </p>
+                <div class="panel border bg-light" id="example-018">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">+</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    and an empty string.
+                </p>
+                <p>
+                    Note that the above canonical form cannot be specified in the following way:
+                </p>
+                <div class="panel border bg-light" id="example-014">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">%empty</span>
+    <span class="def-separator">|</span> <span class="rule-ref">B</span>
+    <span class="def-separator">|</span> <span class="rule-ref">A</span> <span class="rule-ref">S</span> <span class="rule-ref">B</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    since the set of sentential forms generated by this form is the superset of previous one. It contains all elements from the previous set and also elements which begin with separator S.
+                </p>
+                <hr />
+                <h6>Separators used with operator ~*</h6>
+                <p>
+                    Syntax rule using operator ~* with separator is definied similarly to operator * with separator. The difference is the use of recursive rule in its
+                    canonical form. Syntax rule using operator ~* with separator is definied on the following way:
+                </p>
+                <div class="panel border bg-light" id="example-016">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">~*</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to syntax rule:
+                </p>
+                <div class="panel border bg-light" id="example-017">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span><span class="rule-ref">B</span> <span class="reserved-word">~+</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span><span class="def-separator">)</span> <span class="def-separator">?</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    and to this canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-014">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">%empty</span>
+    <span class="def-separator">|</span> <span class="rule-ref">C</span>
+    <span class="def-separator">;</span>
+<span class="rule-name">C</span>
+    <span class="def-separator">|</span> <span class="rule-ref">B</span>
+    <span class="def-separator">|</span> <span class="rule-ref">B</span> <span class="rule-ref">S</span> <span class="rule-ref">A</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    which derives the same set of sentential forms as the set of sentential forms derived by operator *, namely {e, B, BSB, BSBSB, BSBSBSB, ...} :
+                </p>
+                <hr />
+                <h6>Separators used with operator /</h6>
+                <p>
+                    Syntax rule using operator / with separator is definied, similarly to operator * with separator, on the following way:
+                </p>
+                <div class="panel border bg-light" id="example-016">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">/</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to syntax rule:
+                </p>
+                <div class="panel border bg-light" id="example-017">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span><span class="rule-ref">B</span> <span class="reserved-word">-</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span><span class="def-separator">)</span> <span class="def-separator">?</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    and to this canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-014">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">%empty</span>
+    <span class="def-separator">|</span> <span class="rule-ref">C</span>
+    <span class="def-separator">;</span>
+<span class="rule-name">C</span>
+    <span class="def-separator">|</span> <span class="rule-ref">S</span> <span class="rule-ref">B</span> <span class="rule-ref">S</span>
+    <span class="def-separator">|</span> <span class="rule-ref">C</span> <span class="rule-ref">B</span> <span class="rule-ref">S</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    which derives the same set of sentential forms {e, SBS, SBSBS, SBSBSBS, SBSBSBSBS, ...} as the union of sentential forms derived by operator - with separator:
+                </p>
+                <div class="panel border bg-light" id="example-018">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">-</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    and an empty string.
+                </p>
+                <p>
+                    Again, above canonical form cannot be expressed on this way:
+                </p>
+                <div class="panel border bg-light" id="example-014">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">%empty</span>
+    <span class="def-separator">|</span> <span class="rule-ref">S</span>
+    <span class="def-separator">|</span> <span class="rule-ref">A</span> <span class="rule-ref">B</span> <span class="rule-ref">S</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6>Separators used with operator ~/</h6>
+                <p>
+                    Syntax rule using operator ~/ with separator is definied similarly to operator / with separator. The difference is in the type
+                    of recursion used in its canonical form. Syntax rule for operator ~/ :
+                </p>
+                <div class="panel border bg-light" id="example-016">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">B</span> <span class="reserved-word">~/</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    is equivalent to syntax rule:
+                </p>
+                <div class="panel border bg-light" id="example-017">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span><span class="rule-ref">B</span> <span class="reserved-word">~-</span> <span class="reserved-word">[</span> <span class="rule-ref">S</span> <span class="reserved-word">]</span><span class="def-separator">)</span> <span class="def-separator">?</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    and to this canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-014">
+                    <pre>
+<span class="rule-name">A</span>
+    <span class="def-separator">:</span> <span class="rule-ref">%empty</span>
+    <span class="def-separator">|</span> <span class="rule-ref">C</span>
+    <span class="def-separator">;</span>
+<span class="rule-name">C</span>
+    <span class="def-separator">|</span> <span class="rule-ref">S</span> <span class="rule-ref">B</span> <span class="rule-ref">S</span>
+    <span class="def-separator">|</span> <span class="rule-ref">S</span> <span class="rule-ref">B</span> <span class="rule-ref">C</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    which derives the same set of sentential forms {e, SBS, SBSBS, SBSBSBS, SBSBSBSBS, ...} as the set of sentential forms derived by operator / with separator
+                </p>
+                <hr />
+                <h6>Separators used with operator ?</h6>
+                <p>
+                    Operator ? does not use separator since there is nothing to be separated with, since sentential forms associated with this operator contain at least one symbol.
+                </p>
+                <div class="alert alert-primary" role="alert">
+                    <img src="~/images/icons8-info-squared-48.png" /> Don't be too "creative", when you define syntax rules for sequences of syntax-identical objects. Use cardinality
+                    operators instead. This will ensure that syntax rules (their canonical forms) will be always composed in the same way, which is provided by Anglr compiler.
+                </div>
+                <hr />
+                <h4>Syntax rules and sentential forms</h4>
+                <p>
+                    Now is a good time to delve deeper into understanding the composition of sentential forms set derived by syntax rules composed with the help of operators.
+                </p>
+                <p>
+                    Let's take another look at the examples defined <a href="#example-009">here</a> and <a href="#example-010">here</a>, where syntax rule additive-expression is defined in two ways.
+                    At first glance, which is otherwise a false assumption, it seem that these definitions are not equivalent, since they derive different sets of sentential forms. The set of sentential forms derived by
+                    <a href="#example-009">first</a> example is supposed to be the union of two sets. First of them consists of multiplicative-expressions connected with terminal symbol '+',
+                    the second one consists of multiplicative-expressions connected with terminal symbol '-'. On the other side, the set of sentential forms derived by <a href="#example-010">second</a> example
+                    derives the set of multiplicative-expressions connected with the mix of both terminal symbols. These sets are clearly different.
+                </p>
+                <p>
+                    But that's not the case. When analyzing language or set of sentential forms of that language derived by arbitrary number of syntax rules of that language, we should never work with
+                    syntax rules with operators. We must first derive syntax rules with producions containing only terminal and non-terminal symbols and then perform the analyzes, like in the example below.
+                    Definition of syntax rule additive-expression in <a href="#example-009">first</a> example should be writen in this form:
+                </p>
+                <div class="panel border bg-light" id="example-019">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    From above records, we can incorrectly conclude that we cannot use arithmetic operators <span class="string-name">&#39;+&#39;</span> and <span class="string-name">&#39;-&#39;</span> in
+                    the same arithmetic expression. But this is incorrect assumption. If we follow the definition of operator +, we find these syntax rules for additive-expression.
+                </p>
+                <div class="panel border bg-light" id="example-020">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    If we ignore duplcated definitions, we have essentially a rewrite of <a href="#example-001">original definition</a>. But we now see clearly, that we can use both arithmetic
+                    operators in the same arthmetic operation, since we can alternately use productions of <span class="rule-name">additive-expression</span> in the derivation of sentential forms
+                    for that syntax rule. For example, these derivations are quite legal for syntax rule <span class="rule-name">additive-expression</span>:
+                    <div class="panel border bg-light" id="example-020">
+                        <pre>
+<span class="rule-name">additive-expression</span>
+    --&gt; <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    --&gt; <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    --&gt; <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+                    </pre>
+                    </div>
+                </p>
+                <p>
+                    Following the definition of operator + again, the second definition of syntax rule additive-expression, can be writen in this form:
+                </p>
+                <div class="panel border bg-light" id="example-021">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="def-separator">(</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">)</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    which is nothing but shorter form of <a href="#example-001">original definition</a>.
+                </p>
+                <p>
+                    Since in both cases we get the same rules, we conclude, that <a href="#example-009">first</a> and <a href="#example-010">second</a> rules composed with operators are equivalent and that the 
+                    <a href="#example-009">first</a> rule derives the same set of sentential forms as the <a href="#example-010">second</a> one.
+                </p>
+                <p>
+                    This example provides a good insight into understanding of the relation between syntax rules composed with operators and the composition of the sentential forms set derived by these rules.
+                    This knowledge can be useful in assembling syntax rules. The syntax rules should be as short as possible and consist of as few productions as possible.
+                    The length of the syntax rule, and in particular the number of productions, affects the speed of the syntax analyzer. The less the productions, the faster the analyzer.
+                </p>
+                <h4>
+                    Example
+                </h4>
+                <p>
+                    Below is presented complete example of anglr file.
+                </p>
+                <div class="panel border bg-light" id="example-022">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definitions of tokens and regular expressions used to define sntax&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;of simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathDecls&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Declarations&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%declarations</span> <span class="part-name">mathDecls</span>
+<span class="part-brace">%{</span>
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+    <span class="def-separator">}</span>
+
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of scanner, which extracts comments from input string&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CommentRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">commentScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">[\*]+\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[^\*]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\*]+</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of scanner, which extracts terminal symbols from input string&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">mathScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+    <span class="action-token">push</span> <span class="action-identifier">commentScanner</span>
+<span class="regex-ref">{number}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">NUMBER</span>
+<span class="regex-ref">\+</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">add</span>
+<span class="regex-ref">\-</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">sub</span>
+<span class="regex-ref">\*</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">mul</span>
+<span class="regex-ref">\/</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">div</span>
+<span class="regex-ref">\(</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">lb</span>
+<span class="regex-ref">\)</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">rb</span>
+<span class="regex-ref">[ \t]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Lexer for anglr file&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span>
+    <span class="attribute-name">UseScanner</span>
+        <span class="attribute-val-name">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;commentScanner&#39;</span>
+        <span class="attribute-val-name">InitialScanner</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathScanner&#39;</span>
+        <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathLexer&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Lexer&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%lexer</span> <span class="part-name">mathLexer</span>
+<span class="part-brace">%{</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <div class="panel border bg-light" id="example-023">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of parser for simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser1</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <hr />
+                <p>
+                    Above example contains some of the gripes that are worth remembering:
+                </p>
+                <div class="alert alert-primary" role="alert">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img src="~/images/icons8-info-squared-48.png" />
+                                    <h4>Operator Priority</h4>
+                                </td>
+                                <td></td>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    Rules are designed to take into account the priority of operators: addition and subtraction have the same priority,
+                                    but lower than multiplication and division, which also have the same mutual priority, but again lower than the nested
+                                    arithmetic expressions, which are located between parentheses. This technique is worth remembering because Anglr does
+                                    not have special approaches to introduce a priority among operators used in programming languages.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="~/images/icons8-info-squared-48.png" />
+                                    <h4>Recursive Rules</h4>
+                                </td>
+                                <td></td>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    In the example above, some syntax rules can be seen to be recursive. These rules are additive-expression
+                                    and multiplicative-expression. These two rules are explicitly recursive, as their names directly appear in the terms
+                                    with which they are defined.
+                                    <br />
+                                    Implicitly, all the rules in this case are recursive, since each of them acts in themselves indirectly through other rules.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="~/images/icons8-info-squared-48.png" />
+                                    <h4>Left recursive rules</h4>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    The rules additive-expression and multiplicative-expression are left recursive because their names appeare on the left side
+                                    of the rules, they are defined with.
+                                    <br />
+                                    If it is possible, let all the rules in Anglr be left recursive. This affects the functioning of the syntax analyser generated
+                                    by the Anglr compiler. Anglr compiler generates so-called LR analyzers. They are very effective at addressing left-wing
+                                    recursive rules, but in the right recursive rules, results can be disastrous. Recursive rules typically define sequences of
+                                    syntacticaly identical elements. If the syntax rules for these sequences are left recursive, the generated syntax analyzer can
+                                    handle them in real time, one by one. However, if the syntax rules for these sequences are right recursive, the syntax analyzer
+                                    must remember all elements in the sequence and only deal with them at the end. If this sequence is very long, the syntax
+                                    analyzer may run out of memory.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="~/images/icons8-info-squared-48.png" />
+                                    <h4>Terminal Symbols</h4>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    In the above example, there are things that are not explicitly defined anywhere. These are: '+', '-', '*', '/', '(', ')', and
+                                    NUMBER. These are terminal symbols. As we will see later, these elements must be defined somewhere. For '+', '-', '*', '/', '(',
+                                    and ')' this is not necessarily necessary because we can see from the record itself what their content is. However, the contents
+                                    of the NUMBER terminal symbol are not known, so it must be defined elsewhere. At this point it should be noted that the arithmetic
+                                    expressions defined by the syntax rules defined above, consist exclusively of the terminal symbols fund in these syntax rules.
+                                    It is a general rule: each language (or sentences in this language) consists only of those terminal symbols which are located in
+                                    the syntax rules by which it is defined.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="~/images/icons8-info-squared-48.png" />
+                                    <h4>Start Rule</h4>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <p>
+                                        And here's another thing that we see in the example above. The 'expression' syntax rule is indicated by the [ Start ] attribute.
+                                        This means that expression is the rule that defines all valid arithmetic expressions that are build up according to the rules
+                                        in the example. This is the general rule: all valid statements of some language are derived by start rule.
+                                        For example, the following terms are valid under this rule:
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            1
+                                        </li>
+                                        <li>
+                                            1 + 2
+                                        </li>
+                                        <li>
+                                            1 * 2 + 3
+                                        </li>
+                                    </ul>
+                                    <p>
+                                        Let's imagine that in the above exampe, unary-axpression would be chosen as the starting rule. Then 1 + 2 and 1* 2 + 3 would no
+                                        longer be a valid arithmetic expressions. However, the same expressions would be valid if they were listed in parentheses:
+                                        (1 + 2) in (1 * 2 + 3). It is therefore worth remembering that the starting rule derives the language: a set of valid sentences
+                                        from that language.
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel border bg-light" id="example-024">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;compact definition of parser for simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;using iterators&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser2</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">|</span> <span class="rule-ref">unary-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <div class="panel border bg-light" id="example-025">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;more compact definition of parser for simple&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;arithmetic expressions using iterators&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser3</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <div class="panel border bg-light" id="example-026">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;compact definition of parser for simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;using iterators and nested syntax rules&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser4</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">additive-expression</span> <span class="def-separator">:</span>
+            <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">multiplicative-expression</span> <span class="def-separator">:</span>
+                <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">unary-expression</span> <span class="def-separator">:</span>
+                    <span class="identifier-name">NUMBER</span>
+                <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+                <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+            <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">)</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <div class="panel border bg-light" id="example-027">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;compact definition of parser for simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;using iterators and anonymous nested syntax rules&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser5</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span>
+            <span class="def-separator">(</span>
+                <span class="def-separator">(</span>
+                    <span class="identifier-name">NUMBER</span>
+                <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+                <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+            <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">)</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <div class="panel border bg-light" id="example-028">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;single line compact definition of parser for simple arithmetic&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;expressions using iterators and anonymous nested syntax rules&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser6</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span><span class="def-separator">(</span><span class="def-separator">(</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span> <span class="def-separator">)</span><span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>                    </pre>
+                </div>
+                <h4>
+                    Conclusion
+                </h4>
+                <p>
+                    Now that we know the basic procedures for creating syntax rules, we can learn more precisely about how to write the contents of anglr file,
+                    so that we can successfuly create a working syntax analyzer with its help.
+                </p>
+            </section>

@@ -1,0 +1,276 @@
+﻿@page
+@model AnglrFileStructureModel
+@{
+    ViewData ["Title"] = "Anglr File Structure";
+    ViewData ["Content"] = "Definition of Anglr file structure - Anglr file parts";
+}
+<section id="file-structure">
+    <h1>Anglr File Structure</h1>
+    <hr />
+    <h4>Introduction</h4>
+    <p class="anglr-p">
+        Anglr file is composed of different parts. Each part contains similar things, different things are containded in different parts,
+        e.g.: terminal symbols are contained in declaration part, definition of scanners are contained in scanner parts, definitions of
+        lexers are contained in lexer parts, and so on. These parts are not independent, they are interconnected, e.g.: scanners and parsers
+        should know the definitions of terminal symbols, lexers should know the definitions of scanners, parsers should know the definitions
+        of lexers and so on. Dependencies between different parts are made with part references which are implemented with the help of
+        special attributes.
+    </p>
+    <h4>Syntax</h4>
+    <p class="anglr-p">
+        Following are the syntax rules used to define anglr file structure:
+    </p>
+    <hr />
+    <p id="rule-f-1">RULE F-1</p>
+    <div class="panel border bg-light" id="example-001">
+        <pre>
+<span class="rule-name">&lt;anglr file&gt;</span>
+    <span class="def-separator">:</span>    <span class="rule-ref">&lt;anglr file part list&gt;</span> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <hr />
+    <p id="rule-f-2">RULE F-2</p>
+    <div class="panel border bg-light" id="example-001">
+        <pre>
+<span class="rule-name">&lt;anglr file part list&gt;</span>
+    <span class="def-separator">:</span>    <span class="rule-ref">&lt;anglr file part&gt;</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <hr />
+    <p id="rule-f-3">RULE F-3</p>
+    <div class="panel border bg-light" id="example-001">
+        <pre>
+<span class="rule-name">&lt;anglr file part&gt;</span>
+    <span class="def-separator">:</span>    <span class="rule-ref">&lt;general part&gt;</span>
+    <span class="def-separator">|</span>    <span class="rule-ref">&lt;declaration part&gt;</span>
+    <span class="def-separator">|</span>    <span class="rule-ref">&lt;scanner part&gt;</span>
+    <span class="def-separator">|</span>    <span class="rule-ref">&lt;lexer part&gt;</span>
+    <span class="def-separator">|</span>    <span class="rule-ref">&lt;parser part&gt;</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <hr />
+    <h2>Discussion</h2>
+    <hr />
+    <h6 style="font-weight:bold">RULE F-1 - Structure of Anglr File</h6>
+    <p class="anglr-p">
+        Rule <a href="#rule-f-1">RULE F-1</a> defines the syntax of anglr file. Anglr file is composed by possibly empty list of anglr file parts.
+    </p>
+    <hr />
+    <h6 style="font-weight:bold">RULE F-2 - Anglr File Part List</h6>
+    <p class="anglr-p">
+        Rule <a href="#rule-f-2">RULE F-2</a> defines the syntax of anglr file parts list. It is nothing but a nonempty sequence of file parts.
+        There are no special separators between them except space characters.
+    </p>
+    <hr />
+    <h6 style="font-weight:bold">RULE F-3 - Kind of Anglr File Parts</h6>
+    <p class="anglr-p">
+        Rule <a href="#rule-f-3">RULE F-3</a> defines all possible parts of a file:
+    </p>
+    <ul class="anglr-ul">
+        <li>
+            general part: where general things regarding all file are defined
+        </li>
+        <li>
+            declaration part: where declarations are specified
+        </li>
+        <li>
+            scanner part: where scanners are defined. Scanner part can reference any number of declaration parts
+        </li>
+        <li>
+            lexer part: where lexical analyzer is defined. Lexer part can reference many scanner parts
+        </li>
+        <li>
+            parser part: where syntax rules for syntax analyzer are defined. Parser part can reference declaration parts, scanner parts and lexer parts
+        </li>
+    </ul>
+    <p class="anglr-p">
+        There can be any number of different type of anglr file parts in particular anglr file: how many and which parts will be used in the file depends on the needs of
+        particular project which uses that anglr file.
+    </p>
+    <h6>Example</h6>
+    <p class="anglr-p">
+        This example has already been mentioned on the <a href="~/Documentation/#example-001">introductory page</a>, but it is once again repeated there:
+    </p>
+    <div class="panel border bg-light" id="example-001">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="math-decls">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definitions of tokens and regular expressions used to define sntax&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;of simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathDecls&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Declarations&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%declarations</span> <span class="part-name">mathDecls</span>
+<span class="part-brace">%{</span>
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+    <span class="def-separator">}</span>
+
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="comment-scanner">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of scanner, which extracts comments from input string&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="comment-scanner-dcl-spec">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CommentRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">commentScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">[\*]+\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[^\*]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\*]+</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="math-scanner">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of scanner, which extracts terminal symbols from input string&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">mathScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+    <span class="action-token">push</span> <span class="action-identifier">commentScanner</span>
+<span class="regex-ref">{number}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">NUMBER</span>
+<span class="regex-ref">\+</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">add</span>
+<span class="regex-ref">\-</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">sub</span>
+<span class="regex-ref">\*</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">mul</span>
+<span class="regex-ref">\/</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">div</span>
+<span class="regex-ref">\(</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">lb</span>
+<span class="regex-ref">\)</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">rb</span>
+<span class="regex-ref">[ \t]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="math-lexer">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Lexer for anglr file&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span>
+    <span class="attribute-name">UseScanner</span>
+        <span class="attribute-val-name">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;commentScanner&#39;</span>
+        <span class="attribute-val-name">InitialScanner</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathScanner&#39;</span>
+        <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathLexer&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Lexer&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%lexer</span> <span class="part-name">mathLexer</span>
+<span class="part-brace">%{</span>
+
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="math-parser">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of parser for simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser1</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span>    <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span>    <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span>    <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span>    <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span>    <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span>    <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span>    <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span>    <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span>    <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+        </pre>
+    </div>
+    <p class="anglr-p">
+        Above example defines:
+    </p>
+    <ul class="anglr-ul">
+        <li>
+            no general part, since all things needed by angler compiler are defined where they should be
+        </li>
+        <li>
+            one declaration part named <a href="#math-decls">mathDecls</a>.
+        </li>
+        <li>
+            two scanner parts named <a href="#comment-scanner">commentSanner</a> and <a href="#math-scanner">mathScanner</a>
+        </li>
+        <li>
+            one lexer part named <a href="#math-lexer">mathLexer</a>.
+        </li>
+        <li>
+            And one parser part named <a href="#math-parser">mathParser1</a>.
+        </li>
+    </ul>
+    <p class="anglr-p">
+        As we see, certain parts of the anglr file are referenced from other parts of the file using attributes that are listed just before the part that performs referencing. We can observe
+        these referencing relations:
+    </p>
+    <ul class="anglr-ul">
+        <li>
+            scanner parts <a href="#comment-scanner">commentSanner</a> and <a href="#math-scanner">mathScanner</a> are referencing declaration part <a href="#math-decls">mathDecls</a>
+            through attribute<br />
+        <span class="attribute-brace">[</span> <span class="attribute-name"><a href="#comment-scanner-dcl-spec">Declarations</a></span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>.<br />
+            This referencing relations define the source of the data structures that will be used by scanners.
+        </li>
+        <li>
+            lexer part <a href="#math-lexer">mathLexer</a> references scanner parts <a href="#comment-scanner">commentSanner</a> and <a href="#math-scanner">mathScanner</a> through attribute<br />
+            <span class="attribute-brace">[</span>
+            <span class="attribute-name">UseScanner</span>
+            <span class="attribute-val-name">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;commentScanner&#39;</span>
+            <span class="attribute-val-name">InitialScanner</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathScanner&#39;</span>
+            <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+            <span class="attribute-brace">]</span>.<br />This referencing relations define the structure of lexical analyzer. It is built with two scanners. Initial scanner is mathScanner,
+            other is activated when needed.
+        </li>
+        <li>
+            parser part <a href="#math-parser">mathParser1</a> references declarations part <a href="#math-decls">mathDecls</a> through attribute<br />
+            <span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span><br />
+            and lexer part <a href="#math-lexer">mathLexer</a> through attribute<br />
+            <span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>.<br />
+            These referencing relations define the data structures and lexical analyzer used by syntax analyzer.
+        </li>
+    </ul>
+    <p class="anglr-p">
+        From the above example we can also observe, that all parts of anglr file are composed on the similar way:
+    </p>
+    <ul class="anglr-ul">
+        <li>
+            part is preceded by attribute list
+        </li>
+        <li>
+            then follows special token %part-type (where part-type can be general, declarations, scanner, lexer or parser) and an identifier specifying name of particular part
+        </li>
+        <li>
+            between part parentheses %{ an %} is content of that anglr file part. Contents of anglr file parts can be quite different especially contents of
+            different kinds of anglr file parts.
+        </li>
+    </ul>
+</section>

@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="@ViewData["Content"]" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/anglr.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/anglr-html.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AnglrWebSite.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">AnglrWebSite</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Documentation">Documentation</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            <div class="row">
+                <div class="col-xl-2 anglr-doc-index">
+                    <nav class="sticky-top">
+                        <div class="container-fluid">
+                            <ul class="nav flex-column">
+                                <li class="nav-item"><a asp-page="/Documentation">Overview</a></li>
+                                <li class="nav-item"><a asp-page="/Language/AnglrLanguage">Anglr Language</a></li>
+                                <li class="nav-item"><a asp-page="/Language/Attributes">Anglr Language Attributes</a></li>
+                                <li class="nav-item"><a asp-page="/Language/AnglrFileStructure">Anglr File Structure</a></li>
+                                <li class="nav-item"><a asp-page="/Language/GeneralPart">General Part of Anglr File</a></li>
+                                <li class="nav-item"><a asp-page="/Language/DeclarationPart">Declaration Part of Anglr File</a></li>
+                                <li class="nav-item"><a asp-page="/Language/ScannerPart">Scanner Part of Anglr File</a></li>
+                                <li class="nav-item"><a asp-page="/Language/LexerPart">Lexer Part of Anglr File</a></li>
+                                <li class="nav-item"><a asp-page="/Language/ParserPart">Parser Part of Anglr File</a></li>
+                                <li class="nav-item"><a asp-page="/Language/Tutorial">Tutorial</a></li>
+                                <li class="nav-item"><a asp-page="/Compiler/Compiler">Anglr Compiler</a></li>
+                                <li class="nav-item"><a asp-page="/Compiler/Declarations">Declarations Source Code</a></li>
+                                <li class="nav-item"><a asp-page="/Compiler/LexicalScanner">Lexical Scanner Source Code</a></li>
+                                <li class="nav-item"><a asp-page="/Compiler/LexicalAnalyzer">Lexical Analyzer Source Code</a></li>
+                                <li class="nav-item"><a asp-page="/Compiler/SyntaxAnalyzer">Syntax Analyzer Source Code</a></li>
+                                <li class="nav-item"><a asp-page="/Compiler/SyntaxTreeBuilder">Syntax Tree Builder</a></li>
+                                <li class="nav-item"><a asp-page="/Compiler/SyntaxTreeWalker">Syntax Tree Walker</a></li>
+                                <li class="nav-item"><a asp-page="/Appendix-A">Appendix A: Anglr Laguage Syntax</a></li>
+                                <li class="nav-item"><a asp-page="/Appendix-B">Appendix B: Anglr Laguage Syntax using Nested Rules</a></li>
+                                <li class="nav-item"><a asp-page="/Appendix-C">Appendix C: ASN.1 Syntax</a></li>
+                                <li class="nav-item"><a asp-page="/Appendix-D">Appendix D: Java Syntax</a></li>
+                                <li class="nav-item"><a asp-page="/Appendix-E">Appendix E: C# Syntax</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-xl-8">
+                    @RenderBody()
+                </div>
+                <div class="col-xl-2 anglr-page-index">
+                    @await RenderSectionAsync("OnThisPage", required: false)
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - AnglrWebSite - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-W2VMDSX0CE&amp;cx=c&amp;_slc=1"></script>
+    <script async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <script defer="" src="https://cdn.usefathom.com/script.js" data-site="ITUSEYJG"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-146052-10', 'getbootstrap.com');
+        ga('set', 'anonymizeIp', true);
+        ga('send', 'pageview');
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

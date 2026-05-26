@@ -1,0 +1,740 @@
+﻿@page
+@model CompilerModel
+@{
+    ViewData ["Title"] = "Anglr Compiler";
+	ViewData ["Content"] = "Translates syntax rules found in Anglr file into selected programming language source code";
+}
+<section id="compiler">
+    <h1>Anglr Compiler</h1>
+    <hr />
+    <h4>Introduction</h4>
+    <p class="anglr-p">
+        Anglr compiler is a tool which translates syntax and lexical rules specified in an Angler file into the set of source files written in
+        selected programming language. It is used in two ways:
+	</p>
+	<ul class="anglr-ul">
+		<li>
+			manually from the command prompt
+		</li>
+		<li>
+			automatically as an extension of Microsoft Visual Studio.
+		</li>
+	</ul>
+	<p class="anglr-p">
+        Currently it has only the following parameters:
+	</p>
+	<ul class="anglr-ul">
+		<li>
+			-d - switch to activate debug messages
+		</li>
+		<li>
+			-t - switch which enables generation of source code. The name of this switch is attributed to the first character of the last word in
+			acronym CST (concrete syntax <b>t</b>ree). The large part of generated source code actually belong to the classes and their methods
+			associated with the manipulation of the CSTs.
+		</li>
+		<li>
+			-l - switch which generates code which will detect run-time loops in generated code
+		</li>
+		<li>
+			-i - switch which changes the generation of CST manipulation methods: recursive methods are transformed in iterative one
+		</li>
+		<li>
+			-p - switch which enables automatic detection of precedence grammar. Generated parser is optimized for precedence syntax rules.
+		</li>
+		<li>
+			-gen &lt;lang&gt; - parameter with wich we can specify the programming language of generated code. Currently only cs is valid
+			selection for &lt;lang&gt;, meaning C# source code
+		</li>
+		<li>
+			&lt;src&gt; - name of Anglr source file, containing the syntax rules which will be translated into the set of source files of
+			selected programming language.
+		</li>
+	</ul>
+	<p class="anglr-p">
+		All other parameters concerning the compilation process are specified in Anglr source files.
+    </p>
+	<p class="anglr-p">
+        Example:
+	</p>
+	<p class="anglr-p">
+		<div class="panel border bg-light">
+            <pre>
+anglr -t -l -gen cs math.anglr > math-anglr.txt
+            </pre>
+        </div>
+	</p>
+	<p class="anglr-p">
+		With this command, we translate the syntax rules in file math.anglr into a set of C# source files. Output messages are stored into the file math-anglr.txt
+    </p>
+    <h4>Generated source code</h4>
+	<p class="anglr-p">
+        An Anglr compiler generates source code in the selected programming language using the instructions provided in the Anglr file, which makes
+        it possible to create a text analsysis tool for text files whose content is built according to the syntax rules found in the said Anglr file.
+		The most important product of the compiler is the source code generated in the selected programming language. The generated source code can be divided into
+		the following functional sets::
+	</p>
+	<ul class="anglr-ul">
+		<li>
+			lexical analyzer source code
+		</li>
+		<li>
+			syntax analzer source code
+		</li>
+		<li>
+			source code for creating a concrete syntax tree (CST)
+		</li>
+		<li>
+			source code for semantic analysis with the help of CST
+		</li>
+		<li>
+			source code for qdditional functionalities
+		</li>
+	</ul>
+	<p class="anglr-p">
+        The structure of generated source code should be described in this way:
+	</p>
+	<ul class="anglr-ul">
+		<li>
+			for every syntax rule found in any parser part of Anglr file there is a file in selected programming language containig the definition of a
+			class associated with this syntax rule
+		</li>
+		<li>
+			for every declaration part of Anglr file there is a file in selected programming language containing the definition of a class associated
+			with this part
+		</li>
+		<li>
+			for every scanner part of Anglr file there is a file in selected programming language containing the definition of a class associated
+			with this part
+		</li>
+		<li>
+			for every lexical part of Anglr file there is a source file in selected programming language containing the definition of a class
+			representing this part.
+		</li>
+		<li>
+			for every parser part of Anglr file there is a source file in a selected programming language containg the definition of a class
+			representing this parser part.
+		</li>
+		<li>
+			the implementation of a class associated with the concrete syntax tree builder.
+		</li>
+		<li>
+			the implementation of a class associated with concrete syntax tree traversal methods.
+		</li>
+	</ul>
+	<p class="anglr-p">
+		What's the purpose of the generated source code? With this source code, we can build an application that analyzes text files whose content meets
+		the syntax rules listed in the Anglr file associated with generated source code. All these applications are built in a similar way following this scenario:
+	</p>
+	<ul class="anglr-ul">
+		<li>
+			Syntax analyzer performes syntax analyses of the input text file. This step of the application uses classes associated with parser parts of Anglr file.
+		</li>
+		<li>
+			Input text file is nothing but a string of terminal symbols separated by spaces. Lexical analyzer is intensively used by syntax analyzer to extract
+			terminal symbols from the input text file. Lexical analyzer is implemented with classes associated with the lexer parts of Anglr file.
+		</li>
+		<li>
+			Lexical analyzer use scanners to extracts terminal symbols from input text file. It can invoke as many scanners as needed. Scanners are implemented
+			with classes associated with scanner parts of Anglr file.
+		</li>
+		<li>
+			A concrete syntax tree (CST) is also built during the syntax analysis of the text file. The build begins with the first terminal read, and ends after
+			the last one is read. Methods of class associated with CST construction are responsible to do that.
+		</li>
+		<li>
+			When the syntax analysis is complete and the CST is constructed, the most important part begins: semantic analysis of the source file, in the broadest
+			sense of that word. Semantic analysis is essentially a transformation of CST into a new form. Each node of CST represents part of
+			the source text file. The leaves of this CST represent terminal symbols together with their character representation, and the inner nodes
+			represent non-terminal symbols. The inner nodes that are closer to the top of the CST represent a larger portion of the source file
+			than those located lower. The top node represents the entire file, while the leaves represent the individual terminal symbols. To perform semantic
+			analysis we can use CST traversal methods of the class which performs them. CST can be traversed as many times as needed. Any iteration can perform a
+			different task. At every iteration of a CST traversal we can do a part of semantic analysis or transformation of the source text. In that manner we can
+			do as many text trasnformations as we need to do them. If these transformations are independent, then they can be performed together in one iteration,
+			otherwise they should be performed sequentially.
+		</li>
+	</ul>
+	<p class="anglr-p">
+		Every step of scenario described above can be monitored by application. This is done by monitoring the events triggered by the methods that implement scenario
+		described above. Every event can be associated with appropriate method provided by application. When an event is triggered, associated application method is invoked.
+		A huge number of events are triggered, whether it is during the reading phase of the input text file or during the post-processing phase of the CST.
+	</p>
+    <h4>Class associated with syntax rule</h4>
+	<p class="anglr-p">
+        Every syntax rule is associated with exactly one class implemented in selected programming language. Instances of this class represent
+        nodes of concrete syntax tree (CST) generated by syntax analyzer. All classes are composed in a similar way, as follows:
+	</p>
+	<ul class="anglr-ul">
+		<li>
+			their names are a modified versions of the syntax rule names to which they belong.
+		</li>
+		<li>
+			they are subclasses of the class <b>SyntaxTreeBase</b>
+		</li>
+		<li>
+			enumeration <b>production_kind</b> enumerates all productions of class associated with particular syntax rule
+		</li>
+		<li>
+			There is one constructor for each production of syntax rule.
+		</li>
+		<li>
+			Every class has explicitely defined copy constructor
+		</li>
+		<li>
+			then the <b>Clone ()</b> method is specified. It is wrapper for copy constructor.
+		</li>
+		<li>
+			The <b>Dispose</b> method is used to release a sub-tree that is rooted in node associated with this syntax rule.
+		</li>
+		<li>
+			for every production of syntax tree there is a <b>change ()</b> method which completely rebuilds the sub-tree of node
+		</li>
+		<li>
+			the <b>checkInclusion ()</b> method is used to verify if a node is located in a sub-tree.
+		</li>
+		<li>
+			<b>Emit ()</b> and <b>EmitProductionTree ()</b> methods are used to display the sub-tree of a given node
+		</li>
+		<li>
+			<b>InvokeTraverse ()</b> method is used to traverse the sub-tree of a given node
+		</li>
+		<li>
+			<b>reparent ()</b> method is used to move the sub-tree to another node
+		</li>
+		<li>
+			<b>init ()</b> method initializes all properties of the node
+		</li>
+		<li>
+			every class has static counter which counts all nodes created by this class.
+		</li>
+		<li>
+			public properties of this class represent the branches emanating from the node
+		</li>
+	</ul>
+	<p class="anglr-p">
+		Let's take a look at the well-known example of syntax rule and at the class generated by Anglr compiler that belongs to it so we can get a
+		sense of what we're talking about:
+	</p>
+	<p class="anglr-p">
+		<div class="panel border bg-light" id="example-001">
+			<pre>
+<span class="rule-name">additive-expression</span>
+	<span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+	<span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+	<span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+	<span class="def-separator">;</span>
+			</pre>
+		</div>
+	</p>
+	<p class="anglr-p">
+		Class associated with above syntax rule is presented in the text below:
+	</p>
+	<p class="anglr-p">
+		<div class="panel border bg-light" id="example-002">
+			<pre>
+namespace Math.Parser
+{
+	//
+	// class associated with syntax rule additive-expression
+	//
+
+	public class	additive_expression : SyntaxTreeBase
+	{
+		public enum production_kind	// enumerated production(s) of syntax rule additive-expression
+		{
+			g_additive_expression_1 = 1,	// multiplicative-expression
+			g_additive_expression_2 = 2,	// additive-expression add multiplicative-expression
+			g_additive_expression_3 = 3,	// additive-expression sub multiplicative-expression
+		};
+
+		// Constructor declaration(s) associated with production(s) of syntax rule additive-expression
+
+		//
+		// Constructor associated with the following production(s)
+		// additive-expression: multiplicative-expression
+		//
+
+		public additive_expression (multiplicative_expression p_multiplicative_expression) : base ((uint) SyntaxTreeWalker.ProductionID._additive_expression_ID, (uint) production_kind.g_additive_expression_1)
+		{
+			++g_counter;
+			_init ();
+			m_multiplicative_expression = p_multiplicative_expression;
+		}
+
+		//
+		// Constructor associated with the following production(s)
+		// additive-expression: additive-expression add multiplicative-expression
+		// additive-expression: additive-expression sub multiplicative-expression
+		//
+
+		public additive_expression (additive_expression p_additive_expression, SyntaxTreeToken p_token, multiplicative_expression p_multiplicative_expression, int kind) : base ((uint) SyntaxTreeWalker.ProductionID._additive_expression_ID, (uint) kind)
+		{
+			++g_counter;
+			_init ();
+			switch ((production_kind) this.kind)
+			{
+			case production_kind.g_additive_expression_2:
+				m_additive_expression = p_additive_expression;
+				m_add = p_token;
+				m_multiplicative_expression = p_multiplicative_expression;
+				break;
+			case production_kind.g_additive_expression_3:
+				m_additive_expression = p_additive_expression;
+				m_sub = p_token;
+				m_multiplicative_expression = p_multiplicative_expression;
+				break;
+			default:
+				{
+					string[] args = new string[] { "additive_expression" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
+			}
+		}
+
+		// Copy constructor
+
+		public additive_expression (additive_expression p_additive_expression) : base (p_additive_expression.id, p_additive_expression.kind)
+		{
+			++g_counter;
+			if ((m_multiplicative_expression = (p_additive_expression.m_multiplicative_expression != null) ? new multiplicative_expression (p_additive_expression.m_multiplicative_expression) : null) != null) m_multiplicative_expression.parent = this;
+			if ((m_additive_expression = (p_additive_expression.m_additive_expression != null) ? new additive_expression (p_additive_expression.m_additive_expression) : null) != null) m_additive_expression.parent = this;
+			if ((m_add = (p_additive_expression.m_add != null) ? new SyntaxTreeToken (p_additive_expression.m_add) : null) != null) m_add.parent = this;
+			if ((m_sub = (p_additive_expression.m_sub != null) ? new SyntaxTreeToken (p_additive_expression.m_sub) : null) != null) m_sub.parent = this;
+		}
+
+		// Clone node - wrapper of copy constructor
+
+		public override SyntaxTreeBase Clone () { return (SyntaxTreeBase) new additive_expression (this); }
+
+		// Destructor
+
+		public new void Dispose ()
+		{
+			base.Dispose ();
+			--g_counter;
+			if (m_multiplicative_expression != null)
+			{
+				m_multiplicative_expression.Dispose ();
+				m_multiplicative_expression =null;
+			}
+
+			if (m_additive_expression != null)
+			{
+				m_additive_expression.Dispose ();
+				m_additive_expression =null;
+			}
+
+			if (m_add != null)
+			{
+				m_add.Dispose ();
+				m_add =null;
+			}
+
+			if (m_sub != null)
+			{
+				m_sub.Dispose ();
+				m_sub =null;
+			}
+
+			_init ();
+		}
+
+		// Content changing function(s) associated with production(s) of syntax rule additive-expression
+
+		//
+		// Content changing function associated with following production(s)
+		// additive-expression: multiplicative-expression
+		//
+
+		public void change(multiplicative_expression p_multiplicative_expression)
+		{
+			_init ();
+			m_kind = (uint) production_kind.g_additive_expression_1;
+			m_multiplicative_expression = p_multiplicative_expression;
+			reparent (parent);
+		}
+
+		//
+		// Content changing function associated with following production(s)
+		// additive-expression: additive-expression add multiplicative-expression
+		// additive-expression: additive-expression sub multiplicative-expression
+		//
+
+		public void change(additive_expression p_additive_expression, SyntaxTreeToken p_token, multiplicative_expression p_multiplicative_expression, int kind)
+		{
+			_init ();
+			m_kind = (uint) kind;
+			switch ((production_kind) this.kind)
+			{
+			case production_kind.g_additive_expression_2:
+				m_additive_expression = p_additive_expression;
+				m_add = p_token;
+				m_multiplicative_expression = p_multiplicative_expression;
+				break;
+			case production_kind.g_additive_expression_3:
+				m_additive_expression = p_additive_expression;
+				m_sub = p_token;
+				m_multiplicative_expression = p_multiplicative_expression;
+				break;
+			default:
+				{
+					string[] args = new string[] { "additive_expression" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
+			}
+			reparent (parent);
+		}
+
+		//
+		// check if node 'element' is included within syntax tree associated with syntax rule additive-expression
+		//
+
+		public new bool checkInclusion (SyntaxTreeBase element)
+		{
+			return
+				(element == this) ||
+				((m_multiplicative_expression != null) && m_multiplicative_expression.checkInclusion (element)) ||
+				((m_additive_expression != null) && m_additive_expression.checkInclusion (element)) ||
+				((m_add != null) && m_add.checkInclusion (element)) ||
+				((m_sub != null) && m_sub.checkInclusion (element)) ||
+				false;
+		}
+
+		//
+		// emit production tree node associated with any production of syntax rule additive-expression
+		//
+
+		public override string Emit (int depth)
+		{
+			string s = "";
+			if (depth != 0)
+			switch ((production_kind) kind)
+			{
+				case production_kind.g_additive_expression_1:
+					// emit syntax tree node associated with production
+					// additive-expression: multiplicative-expression
+					s += m_multiplicative_expression.Emit (depth - 1);
+				break;
+				case production_kind.g_additive_expression_2:
+					// emit syntax tree node associated with production
+					// additive-expression: additive-expression add multiplicative-expression
+					s += m_additive_expression.Emit (depth - 1);
+					s += " ";
+					s += m_add.Emit(depth - 1);
+					s += " ";
+					s += m_multiplicative_expression.Emit (depth - 1);
+				break;
+				case production_kind.g_additive_expression_3:
+					// emit syntax tree node associated with production
+					// additive-expression: additive-expression sub multiplicative-expression
+					s += m_additive_expression.Emit (depth - 1);
+					s += " ";
+					s += m_sub.Emit(depth - 1);
+					s += " ";
+					s += m_multiplicative_expression.Emit (depth - 1);
+				break;
+			}
+			return s;
+		}
+
+		//
+		// emit production tree node associated with any production of syntax rule additive-expression
+		//
+
+		public override string EmitProductionTree (int depth)
+		{
+			string s = "additive_expression (";
+			if (depth != 0)
+			switch ((production_kind) kind)
+			{
+				case production_kind.g_additive_expression_1:
+					// emit syntax tree node associated with production
+					// additive-expression: multiplicative-expression
+					s += m_multiplicative_expression.EmitProductionTree (depth - 1);
+				break;
+				case production_kind.g_additive_expression_2:
+					// emit syntax tree node associated with production
+					// additive-expression: additive-expression add multiplicative-expression
+					s += m_additive_expression.EmitProductionTree (depth - 1);
+					s += ' ';
+					s += "add";
+					s += ' ';
+					s += m_multiplicative_expression.EmitProductionTree (depth - 1);
+				break;
+				case production_kind.g_additive_expression_3:
+					// emit syntax tree node associated with production
+					// additive-expression: additive-expression sub multiplicative-expression
+					s += m_additive_expression.EmitProductionTree (depth - 1);
+					s += ' ';
+					s += "sub";
+					s += ' ';
+					s += m_multiplicative_expression.EmitProductionTree (depth - 1);
+				break;
+			}
+			s += ")";
+			return s;
+		}
+
+		//
+		// traverse sub-tree rooted in this node using selected syntax tree walker
+		//
+
+		public override void InvokeTraverse (SyntaxTreeWalker syntaxTreeWalker)
+		{
+			syntaxTreeWalker.Traverse (this);
+		}
+
+		// Change parent node - move sub-tree
+
+		public override void reparent (SyntaxTreeBase parent)
+		{
+			this.parent = parent;
+			if (m_multiplicative_expression != null)
+				m_multiplicative_expression.reparent (this);
+
+			if (m_additive_expression != null)
+				m_additive_expression.reparent (this);
+
+			if (m_add != null)
+				m_add.reparent (this);
+
+			if (m_sub != null)
+				m_sub.reparent (this);
+
+		}
+
+		//
+		// initialize object associated with syntax rule additive-expression
+		//
+
+		public void _init ()
+		{
+			m_multiplicative_expression = null;
+			m_additive_expression = null;
+			m_add = null;
+			m_sub = null;
+		}
+
+		// counter of all nodes associated with syntax rule additive-expression
+		public static int g_counter;
+
+		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule additive-expression
+		public multiplicative_expression m_multiplicative_expression { get; private set; }
+		public additive_expression m_additive_expression { get; private set; }
+		public SyntaxTreeToken m_add { get; private set; }
+		public SyntaxTreeToken m_sub { get; private set; }
+
+	};
+
+	public partial class SyntaxTreeWalker
+	{
+
+		// delegate function (callback) prototype associated with syntax rule additive-expression
+		public delegate bool additive_expression_Callback (SyntaxTreeCallbackReason reason, additive_expression.production_kind kind, additive_expression p_additive_expression);
+
+		// event associated with syntax rule additive-expression
+		public event additive_expression_Callback additive_expression_Event;
+
+		// event trigger associated with syntax rule additive-expression
+		public bool Raise_additive_expression_Event (SyntaxTreeCallbackReason reason, additive_expression.production_kind kind, additive_expression p_additive_expression)
+		{
+			bool? status = additive_expression_Event?.Invoke (reason, kind, p_additive_expression);
+			return (status == null) || status.Value;
+		}
+		//
+		// traverse syntax tree node associated with any production of syntax rule additive-expression
+		//
+
+		public void Traverse (additive_expression p_additive_expression)
+		{
+			if (p_additive_expression.isLocked())
+				return;
+			p_additive_expression.dolock();
+			additive_expression.production_kind kind = (additive_expression.production_kind) p_additive_expression.kind;
+			p_additive_expression.turn_reset ();
+			if (Raise_additive_expression_Event (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, kind, p_additive_expression))
+			switch (kind)
+			{
+				case additive_expression.production_kind.g_additive_expression_1:
+					// traverse syntax tree node associated with production
+					// additive-expression: multiplicative-expression
+					if (Raise_additive_expression_Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p_additive_expression))
+						Traverse (p_additive_expression.m_multiplicative_expression);
+					p_additive_expression.turn_inc ();
+					Raise_additive_expression_Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p_additive_expression);
+				break;
+				case additive_expression.production_kind.g_additive_expression_2:
+					// traverse syntax tree node associated with production
+					// additive-expression: additive-expression add multiplicative-expression
+					if (Raise_additive_expression_Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p_additive_expression))
+						Traverse (p_additive_expression.m_additive_expression);
+					p_additive_expression.turn_inc ();
+					if (Raise_additive_expression_Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p_additive_expression))
+						Traverse (p_additive_expression.m_multiplicative_expression);
+					p_additive_expression.turn_inc ();
+					Raise_additive_expression_Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p_additive_expression);
+				break;
+				case additive_expression.production_kind.g_additive_expression_3:
+					// traverse syntax tree node associated with production
+					// additive-expression: additive-expression sub multiplicative-expression
+					if (Raise_additive_expression_Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p_additive_expression))
+						Traverse (p_additive_expression.m_additive_expression);
+					p_additive_expression.turn_inc ();
+					if (Raise_additive_expression_Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p_additive_expression))
+						Traverse (p_additive_expression.m_multiplicative_expression);
+					p_additive_expression.turn_inc ();
+					Raise_additive_expression_Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p_additive_expression);
+				break;
+			}
+			Raise_additive_expression_Event (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, kind, p_additive_expression);
+			p_additive_expression.unlock();
+		}
+
+		//
+		// traverse syntax tree node associated with any production of syntax rule additive-expression
+		//
+
+		public void TraverseCommon (additive_expression p_additive_expression)
+		{
+			additive_expression.production_kind kind = (additive_expression.production_kind) p_additive_expression.kind;
+			if (Raise_Common_Event (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, p_additive_expression))
+			switch (kind)
+			{
+				case additive_expression.production_kind.g_additive_expression_1:
+					// traverse syntax tree node associated with production
+					// additive-expression: multiplicative-expression
+					TraverseCommon (p_additive_expression.m_multiplicative_expression);
+				break;
+				case additive_expression.production_kind.g_additive_expression_2:
+					// traverse syntax tree node associated with production
+					// additive-expression: additive-expression add multiplicative-expression
+					TraverseCommon (p_additive_expression.m_additive_expression);
+					TraverseCommon (p_additive_expression.m_add);
+					TraverseCommon (p_additive_expression.m_multiplicative_expression);
+				break;
+				case additive_expression.production_kind.g_additive_expression_3:
+					// traverse syntax tree node associated with production
+					// additive-expression: additive-expression sub multiplicative-expression
+					TraverseCommon (p_additive_expression.m_additive_expression);
+					TraverseCommon (p_additive_expression.m_sub);
+					TraverseCommon (p_additive_expression.m_multiplicative_expression);
+				break;
+			}
+			Raise_Common_Event (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, p_additive_expression);
+		}
+	};
+
+	public partial class SyntaxTreeBuilder : SyntaxTreeWalker
+	{
+
+		//
+		// create syntax tree node associated with production
+		// additive-expression: multiplicative-expression
+		//
+
+		public additive_expression additive_expression_1 (multiplicative_expression p_multiplicative_expression)
+		{
+			additive_expression p_additive_expression_ref = new additive_expression(p_multiplicative_expression);
+			p_multiplicative_expression.parent = p_additive_expression_ref;
+			Raise_additive_expression_Event (SyntaxTreeCallbackReason.BuilderCallbackReason, additive_expression.production_kind.g_additive_expression_1, p_additive_expression_ref);
+			return p_additive_expression_ref;
+		}
+
+		//
+		// create syntax tree node associated with production
+		// additive-expression: additive-expression add multiplicative-expression
+		//
+
+		public additive_expression additive_expression_2 (additive_expression p_additive_expression, SyntaxTreeToken p_token, multiplicative_expression p_multiplicative_expression)
+		{
+			additive_expression p_additive_expression_ref = new additive_expression(p_additive_expression, p_token, p_multiplicative_expression, 2);
+			p_additive_expression.parent = p_additive_expression_ref;
+			p_token.parent = p_additive_expression_ref;
+			p_multiplicative_expression.parent = p_additive_expression_ref;
+			Raise_additive_expression_Event (SyntaxTreeCallbackReason.BuilderCallbackReason, additive_expression.production_kind.g_additive_expression_2, p_additive_expression_ref);
+			return p_additive_expression_ref;
+		}
+
+		//
+		// create syntax tree node associated with production
+		// additive-expression: additive-expression sub multiplicative-expression
+		//
+
+		public additive_expression additive_expression_3 (additive_expression p_additive_expression, SyntaxTreeToken p_token, multiplicative_expression p_multiplicative_expression)
+		{
+			additive_expression p_additive_expression_ref = new additive_expression(p_additive_expression, p_token, p_multiplicative_expression, 3);
+			p_additive_expression.parent = p_additive_expression_ref;
+			p_token.parent = p_additive_expression_ref;
+			p_multiplicative_expression.parent = p_additive_expression_ref;
+			Raise_additive_expression_Event (SyntaxTreeCallbackReason.BuilderCallbackReason, additive_expression.production_kind.g_additive_expression_3, p_additive_expression_ref);
+			return p_additive_expression_ref;
+		}
+	};
+}
+			</pre>
+		</div>
+	</p>
+    <h6>Class name</h6>
+	<p class="anglr-p">
+        Name of the class associated with syntax rule is similar to the name of syntax rule. The compiler is trying to make a class name that is as
+        similar as possible to the syntax rule name. If the syntax rule name contains characters that should not be contained within variable names
+        in the selected programing language, it replaces them with an underscore. If syntax rule names does not contain such characters then their
+        associated class names are equal to their names.
+    </p>
+	<p class="anglr-p">
+        For example, let's take a look at a well-known example of a syntax rule:
+	</p>
+	<p class="anglr-p">
+		<div class="panel border bg-light" id="example-003">
+            <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+            </pre>
+        </div>
+	</p>
+	<p class="anglr-p">
+		Since the name of syntax rule <span class="rule-name">additive-expression</span> contains character &#39;-&#39; that should not be used to
+        compose variable names in most programming languages, Anglr compiler will turn it into character &#39;_&#39; when it composes the associated
+        class name. The name of associated class would then be <span class="rule-name">additive_expression</span>.
+    </p>
+	<p class="anglr-p">
+        Now let's imagine that the syntax rule name would be equal to <span class="rule-name">&lt;additive expression&gt;</span>. In this case the
+        associated class name would be equal to <span class="rule-name">_additive_expression_</span>, since characters &#39;&lt;&#39;, &#39;&gt;&#39;
+        and &#39; &#39; should not be used to compose variable names in most programming languages.
+    </p>
+    <h6>Super class SyntaxTreeBase</h6>
+    <h6>Enumeration of productions</h6>
+    <h6>Constructors</h6>
+	<p class="anglr-p">
+		Productions of some syntax rule having the same length and whose non-terminal symbols at the same position have the same names shall have the same constructors.
+		In <a href="#example-003">example above</a> this is the case with the following productions:
+	</p>
+	<p class="anglr-p">
+		<div class="panel border bg-light" id="example-004">
+            <pre>
+    <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+            </pre>
+        </div>
+	</p>
+    <h6>Copy constructor</h6>
+    <h6>Clone() method</h6>
+    <h6>Dispose() method</h6>
+    <h6>change() methods</h6>
+    <h6>checkInclusion () method</h6>
+    <h6>Emit () method</h6>
+    <h6>EmitProductionTree () method</h6>
+    <h6>InvokeTraverse () method</h6>
+    <h6>reparent () method</h6>
+    <h6>_init () method</h6>
+    <h6>Node counter</h6>
+    <h6>Public properties</h6>
+    <h4>Class associated with declaration part of Anglr file</h4>
+    <h4>Class associated with scanner part of Anglr file</h4>
+    <h4>Class associated with lexer part of Anglr file</h4>
+    <h4>Class associated with parser part of Anglr file</h4>
+    <h4>Class associated with syntax tree builder</h4>
+    <h4>Class associated with syntax tree traversal</h4>
+</section>

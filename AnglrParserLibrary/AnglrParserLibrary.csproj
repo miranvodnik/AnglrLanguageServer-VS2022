@@ -1,0 +1,97 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <version>$(VersionPrefix)</version>
+    <title>AnglrParserLibrary</title>
+    <authors>Miran Vodnik</authors>
+    <description>AnGLR comiler library</description>
+    <tags>ANGLR;syntax;LR;generalised LR;parse;syntax tree;grammar;LR grammar</tags>
+    <copyright>Copyright ©AnGLR 2022</copyright>
+    <!-- we need the assemblies bundled, so set this so we don't expose any dependencies to the outside world -->
+    <GenerateDependencyFile>true</GenerateDependencyFile>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+    <DebugType>embedded</DebugType>
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <SignAssembly>False</SignAssembly>
+    <DelaySign>False</DelaySign>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <!-- The dependencies of your MSBuild task must be packaged inside the package, they cannot be expressed as normal PackageReferences -->
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths)" TargetPath="%(ReferenceCopyLocalPaths.DestinationSubPath)" />
+    </ItemGroup>
+  </Target>
+
+  <!-- This target adds the generated deps.json file to our package output -->
+  <Target Name="AddBuildDependencyFileToBuiltProjectOutputGroupOutput" BeforeTargets="BuiltProjectOutputGroup" Condition=" '$(GenerateDependencyFile)' == 'true'">
+
+    <ItemGroup>
+      <BuiltProjectOutputGroupOutput Include="$(ProjectDepsFilePath)" TargetPath="$(ProjectDepsFileName)" FinalOutputPath="$(ProjectDepsFilePath)" />
+    </ItemGroup>
+  </Target>
+  <ItemGroup>
+    <Compile Remove="Syntax-math\**" />
+    <Compile Remove="Syntax-new\**" />
+    <Compile Remove="Syntax-test\**" />
+    <Compile Remove="Syntax\old\**" />
+    <EmbeddedResource Remove="Syntax-math\**" />
+    <EmbeddedResource Remove="Syntax-new\**" />
+    <EmbeddedResource Remove="Syntax-test\**" />
+    <EmbeddedResource Remove="Syntax\old\**" />
+    <None Remove="Syntax-math\**" />
+    <None Remove="Syntax-new\**" />
+    <None Remove="Syntax-test\**" />
+    <None Remove="Syntax\old\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="AnglrExtensions.cs" />
+    <Compile Remove="AnglrGeneator.cs" />
+    <Compile Remove="AnglrGeneratorEvents.cs" />
+    <Compile Remove="AnglrIterator.cs" />
+    <Compile Remove="anglrParserItf.cs" />
+    <Compile Remove="PDAGenerator.cs" />
+    <Compile Remove="PDAGeneratorStrings.cs" />
+    <Compile Remove="Syntax\AnglrLexer1.cs" />
+    <Compile Remove="Syntax\AnglrParser1.cs" />
+    <Compile Remove="Syntax\Test1Decls.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="anglr-nested.anglr" />
+    <None Remove="anglr-original.anglr" />
+    <None Remove="anglr-test.anglr" />
+    <None Remove="anglr.2023-03-02.anglr" />
+    <None Remove="anglr.2025-11-18.anglr" />
+    <None Remove="asn.anglr" />
+    <None Remove="attribute-list.anglr" />
+    <None Remove="cdcpmgr.log" />
+    <None Remove="math.anglr" />
+    <None Remove="pp-directives.anglr" />
+    <None Remove="Syntax\anglr-anglr - Copy.txt" />
+    <None Remove="Syntax\anglr-anglr.txt" />
+    <None Remove="Syntax\anglr-colorizer.txt" />
+    <None Remove="Syntax\anglr-nested-anglr.txt" />
+    <None Remove="Syntax\anglr-nested-colorizer.txt" />
+    <None Remove="Syntax\anglranglr.txt" />
+    <None Remove="Syntax\Main.class" />
+    <None Remove="Syntax\Main.java" />
+    <None Remove="Syntax\math-anglr.txt" />
+    <None Remove="Syntax\test-1-anglr.txt" />
+    <None Remove="test-1.anglr" />
+    <None Remove="xdbdmgr.log" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AnglrDebugBridge\AnglrDebugBridge.csproj" />
+    <ProjectReference Include="..\AnglrLogLibrary\AnglrLogLibrary.csproj" />
+    <ProjectReference Include="..\AnglrParserCore\AnglrParserCore.csproj" />
+  </ItemGroup>
+
+</Project>

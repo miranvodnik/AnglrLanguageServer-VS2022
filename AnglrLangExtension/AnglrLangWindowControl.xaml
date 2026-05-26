@@ -1,0 +1,169 @@
+﻿<UserControl x:Class="AnglrLangExtension.AnglrLangWindowControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vsshell="clr-namespace:Microsoft.VisualStudio.Shell;assembly=Microsoft.VisualStudio.Shell.15.0"
+             xmlns:src="clr-namespace:AnglrLangExtension"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="AnglrLangToolWindow">
+    <UserControl.Resources>
+        <ContextMenu Name="ctxMenu" x:Key="TreeViewItemMenu">
+            <MenuItem Header="Edit" Click="Edit_MenuItem_Click"/>
+            <MenuItem Header="Compile" Click="Compile_MenuItem_Click"/>
+            <MenuItem Header="Debug" Click="Debug_MenuItem_Click"/>
+        </ContextMenu>
+        <Image x:Key="imgArray" Source="/AnglrLangExtension;component/Resources/AnglrLangWindowCommand.png"/>
+    </UserControl.Resources>
+    <Grid>
+        <TabControl>
+            <TabItem Header="Anglr Explorer">
+                <Grid Margin="0,3,0,-3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TreeView
+                        x:Name="anglrSyntaxTree"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        SelectedItemChanged="anglrSyntaxTree_SelectedItemChanged"
+                        MouseRightButtonDown="anglrSyntaxTree_MouseRightButtonDown"
+                        KeyDown="anglrSyntaxTree_KeyDown" 
+                        Margin="0,-2,0,2"
+                        >
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="{x:Type TreeViewItem}">
+                                <Setter Property="ContextMenu" Value="{DynamicResource TreeViewItemMenu}"/>
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate
+                                DataType="{x:Type src:AnglrLangItem}"
+                                ItemsSource="{Binding anglrLangItems}"
+                                >
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Path=ImagePath}"/>
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding Path=Name}"/>
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                    <GridSplitter Width="5" BorderThickness="1" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="#FFB4B4B4"/>
+                    <Grid Grid.Row="0" Grid.Column="2" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="nodeName" Grid.Row="0" Grid.Column="0" Content="label" BorderThickness="1" Margin="0,0,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Arial" FontSize="20"/>
+                        <WebBrowser x:Name="webBrowser" Grid.Row="1" Grid.Column="0" Margin="0,0,-2,0" />
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="stateTab" Header="State View">
+                <Grid Margin="0,3,0,-3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TreeView
+                        x:Name="anglrParserStates"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        SelectedItemChanged="anglrParserStates_SelectedItemChanged"
+                        MouseRightButtonDown="anglrParserStates_MouseRightButtonDown"
+                        MouseDoubleClick="anglrParserStates_MouseDoubleClick"
+                        KeyDown="anglrParserStates_KeyDown"
+                        Margin="0,7,2,-7"
+                        >
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="{x:Type TreeViewItem}">
+                                <Setter Property="ContextMenu" Value="{DynamicResource TreeViewItemMenu}"/>
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate
+                                DataType="{x:Type src:AnglrStateItem}"
+                                ItemsSource="{Binding anglrStateItems}"
+                                >
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Path=ImagePath}"/>
+                                    <Image Source="{Binding Path=LinkImagePath}"/>
+                                    <Image Source="{Binding Path=KindImagePath}"/>
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding Path=State}"/>
+                                    <TextBlock Text=" - "/>
+                                    <TextBlock Text="{Binding Path=Token}"/>
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                    <GridSplitter Width="5" BorderThickness="1" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="#FFB4B4B4"/>
+                    <Grid Grid.Row="0" Grid.Column="2" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel x:Name="stateViewPanel" Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                            <Label x:Name="stateName" Content="" BorderThickness="1" Margin="0,0,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Arial" FontSize="20"/>
+                            <Button x:Name="openState" Click="openState_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0">Open State</Button>
+                        </StackPanel>
+                        <WebBrowser x:Name="stateBrowser" Grid.Row="1" Grid.Column="0" Margin="0,0,-2,0" Navigating="stateBrowser_Navigating" />
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Debug Panel" Margin="-2,-2,-2,0">
+                <Grid Margin="0,3,0,-3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <src:AnglrDebugWindow x:Name="anglrDebugWindow" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Details View">
+                <ScrollViewer>
+                    <Grid Margin="0,3,0,-3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ListView x:Name="anglrDetailsWindow" Grid.Row="0" Grid.Column="0"
+                                VerticalAlignment="Center"                                
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <src:AnglrDetailViewItemWindow VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

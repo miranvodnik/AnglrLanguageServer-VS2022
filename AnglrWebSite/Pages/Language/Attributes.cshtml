@@ -1,0 +1,236 @@
+﻿@page
+@model AttributesModel
+@{
+    ViewData ["Title"] = "Anglr Language Attributes";
+    ViewData ["Content"] = "Anglr language attributes";
+}
+<section id="attributes">
+    <h1>Anglr language Attributes</h1>
+    <hr />
+    <h4>Introduction</h4>
+    <p class="anglr-p">
+        Attributes appear at different places in anglr files. They are not tied to a single part of anglr file,
+        so it is appropriate to describe them separately before we become familiar with the other parts of the anglr file.
+        They are used for a variety of purposes. Some of them are mandatory, others can be defined by any user at their discretion.
+        Mandatory attributes are associated with anglr compiler. User defined attributes are for information purposes only.
+        User defined attributes can have any content, only care should be taken to make their names different from the names
+        of the mandatory attributes.
+    </p>
+    <h4>Syntax</h4>
+    <p class="anglr-p">
+        The following is a list of syntax rules needed to compose attributes:
+    </p>
+    <hr />
+    <p id="rule-a-1">RULE A-1</p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="rule-name">&lt;attribute list&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;attribute&gt;</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <hr />
+    <p id="rule-a-2">RULE A-2</p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="rule-name">&lt;attribute&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;[&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="rule-ref">&lt;name value list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;]&#39;</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <hr />
+    <p id="rule-a-3">RULE A-3</p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="rule-name">&lt;name value list&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;name value pair&gt;</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <hr />
+    <p id="rule-a-4">RULE A-4</p>
+    <div class="panel border bg-light">
+        <pre>
+<span class="rule-name">&lt;name value pair&gt;</span>
+    <span class="def-separator">:</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;=&#39;</span> <span class="identifier-name">&lt;cstring&gt;</span>
+    <span class="def-separator">;</span>
+        </pre>
+    </div>
+    <hr />
+    <h2>Discussion</h2>
+    <hr />
+    <h6 style="font-weight:bold">RULE A-1 - Attribute List</h6>
+    <p class="anglr-p">
+        Rule <a href="#rule-a-1">RULE A-1</a> defines the syntax of the attribute list. The attribute list is a sequence of attributes without
+        specific separators. The only characters that may be between them are spaces and new line characters. Here is an example of attribute
+        list:
+    </p>
+    <div class="panel border bg-light" id="example-003">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Parser for anglr file&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrLexer&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;anglrDecls&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;AnglrParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+        </pre>
+    </div>
+    <p class="anglr-p">
+        It contains four attributes:
+    </p>
+    <ul class="anglr-ul">
+        <li>
+            <span class="attribute-name">Description</span>
+        </li>
+        <li>
+            <span class="attribute-name">Lexer</span>
+        </li>
+        <li>
+            <span class="attribute-name">Declarations</span>
+        </li>
+        <li>
+            <span class="attribute-name">CompilationInfo</span>
+        </li>
+    </ul>
+    <hr />
+    <h6 style="font-weight:bold">RULE A-2 - Structure of Attribute</h6>
+    <p class="anglr-p">
+        Rule <a href="#rule-a-2">RULE A-2</a> defines attribute structure:
+    </p>
+    <ul class="anglr-ul">
+        <li>
+            The content of the attribute is specified between the characters [ and ].
+        </li>
+        <li>
+            Character [ is followed by the attribute name
+        </li>
+        <li>
+            Then follows the list of named values, which may also be empty.
+        </li>
+    </ul>
+    <p class="anglr-p">
+        Let's take the following attribute definition for an example:
+    </p>
+    <div class="panel border bg-light" id="example-004">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;AnglrParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+        </pre>
+    </div>
+    <ul class="anglr-ul">
+        <li>
+            its content is specified btween characters <span class="attribute-brace">[</span> and <span class="attribute-brace">]</span>
+        </li>
+        <li>
+            its name is <span class="attribute-name">CompilationInfo</span>
+        </li>
+        <li>
+            it has the following list of named values <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;AnglrParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        </li>
+    </ul>
+    <hr />
+    <h6 style="font-weight:bold">RULE A-3 - List of Named Values</h6>
+    <p class="anglr-p">
+        Rule <a href="#rule-a-3">RULE A-3</a> defines list of named values. It is nothing but a string of named values listed one after another without any separators between them.
+        In the example above, list of named values of attribute <span class="attribute-name">CompilationInfo</span> defined <a href="#example-004">above</a>, contains the following named values:
+    </p>
+    <ul class="anglr-ul">
+        <li>
+            <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;AnglrParser&#39;</span>
+        </li>
+        <li>
+            <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.Parser&#39;</span>
+        </li>
+        <li>
+            <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span>
+        </li>
+        <li>
+            <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+        </li>
+    </ul>
+    <hr />
+    <h6 style="font-weight:bold">RULE A-4 - Structure of Named Value</h6>
+    <p class="anglr-p">
+        Rule <a href="#rule-a-4">RULE A-4</a> defines structure of named value:
+    </p>
+    <ul class="anglr-ul">
+        <li>
+            first the name of value must be stated 
+        </li>
+        <li>
+            Then comes the equality character sign =
+        </li>
+        <li>
+            the value of named attribute value comes last. It is a character string with an arbitrary content
+        </li>
+    </ul>
+    <p class="anglr-p">
+        If we once again take a look at example <a href="#example-004">above</a>, we can observe that the structure of named value <span class="attribute-val-name">ClassName</span>,
+        for example, follows this structure:
+    </p>
+    <ul class="anglr-ul">
+        <li>
+            its name is 
+            <span class="attribute-val-name">ClassName</span>
+        </li>
+        <li>
+            name is followed by equality sign <span class="def-separator">=</span>
+        </li>
+        <li>
+            and finally its value is specified: <span class="attribute-val-value">&#39;AnglrParser&#39;</span>
+        </li>
+    </ul>
+    <h2>Examples</h2>
+    <h6 id="example-001">Example 1</h6>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Declarations&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;AnglrDeclarations&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr.Declarations&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+        </pre>
+    </div>
+    <p class="anglr-p">
+        Above example defines list of two attributes:
+    </p>
+    <ul class="anglr-ul">
+        <li>
+            <span class="attribute-name">Description</span>: it is user defined attribute with no special meaning for any application. As its name and named values suggest, it is used to describe something in anglr file.
+            It has two named values:
+            <ul>
+                <li>
+                    <span class="attribute-val-name">Text</span> with value <span class="attribute-val-value">&#39;Declarations&#39;</span>
+                </li>
+                and
+                <li>
+                    <span class="attribute-val-name">Hover</span> with value <span class="attribute-val-value">&#39;true&#39;</span>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <span class="attribute-name">CompilationInfo</span> with four named values:
+            <ul>
+                <li>
+                    <span class="attribute-val-name">ClassName</span> with value <span class="attribute-val-value">&#39;AnglrDeclarations&#39;</span>
+                </li>
+                <li>
+                    <span class="attribute-val-name">NameSpace</span> with value <span class="attribute-val-value">&#39;Anglr.Declarations&#39;</span>
+                </li>
+                <li>
+                    <span class="attribute-val-name">Access</span> with value <span class="attribute-val-value">&#39;public&#39;</span>
+                </li>
+                <li>
+                    <span class="attribute-val-name">Hover</span> with value <span class="attribute-val-value">&#39;true&#39;</span>
+                </li>
+            </ul>
+            Attribute <span class="attribute-name">CompilationInfo</span> is mandatory for anglr compiler. It defines class name for code generator. One of named values has name Hover. It is not used by anglr compiler,
+            since it does not know its name. This named value is hovever used by Microsoft VisualStudio extension, which is used to edit anglr files. We can add named values to each attribute
+            if we use names that are not the same as the required attribute value names.
+        </li>
+    </ul>
+    <h6 id="example-002">Example 2</h6>
+    <div class="panel border bg-light">
+        <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+        </pre>
+    </div>
+    <p class="anglr-p">
+        Above example defines an attribute without named values. It is perfectly legal to define an attribute without values. Attribute <span class="attribute-name">Start</span> is used by anglr compiler to identify
+        starting rule of the language defined in anglr file.
+    </p>
+</section>

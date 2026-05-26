@@ -1,0 +1,206 @@
+﻿@page
+@model AnglrWebSite.Pages.DocumentationModel
+@{
+    ViewData ["Title"] = "Documentation";
+}
+
+<div id="#wrapper">
+        <section>
+            <div class="col-xl-12">
+                <h1>Kaj je ANGLR</h1>
+                <p class="lead">Verzija 1.0</p>
+            </div>
+        </section>
+        <div class="row">
+        <div class="col-xl-2 anglr-doc-index">
+                <nav class="sticky-top">
+                    <div class="container-fluid">
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a href="#pregled">Pregled</a></li>
+                            <li class="nav-item"><a asp-area="" asp-page="/AnglrSyntax">Sintaksa</a></li>
+                            <li class="nav-item"><a asp-area="" asp-page="/Declarations">Definicije terminalnih simbolov</a></li>
+                            <li class="nav-item"><a asp-area="" asp-page="/Scanner">Definicije leksikalnih pravil</a></li>
+                            <li class="nav-item"><a asp-area="" asp-page="/Lexer">Definicije leksikalnega analizatorja</a></li>
+                            <li class="nav-item"><a asp-area="" asp-page="/Parser">Definicije sintaksnih pravil</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-xl-8">
+                <section id="pregled">
+                    <div>
+                        <h2>Pregled</h2>
+                        <div>
+                            <hr />
+                            <p>
+                                ANGLR je v prvi vrsti:
+                            </p>
+                            <ul>
+                                <li>
+                                    programski jezik, s katerim opišemo sintaksna pravila poljubnega kontekstno prostega
+                                    programskega jezika.
+                                </li>
+                            </ul>
+                            <p>
+                                Sintakso programskega jezika se nahaja v datoteki s končnico .anglr. Takim datotekam
+                                pravimo anglr datoteke.
+                            </p>
+                            <p>
+                                Primer anglr datoteke:
+                            </p>
+                            <div class="panel border bg-light" id="primer_001">
+                                <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definitions of tokens and regular expressions used to define sntax&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;of simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathDecls&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Declarations&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%declarations</span> <span class="part-name">mathDecls</span>
+<span class="part-brace">%{</span>
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+    <span class="def-separator">}</span>
+
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of scanner, which extracts comments from input string&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CommentRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">commentScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">[\*]+\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[^\*]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\*]+</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of scanner, which extracts terminal symbols from input string&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathRegex&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.ScannerLib&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name">mathScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+    <span class="action-token">push</span> <span class="action-identifier">commentScanner</span>
+<span class="regex-ref">{number}</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">NUMBER</span>
+<span class="regex-ref">\+</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">add</span>
+<span class="regex-ref">\-</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">sub</span>
+<span class="regex-ref">\*</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">mul</span>
+<span class="regex-ref">\/</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">div</span>
+<span class="regex-ref">\(</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">lb</span>
+<span class="regex-ref">\)</span>
+    <span class="action-token">terminal</span> <span class="action-identifier">rb</span>
+<span class="regex-ref">[ \t]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">.</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Lexer for anglr file&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span>
+    <span class="attribute-name">UseScanner</span>
+        <span class="attribute-val-name">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;commentScanner&#39;</span>
+        <span class="attribute-val-name">InitialScanner</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathScanner&#39;</span>
+        <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathLexer&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Lexer&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%lexer</span> <span class="part-name">mathLexer</span>
+<span class="part-brace">%{</span>
+
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of parser for simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser1</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                                </pre>
+                            </div>
+                            <br />
+                            <p>
+                                Gornji primer opisuje sintakso programskega jezika, s katerim lahko opišemo
+                                preproste aritmetične izraze, v katerih se uporabljajo osnovne računske
+                                operacije. Ta primer se bo v taki ali spremenjeni in razširjeni obliki
+                                uporabljal vseskozi.
+                            </p>
+                            <p>
+                                V širšem smislu je Anglr sklop naslednjih progamskih orodij:
+                            </p>
+                            <ul>
+                                <li>
+                                    ANGLR prevajalnik: uporablja se za prevajanje sintaksnih pravil
+                                </li>
+                                <li>
+                                    ANGLR razširitvena knjižnica za Microsoft VisualStudio: uporablja
+                                    se za urejanje datotek, ki vsebujejo Anglr sintaksna pravil
+                                </li>
+                                <li>
+                                    ANGLR MSBuild projektne datoteke: omogočajo vklučevanje anglr datotek
+                                    v <a href="https://visualstudio.microsoft.com/">MS VisualStudio</a> projekte
+                                </li>
+                                <li>
+                                    .NET knjižnice za zahtevnejšo uporabo ANGLR prevajalnika
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        <div class="col-xl-2 anglr-page-index">
+                <nav class="sticky-top">
+                    <div class="container-fluid">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a href="#pregled">Pregled</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+</div>

@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "AnglrCompiler": {
+      "commandName": "Project",
+      "commandLineArgs": "-t -l -p -i -gen cs ..\\math.anglr > math-anglr.txt",
+      "workingDirectory": "D:\\Users\\Miran\\source\\repos\\math\\ConsoleApp1\\Syntax"
+    }
+  }
+}

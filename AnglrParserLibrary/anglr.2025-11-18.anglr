@@ -1,0 +1,1356 @@
+
+
+/*********************************************/
+/*                                           */
+/*	Anglr specifications for Anglr language  */
+/*                                           */
+/*********************************************/
+
+[ Description Text='General settings' Hover='true' ]
+[ CompilationInfo NameSpace='Anglr' CodeDir='.' Hover='true' ]
+%general anglrSettings
+%{
+%}
+
+[ Description Text='Declarations' Hover='true' ]
+[ CompilationInfo ClassName='AnglrDeclarations' NameSpace='Anglr.Declarations' Access='public' Hover='true' ]
+%declarations anglrDecls
+%{
+
+[
+	Description Hover='true'
+	Text='regular expressions representing constant terminal identifiers'
+]
+
+	%regex
+	{
+		vertical-bar           \|
+		comma                  \,
+		colon                  \:
+		semicolon              \;
+		left-curly-bracket     \{
+		right-curly-bracket    \}
+		left-bracket           \(
+		right-bracket          \)
+		left-scanner-bracket   \%\{
+		right-scanner-bracket  \%\}
+		left-square-bracket    \[
+		right-square-bracket   \]
+		at-sign                \@
+		double-at-sign         \@\@
+		equals-sign            \=
+		question-mark          \?
+		plus-sign              \+
+		minus-sign             \-
+		asterisk               \*
+		slash                  \/
+		inv-plus-sign          \~\+
+		inv-minus-sign         \~\-
+		inv-asterisk           \~\*
+		inv-slash              \~\/
+	}
+
+[
+	Description Hover='true'
+	Text='regular expressions representing anglr directives'
+]
+
+	%regex
+	{
+		empty         %[ \t]*empty
+		terminal      %[ \t]*terminal
+		general       %[ \t]*general
+		declarations  %[ \t]*declarations
+		rregex        %[ \t]*regex
+		scanner       %[ \t]*scanner
+		lexer         %[ \t]*lexer
+		parser        %[ \t]*parser
+		priority      %[ \t]*prio(rity)?
+		associativity %[ \t]*assoc(iativity)?
+		skip          skip
+		ttoken        terminal
+		revent        event
+		push          push
+		pop           pop
+	}
+
+[
+	Description Hover='true'
+	Text='regular expressions representing'
+	Text='- identifier names'
+	Text='- character strings'
+	Text='- decimal numbers'
+]
+
+	%regex
+	{
+		letter        [a-zA-Z_]
+		digit         [0-9]
+		identifier    {letter}({letter}|{digit}|[-\.])*|<{letter}({letter}|{digit}|[-\. ])*>
+		cstring       \"([^"]|\"\")*\"|\'([^']|\'\')*\'
+		number        {digit}+
+	}
+
+[
+	Description Hover='true'
+	Text='all regular expressions together'
+]
+
+	%regex	lexical-unit-1  {vertical-bar}|{comma}|{colon}|{semicolon}
+	%regex	lexical-unit-2  {left-curly-bracket}|{right-curly-bracket}|{left-scanner-bracket}|{right-scanner-bracket}|{left-square-bracket}|{right-square-bracket}
+	%regex	lexical-unit-3  {equals-sign}|{empty}|{terminal}|{declarations}|{general}|{rregex}|{scanner}|{parser}|{identifier}|{cstring}
+	%regex	lexical-unit  {lexical-unit-1}|{lexical-unit-2}|{lexical-unit-3}
+
+[
+	Description Hover='true'
+	Text='terminal identifiers. Most of them are specified with actual string representations'
+]
+
+	%terminal
+	{
+		<vertical bar> '|'
+		<comma> ','
+		<left curly bracket> '{'
+		<right curly bracket> '}'
+		<left bracket> '('
+		<right bracket> ')'
+		<left part bracket> '%{'
+		<right part bracket> '%}'
+		<left square bracket> '['
+		<right square bracket> ']'
+		<double at sign> '@@'
+		<at sign> '@'
+		<equals sign> '='
+		<colon> ':'
+		<semicolon> ';'
+		<question mark> '?'
+		<plus sign> '+'
+		<minus sign> '-'
+		<asterisk> '*'
+		<slash> '/'
+		<inv plus sign> '~+'
+		<inv minus sign> '~-'
+		<inv asterisk> '~*'
+		<inv slash> '~/'
+		<any>
+		<cstring>
+		<empty>	'%empty'
+		<identifier>
+		<terminal>	'%terminal'
+		<general> '%general'
+		<declarations> '%declarations'
+		<regex> '%regex'
+		<scanner> '%scanner'
+		<lexer> '%lexer'
+		<parser> '%parser'
+		<priority> '%priority'
+		<associativity> '%associativity'
+		<regular expression>
+		<number>
+		<skip>	'skip'
+		<ttoken>	'terminal'
+		<event>	'event'
+		<push>	'push'
+		<pop>	'pop'
+	}
+
+[
+	Description Hover='true'
+	Text='The following terminals are used in <anglr file fragment> syntax rule and are associated'
+	Text='with different fragments of anglr file. They have no textual representation. They'
+	Text='are always used to distinguish fragments of anglr file. They shall be used by first'
+	Text='indicating the terminal symbol followed by the text of the fragment. Examples are'
+	Text='all productions of <anglr file fragment> syntax rule. The lexical and yntax analysers must'
+	Text='address these rules in a specific way:'
+	Text=' 1) the task of the leading terminal is that the syntax analyzer correctly selects'
+	Text='    the production of <anglr soure> syntax rule by which to analyze the text'
+	Text='    belonging to the fragment.'
+	Text=' 2) The lexical analyser must generate the leading terminal on the first run, enabling'
+	Text='    the syntax analyzer to make the right decision when selecting the rule to use for'
+	Text='    the analysis of the fragment. Other terminal symbols are obtained in the usual'
+	Text='    way by lexical analysis of the text belonging to the fragment.'
+]
+
+	%terminal
+	{
+		<anglr file terminal>
+		<anglr file part list terminal>
+		<anglr file part terminal>
+		<general part terminal>
+		<declaration part terminal>
+		<scanner part terminal>
+		<regular expression list terminal>
+		<regular expression usage terminal>
+		<actions terminal>
+		<action terminal>
+		<skip action terminal>
+		<terminal action terminal>
+		<event action terminal>
+		<push action terminal>
+		<pop action terminal>
+		<lexer part terminal>
+		<parser part terminal>
+		<attribute list terminal>
+		<attribute terminal>
+		<name value list terminal>
+		<name value pair terminal>
+		<anglr definition list terminal>
+		<anglr definition with attribute list terminal>
+		<anglr definition terminal>
+		<single terminal definition terminal>
+		<single regex definition terminal>
+		<block of terminal definitions terminal>
+		<block of regex definitions terminal>
+		<terminal definition terminal>
+		<regex definition terminal>
+		<block terminal definitions terminal>
+		<block terminal definition terminal>
+		<block regex definitions terminal>
+		<block regex definition terminal>
+		<anglr syntax rule list terminal>
+		<anglr syntax rule terminal>
+		<anglr syntax production list terminal>
+		<anglr syntax production terminal>
+		<priority assoc specification terminal>
+		<priority specification terminal>
+		<associativity specification terminal>
+		<anglr nested rule terminal>
+		<anglr syntax production list name terminal>
+		<name list terminal>
+		<production name terminal>
+		<marker list terminal>
+		<marker terminal>
+		<g name terminal>
+		<name terminal>
+		<cardinality delimiter terminal>
+		<cardinality terminal>
+		<delimiter terminal>
+
+		<attribute list optional terminal>
+		<name value list optional terminal>
+		<anglr file part list optional terminal>
+		<anglr definition list optional terminal>
+		<block terminal definitions optional terminal>
+		<block regex definitions optional terminal>
+		<regular expression list optional terminal>
+		<actions optional terminal>
+		<anglr syntax rule list optional terminal>
+		<anglr syntax production list name optional terminal>
+		<production name optional terminal>
+		<priority assoc specification optional terminal>
+		<marker list optional terminal>
+		<delimiter optional terminal>
+		<cstring optional terminal>
+		<number optional terminal>
+	}
+
+%}
+
+[ Description Text='Scanner for multi-line comment' Hover='true' ]
+[ Declarations Id='anglrDecls' Hover='true' ]
+[ CompilationInfo ClassName='CommentRegex' NameSpace='Anglr.RegexLib' Access='public' Hover='true' ]
+%scanner comment_ctx
+%{
+\*+\/
+		pop
+\*+[^\*\/]
+		skip
+[^\*]+
+		skip
+%}
+
+[ Description Text='Scanner for single-line comment' Hover='true' ]
+[ Declarations Id='anglrDecls' Hover='true' ]
+[ CompilationInfo ClassName='LineCommentRegex' NameSpace='Anglr.RegexLib' Access='public' Hover='true' ]
+%scanner line_comment_ctx
+%{
+[^\n]*\n
+		pop
+%}
+
+[ Description Text='Scanner for hidden attribute' Hover='true' ]
+[ Declarations Id='anglrDecls' Hover='true' ]
+[ CompilationInfo ClassName='AttributeRegex' NameSpace='Anglr.RegexLib' Access='public' Hover='true' ]
+%scanner attribute_ctx
+%{
+\]\]
+		pop
+{identifier}
+		skip
+{equals-sign}
+		skip
+{cstring}
+		skip
+[ \t\n\r]
+		skip
+%}
+
+[ Description Text='Scanner for %scanner directive' Hover='true' ]
+[ Declarations Id='anglrDecls' Hover='true' ]
+[ CompilationInfo ClassName='ScannerIdRegex' NameSpace='Anglr.RegexLib' Access='public' Hover='true' ]
+%scanner scanner_id_ctx
+%{
+\/\*
+		push comment_ctx
+\[\[
+		push attribute_ctx
+\/\/
+		push line_comment_ctx
+{identifier}
+		push scanner_part_ctx
+		terminal <identifier>
+[ \t]+
+		skip
+[\n\r]
+		skip
+%}
+
+[ Description Text='Scanner for body of %scanner directive (text between %{ and %} )' Hover='true' ]
+[ Declarations Id='anglrDecls' Hover='true' ]
+[ CompilationInfo ClassName='ScannerPartRegex' NameSpace='Anglr.RegexLib' Access='public' Hover='true' ]
+%scanner scanner_part_ctx
+%{
+\/\*
+		push comment_ctx
+\[\[
+		push attribute_ctx
+\/\/
+		push line_comment_ctx
+{left-scanner-bracket}
+		terminal <left part bracket>
+{right-scanner-bracket}
+		pop
+		pop
+		terminal <right part bracket>
+{skip}
+		terminal <skip>
+{ttoken}
+		terminal <ttoken>
+{revent}
+		terminal <event>
+{push}
+		terminal <push>
+{pop}
+		terminal <pop>
+{identifier}
+		terminal <identifier>
+[ \t]+
+		skip
+.+
+		terminal <regular expression>
+[\n\r]
+		skip
+%}
+
+[ Description Text='Scanner for %regex directive' Hover='true' ]
+[ Declarations Id='anglrDecls' Hover='true' ]
+[ CompilationInfo ClassName='RegexIdRegex' NameSpace='Anglr.RegexLib' Access='public' Hover='true' ]
+%scanner regex_id_ctx
+%{
+\/\*
+		push comment_ctx
+\[\[
+		push attribute_ctx
+\/\/
+		push line_comment_ctx
+{identifier}
+		push regex_part_ctx
+		terminal <identifier>
+{left-curly-bracket}
+		push regex_block_ctx
+		terminal <left curly bracket>
+{right-scanner-bracket}
+		pop
+		terminal <right part bracket>
+[ \t]+
+		skip
+[\n\r]
+		skip
+%}
+
+[ Description Text='Scanner for body of %regex directive' Hover='true' ]
+[ Declarations Id='anglrDecls' Hover='true' ]
+[ CompilationInfo ClassName='RegexPartRegex' NameSpace='Anglr.RegexLib' Access='public' Hover='true' ]
+%scanner regex_part_ctx
+%{
+\/\*
+		push comment_ctx
+\[\[
+		push attribute_ctx
+\/\/
+		push line_comment_ctx
+[ \t]+
+		skip
+.+
+		pop
+		pop
+		terminal <regular expression>
+[\n\r]
+		skip
+%}
+
+[ Description Text='Scanner for body of %regex directive' Hover='true' ]
+[ Declarations Id='anglrDecls' Hover='true' ]
+[ CompilationInfo ClassName='RegexBlockRegex' NameSpace='Anglr.RegexLib' Access='public' Hover='true' ]
+%scanner regex_block_ctx
+%{
+\/\*
+		push comment_ctx
+\[\[
+		push attribute_ctx
+\/\/
+		push line_comment_ctx
+[ \t\n]+
+		skip
+{right-curly-bracket}
+		pop
+		pop
+		terminal <right curly bracket>
+{identifier}
+		push regex_block_part_ctx
+		terminal <identifier>
+%}
+
+[ Description Text='Scanner for body of %regex directive' Hover='true' ]
+[ Declarations Id='anglrDecls' Hover='true' ]
+[ CompilationInfo ClassName='RegexBlockPartRegex' NameSpace='Anglr.RegexLib' Access='public' Hover='true' ]
+%scanner regex_block_part_ctx
+%{
+\/\*
+		push comment_ctx
+\[\[
+		push attribute_ctx
+\/\/
+		push line_comment_ctx
+[ \t]+
+		skip
+.+
+		pop
+		terminal <regular expression>
+[\n\r]
+		skip
+%}
+
+[ Description Text='Scanner for anglr file' Hover='true' ]
+[ Declarations Id='anglrDecls' Hover='true' ]
+[ CompilationInfo ClassName='AnglrRegex' NameSpace='Anglr.RegexLib' Access='public' Hover='true' ]
+%scanner anglrScanner
+%{
+\/\*
+		push comment_ctx
+\[\[
+		push attribute_ctx
+\/\/
+		push line_comment_ctx
+{vertical-bar}
+		terminal <vertical bar>
+{comma}
+		terminal <comma>
+{colon}
+		terminal <colon>
+{semicolon}
+		terminal <semicolon>
+{left-curly-bracket}
+		terminal <left curly bracket>
+{right-curly-bracket}
+		terminal <right curly bracket>
+{left-bracket}
+		terminal <left bracket>
+{right-bracket}
+		terminal <right bracket>
+{left-scanner-bracket}
+		terminal <left part bracket>
+{right-scanner-bracket}
+		terminal <right part bracket>
+{left-square-bracket}
+		terminal <left square bracket>
+{right-square-bracket}
+		terminal <right square bracket>
+{equals-sign}
+		terminal <equals sign>
+{double-at-sign}
+		terminal <double at sign>
+{at-sign}
+		terminal <at sign>
+{question-mark}
+		terminal <question mark>
+{plus-sign}
+		terminal <plus sign>
+{minus-sign}
+		terminal <minus sign>
+{asterisk}
+		terminal <asterisk>
+{slash}
+		terminal <slash>
+{inv-plus-sign}
+		terminal <inv plus sign>
+{inv-minus-sign}
+		terminal <inv minus sign>
+{inv-asterisk}
+		terminal <inv asterisk>
+{inv-slash}
+		terminal <inv slash>
+{empty}
+		terminal <empty>
+{terminal}
+		terminal <terminal>
+{general}
+		terminal <general>
+{declarations}
+		terminal <declarations>
+{rregex}
+		push regex_id_ctx
+		terminal <regex>
+{scanner}
+		push scanner_id_ctx
+		terminal <scanner>
+{lexer}
+		terminal <lexer>
+{parser}
+		terminal <parser>
+{priority}
+		terminal <priority>
+{associativity}
+		terminal <associativity>
+{identifier}
+		terminal <identifier>
+{cstring}
+		terminal <cstring>
+{number}
+		terminal <number>
+[ \t]+
+		skip
+[\n\r]
+		skip
+.
+		skip
+%}
+
+[ Description Text='Lexer for anglr file' Hover='true' ]
+[
+	UseScanner
+		ScannerId='comment_ctx'
+		ScannerId='line_comment_ctx'
+		ScannerId='attribute_ctx'
+		ScannerId='scanner_id_ctx'
+		ScannerId='scanner_part_ctx'
+		ScannerId='regex_id_ctx'
+		ScannerId='regex_part_ctx'
+		ScannerId='regex_block_ctx'
+		ScannerId='regex_block_part_ctx'
+		InitialScanner='anglrScanner'
+		Hover='true'
+]
+[ CompilationInfo ClassName='AnglrLexer' NameSpace='Anglr.Lexer' Access='public' Hover='true' ]
+%lexer anglrLexer
+%{
+%}
+
+[ Description Text='Parser for anglr file' Hover='true' ]
+[ Lexer Id='anglrLexer' Hover='true' ]
+[ Declarations Id='anglrDecls' Hover='true' ]
+[ CompilationInfo ClassName='AnglrParser' NameSpace='Anglr.Parser' Access='public' Hover='true' ]
+%parser anglrParser
+%{
+
+[
+	Description Hover='true'
+	Text='ANGLR-FILE-FRAGMENTS is list of syntax rules which'
+	Text='define the structure of anglr file fragments.'
+]
+ANGLR-FILE-FRAGMENTS
+{
+
+[ Start Hover='true' ]
+[
+	Description Hover='true'
+	Text='Syntax rule <anglr file fragment> describes syntax of all possible valid'
+	Text='fragments of anglr source file. Anglr file fragment is any part of anglr'
+	Text='file which should be derived by exactly one syntax rule following syntax'
+	Text='rule <anglr file fragment>. For every syntax rule following syntax rule'
+	Text='<anglr file fragment> there is one production of syntax rule <anglr file'
+	Text='fragment> which should be used to parse part of anglr file which is'
+	Text='derived by that production.'
+]
+<anglr file fragment>
+	:	<attribute list terminal> <attribute list>
+	|	<attribute terminal> <attribute>
+	|	<name value list terminal> <name value list>
+	|	<name value pair terminal> <name value pair>
+
+	|	<anglr file terminal> <anglr file>
+	|	<anglr file part list terminal> <anglr file part list>
+	|	<anglr file part terminal> <anglr file part>
+
+	|	<general part terminal> <general part>
+
+	|	<declaration part terminal> <declaration part>
+	|	<anglr definition list terminal> <anglr definition list>
+	|	<anglr definition with attribute list terminal> <anglr definition with attribute>
+	|	<anglr definition terminal> <anglr definition>
+	|	<single terminal definition terminal> <single terminal definition>
+	|	<single regex definition terminal> <single regex definition>
+	|	<block of terminal definitions terminal> <block of terminal definitions>
+	|	<block of regex definitions terminal> <block of regex definitions>
+	|	<terminal definition terminal> <terminal definition>
+	|	<regex definition terminal> <regex definition>
+	|	<block terminal definitions terminal> <block terminal definitions>
+	|	<block terminal definition terminal> <block terminal definition>
+	|	<block regex definitions terminal> <block regex definitions>
+	|	<block regex definition terminal> <block regex definition>
+
+	|	<scanner part terminal> <scanner part>
+	|	<regular expression list terminal> <regular expression list>
+	|	<regular expression usage terminal> <regular expression usage>
+	|	<actions terminal> <actions>
+	|	<action terminal> <action>
+	|	<skip action terminal> <skip action>
+	|	<terminal action terminal> <terminal action>
+	|	<event action terminal> <event action>
+	|	<push action terminal> <push action>
+	|	<pop action terminal> <pop action>
+
+	|	<lexer part terminal> <lexer part>
+
+	|	<parser part terminal> <parser part>
+	|	<anglr syntax rule list terminal> <anglr syntax rule list>
+	|	<anglr syntax rule terminal> <anglr syntax rule>
+	|	<anglr nested rule terminal> <anglr nested rule>
+	|	<anglr syntax production list name terminal> <anglr syntax production list name>
+	|	<anglr syntax production list terminal> <anglr syntax production list>
+	|	<anglr syntax production terminal> <anglr syntax production>
+	|	<priority assoc specification terminal> <priority assoc specification>
+	|	<priority specification terminal> <priority specification>
+	|	<associativity specification terminal> <associativity specification>
+	|	<production name terminal> <production name>
+	|	<name list terminal> <name list>
+	|	<marker list terminal> <marker list>
+	|	<marker terminal> <marker>
+	|	<g name terminal> <g name>
+	|	<name terminal> <name>
+	|	<cardinality delimiter terminal> <cardinality delimiter>
+	|	<cardinality terminal> <cardinality>
+	|	<delimiter terminal> <delimiter>
+
+	|	<attribute list optional terminal> <attribute list> ?
+	|	<name value list optional terminal> <name value list> ?
+	|	<anglr file part list optional terminal> <anglr file part list> ?
+	|	<anglr definition list optional terminal> <anglr definition list> ?
+	|	<block terminal definitions optional terminal> <block terminal definitions> ?
+	|	<block regex definitions optional terminal> <block regex definitions> ?
+	|	<regular expression list optional terminal> <regular expression list> ?
+	|	<actions optional terminal> <actions> ?
+	|	<anglr syntax rule list optional terminal> <anglr syntax rule list> ?
+	|	<anglr syntax production list name optional terminal> <anglr syntax production list name> ?
+	|	<production name optional terminal> <production name> ?
+	|	<priority assoc specification optional terminal> <priority assoc specification> ?
+	|	<marker list optional terminal> <marker list> ?
+	|	<delimiter optional terminal> <delimiter> ?
+	|	<cstring optional terminal> <cstring> ?
+	|	<number optional terminal> <number> ?
+
+	;
+
+}
+
+[
+	Description Hover='true'
+	Text='ANGLR-ATTRIBUTES is list of syntax rules which'
+	Text='define the structure of anglr file attributes'
+]
+ANGLR-ATTRIBUTES
+{
+
+[
+	Description Hover='true'
+	Text='attribute list is nonempty list of attributes'
+]
+<attribute list>
+	:	<attribute> +
+	;
+
+[
+	Description Hover='true'
+	Text='attribute is text between ''['' and '']''. It is composed of'
+	Text='- an identifier representing attribute name'
+	Text='- optional list of name value pairs'
+]
+<attribute>
+	:	'[' <identifier> <name value list> ? ']'
+	;
+
+[
+	Description Hover='true'
+	Text='list of name value pairs is nonempty list of'
+	Text='names and associated values'
+]
+<name value list>
+	:	<name value pair> +
+	;
+
+[
+	Description Hover='true'
+	Text='name value pair consists of'
+	Text='- identifier representing name'
+	Text='- equals sign delimiting name and value'
+	Text='- string representing value associated with name'
+]
+<name value pair>
+	:	<identifier> '=' <cstring>
+	;
+
+}
+
+[
+	Description Hover='true'
+	Text='ANGLR-FILE-STRUCTURE is colection of syntax rules'
+	Text='which describe the structure of anglr file'
+]
+ANGLR-FILE-STRUCTURE
+{
+
+[
+	Description Hover='true'
+	Text='this rule describes the syntax of whole anglr file.'
+	Text='Anglr file is an optional list of anglr file parts.'
+]
+<anglr file>
+	:	<anglr file part list> ?
+	;
+
+[
+	Description Hover='true'
+	Text='List of anglr file parts is nonempty list of anglr file parts'
+]
+<anglr file part list>
+	:	<anglr file part> +
+	;
+
+[
+	Description Hover='true'
+	Text='anglr file part is one of:'
+	Text='- general part'
+	Text='- declaration part'
+	Text='- scanner part'
+	Text='- lexer part'
+	Text='- parser part'
+]
+<anglr file part>
+	:	<general part> 
+	|	<declaration part>
+	|	<scanner part>
+	|	<lexer part>
+	|	<parser part>
+	;
+
+}
+
+[
+	Description Hover='true'
+	Text='GENERAL-PART-OF-ANGLR-FILE is collection of syntax rules'
+	Text='(only one) used to describe the structure of general part of anglr file'
+]
+GENERAL-PART-OF-ANGLR-FILE
+{
+
+[
+	Description Hover='true'
+	Text='General part has name and list of attribtes which describe:'
+	Text='- name of resulting assembly'
+	Text='- namespaces for generated classes'
+	Text='- names of generated classes'
+]
+
+<general part>
+	:	<attribute list> ? '%general' <identifier> '%{' <attribute list> ? '%}'
+	;
+
+}
+
+[
+	Description Hover='true'
+	Text='DECLARATION-PART-OF-ANGLR-FILE is a set of syntax rules'
+	Text='used to define the structure of declaration part of anglr file'
+]
+DECLARATION-PART-OF-ANGLR-FILE
+{
+
+[
+	Description Hover='true'
+	Text='Declaration part consists of:'
+	Text='- optional list of attributes. Attributes for the declaration part do not currently exist'
+	Text='- name for declaration part'
+	Text='- optional list of declarations'
+]
+
+<declaration part>
+	:	<attribute list> ? '%declarations' <identifier> '%{' <anglr definition list> ? '%}'
+	;
+
+[
+	Description Hover='true'
+	Text='anglr definition list is nonempty list of anglr definitions'
+]
+<anglr definition list>
+	:	<anglr definition with attribute> +
+	;
+
+[
+	Description Hover='true'
+	Text='anglr definition should be preceeded with possibly empty attribute list'
+]
+<anglr definition with attribute>
+	:	<attribute list> ? <anglr definition>
+	;
+
+[
+	Description Hover='true'
+	Text='anglr definition is one of'
+	Text='- single termial declaration'
+	Text='- single regular expression declaration'
+	Text='- block of termial declarations'
+	Text='- block of regular expression declarations'
+]
+<anglr definition>
+	:	<single terminal definition>
+	|	<single regex definition>
+	|	<block of terminal definitions>
+	|	<block of regex definitions>
+	;
+
+[
+	Description Hover='true'
+	Text='single terminal declaration is composed of:'
+	Text='- word %terminal'
+	Text='- followed by definition of terminal symbol'
+]
+<single terminal definition>
+	:	'%terminal' <terminal definition>
+	;
+
+[
+	Description Hover='true'
+	Text='single regular expression declaration is composed of:'
+	Text='- word %regex'
+	Text='- followed by definition of regular expression'
+]
+<single regex definition>
+	:	'%regex' <regex definition>
+	;
+
+[
+	Description Hover='true'
+	Text='block of terminal declarations is composed of:'
+	Text='- word %terminal'
+	Text='- followed by block of terminal symbol definitions enclosed between curly braces'
+]
+<block of terminal definitions>
+	:	'%terminal' '{' <block terminal definitions> ? '}'
+	;
+
+[
+	Description Hover='true'
+	Text='block of regular expression declarations is composed of:'
+	Text='- word %regex'
+	Text='- followed by block of regular expression definitions enclosed between curly braces'
+]
+<block of regex definitions>
+	:	'%regex' '{' <block regex definitions> ? '}'
+	;
+
+[
+	Description Hover='true'
+	Text='terminal symbol definition consists of'
+	Text='- terminal symbol name'
+	Text='- optional string representation of terminal symbol'
+	Text='  name and string representation are interchangable'
+]
+<terminal definition>
+	:	<identifier> <cstring> ?
+	;
+
+[
+	Description Hover='true'
+	Text='regular expression definition consists of'
+	Text='- regular expression name'
+	Text='- string, spanning to the end of line, representing content of regular expression'
+]
+<regex definition>
+	:	<identifier> <regular expression>
+	;
+
+[
+	Description Hover='true'
+	Text='block terminal definitions is list of terminals'
+]
+<block terminal definitions>
+	:	<block terminal definition> +
+	;
+
+[
+	Description Hover='true'
+	Text='block terminal definition consists of'
+	Text='- possible empty attribute list; Description attribute'
+	Text='- terminal specification'
+]
+<block terminal definition>
+	:	<attribute list> ? <terminal definition>
+	;
+
+[
+	Description Hover='true'
+	Text='list of block regex definitions'
+]
+<block regex definitions>
+	:	<block regex definition> +
+	;
+
+[
+	Description Hover='true'
+	Text='block regex definition consists of'
+	Text='- possible empty attribute list'
+	Text='- identifier representing name of regular expression'
+	Text='- character string representing regular expression'
+]
+<block regex definition>
+	:	<attribute list> ? <regex definition>
+	;
+
+}
+
+[
+	Description Hover='true'
+	Text='SCANNER-PART-OF-ANGLR-FILE is a set of syntax rules'
+	Text='used to define the structure of scanner part of anglr file'
+]
+SCANNER-PART-OF-ANGLR-FILE
+{
+
+[
+	Description Hover='true'
+	Text='scanner part consists of'
+	Text='- optional attribute list. CompilationInfo is currently'
+	Text='  the only attribute used to describe scanner part. This'
+	Text='  attribute describes compiled regular expression associated'
+	Text='  with scanner part'
+	Text='- word %scanner'
+	Text='- identifier representing name of scanner part'
+	Text='- optional list of regular expressions constituting scanner part within %{ and %}'
+]
+<scanner part>
+	:	<attribute list> ? '%scanner' <identifier> '%{' <regular expression list> ? '%}'
+	;
+
+[
+	Description Hover='true'
+	Text='list of regular expressions consists usage specifications of regular expressions'
+]
+<regular expression list>
+	:	<regular expression usage> +
+	;
+
+[
+	Description Hover='true'
+	Text='regular expression usage consists of regular expression followed by possibly empty list of actions'
+	Text='regular expression must be specified at the beginnig of the line'
+]
+<regular expression usage>
+	:	<regular expression> <actions> ?
+	;
+
+[
+	Description Hover='true'
+	Text='list of actions associated with text scanned by scanner using particular regular expression'
+]
+<actions>
+	:	<action> +
+	;
+
+[
+	Description Hover='true'
+	Text='an action associated with text scanned by regular expression.'
+	Text='Skip, terminal and event action are mutually exclusive.'
+	Text='Only one of them, last in the list, is taken in effect.'
+	Text='If there is no skip, terminal or event actions in action list,'
+	Text='skip is assumed. Push and pop actions should be balanced.'
+	Text='During the scanning process there should never be more pop'
+	Text='than push actions. At the end of scanning process number of'
+	Text='push and pop actions should be equal.'
+	Text=''
+	Text='Action list must be specified in lines following regular'
+	Text='expression, with which it is associated. Lines containing'
+	Text='actions must start with at least one space character'
+]
+<action>
+	:	<skip action>
+	|	<terminal action>
+	|	<event action>
+	|	<push action>
+	|	<pop action>
+	;
+
+[
+	Description Hover='true'
+	Text='regular expression action: skip text. Skip, terminal'
+	Text='and event actions are mutually exclusive. The last one of'
+	Text='them si taken in effect.'
+]
+<skip action>
+	:	'skip'
+	;
+
+[
+	Description Hover='true'
+	Text='regular expression action: report terminal code. Skip, terminal'
+	Text='and event actions are mutually exclusive. The last one of'
+	Text='them si taken in effect.'
+]
+<terminal action>
+	:	'terminal' <identifier>
+	;
+
+[
+	Description Hover='true'
+	Text='regular expression action: fire event associated with scanned text'
+	Text='Handlers for event actions should be specified in source code'
+	Text='associated with scanner. Event actions are used to handle more complex'
+	Text='scenarios, when terminal an skip actions are not enough. If event action'
+	Text='is not handled, skip action is performed. Skip, terminal and event actions'
+	Text='are mutually exclusive. The last one of them si taken in effect.'
+]
+<event action>
+	:	'event' <identifier>
+	;
+
+[
+	Description Hover='true'
+	Text='regular expression action: activate another scanner'
+	Text='more than one push action should be specified in single action list'
+]
+<push action>
+	:	'push' <identifier>
+	;
+
+[
+	Description Hover='true'
+	Text='regular expression action: deactivate current scanner'
+	Text='more than one pop action should be specified in single'
+	Text='action list as long as it is balanced with push actions'
+]
+<pop action>
+	:	'pop'
+	;
+
+}
+
+[
+	Description Hover='true'
+	Text='LEXER-PART-OF-ANGLR-FILE is a set of syntax rules'
+	Text='used to define the structure of lexer part of anglr file'
+]
+LEXER-PART-OF-ANGLR-FILE
+{
+
+[
+	Description Hover='true'
+	Text='lexer part consists of attribute list which describes lexical analyzer'
+]
+<lexer part>
+	:	<attribute list> ? '%lexer' <identifier> '%{' <attribute list> ? '%}'
+	;
+
+}
+
+[
+	Description Hover='true'
+	Text='PARSER-PART-OF-ANGLR-FILE is a set of syntax rules'
+	Text='used to define the structure of parser part of anglr file'
+]
+PARSER-PART-OF-ANGLR-FILE
+{
+
+[
+	Description Hover='true'
+	Text='parser part consists of'
+	Text='- optional attribute list. Scanner is currently the only'
+	Text='  attribute used to describe parser part. It defines'
+	Text='  id of scanner used in generated parser.'
+	Text='- word %parser'
+	Text='- identifier representing parser name'
+	Text='- optional list of syntax rules enclosed within %{ and %}'
+]
+
+<parser part>
+	:	<attribute list> ? '%parser' <identifier> '%{' <anglr syntax rule list> ? '%}'
+	;
+
+[
+	Description Hover='true'
+	Text='anglr syntax rule list is nonempty list of syntax rule specifications'
+]
+<anglr syntax rule list>
+	:	<anglr syntax rule> +
+	;
+
+[
+	Description Hover='true'
+	Text='anglr syntax rule specification comes in two flavours. First one is'
+	Text='specification of anglr syntax rule. The second one is something completelly'
+	Text='different but contextually similar: specification of syntax rules grouping.'
+	Text=''
+	Text='First production defines the syntax of anglr syntax rule. It consists of:'
+	Text='- optional attribute list. Currently is recognised only Start attribute'
+	Text='  which should have no parameters'
+	Text='- name of syntax rule'
+	Text='- followed by colon'
+	Text='- syntax production list'
+	Text='- terminated by semicolon'
+	Text=''
+	Text='The second production defines the syntax of grouping. It consists of:'
+	Text='- group name optionally preceeded by attribute list which are currently'
+	Text='  miningless for grouping'
+	Text='- possibly empty list of syntax rules and nested groupings (since syntax'
+	Text='  rule for anglr syntax rule specifies also syntax rule for grouping)'
+	Text='  enclosed with curly braces.'
+	Text='The depth of nesting is thus theoretically unlimited.'
+]
+<anglr syntax rule>
+	:	<attribute list> ? <identifier> ':' <anglr syntax production list> ';'
+	|	<attribute list> ? <identifier> '{' <anglr syntax rule list> ? '}'
+	;
+
+[
+	Description Hover='true'
+	Text='Nested anglr syntax production list is used to separate elements in name lists'
+	Text='and to specify more compact forms of syntax rules. Optional name specified'
+	Text='within it, or generated one if this name is not specified, is used to generate'
+	Text='syntax rule for anglr syntax production list specified within it if this list'
+	Text='does not represent unnamed single production.'
+	Text=''
+	Text='Named nested anglr syntax rules should be used exactly the same way as ordinary'
+	Text='syntax rules. Their names should be used as nonterminal symbols in specifications'
+	Text='of arbitrary syntax rules.'
+	Text=''
+	Text='Nested anglr syntax rule pecification is very similar to syntax rule specification itself,'
+	Text='except that its name is optional and specified between two colon signs ('':''). It is always'
+	Text='specified within other syntax rule specifications. They can be nested to an arbitrary depth:'
+	Text='within nested syntax rule there can be any number of other nested syntax rules. In this way'
+	Text='the whole grammar of some language can be specified with single syntax rule composed by'
+	Text='nested rules of arbitrary depth.'
+	Text=''
+	Text='It consists of'
+	Text='- optional name of syntax rule'
+	Text='- specified between colon signs'
+	Text='- syntax production list'
+	Text='- it is not terminated by semicolon'
+]
+<anglr nested rule>
+	:	<anglr syntax production list name> ? <anglr syntax production list>
+	;
+
+
+[
+	Description Hover='true'
+	Text='name of nested rule is very similar to name of ordinary rule'
+]
+<anglr syntax production list name>
+	:	':' <identifier> ':'
+	;
+
+[
+	Description Hover='true'
+	Text='syntax production list is nonempty list of syntax productions'
+	Text='delimited with vertical lines'
+]
+<anglr syntax production list>
+	:	<anglr syntax production> + [ '|' ]
+	;
+
+[
+	Description Hover='true'
+	Text='syntax production should be on of'
+	Text='- name list representing nonempty production'
+	Text='- string ''%empty'' representing empty production'
+	Text='production specified with ''%empty'' always produces'
+	Text='empty terminal string. By the contrary, production'
+	Text='represented by name list need not to produce nonempty'
+	Text='terminal string. Every production of syntax rule should'
+	Text='be preceeded with production name'
+]
+<anglr syntax production>
+	:	<production name> ? <name list> <priority assoc specification> ?
+	|	'%empty'
+	;
+
+[
+	Description Hover='true'
+	Text='Production name should be used to give name to any production'
+	Text='of any syntax rule. Exceptions are empty productions which'
+	Text='must not be named. These names are composed with two consecutive'
+	Text='at-signs (@) and an identifier. Different productions of given'
+	Text='syntax rule must have different names. These names are used in'
+	Text='naming conventions for enums of positional markers. If production'
+	Text='has name, enum of positional markers for this production is'
+	Text='concatenation with this name and suffix _markers. If production'
+	Text='has no name, than name for enum of positional markers is composed'
+	Text='with syntax rule name, suffix _markers and relative index of'
+	Text='production starting with 1. See generated code for an example.'
+]
+<production name>
+	:	'@@' <identifier>
+	;
+
+[
+	Description Hover='true'
+	Text='priority of syntyx rule is composed of two parts'
+	Text='- priority number of syntax rule which i composed of reserved word'
+	Text='  %priority and priority number. Smaller numbers represent a higher'
+	Text='  priority, with 0 as the highest priority'
+	Text='- optional specification of syntax rule associativity'
+]
+<priority assoc specification>
+	:	<priority specification> <associativity specification>
+	|	<associativity specification> <priority specification>
+	|	<priority specification>
+	|	<associativity specification>
+	|	<priority specification> ',' <associativity specification>
+	|	<associativity specification> ',' <priority specification>
+	;
+
+[
+	Description Hover='true'
+	Text='priority of syntyx rule is composed of two parts'
+	Text='- priority number of syntax rule which i composed of reserved word'
+	Text='  %priority and priority number. Smaller numbers represent a higher'
+	Text='  priority, with 0 as the highest priority'
+	Text='- optional specification of syntax rule associativity'
+]
+<priority specification>
+	:	<priority> <number>
+	|	<priority> '=' <number>
+	;
+
+[
+	Description Hover='true'
+	Text='associativity of syntax rule is specified with reserved word'
+	Text='%associativity followd by one of these words:'
+	Text='- left'
+	Text='- right'
+	Text='- nonassoc'
+]
+<associativity specification>
+	:	<associativity> <cstring>
+	|	<associativity> '=' <cstring>
+	|	<associativity> <identifier>
+	|	<associativity> '=' <identifier>
+	;
+
+[
+	Description Hover='true'
+	Text='name list is nonempty list of ''marked'' names'
+]
+<name list>
+	:	<g name> - [ <marker list> ? ]
+	;
+
+[
+	Description Hover='true'
+	Text='non-empty list of markers'
+]
+<marker list>
+	:	<marker> +
+	;
+
+[
+	Description Hover='true'
+	Text='Marker is non-syntactical element of production.'
+	Text='It is used to enumerate production nodes. Each marker'
+	Text='is assigned sequence number of production node immediately'
+	Text='following it. Marker names should be different within'
+	Text='given syntax rule. Their names are stored in enumeration'
+	Text='named markers of class associated with this syntax rule.'
+	Text='marker should be given in following form: identifier'
+	Text='preceeded with at-sign @.'
+]
+<marker>
+	:	'@' <identifier>
+	;
+
+[
+	Description Hover='true'
+	Text='''generalized'' name should be one of'
+	Text='- simple name'
+	Text='- nested anglr syntax production list enclosed with ''('' and '')'''
+	Text='- any of above possibilities followd by any number of cardinality spcifications'
+]
+[
+	Iterator
+	Text='generate iterative traversial methods for this syntax rule'
+]
+<g name>
+	:	<name>
+	|	'(' <anglr nested rule> ')'
+	|	<g name> <cardinality delimiter>
+	;
+
+[
+	Description Hover='true'
+	Text='simple name is one of'
+	Text='- any. This case is currently undefined'
+	Text='- string of characters enclosed with single or double apostrophes'
+	Text='- identifier'
+]
+<name>
+	:	<any>
+	|	<cstring>
+	|	<identifier>
+	;
+
+[
+	Description Hover='true'
+	Text='specification of cardinality is followed by an optional'
+	Text='specification of delimiter between name list elements'
+]
+<cardinality delimiter>
+	:	<cardinality> <delimiter> ?
+	;
+
+[
+	Description Hover='true'
+	Text='cardinality is used to specify how many elements should have set of <g name>s'
+	Text='preceeding it in the specification of <g name>.'
+	Text='Cardinality is one of'
+	Text='- ? non-mandatory element (list consists of mostly one element)'
+	Text='- +, -, ~+ and ~- to create nonempty name list'
+	Text='- *, /, ~* and ~/ to create possibly empty name list'
+	Text='- two optional numbers delimited with comma and enclosed with ''{'' and ''}'''
+	Text='  possible way to specify optional minimal and maximal number of'
+	Text='  element occurances in name list (this case is not yet implemented)'
+]
+<cardinality>
+	:	'?'
+	|	'+'
+	|	'-'
+	|	'*'
+	|	'/'
+	|	'~+'
+	|	'~-'
+	|	'~*'
+	|	'~/'
+	|	'{' <number> ? ',' <number> ? '}'
+	;
+
+[
+	Description Hover='true'
+	Text='delimiter is nested anglr syntax production list used to separate elements in name list.'
+	Text='Optional name of anglr nested rule, or generated one if name is not specified, is used to generate'
+	Text='syntax rule for anglr syntax production list if this list does not represent unnamed'
+	Text='single production. Delimiter can be followed by the name'
+]
+<delimiter>
+	:	'[' <anglr nested rule> ']'
+	;
+
+}
+
+%}

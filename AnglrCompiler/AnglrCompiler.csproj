@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants);ANGLR_DEBUGGER</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AnglrCompilerLibrary\AnglrCompilerLibrary.csproj" />
+    <ProjectReference Include="..\AnglrJsonRpcMethods\AnglrJsonRpcMethods.csproj" />
+    <ProjectReference Include="..\AnglrParserCore\AnglrParserCore.csproj" />
+    <ProjectReference Include="..\AnglrParserLibrary\AnglrParserLibrary.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,654 @@
+﻿@page
+@model AnglrWebSite.Pages.DeclarationsModel
+@{
+}
+<div>
+    <section>
+        <div class="col-xl-12">
+            <h1>Deklaracije v Anglr datotekah</h1>
+            <hr />
+        </div>
+    </section>
+    <div class="row">
+        <div class="col-xl-2 anglr-doc-index">
+            <nav class="sticky-top">
+                <div class="container-fluid">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a href="#overview">Pregled</a></li>
+                        <li class="nav-item"><a href="#declaration_part_info">Deklaracijski odstavek</a></li>
+                        <li class="nav-item"><a href="#definition_list">Spisek definicij</a></li>
+                        <li class="nav-item"><a href="#attribute_usage">Uporaba atributov</a></li>
+                        <li class="nav-item"><a href="#definition_kind">Vrste definicij</a></li>
+                        <li class="nav-item"><a href="#inline_terminal_definition">Vrstična definicija terminalnih simbolov</a></li>
+                        <li class="nav-item"><a href="#terminal_list">Spisek terminalnih simbolov</a></li>
+                        <li class="nav-item"><a href="#terminal_definition">Definicija terminalnega simbola</a></li>
+                        <li class="nav-item"><a href="#block_terminal_definition">Skupinska definicija terminalnih simbolov</a></li>
+                        <li class="nav-item"><a href="#inline_regex_definition">Vrstična definicija regularnih izrazov</a></li>
+                        <li class="nav-item"><a href="#block_regex_definition">Skupinska definicija regularnih izrazov</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="col-xl-8">
+            <section id="overview">
+                <div>
+                    <h2>Deklaracijski odstavek</h2>
+                    <p>
+                        V deklaracijskem odstavku se nahajajo definicije terminalnih simbolov in regularnih izrazov,
+                        ki jih uporabljamo v drugih odstavkih. Terminalne simbole uporabljamo v odstavkih za definicijo
+                        leksikalnih pravil in v odstavkih za definicije sintaksnih pravil. Regularne izraze pa
+                        uporabljamo v odstavkih za izgradnjo leksikalnih pravil in tudi v samem deklaracijskem odstavku,
+                        kjer s pomočjo posameznih regularnih izrazov tvorimo nove regularne izraze.
+                    </p>
+                    <p>
+                        Sintaksna pravila deklaracijskega odstavka:
+                    </p>
+                    <div class="panel border bg-light" id="declaration_part">
+                        <pre>
+<span class="rule-name">&lt;declaration part&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%declarations&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;%{&#39;</span> <span class="rule-ref">&lt;anglr definition list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%}&#39;</span>
+    <span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <br />
+                    <div class="panel border bg-light" id="anglr_definition_list">
+                        <pre>
+<span class="rule-name">&lt;anglr definition list&gt;</span>
+	<span class="def-separator">:</span> <span class="rule-ref">&lt;anglr definition with attribute list&gt;</span> <span class="reserved-word">+</span>
+	<span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <br />
+                    <div class="panel border bg-light" id="anglr_definition_with_attribute_list">
+                        <pre>
+<span class="rule-name">&lt;anglr definition with attribute list&gt;</span>
+	<span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="rule-ref">&lt;anglr definition&gt;</span>
+	<span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <br />
+                    <div class="panel border bg-light" id="anglr_definition">
+                        <pre>
+<span class="rule-name">&lt;anglr definition&gt;</span>
+	<span class="def-separator">:</span> <span class="string-name">&#39;%token&#39;</span> <span class="rule-ref">&lt;token string&gt;</span>
+	<span class="def-separator">|</span> <span class="string-name">&#39;%regex&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="identifier-name">&lt;regular expression&gt;</span>
+	<span class="def-separator">|</span> <span class="string-name">&#39;%tokens&#39;</span> <span class="string-name">&#39;{&#39;</span> <span class="rule-ref">&lt;token declarations&gt;</span> <span class="string-name">&#39;}&#39;</span>
+	<span class="def-separator">|</span> <span class="string-name">&#39;%regexs&#39;</span> <span class="string-name">&#39;{&#39;</span> <span class="rule-ref">&lt;regex declarations&gt;</span> <span class="string-name">&#39;}&#39;</span>
+	<span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <br />
+                    <div class="panel border bg-light" id="token_string">
+                        <pre>
+<span class="rule-name">&lt;token string&gt;</span>
+	<span class="def-separator">:</span> <span class="rule-ref">&lt;token definition&gt;</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+	<span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <br />
+                    <div class="panel border bg-light" id="token_definition">
+                        <pre>
+<span class="rule-name">&lt;token definition&gt;</span>
+	<span class="def-separator">:</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="identifier-name">&lt;cstring&gt;</span> <span class="reserved-word">?</span>
+	<span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <br />
+                    <div class="panel border bg-light" id="token_declarations">
+                        <pre>
+<span class="rule-name">&lt;token declarations&gt;</span>
+	<span class="def-separator">:</span> <span class="rule-ref">&lt;token declaration&gt;</span> <span class="reserved-word">+</span>
+	<span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <br />
+                    <div class="panel border bg-light" id="token_declaration">
+                        <pre>
+<span class="rule-name">&lt;token declaration&gt;</span>
+	<span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="rule-ref">&lt;token string&gt;</span>
+	<span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <br />
+                    <div class="panel border bg-light" id="regex_declarations">
+                        <pre>
+<span class="rule-name">&lt;regex declarations&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;regex declaration&gt;</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <br />
+                    <div class="panel border bg-light" id="regex_declaration">
+                        <pre>
+<span class="rule-name">&lt;regex declaration&gt;</span>
+	<span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="identifier-name">&lt;regular expression&gt;</span>
+	<span class="def-separator">;</span>
+                        </pre>
+                    </div>
+                    <hr />
+                </div>
+            </section>
+            <section id="declaration_part_info">
+                <div>
+                    <h4>Deklaracijski odstavek</h4>
+                    <p>
+                        Deklaracijski odstavek <a href="#declaration_part"><span class="rule-name">&lt;declaration part&gt;</span></a> se navede tako:
+                    </p>
+                    <ul>
+                        <li>
+                            pred odstavkom se lahko nahaja spisek atributov. Anglr prevajalnik zahteva, da se v tem
+                            spisku nahaja nekaj točno določenih atributov.
+                        </li>
+                        <li>
+                            Deklaracijski odstavek se začne z besedo %declarations
+                        </li>
+                        <li>
+                            Sledi ime odstavka
+                        </li>
+                        <li>
+                            Na koncu pa se med ločili %{ in %} nahaja spisek deklaracij, ki je lahko tudi prazen.
+                        </li>
+                    </ul>
+                    <p>
+                        Primer:
+                    </p>
+                    <div class="alert alert-primary" role="alert" id="primer_001">
+                        <pre>
+<span class="part-token">%declarations</span> <span class="part-name">mathDecls</span>
+<span class="part-brace">%{</span>
+    <span class="reserved-word">%token</span> <span class="token-name">NUMBER</span><span class="def-separator">,</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">unknown</span>
+
+    <span class="reserved-word">%regex</span> <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+    <span class="reserved-word">%regex</span> <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+<span class="part-brace">%}</span>
+                        </pre>
+                    </div>
+                    <p>
+                        V gornjem primeru se nahaja deklaracijski odstavek z imenom mathDecls
+                    </p>
+                    <hr />
+                </div>
+            </section>
+            <section id="definition_list">
+                <div>
+                    <h4>Spisek definicij</h4>
+                    <p>
+                        Spsek definicij <a href="#anglr_definition_list"><span class="rule-name">&lt;anglr definition list&gt;</span></a> je zaporedje definicij. Med njimi ni ločil razen preslekov.
+                    </p>
+                    <p>
+                        V <a href="#primer_001">gornjem primeru</a> se nahaja spisek treh definicij:
+                    </p>
+                    <ul>
+                        <li>
+                            stavek %token definira več terminalnih simbolov in njihovih vrednosti. V tem primeru
+                            gre za en sam stavek, v katerem pa se definira več terminalnih sombolov.
+                        </li>
+                        <li>
+                            stavka %regex definirata dva regularna izraza
+                        </li>
+                    </ul>
+                    <p>
+                        V <a href="#primer_001">gornjem primeru</a> bi lahko vsak terminalni simbol definirali posebej, npr.:
+                    </p>
+                    <div class="alert alert-primary" role="alert">
+                        <pre>
+<span class="part-token">%declarations</span> <span class="part-name">mathDecls</span>
+<span class="part-brace">%{</span>
+    <span class="reserved-word">%token</span> <span class="token-name">NUMBER</span>
+    <span class="reserved-word">%token</span> <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+    <span class="reserved-word">%token</span> <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+    <span class="reserved-word">%token</span> <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+    <span class="reserved-word">%token</span> <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+    <span class="reserved-word">%token</span> <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+    <span class="reserved-word">%token</span> <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+    <span class="reserved-word">%token</span> <span class="token-name">unknown</span>
+
+    <span class="reserved-word">%regex</span> <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+    <span class="reserved-word">%regex</span> <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+<span class="part-brace">%}</span>
+                        </pre>
+                    </div>
+                    <p>
+                        Gornji blok vsebuje deset definicij:
+                    </p>
+                    <ul>
+                        <li>
+                            v prvih osmih definicijah so definirani terminalni simboli
+                        </li>
+                        <li>
+                            v zadnjih dveh pa so definirani regularni izrazi
+                        </li>
+                    </ul>
+                    <hr />
+                </div>
+            </section>
+            <section id="attribute_usage">
+                <div>
+                    <h4>Uporaba atributov</h4>
+                    <p>
+                        Pravilo <a href="#anglr_definition_with_attribute_list"><span class="rule-name">&lt;anglr definition with attribute list&gt;</span></a>
+                        omogoča, da se lahko pred vsako definicijo nahaja spisek atributov, ki je lahko tudi prazen. Anglr prevajalnik teh
+                        atributov ne uporablja. Njihova vsebina je lahko pojubna in služi zgolj uporabniku.
+                    </p>
+                    <p>
+                        Primer:
+                    </p>
+                    <div class="alert alert-primary" role="alert" id="primer_003">
+                        <pre>
+<span class="part-token">%declarations</span> <span class="part-name">mathDecls</span>
+<span class="part-brace">%{</span>
+    <span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;natural numbers used in arithmetic expressions&#39;</span> <span class="attribute-brace">]</span>
+    <span class="reserved-word">%token</span> <span class="token-name">NUMBER</span>
+    <span class="reserved-word">%token</span> <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+    <span class="reserved-word">%token</span> <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+    <span class="reserved-word">%token</span> <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+    <span class="reserved-word">%token</span> <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+    <span class="reserved-word">%token</span> <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+    <span class="reserved-word">%token</span> <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+    <span class="reserved-word">%token</span> <span class="token-name">unknown</span>
+
+    <span class="reserved-word">%regex</span> <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+    <span class="reserved-word">%regex</span> <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+<span class="part-brace">%}</span>
+                        </pre>
+                    </div>
+                    <p>
+                        Pred defnicijo terminalnega simbola NUMBER se nahaja atribut z imenom Description
+                    </p>
+                    <hr />
+                </div>
+            </section>
+            <section id="definition_kind">
+                <div>
+                    <h4>Vrste definicij</h4>
+                    <p>
+                        Pravilo <a href="#anglr_definition"><span class="rule-name">&lt;anglr definition&gt;</span></a> navaja
+                        štiri vrste definicij. Gre za razliko med t.i. vrstično in skupinsko definicijo. Pri terminanih simbolih
+                        te razlike v bistvu ni, ker lahko z vrstično definicijo naredimo isto kot s skupinsko.
+                    </p>
+                    <p>
+                        V pravilu so po vrsti navedeni naslednji načini definicij:
+                    </p>
+                    <ul>
+                        <li>
+                            vrstična definicija terminalnih simbolov
+                        </li>
+                        <li>
+                            vrstična definicija regularnih izrazov
+                        </li>
+                        <li>
+                            skupinska definicija terminalnih simbolov
+                        </li>
+                        <li>
+                            skupinska definicija regularnih izrazov
+                        </li>
+                    </ul>
+                    <hr />
+                </div>
+            </section>
+            <section id="inline_terminal_definition">
+                <div>
+                    <h4>Vrstična definicija terminalnih simbolov</h4>
+                    <p>
+                        Prva različica pravila <a href="#anglr_definition"><span class="rule-name">&lt;anglr definition&gt;</span></a>,
+                        <span class="string-name">&#39;%token&#39;</span> <span class="rule-ref">&lt;token string&gt;</span> , predstavlja
+                        sintaksno pravilo za vrstično definicijo terminalnih simbolov. To pravilo pravi naslednje:
+                    </p>
+                    <ul>
+                        <li>
+                            definicija se prične z besedo %token
+                        </li>
+                        <li>
+                            sledi ji spisek definicij terminalnih simbolov
+                        </li>
+                    </ul>
+                    <p>
+                        Primer:
+                    </p>
+                    <div class="alert alert-primary" role="alert" id="primer_004">
+                        <pre>
+    <span class="reserved-word">%token</span> <span class="token-name">NUMBER</span><span class="def-separator">,</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">unknown</span>
+                        </pre>
+                    </div>
+                    <hr />
+                </div>
+            </section>
+            <section id="terminal_list">
+                <div>
+                    <h4>Spisek terminalnih simbolov</h4>
+                    <p>
+                        Pravilo <a href="#token_string"><span class="rule-name">&lt;token string&gt;</span></a> definira sintakso
+                        zaporedja terminalnih simbolov:
+                    </p>
+                    <ul>
+                        <li>
+                            v zaporedju se nahaja vsaj ena definicija terminalnega simbola
+                        </li>
+                        <li>
+                            definicije terminalnih simbolov v zaporedju so med sabo ločene z vejicami.
+                        </li>
+                    </ul>
+                    <p>
+                        Primer spiska terminalnih simbolov, ki se nahajajo v <a href="#primer_004">prej</a> omenjenem primeru:
+                    </p>
+                    <div class="alert alert-primary" role="alert" id="primer_005">
+                        <pre>
+        <span class="token-name">NUMBER</span><span class="def-separator">,</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">unknown</span>
+                        </pre>
+                    </div>
+                    <hr />
+                </div>
+            </section>
+            <section id="terminal_definition">
+                <div>
+                    <h4>Definicija terminalnega simbola</h4>
+                    <p>
+                        Pravilo <a href="#token_definition"><span class="rule-name">&lt;token definition&gt;</span></a> opisuje
+                        definicijo terminalnega simbola. Po tej definiciji se terminalni simbol definira tako:
+                    </p>
+                    <ul>
+                        <li>
+                            Navesti je potrebno ime terminalnega simbola (<span class="identifier-name">&lt;identifier&gt;</span>)
+                        </li>
+                        <li>
+                            Lahko navedmo tudi tekstovno predstavitev terminalnega simbola (<span class="identifier-name">&lt;cstring&gt;</span>).
+                            To je smiselno uporabljati samo pri terminalnih simbolih, ki imajo nespremenljivo vrednost. Običajno so to ločila,
+                            operatorji, ki jih uporabljamo v nekem programskem jeziku.
+                        </li>
+                    </ul>
+                    <p>
+                        V <a href="#primer_005">gornjem</a> primeru, med drugim, nastopajo naslednje definicije terminalnih simbolov:
+                    </p>
+                    <div class="alert alert-primary" role="alert" id="primer_006">
+                        <pre>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+                        </pre>
+                    </div>
+                    <p>
+                        Prva definicija, <span class="token-name">NUMBER</span>, nima tekstovne predstavitve, ker to ni smiselno, saj predstavlja
+                        vsa naravna števila.
+                    </p>
+                    <p>
+                        Druga definicija, <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>, pa ima tekstovno predstavitev,
+                        ker vedno predstavlja aritmetični operator za seštevanje.
+                    </p>
+                    <div class="alert alert-primary" role="alert">
+                        <span><img src="~/images/icons8-info-squared-48.png" /></span><br />
+                        Za tekstovno predstavitev terminalnih simbolov velja naslednje:
+                        <ul>
+                            <li>
+                                Terminalni simbol lahko uporabljamo s pomočjo njegovega imena ali pa s tekstovno predstavitvijo.<br />
+                                Primer uporabe terminalnega simbola, ki je definiran kot <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>:
+                                <div class="alert alert-primary" role="alert" id="primer_007">
+                                    <pre>
+<span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+<span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">add</span> <span class="rule-ref">multiplicative-expression</span>
+                                    </pre>
+                                </div>
+                            </li>
+                            <li>
+                                Tudi terminalne simbole, za katere ni smiselno uporabljati tekstovne predstavitve, lahko predstavimo
+                                v tekstovni obliki in jo tako tudi uporabljamo, čeprav je to lahko zavajajoče.<br />Primer, ko vsa naravna števila
+                                predstavimo s tekstovno predstavitvijo '0':
+                                <div class="alert alert-primary" role="alert" id="primer_008">
+                                    <pre>
+<span class="reserved-word">%token</span> <span class="token-name">NUMBER</span> <span class="token-value">&#39;0&#39;</span>
+<span class="rule-name">unary-expression</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+<span class="rule-name">unary-expression</span> <span class="def-separator">:</span> <span class="identifier-name">&#39;0&#39;</span>
+                                    </pre>
+                                </div>
+                            </li>
+                        </ul>
+                        Terminalne simbole, ki jih definiramo tudi v tekstovni obliki, lahko uporabljamo v obeh oblikah
+                    </div>
+                    <hr />
+                </div>
+            </section>
+            <section id="block_terminal_definition">
+                <div>
+                    <h4>Skupinska definicija terminalnih simbolov</h4>
+                    <p>
+                        Tretja različica pravila <a href="#anglr_definition"><span class="rule-name">&lt;anglr definition&gt;</span></a>,
+                        <span class="string-name">&#39;%tokens&#39;</span> <span class="string-name">&#39;{&#39;</span> <span class="rule-ref">&lt;token declarations&gt;</span>,
+                        predstavlja sintaksno pravilo za skupinsko definicijo terminalnih simbolov. Po tem pravilu se terminalne simbole definira takole:
+                    </p>
+                    <ul>
+                        <li>
+                            na začetku se nahaja beseda %tokens
+                        </li>
+                        <li>
+                            med zavitima oklepajema { in } pa navedemo definicije terminalnih simbolov. Navedemo jih tako kot v vrstični
+                            definiciji, vendar tako, da opustimo besedo %token. Uporaba vejice je v takih primerih brezpredmetna. Lahko jo
+                            uporabljamo ali pa ne. V obeh primerih dobimo isto. Uporaba tega pravila je taka, kot da bi vse terminalne
+                            simbole definirali z enim vrstičnim pravilom.<br />Primer: skupinska definicija
+                            <div class="alert alert-primary" role="alert" id="primer_009">
+                                <pre>
+    <span class="reserved-word">%tokens</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span><span class="def-separator">,</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+                                    </pre>
+                            </div>
+                            ali pa skupinska definicija brez vejic (lahko tudi s poljubnim številom vejic)
+                            <div class="alert alert-primary" role="alert" id="primer_010">
+                                <pre>
+    <span class="reserved-word">%tokens</span>
+    <span class="def-separator">{</span>
+        <span class="token-name">NUMBER</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span>
+        <span class="token-name">unknown</span>
+    <span class="def-separator">}</span>
+                                    </pre>
+                            </div>
+                            je enaka kot vrstična definicija:
+                            <div class="alert alert-primary" role="alert" id="primer_011">
+                                <pre>
+    <span class="reserved-word">%token</span> <span class="token-name">NUMBER</span><span class="def-separator">,</span>
+        <span class="token-name">add</span> <span class="token-value">&#39;+&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">sub</span> <span class="token-value">&#39;-&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">mul</span> <span class="token-value">&#39;*&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">div</span> <span class="token-value">&#39;/&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">lb</span> <span class="token-value">&#39;(&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">rb</span> <span class="token-value">&#39;)&#39;</span><span class="def-separator">,</span>
+        <span class="token-name">unknown</span>
+                                </pre>
+                            </div>
+                        </li>
+                    </ul>
+                    <p>
+                        Skupinska definicija terminalnih simbolov je od vrstične boljša samo v tem, da se lahko znebimo
+                        vejic, ki ločujejo definicije terminalnih simbolov v vrstični definiciji.
+                    </p>
+                    <hr />
+                </div>
+            </section>
+            <section id="inline_regex_definition">
+                <div>
+                    <h4>Vrstična definicija regularnih izrazov</h4>
+                    <p>
+                        Druga različica pravila <a href="#anglr_definition"><span class="rule-name">&lt;anglr definition&gt;</span></a>,
+                        <span class="string-name">&#39;%regex&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="identifier-name">&lt;regular expression&gt;</span>,
+                        predstavlja sintaksno pravilo za vrstično definicijo regularnih izrazov. Po tem pravilu se regulare izraze definira takole:
+                    </p>
+                    <ul>
+                        <li>
+                            na začetku je beseda %regex
+                        </li>
+                        <li>
+                            potem sledi ime regularnega izraza
+                        </li>
+                        <li>
+                            nazadnje pa je naveden regularni izraz. Za vsebino regularnega izraza se šteje vse,
+                            kar sledi presledkom za imenom regularnega izraza do konca vrstice, v kateri je definiran
+                            regularni izraz. Zato lahko v eni vrstici definiramo samo po en regularni izraz.
+                            Definicije regularnih izrazov morajo zadoščati pravilom, ki so navedena <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expressions">tukaj</a>.
+                            <br />Primer:
+                            <div class="alert alert-primary" role="alert" id="primer_012">
+                                <pre>
+    <span class="reserved-word">%regex</span> <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+    <span class="reserved-word">%regex</span> <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+                                </pre>
+                            </div>
+                        </li>
+                    </ul>
+                    <p>
+                        V gornjem primeru sta definirana dva regularna izraza:
+                    </p>
+                    <ul>
+                        <li>
+                            v prvem se nahaja regularni izraz z imenom decimal-digit, ki prepozna poljubno desetiško cifro.
+                        </li>
+                        <li>
+                            v drugem pa se nahaja regularni izraz z imenom number, ki prepozna poljubno pozitivno zaporedje desetiških cifer
+                        </li>
+                    </ul>
+                    <div class="alert alert-primary" role="alert">
+                        <span><img src="~/images/icons8-info-squared-48.png" /></span><br />
+                        <p>
+                            Vsak regularni izraz se lahko uporablja za definicijo drugih regularnih izrazov. Regularni izraz uporabimo tako,
+                            da v nekem drugem regularnem izrazu njegovo ime navedemo med zavitima oklepajema { in }. V <a href="#primer_012">gornjem primeru</a>
+                            se regularni izraz decimal-digit uporablja v definiciji regularega izraza number.
+                        </p>
+                        <p>
+                            Pri uporabi regularnega izraza v definiciji nekega drugega izraza se njegova definicija dobesedno prepiše v 
+                            definicijo novega regularnega izraza.
+                        </p>
+                        <p>
+                            Vrstni red definicij regularnih izrazov ni pomemben. V <a href="#primer_012">gornjem primeru</a> smemo uporabiti tak vrstni red:
+                        </p>
+                        <div class="alert alert-primary" role="alert" id="primer_013">
+                            <pre>
+    <span class="reserved-word">%regex</span> <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+    <span class="reserved-word">%regex</span> <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+                            </pre>
+                        </div>
+                    </div>
+                    <div class="alert alert-primary" role="alert">
+                        <span><img src="~/images/icons8-general-warning-sign-48.png" /></span><br />
+                        <p>
+                            Pri uporabi regularnih izrazov v definiciji drugih regularnih izrazov pa moramo biti previdni. Velikokrat
+                            so povezani z neuporabo oklepajev ( in ) takrat, ko uporabljamo operatorje za ponavljanje, kot npr. +
+                        </p>
+                        <p>
+                            Predstavljajmo si, da regularni izraz decimal-digit v <a href="#primer_012">gornjem primeru</a> definiramo tako:
+                        </p>
+                        <div class="alert alert-primary" role="alert" id="primer_014">
+                            <pre>
+    <span class="reserved-word">%regex</span> <span class="regex-name">decimal-digit</span> <span class="regex-def">0|1|2|3|4|5|6|7|8|9</span>
+                            </pre>
+                        </div>
+                        <p>
+                            Če definicije regularnega izraza number ne spremenimo, potem postane definicija regularnega izraza za number
+                            enakovredna tej definiciji:
+                        </p>
+                        <div class="alert alert-primary" role="alert" id="primer_015">
+                            <pre>
+    <span class="reserved-word">%regex</span> <span class="regex-name">number</span> <span class="regex-def">0|1|2|3|4|5|6|7|8|9+</span>
+                            </pre>
+                        </div>
+                        <p>
+                            Ta izraz pa ne predstavlja vseh naravnih števil ampak števila med 0 in 9 ter vsa ostala števila, ki so sestavljena iz cifer 9.
+                            Težavo odpravimo z uporabo oklepajev ( in ). Nova definicija regularnega izraza z imenom number se sedaj glasi:
+                        </p>
+                        <div class="alert alert-primary" role="alert" id="primer_016">
+                            <pre>
+    <span class="reserved-word">%regex</span> <span class="regex-name">number</span> <span class="regex-def">({decimal-digit})+</span>
+                            </pre>
+                        </div>
+                        <p>
+                            in je enakovredna definiciji tega regularnega izraza:
+                        </p>
+                        <div class="alert alert-primary" role="alert" id="primer_017">
+                            <pre>
+    <span class="reserved-word">%regex</span> <span class="regex-name">number</span> <span class="regex-def">(0|1|2|3|4|5|6|7|8|9)+</span>
+                            </pre>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </section>
+            <section id="block_regex_definition">
+                <div>
+                    <h4>Skupinska definicija regularnih izrazov</h4>
+                    <p>
+                        Četrta različica pravila <a href="#anglr_definition"><span class="rule-name">&lt;anglr definition&gt;</span></a>,
+                        <span class="string-name">&#39;%regexs&#39;</span> <span class="string-name">&#39;{&#39;</span> <span class="rule-ref">&lt;regex declarations&gt;</span> <span class="string-name">&#39;}&#39;</span>,
+                        predstavlja sintaksno pravilo za skupinsko definicijo regularnih izrazov. Po tem pravilu se regulare izraze definira takole:
+                    </p>
+                    <ul>
+                        <li>
+                            na začetku je beseda %regexs
+                        </li>
+                        <li>
+                            nato pa med zavitima oklepajema { in } navedemo definicije regularnih izrazov. Te definicije so ravno take kot v primeru vrstičnih definicij 
+                            regularnih izrazov s to razliko, da ni potrebno navajati besede %regex. Tudi v primeru skupinskih definicij lahko
+                            v eni vrstici navedemo največ eno definicijo regularnega izraza.<br />Primer:
+                            <div class="alert alert-primary" role="alert" id="primer_018">
+                                <pre>
+    <span class="reserved-word">%regexs</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name">number</span> <span class="regex-def">{decimal-digit}+</span>
+        <span class="regex-name">decimal-digit</span> <span class="regex-def">[0-9]</span>
+    <span class="def-separator">}</span>
+                                </pre>
+                            </div>
+                        </li>
+                    </ul>
+        </div>
+            </section>
+        </div>
+        <div class="col-xl-2 anglr-page-index">
+            <nav class="sticky-top">
+                <div class="container-fluid">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a href="#overview">Pregled</a></li>
+                        <li class="nav-item"><a href="#declaration_part_info">Deklaracijski odstavek</a></li>
+                        <li class="nav-item"><a href="#definition_list">Spisek definicij</a></li>
+                        <li class="nav-item"><a href="#attribute_usage">Uporaba atributov</a></li>
+                        <li class="nav-item"><a href="#definition_kind">Vrste definicij</a></li>
+                        <li class="nav-item"><a href="#inline_terminal_definition">Vrstična definicija terminalnih simbolov</a></li>
+                        <li class="nav-item"><a href="#terminal_list">Spisek terminalnih simbolov</a></li>
+                        <li class="nav-item"><a href="#terminal_definition">Definicija terminalnega simbola</a></li>
+                        <li class="nav-item"><a href="#block_terminal_definition">Skupinska definicija terminalnih simbolov</a></li>
+                        <li class="nav-item"><a href="#inline_regex_definition">Vrstična definicija regularnih izrazov</a></li>
+                        <li class="nav-item"><a href="#block_regex_definition">Skupinska definicija regularnih izrazov</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>

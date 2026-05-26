@@ -1,0 +1,176 @@
+namespace Anglr.Declarations
+{
+	public class AnglrDeclarations
+	{
+		// values of terminal symbols
+		public class tokens
+		{
+			public const int _vertical_bar_ = 258;
+			public const int _comma_ = 259;
+			public const int _left_curly_bracket_ = 260;
+			public const int _right_curly_bracket_ = 261;
+			public const int _left_bracket_ = 262;
+			public const int _right_bracket_ = 263;
+			public const int _left_part_bracket_ = 264;
+			public const int _right_part_bracket_ = 265;
+			public const int _left_square_bracket_ = 266;
+			public const int _right_square_bracket_ = 267;
+			public const int _double_at_sign_ = 268;
+			public const int _at_sign_ = 269;
+			public const int _equals_sign_ = 270;
+			public const int _colon_ = 271;
+			public const int _semicolon_ = 272;
+			public const int _question_mark_ = 273;
+			public const int _plus_sign_ = 274;
+			public const int _minus_sign_ = 275;
+			public const int _asterisk_ = 276;
+			public const int _slash_ = 277;
+			public const int _inv_plus_sign_ = 278;
+			public const int _inv_minus_sign_ = 279;
+			public const int _inv_asterisk_ = 280;
+			public const int _inv_slash_ = 281;
+			public const int _any_ = 282;
+			public const int _cstring_ = 283;
+			public const int _empty_ = 284;
+			public const int _identifier_ = 285;
+			public const int _terminal_ = 286;
+			public const int _general_ = 287;
+			public const int _declarations_ = 288;
+			public const int _regex_ = 289;
+			public const int _scanner_ = 290;
+			public const int _lexer_ = 291;
+			public const int _parser_ = 292;
+			public const int _priority_ = 293;
+			public const int _associativity_ = 294;
+			public const int _regular_expression_ = 295;
+			public const int _number_ = 296;
+			public const int _skip_ = 297;
+			public const int _ttoken_ = 298;
+			public const int _event_ = 299;
+			public const int _push_ = 300;
+			public const int _pop_ = 301;
+			public const int _anglr_file_terminal_ = 302;
+			public const int _anglr_file_part_list_terminal_ = 303;
+			public const int _anglr_file_part_terminal_ = 304;
+			public const int _general_part_terminal_ = 305;
+			public const int _declaration_part_terminal_ = 306;
+			public const int _scanner_part_terminal_ = 307;
+			public const int _regular_expression_list_terminal_ = 308;
+			public const int _regular_expression_usage_terminal_ = 309;
+			public const int _actions_terminal_ = 310;
+			public const int _action_terminal_ = 311;
+			public const int _skip_action_terminal_ = 312;
+			public const int _terminal_action_terminal_ = 313;
+			public const int _event_action_terminal_ = 314;
+			public const int _push_action_terminal_ = 315;
+			public const int _pop_action_terminal_ = 316;
+			public const int _lexer_part_terminal_ = 317;
+			public const int _parser_part_terminal_ = 318;
+			public const int _attribute_list_terminal_ = 319;
+			public const int _attribute_terminal_ = 320;
+			public const int _name_value_list_terminal_ = 321;
+			public const int _name_value_pair_terminal_ = 322;
+			public const int _anglr_definition_list_terminal_ = 323;
+			public const int _anglr_definition_with_attribute_list_terminal_ = 324;
+			public const int _anglr_definition_terminal_ = 325;
+			public const int _single_terminal_definition_terminal_ = 326;
+			public const int _single_regex_definition_terminal_ = 327;
+			public const int _block_of_terminal_definitions_terminal_ = 328;
+			public const int _block_of_regex_definitions_terminal_ = 329;
+			public const int _terminal_definition_terminal_ = 330;
+			public const int _regex_definition_terminal_ = 331;
+			public const int _block_terminal_definitions_terminal_ = 332;
+			public const int _block_terminal_definition_terminal_ = 333;
+			public const int _block_regex_definitions_terminal_ = 334;
+			public const int _block_regex_definition_terminal_ = 335;
+			public const int _anglr_syntax_rule_list_terminal_ = 336;
+			public const int _anglr_syntax_rule_terminal_ = 337;
+			public const int _anglr_syntax_production_list_terminal_ = 338;
+			public const int _anglr_syntax_production_terminal_ = 339;
+			public const int _priority_assoc_specification_terminal_ = 340;
+			public const int _priority_specification_terminal_ = 341;
+			public const int _associativity_specification_terminal_ = 342;
+			public const int _anglr_nested_rule_terminal_ = 343;
+			public const int _anglr_syntax_production_list_name_terminal_ = 344;
+			public const int _name_list_terminal_ = 345;
+			public const int _production_name_terminal_ = 346;
+			public const int _marker_list_terminal_ = 347;
+			public const int _marker_terminal_ = 348;
+			public const int _g_name_terminal_ = 349;
+			public const int _name_terminal_ = 350;
+			public const int _cardinality_delimiter_terminal_ = 351;
+			public const int _cardinality_terminal_ = 352;
+			public const int _delimiter_terminal_ = 353;
+			public const int _attribute_list_optional_terminal_ = 354;
+			public const int _name_value_list_optional_terminal_ = 355;
+			public const int _anglr_file_part_list_optional_terminal_ = 356;
+			public const int _anglr_definition_list_optional_terminal_ = 357;
+			public const int _block_terminal_definitions_optional_terminal_ = 358;
+			public const int _block_regex_definitions_optional_terminal_ = 359;
+			public const int _regular_expression_list_optional_terminal_ = 360;
+			public const int _actions_optional_terminal_ = 361;
+			public const int _anglr_syntax_rule_list_optional_terminal_ = 362;
+			public const int _anglr_syntax_production_list_name_optional_terminal_ = 363;
+			public const int _production_name_optional_terminal_ = 364;
+			public const int _priority_assoc_specification_optional_terminal_ = 365;
+			public const int _marker_list_optional_terminal_ = 366;
+			public const int _delimiter_optional_terminal_ = 367;
+			public const int _cstring_optional_terminal_ = 368;
+			public const int _number_optional_terminal_ = 369;
+		}
+
+		// values of regular expressions
+		public class regex
+		{
+			public const string vertical_bar = @"\|";
+			public const string comma = @"\,";
+			public const string colon = @"\:";
+			public const string semicolon = @"\;";
+			public const string left_curly_bracket = @"\{";
+			public const string right_curly_bracket = @"\}";
+			public const string left_bracket = @"\(";
+			public const string right_bracket = @"\)";
+			public const string left_scanner_bracket = @"\%\{";
+			public const string right_scanner_bracket = @"\%\}";
+			public const string left_square_bracket = @"\[";
+			public const string right_square_bracket = @"\]";
+			public const string at_sign = @"\@";
+			public const string double_at_sign = @"\@\@";
+			public const string equals_sign = @"\=";
+			public const string question_mark = @"\?";
+			public const string plus_sign = @"\+";
+			public const string minus_sign = @"\-";
+			public const string asterisk = @"\*";
+			public const string slash = @"\/";
+			public const string inv_plus_sign = @"\~\+";
+			public const string inv_minus_sign = @"\~\-";
+			public const string inv_asterisk = @"\~\*";
+			public const string inv_slash = @"\~\/";
+			public const string empty = @"%[ \t]*empty";
+			public const string terminal = @"%[ \t]*terminal";
+			public const string general = @"%[ \t]*general";
+			public const string declarations = @"%[ \t]*declarations";
+			public const string rregex = @"%[ \t]*regex";
+			public const string scanner = @"%[ \t]*scanner";
+			public const string lexer = @"%[ \t]*lexer";
+			public const string parser = @"%[ \t]*parser";
+			public const string priority = @"%[ \t]*prio(rity)?";
+			public const string associativity = @"%[ \t]*assoc(iativity)?";
+			public const string skip = @"skip";
+			public const string ttoken = @"terminal";
+			public const string revent = @"event";
+			public const string push = @"push";
+			public const string pop = @"pop";
+			public const string letter = @"[a-zA-Z_]";
+			public const string digit = @"[0-9]";
+			public const string identifier = @"[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>";
+			public const string cstring = @"\""([^""]|\""\"")*\""|\'([^']|\'\')*\'";
+			public const string number = @"[0-9]+";
+			public const string lexical_unit_1 = @"\||\,|\:|\;";
+			public const string lexical_unit_2 = @"\{|\}|\%\{|\%\}|\[|\]";
+			public const string lexical_unit_3 = @"\=|%[ \t]*empty|%[ \t]*terminal|%[ \t]*declarations|%[ \t]*general|%[ \t]*regex|%[ \t]*scanner|%[ \t]*parser|[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>|\""([^""]|\""\"")*\""|\'([^']|\'\')*\'";
+			public const string lexical_unit = @"\||\,|\:|\;|\{|\}|\%\{|\%\}|\[|\]|\=|%[ \t]*empty|%[ \t]*terminal|%[ \t]*declarations|%[ \t]*general|%[ \t]*regex|%[ \t]*scanner|%[ \t]*parser|[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>|\""([^""]|\""\"")*\""|\'([^']|\'\')*\'";
+		}
+	}
+}
+

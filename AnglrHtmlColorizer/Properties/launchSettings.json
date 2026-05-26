@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "AnglrHtmlColorizer": {
+      "commandName": "Project",
+      "commandLineArgs": "-t attribute-list ..\\attribute-list.anglr ..\\anglr.anglr",
+      "workingDirectory": "D:\\Users\\Miran\\source\\repos\\AnglrLanguageServer-VS2022\\AnglrParserLibrary\\Syntax"
+    },
+    "Profile 1": {
+      "commandName": "Project",
+      "commandLineArgs": "math.anglr",
+      "workingDirectory": "D:\\Users\\Miran\\source\\repos\\math\\ConsoleApp1"
+    }
+  }
+}

@@ -1,0 +1,169 @@
+[
+	CompilationInfo
+		ClassName='Test1Decls'
+		NameSpace='Test1.Declarations'
+		Access='public'
+		Hover='true'
+		CodeDir='Test1Parser'
+]
+%declarations test1Decls
+%{
+	%terminal
+	{
+		NUMBER
+		add '+'
+		sub '-'
+		mul '*'
+		div '/'
+		and '&'
+		a 'a'
+		b 'b'
+		c 'c'
+		d 'd'
+		e 'e'
+	}
+	%regex
+	{
+		add \+
+		sub \-
+		mul \*
+		div \/
+		and \&
+		a a
+		b b
+		c c
+		d d
+		e e
+	}
+%}
+
+[
+	CompilationInfo
+		ClassName='CommentRegex'
+		NameSpace='Test1.ScannerLib'
+		Access='public'
+]
+%scanner commentScanner
+%{
+\*\/
+	pop
+.
+	skip
+%}
+
+[
+	Declarations
+		Id='test1Decls'
+]
+[
+	CompilationInfo
+		ClassName='Test1Regex'
+		NameSpace='Test1.ScannerLib'
+		Access='public'
+]
+%scanner test1Scanner
+%{
+\/\*
+	push commentScanner
+{add}
+	terminal add
+{sub}
+	terminal sub
+{mul}
+	terminal mul
+{div}
+	terminal div
+{a}
+	terminal a
+{b}
+	terminal b
+{c}
+	terminal c
+{d}
+	terminal d
+{e}
+	terminal e
+[ \t]+
+	skip
+[\n\r]
+	skip
+.
+	skip
+%}
+
+[
+	UseScanner
+		ScannerId='commentScanner'
+		InitialScanner='test1Scanner'
+]
+[
+	CompilationInfo
+		ClassName='Test1Lexer'
+		NameSpace='Test1.Lexer'
+		Access='public'
+		Hover='true'
+		CodeDir='Test1Parser'
+]
+%lexer mathLexer
+%{
+
+%}
+
+[
+	Declarations
+		Id='test1Decls'
+]
+[
+	Lexer
+		Id='test1Lexer'
+]
+[
+	CompilationInfo
+		ClassName='Test1Parser'
+		NameSpace='Test1.Parser'
+		Access='public'
+		CodeDir='Test1Parser'
+]
+%parser test1Parser
+%{
+
+[ Start ]
+expression
+	:	( :<A gen>:
+			A + ['+']
+			( :<B gen>:
+				B + ['-']
+				( :<C gen>:
+					C + ['*']
+					( :<D gen>:
+						D + ['/']
+						( :<E gen>:
+							E + ['&']
+						) + ?
+					) + ?
+				) + ?
+			) + ?
+		) + ?
+	;
+
+A
+	:	'a' 
+	;
+
+B
+	:	'b' 
+	;
+
+C
+	:	'c' 
+	;
+
+D
+	:	'd' 
+	;
+
+E
+	:	'e' 
+	;
+
+%}

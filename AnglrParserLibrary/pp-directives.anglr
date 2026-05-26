@@ -1,0 +1,742 @@
+
+[ Description
+	Text='In this file are represented Anglr declarations for C# programming language.'
+	Text='All grammar and lexical definitions are actually copied from the Microsoft'
+	Text='specifications of C# programming language defined in'
+	Text='https://learn.microsoft.com/en-us/dotnet/csharp/specification/overview'
+	Text='The notations of some syntax rules are slightly modified, however, because'
+	Text='they can be written more compactly in Anglr. For example: syntax rule'
+	Text='        expression ( "," expression ) *        '
+	Text='can be writen like'
+	Text='        expression + [ "," ]                   '
+	Text='which means: positive number of expressions separated with commas.'
+]
+
+[ CompilationInfo ClassName='CsharpDeclarations' NameSpace='Csharp.Declarations' Access='public' TokenPrefix='token_' Hover='true' ]
+%declarations csharpDecls
+%{
+
+	[ Description
+		Text='character representation of an identifier as returned by the lexical analyzer'
+	]
+	%terminal
+	{
+		raw-identifier
+	}
+
+	[ Description
+		Text='terminal symbols associated with C# keywords'
+		Text='which should not be used as identifier names'
+	]
+	%terminal
+	{
+		abstract	as			base		bool		break
+		byte		case		catch		char		checked
+		class		const		continue	decimal		default
+		delegate	do			double		else		enum
+		event		explicit	extern		false		finally
+		fixed		float		for			foreach		using
+		goto		if			implicit	in			int
+		interface	internal	is			lock		long
+		namespace	new			null		object		operator
+		out			override	params		private		protected
+		public		readonly	ref			return		sbyte
+		sealed		short		sizeof		stackalloc	static
+		string		struct		switch		this		throw
+		true		try			typeof		uint		ulong
+		unchecked	unsafe		ushort		virtual		void
+		volatile	while
+	}
+
+	[ Description
+		Text='terminal symbols associated with C# keywords'
+		Text='which should be used as identifier names'
+	]
+	%terminal
+	{
+		add			alias		ascending	async		await
+		by			descending	dynamic		equals		from
+		get			global		group		into		join
+		let			nameof		on			orderby		partial
+		remove		select		set			unmanaged	value
+		var			when		where		yield
+	}
+
+	[ Description
+		Text='terminal symbols representing C# literals'
+	]
+	%terminal
+	{
+		keyword
+		boolean-literal
+		integer-literal
+		real-literal
+		character-literal
+		string-literal
+		null-literal
+	}
+
+	[ Description
+		Text='Terminal symbols representing C# arithmetic operators.'
+		Text='They are listed with their textual representations.'
+		Text='But be carefull: exact textual representations are defined'
+		Text='with regular expression cs-ops and should differ from the'
+		Text='textual representations stated in the following %terminal block.'
+	]
+	%terminal
+	{
+		lshequ-op	'<<='
+		nullc-op	'??'
+		member-op	'::'
+		uinc-op	'++'
+		udec-op	'--'
+		land-op	'&&'
+		lor-op	'||'
+		ptr-op	'->'
+		eq-op	'=='
+		neq-op	'!='
+		lteq-op	'<='
+		gteq-op	'>='
+		adde-op	'+='
+		sube-op	'-='
+		mule-op	'*='
+		dive-op	'/='
+		mode-op	'%='
+		ande-op	'&='
+		ore-op	'|='
+		xore-op	'^='
+		lsh-op	'<<'
+		lambda-op	'=>'
+		lcb	'{'
+		rcb	'}'
+		lab	'['
+		rab	']'
+		lrb	'('
+		rrb	')'
+		dot	'.'
+		comma	','
+		colon	':'
+		semicolon	';'
+		add-op	'+'
+		sub-op	'-'
+		mul-op	'*'
+		div-op	'/'
+		mod-op	'%'
+		and-op	'&'
+		or-op	'|'
+		xor-op	'^'
+		not-op	'!'
+		inv-op	'~'
+		equ-op	'='
+		lt-op	'<'
+		gt-op	'>'
+		aif-op	'?'
+	}
+
+	[ Description
+		Text='terminal symbols associated with interpolated strings'
+	]
+	%terminal
+	{
+		interpolated-regular-string-elements
+		interpolated-verbatim-string-elements
+		irss	'$"'
+		ivss	'$@"'
+		ise		'"'
+	}
+
+	[ Description
+		Text='regular expressions associated with c# arithmetic operators'
+	]
+	%regex
+	{
+		lshequ-op	\<\<\=
+		nullc-op	\?\?
+		member-op	\:\:
+		uinc-op	\+\+
+		udec-op	\-\-
+		land-op	\&\&
+		lor-op	\|\|
+		ptr-op	\-\>
+		eq-op	\=\=
+		neq-op	\!\=
+		lteq-op	\<\=
+		gteq-op	\>\=
+		adde-op	\+\=
+		sube-op	\-\=
+		mule-op	\*\=
+		dive-op	\/\=
+		mode-op	\%\=
+		ande-op	\&\=
+		ore-op	\|\=
+		xore-op	\^\=
+		lsh-op	\<\<
+		lambda-op	\=\>
+		lcb	\{
+		rcb	\}
+		lab	\[
+		rab	\]
+		lrb	\(
+		rrb	\)
+		dot	\.
+		comma	\,
+		colon	\:
+		semicolon	\;
+		add-op	\+
+		sub-op	\-
+		mul-op	\*
+		div-op	\/
+		mod-op	\%
+		and-op	\&
+		or-op	\|
+		xor-op	\^
+		not-op	\!
+		inv-op	\~
+		equ-op	\=
+		lt-op	\<
+		gt-op	\>
+		aif-op	\?
+
+		cs-ops	({lshequ-op}|{nullc-op}|{member-op}|{uinc-op}|{udec-op}|{land-op}|{lor-op}|{ptr-op}|{eq-op}|{neq-op}|{lteq-op}|{gteq-op}|{adde-op}|{sube-op}|{mule-op}|{dive-op}|{mode-op}|{ande-op}|{ore-op}|{xore-op}|{lsh-op}|{lambda-op}|{lcb}|{rcb}|{lab}|{rab}|{lrb}|{rrb}|{dot}|{comma}|{colon}|{semicolon}|{add-op}|{sub-op}|{mul-op}|{div-op}|{mod-op}|{and-op}|{or-op}|{xor-op}|{not-op}|{inv-op}|{equ-op}|{lt-op}|{gt-op}|{aif-op})
+	}
+
+	[ Description
+		Text='regular expressions associated with beginning of interpolated strings'
+	]
+	%regex
+	{
+		irss	\$\"
+		ivss	\$\@\"|\@\$\"
+	}
+
+	[ Description Text='Lexical grammar' Hover='true' ]
+	%regex
+	{
+		input				({input-section})?
+		input-section		({input-section-part})+
+		input-section-part	({input-elements})?({new-line})|({pp-directive})
+		input-elements		({input-element})+
+		input-element		({whitespace})|({comment})|({token})
+	}
+
+	[ Description Text='Line terminators' Hover='true' ]
+	%regex
+	{
+
+		new-line	\u000D|\u000A|\u000D\u000A|\u0085|\u2028|\u2029
+	}
+
+	[ Description Text='White space' Hover='true' ]
+	%regex
+	{
+		whitespace				({whitespace-character})+
+		whitespace-character	\p{Zs}|\u0009|\u000B|\u000C
+	}
+
+	[ Description Text='Comments' Hover='true' ]
+	%regex
+	{
+		comment						({single-line-comment})|({delimited-comment})
+		single-line-comment			\/\/({input-characters})?
+		input-characters			({input-character})+
+		input-character				[^{new-line-character}]
+		new-line-character			\u000D\u000A\u0085\u2028\u2029
+		delimited-comment			\/\*({delimited-comment-text})?({asterisks})\/
+		delimited-comment-text		({delimited-comment-section})+
+		delimited-comment-section	\/|({asterisks})?({not-slash-or-asterisk})
+		asterisks					\*+
+		not-slash-or-asterisk		[^\/\*]
+	}
+
+	[ Description Text='Tokens' Hover='true' ]
+	%regex
+	{
+		token	({identifier})|({keyword})|({integer-literal})|({real-literal})|({character-literal})|({string-literal})|({operator-or-punctuator})
+	}
+
+	[ Description Text='Unicode character escape sequences' Hover='true' ]
+	%regex
+	{
+		unicode-escape-sequence	\\u({hex-digit}){4}|\\u({hex-digit}){8}
+	}
+
+	[ Description Text='Identifiers' Hover='true' ]
+	%regex
+	{
+		identifier					({available-identifier})|\@({identifier-or-keyword})
+		available-identifier		{identifier-or-keyword}
+		identifier-or-keyword		({identifier-start-character})({identifier-part-characters})?
+		identifier-start-character	({letter-character})|({underscore-character})
+		underscore-character		_|\u005F
+		identifier-part-characters	({identifier-part-character})+
+		identifier-part-character	({letter-character})|({decimal-digit-character})|({connecting-character})|({combining-character})|({formatting-character})
+		letter-character			\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}
+		combining-character			\p{Mn}|\p{Mc}
+		decimal-digit-character		\p{Nd}
+		connecting-character		\p{Pc}
+		formatting-character		\p{Cf}
+	}
+
+	[ Description Text='Keywords' Hover='true' ]
+	%regex
+	{
+		keyword	abstract|as|base|bool|break|byte|case|catch|char|checked|class|const|continue|decimal|default|delegate|do|double|else|enum|event|explicit|extern|false|finally|fixed|float|for|foreach|goto|if|implicit|in|int|interface|internal|is|lock|long|namespace|new|null|object|operator|out|override|params|private|protected|public|readonly|ref|return|sbyte|sealed|short|sizeof|stackalloc|static|string|struct|switch|this|throw|true|try|typeof|uint|ulong|unchecked|unsafe|ushort|using|virtual|void|volatile|while
+	}
+
+	[ Description Text='Literals' Hover='true' ]
+	%regex
+	{
+		literal										({boolean-literal})|({integer-literal})|({real-literal})|({character-literal})|({string-literal})|({null-literal})
+		boolean-literal								true|false
+		integer-literal								({hexadecimal-integer-literal})|{decimal-integer-literal}
+		decimal-integer-literal						({decimal-digits})({integer-type-suffix})?
+		decimal-digits								({decimal-digit})+
+		decimal-digit								[0-9]
+		integer-type-suffix							[uUlL]+
+		hexadecimal-integer-literal					(0(x|X)({hex-digits})({integer-type-suffix})?)|((x|X)0({hex-digits})({integer-type-suffix})?)
+		hex-digits									({hex-digit})+
+		hex-digit									[0-9A-Fa-f]
+		real-literal								({decimal-digits})\.({decimal-digits})({exponent-part})?({real-type-suffix})?|\.({decimal-digits})({exponent-part})?({real-type-suffix})?|({decimal-digits})({exponent-part})({real-type-suffix})?|({decimal-digits})({real-type-suffix})
+		exponent-part								(e|E)({sign})?({decimal-digits})
+		sign										\+|\-
+		real-type-suffix							F|f|D|d|M|m
+		character-literal							'({character})'
+		character									({single-character})|({simple-escape-sequence})|({hexadecimal-escape-sequence})|({unicode-escape-sequence})
+		single-character							[^'\\{new-line-character}]
+		simple-escape-sequence						\\\'|\\\"|\\\\|\\0|\\a|\\b|\\f|\\n|\\r|\\t|\\v
+		hexadecimal-escape-sequence					\\x({hex-digit}){1,4}
+		string-literal								({regular-string-literal})|({verbatim-string-literal})
+		regular-string-literal						"({regular-string-literal-characters})?"
+		regular-string-literal-characters			({regular-string-literal-character})+
+		regular-string-literal-character			({single-regular-string-literal-character})|({simple-escape-sequence})|({hexadecimal-escape-sequence})|({unicode-escape-sequence})
+		single-regular-string-literal-character		[^"\\{new-line-character}]
+		verbatim-string-literal						@"({verbatim-string-literal-characters})?"
+		verbatim-string-literal-characters			({verbatim-string-literal-character})+
+		verbatim-string-literal-character			({single-verbatim-string-literal-character})|({quote-escape-sequence})
+		single-verbatim-string-literal-character	[^"]
+		quote-escape-sequence						""
+		null-literal								null
+		interpolated-regular-string-elements		({interpolated-regular-string-element})+
+		interpolated-regular-string-element			{interpolated-regular-string-character}|{simple-escape-sequence}|{hexadecimal-escape-sequence}|{unicode-escape-sequence}|{open-brace-escape-sequence}|{close-brace-escape-sequence}
+		interpolated-regular-string-character		[^"\\{}\u000D\u000A\u0085\u2028\u2029]
+		open-brace-escape-sequence					\u007b\u007b
+		close-brace-escape-sequence					\u007d\u007d
+		interpolated-verbatim-string-elements		({interpolated-verbatim-string-element})+
+		interpolated-verbatim-string-element		{interpolated-verbatim-string-character}|{quote-escape-sequence}|{open-brace-escape-sequence}|{close-brace-escape-sequence}
+		interpolated-verbatim-string-character		[^"{}]
+	}
+
+	[ Description Text='Operators and punctuators' Hover='true' ]
+	%regex
+	{
+		operator-or-punctuator	\{|\}|\[|\]|\(|\)|\.|\,|\:|\;|\+|\-|\*|\/|\%|\&|\||\^|\!|\~|\=|\<|\>|\?|\?\?|\:\:|\+\+|\-\-|\&\&|\|\||\-\>|\=\=|\!\=|\<\=|\>\=|\+\=|\-\=|\*\=|\/\=|\%\=|\&\=|\|\=|\^\=|\<\<|\<\<\=
+		right-shift				\>\>
+		right-shift-assignment	\>\>\=
+	}
+
+	[ Description
+		Text='Pre-processing directives. They are not handled by lexical analyzer. Instead they'
+		Text='are handled by event pp-directive. See csharpScanner %scanner section for details'
+		Text='and https://angstlr.com for additional information about Anglr events.'
+
+		Text='%regex'
+		Text='{'
+		Text='	pp-directive::'
+		Text='		pp-declaration'
+		Text='		pp-conditional'
+		Text='		pp-line '
+		Text='		pp-diagnostic'
+		Text='		pp-region'
+		Text='		pp-pragma'
+		Text='	conditional-symbol::'
+		Text='		Any identifier-or-keyword except true or false'
+		Text='	pp-expression::'
+		Text='		whitespace ? pp-or-expression whitespace ?'
+		Text='	pp-or-expression::'
+		Text='		pp-and-expression'
+		Text='		pp-or-expression whitespace ? || whitespace ? pp-and-expression'
+		Text='	pp-and-expression::'
+		Text='		pp-equality-expression'
+		Text='		pp-and-expression whitespace ? && whitespace ? pp-equality-expression'
+		Text='	pp-equality-expression::'
+		Text='		pp-unary-expression'
+		Text='		pp-equality-expression whitespace ? == whitespace ? pp-unary-expression'
+		Text='		pp-equality-expression whitespace ? != whitespace ? pp-unary-expression'
+		Text='	pp-unary-expression::'
+		Text='		pp-primary-expression'
+		Text='		! whitespace ? pp-unary-expression'
+		Text='	pp-primary-expression::'
+		Text='		true'
+		Text='		false'
+		Text='		conditional-symbol'
+		Text='		( whitespace ? pp-expression whitespace ? )'
+		Text='	pp-declaration::'
+		Text='		whitespace ? # whitespace ? define whitespace conditional-symbol pp-new-line'
+		Text='		whitespace ? # whitespace ? undef whitespace conditional-symbol pp-new-line'
+		Text='	pp-new-line::'
+		Text='		whitespace ? single-line-comment ? new-line'
+		Text='	pp-conditional::'
+		Text='		pp-if-section pp-elif-sections ? pp-else-section ? pp-endif'
+		Text='	pp-if-section::'
+		Text='		whitespace ? # whitespace ? if whitespace pp-expression pp-new-line conditional-section ?'
+		Text='	pp-elif-sections::'
+		Text='		pp-elif-section'
+		Text='		pp-elif-sections pp-elif-section'
+		Text='	pp-elif-section::'
+		Text='		whitespace ? # whitespace ? elif whitespace pp-expression pp-new-line conditional-section ?'
+		Text='	pp-else-section::'
+		Text='		whitespace ? # whitespace ? else pp-new-line conditional-section ?'
+		Text='	pp-endif::'
+		Text='		whitespace ? # whitespace ? endif pp-new-line'
+		Text='	conditional-section::'
+		Text='		input-section'
+		Text='		skipped-section'
+		Text='	skipped-section::'
+		Text='		skipped-section-part +'
+		Text='	skipped-section-part::'
+		Text='		skipped-characters ? new-line'
+		Text='		pp-directive'
+		Text='	skipped-characters::'
+		Text='		whitespace ? not-number-sign input-characters ?'
+		Text='	not-number-sign::'
+		Text='		Any input-character except #'
+		Text='	pp-line::'
+		Text='		whitespace ? # whitespace ? line whitespace line-indicator pp-new-line'
+		Text='	line-indicator::'
+		Text='		decimal-digits whitespace file-name'
+		Text='		decimal-digits'
+		Text='		default'
+		Text='		hidden'
+		Text='	file-name::'
+		Text='		" file-name-characters "'
+		Text='	file-name-characters::'
+		Text='		file-name-character +'
+		Text='	file-name-character::'
+		Text='		Any input-character except " (U+0022), and new-line-character'
+		Text='	pp-diagnostic::'
+		Text='		whitespace ? # whitespace ? error pp-message'
+		Text='		whitespace ? # whitespace ? warning pp-message'
+		Text='	pp-message::'
+		Text='		new-line'
+		Text='		whitespace input-characters ? new-line'
+		Text='	pp-region::'
+		Text='		pp-start-region conditional-section ? pp-end-region'
+		Text='	pp-start-region::'
+		Text='		whitespace ? # whitespace ? region pp-message'
+		Text='	pp-end-region::'
+		Text='		whitespace ? # whitespace ? endregion pp-message'
+		Text='	pp-pragma::'
+		Text='		whitespace ? # whitespace ? pragma pp-pragma-text'
+		Text='	pp-pragma-text::'
+		Text='		new-line'
+		Text='		whitespace input-characters ? new-line'
+		Text='}'
+	]
+	%regex
+	{
+		pp-directive	({whitespace})?#({whitespace})?({identifier}).*
+	}
+%}
+
+[ Declarations Id='csharpDecls' Hover='true' ]
+[ CompilationInfo ClassName='CommentRegex' NameSpace='Csharp.RegexLib' Access='public' Hover='true' ]
+%scanner commentScanner
+%{
+\*+/
+	pop
+{delimited-comment-section}
+	skip
+{new-line}
+	skip
+%}
+
+[ Declarations Id='csharpDecls' Hover='true' ]
+[ CompilationInfo ClassName='InterpolatedRegularStringRegex' NameSpace='Csharp.RegexLib' Access='public' Hover='true' ]
+%scanner interpolatedRegularStringScanner
+%{
+\"
+	pop
+	terminal ise
+{interpolated-regular-string-elements}
+	terminal interpolated-regular-string-elements
+{lcb}
+	push interpolatedScanner
+	terminal lcb
+%}
+
+[ Declarations Id='csharpDecls' Hover='true' ]
+[ CompilationInfo ClassName='InterpolatedVerbatimStringRegex' NameSpace='Csharp.RegexLib' Access='public' Hover='true' ]
+%scanner interpolatedVerbatimStringScanner
+%{
+\"
+	pop
+	terminal ise
+{interpolated-verbatim-string-elements}
+	terminal interpolated-verbatim-string-elements
+{lcb}
+	push interpolatedScanner
+	terminal lcb
+%}
+
+[
+	Description Hover='true' 
+	Text='In the definition of the following scanner there are two lexical rules' 
+	Text='which are correlated in some way, namely:' 
+	Text='- {rcb}'
+	Text='- {cs-ops}'
+	Text='Lexical rule {cs-ops} must be preceeded by lexical rule {rcb} since it'
+	Text='contains its definition. Otherwise the lexical rule {rcb} will have no'
+	Text='effect since its definition would be hidden by the lexical rule {cs-ops}.'
+	Text='Otherwise (if the lexical rule {rcb} follows the definition of the lexical'
+	Text='rule {cs-ops} or if the lexical rule {rcb} would be omited), the event'
+	Text='handler for the lexical rule {cs-ops} should implement the funcionality'
+	Text='of the lexical rule {rcb}. It should invoke pop action and return terminal'
+	Text='symbol rcb. But such implementation is not clean since some push and/or pop'
+	Text='actions are executed by lexical analyzer itself and the other with event'
+	Text='handlers and is hard to identify their pairing.'
+	Text=''
+	Text='Also, there is another event handler: event identifier. This event handler'
+	Text='should distinguish between keywords and other identifiers found in C# source'
+	Text='code. Since it is important for a lexical analyzer to contain as few items as'
+	Text='possible, all identifiers are treated in the source code, which separates'
+	Text='them into names of the variables and keywords. There are other aspects that'
+	Text='need to be taken into account, e.g. the use of keywords instead of'
+	Text='variable names. All this can only be done in the source code and that is what'
+	Text='this event handler should do: it should take into account the duality of'
+	Text='keywords. Some keywords should be treated as keywords and variable names at'
+	Text='the same time. Syntax analyzer should later decide what is right depending'
+	Text='of the context in which this identifier is found.'
+	Text=''
+	Text='The same arguments apply to the definition of the next scanner, except that'
+	Text='there is no need to handle the lexical rule {rcb} separately from the'
+	Text='lexical rule {cs-ops} since {rcb} need not to pop the scanner but just'
+	Text='return the token code which is returned by {cs-ops} too.'
+]
+[ Declarations Id='csharpDecls' Hover='true' ]
+[ CompilationInfo ClassName='InterpolatedScannerRegex' NameSpace='Csharp.RegexLib' Access='public' Hover='true' ]
+%scanner interpolatedScanner
+%{
+\/\/.*
+	skip
+\/\*
+	push commentScanner
+{integer-literal}
+	terminal	integer-literal
+{real-literal}
+	terminal	real-literal
+{character-literal}
+	terminal	character-literal
+{string-literal}
+	terminal	string-literal
+{irss}
+	push	interpolatedRegularStringScanner
+	terminal	irss
+{ivss}
+	push	interpolatedVerbatimStringScanner
+	terminal	ivss
+{identifier}
+	event	identifier
+{rcb}
+	pop
+	terminal	rcb
+{cs-ops}
+	event	cs-ops
+{whitespace}
+	skip
+[\n\f\r\v]
+	pop
+.
+	pop
+%}
+
+[ Declarations Id='csharpDecls' Hover='true' ]
+[ CompilationInfo ClassName='ScannerRegex' NameSpace='Csharp.RegexLib' Access='public' Hover='true' ]
+[
+	Description Hover='true'
+	Text='This is the main scanner of C# language. From its definition we can see, that the'
+	Text='lexical structure of C# source code is in fact quite simple. It is composed of:'
+	Text=' - comments: single or multi line'
+	Text=' - literals: integer numbers, real numbers, characters and strings'
+	Text=' - interpolated string literals'
+	Text=' - words: identifiers or keywords'
+	Text=' - operators and delimiters'
+	Text=' - preprocessing directives'
+	Text=' - white space characters'
+]
+%scanner csharpScanner
+%{
+\/\/.*
+	skip
+\/\*
+	push commentScanner
+{integer-literal}
+	terminal	integer-literal
+{real-literal}
+	terminal	real-literal
+{character-literal}
+	terminal	character-literal
+{string-literal}
+	terminal	string-literal
+{irss}
+	push	interpolatedRegularStringScanner
+	terminal	irss
+{ivss}
+	push	interpolatedVerbatimStringScanner
+	terminal	ivss
+{identifier}
+	event	identifier
+{cs-ops}
+	event	cs-ops
+{pp-directive}
+	event pp-directive
+{whitespace}
+	skip
+[\n\f\r\v]
+	skip
+.
+	skip
+%}
+
+[ Description Text='Lexer for c# file' Hover='true' ]
+[
+	UseScanner
+		ScannerId='commentScanner'
+		ScannerId='interpolatedRegularStringScanner'
+		ScannerId='interpolatedVerbatimStringScanner'
+		ScannerId='interpolatedScanner'
+		InitialScanner='csharpScanner'
+		Hover='true'
+]
+[ CompilationInfo ClassName='CsharpLexer' NameSpace='Csharp.Lexer' Access='public' Hover='true' ]
+%lexer csharpLexer
+%{
+%}
+
+[ Declarations Id='csharpDecls' Hover='true' ]
+[ Lexer Id='csharpLexer' Hover='true' ]
+[ CompilationInfo ClassName='CsharpParser' NameSpace='Csharp.Parser' Access='public' Hover='true' ]
+%parser csharpParser
+%{
+pp-directive
+	:	pp-declaration
+	|	pp-conditional
+	|	pp-line 
+	|	pp-diagnostic
+	|	pp-region
+	|	pp-pragma
+	;
+conditional-symbol
+	:	Any identifier-or-keyword except true or false
+	;
+pp-expression
+	:	whitespace ? pp-or-expression whitespace ?
+	;
+pp-or-expression
+	:	pp-and-expression
+	|	pp-or-expression whitespace ? || whitespace ? pp-and-expression
+	;
+pp-and-expression
+	:	pp-equality-expression
+	|	pp-and-expression whitespace ? && whitespace ? pp-equality-expression
+	;
+pp-equality-expression
+	:	pp-unary-expression
+	|	pp-equality-expression whitespace ? == whitespace ? pp-unary-expression
+	|	pp-equality-expression whitespace ? != whitespace ? pp-unary-expression
+	;
+pp-unary-expression
+	:	pp-primary-expression
+	|	! whitespace ? pp-unary-expression
+	;
+pp-primary-expression
+	:	true
+	|	false
+	|	conditional-symbol
+	|	( whitespace ? pp-expression whitespace ? )
+	;
+pp-declaration
+	:	whitespace ? # whitespace ? define whitespace conditional-symbol pp-new-line
+	|	whitespace ? # whitespace ? undef whitespace conditional-symbol pp-new-line
+	;
+pp-new-line
+	:	whitespace ? single-line-comment ? new-line
+	;
+pp-conditional
+	:	pp-if-section pp-elif-sections ? pp-else-section ? pp-endif
+	;
+pp-if-section
+	:	whitespace ? # whitespace ? if whitespace pp-expression pp-new-line conditional-section ?
+	;
+pp-elif-sections
+	:	pp-elif-section
+	|	pp-elif-sections pp-elif-section
+	;
+pp-elif-section
+	:	whitespace ? # whitespace ? elif whitespace pp-expression pp-new-line conditional-section ?
+	;
+pp-else-section
+	:	whitespace ? # whitespace ? else pp-new-line conditional-section ?
+	;
+pp-endif
+	:	whitespace ? # whitespace ? endif pp-new-line
+	;
+conditional-section
+	:	input-section
+	|	skipped-section
+	;
+skipped-section
+	:	skipped-section-part +
+	;
+skipped-section-part
+	:	skipped-characters ? new-line
+	|	pp-directive
+	;
+skipped-characters
+	:	whitespace ? not-number-sign input-characters ?
+	;
+not-number-sign
+	:	Any input-character except #
+	;
+pp-line
+	:	whitespace ? # whitespace ? line whitespace line-indicator pp-new-line
+	;
+line-indicator
+	:	decimal-digits whitespace file-name
+	|	decimal-digits
+	|	default
+	|	hidden
+	;
+file-name
+	:	" file-name-characters "
+	;
+file-name-characters
+	:	file-name-character +
+	;
+file-name-character
+	:	Any input-character except " (U+0022), and new-line-character
+	;
+pp-diagnostic
+	:	whitespace ? # whitespace ? error pp-message
+	|	whitespace ? # whitespace ? warning pp-message
+	;
+pp-message
+	:	new-line
+	|	whitespace input-characters ? new-line
+	;
+pp-region
+	:	pp-start-region conditional-section ? pp-end-region
+	;
+pp-start-region
+	:	whitespace ? # whitespace ? region pp-message
+	;
+pp-end-region
+	:	whitespace ? # whitespace ? endregion pp-message
+	;
+pp-pragma
+	:	whitespace ? # whitespace ? pragma pp-pragma-text
+	;
+pp-pragma-text
+	:	new-line
+	|	whitespace input-characters ? new-line
+	;
+%}

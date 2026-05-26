@@ -1,0 +1,322 @@
+[ CompilationInfo ClassName='MathDecls' NameSpace='Math.Declarations' Access='public']
+%declarations mathDecls
+%{
+	%terminal
+	{
+		NUMBER
+		add '+'
+		sub '-'
+		mul '*'
+		div '/'
+		lsh '<<'
+		rsh '>>'
+		lt '<'
+		gt '>'
+		le '<='
+		ge '>='
+		equ '=='
+		neq '!='
+		and '&'
+		xor '^'
+		or '|'
+		cj '&&'
+		dj '||'
+		lb '('
+		rb ')'
+	}
+	%regex
+	{
+		decimal-digit [0-9]
+		number {decimal-digit}+
+		add \+
+		sub \-
+		mul \*
+		div \/
+		lb \(
+		lsh \<\<
+		rsh \>\>
+		lt \<
+		gt \>
+		le \<\=
+		ge \>\=
+		equ \=\=
+		neq \!\=
+		and \&
+		xor \^
+		or \|
+		cj \&\&
+		dj \|\|
+		rb \)
+	}
+%}
+
+[ CompilationInfo ClassName='CommentRegex' NameSpace='Math.ScannerLib' Access='public']
+%scanner commentScanner
+%{
+\*\/
+	pop
+.
+	skip
+%}
+
+[ Declarations Id='mathDecls' ]
+[ CompilationInfo ClassName='MathRegex' NameSpace='Math.ScannerLib' Access='public']
+%scanner mathScanner
+%{
+\/\*
+	push commentScanner
+{number}
+	terminal NUMBER
+{add}
+	terminal add
+{sub}
+	terminal sub
+{mul}
+	terminal mul
+{div}
+	terminal div
+{lsh}
+	terminal lsh
+{rsh}
+	terminal rsh
+{le}
+	terminal le
+{ge}
+	terminal ge
+{lt}
+	terminal lt
+{gt}
+	terminal gt
+{equ}
+	terminal equ
+{neq}
+	terminal neq
+{cj}
+	terminal cj
+{dj}
+	terminal dj
+{and}
+	terminal and
+{xor}
+	terminal xor
+{or}
+	terminal or
+{lb}
+	terminal lb
+{rb}
+	terminal rb
+[ \t]+
+	skip
+[\n\r]
+	skip
+.
+	skip
+%}
+
+[
+	UseScanner
+		ScannerId='commentScanner'
+		InitialScanner='mathScanner'
+]
+[ CompilationInfo ClassName='MathLexer' NameSpace='Math.Lexer' Access='public' Hover='true' CodeDir='.' ]
+%lexer mathLexer
+%{
+
+%}
+
+[ Declarations Id='mathDecls' ]
+[ Lexer Id='mathLexer' ]
+[ CompilationInfo ClassName='MathParser' NameSpace='Math.Parser' Access='public' CodeDir='mathParser' ]
+%parser mathParser
+%{
+
+[ Start ]
+expression
+	:
+		( :<disjunction expression>:
+		( :<conjunction expression>:
+		( :<or expression>:
+		( :<xor expression>:
+		( :<and expression>:
+		( :<equality expression>:
+		( :<relational expression>:
+		( :<shift expression>:
+		( :<additive expression>:
+		( :<multiplicative expression>:
+		( :signing-expression:
+				( :basic-operand:
+						NUMBER
+					|	'(' expression ')'
+				)
+			|	'+' basic-operand
+			|	'-' basic-operand
+		) + [ '*' | '/' ]
+		) + [ '+' | '-' ]
+		) + [ '<<' | '>>' ]
+		) + [ '<' | '>' | '<=' | '>=' ]
+		) + [ '==' | '!=' ]
+		) + [ '&' ]
+		) + [ '^' ]
+		) + [ '|' ]
+		) + [ '&&' ]
+		) + [ '||' ]
+		)
+	;
+
+%}
+
+
+[ Declarations Id='mathDecls' ]
+[ Lexer Id='mathLexer' ]
+[ CompilationInfo ClassName='MathParser1' NameSpace='Math.Parser1' Access='public' CodeDir='mathParser1' ]
+%parser mathParser1
+%{
+
+[ Start ]
+expression
+	:	<disjunction expression> 
+	;
+
+basic-operand
+	:	NUMBER 
+	|	'(' expression ')' 
+	;
+
+signing-expression
+	:	basic-operand 
+	|	'+' basic-operand 
+	|	'-' basic-operand 
+	;
+
+<multiplicative expression>
+	:	signing-expression 
+	|	<multiplicative expression> '*' signing-expression 
+	|	<multiplicative expression> '/' signing-expression 
+	;
+
+<additive expression>
+	:	<multiplicative expression> 
+	|	<additive expression> '+' <multiplicative expression> 
+	|	<additive expression> '-' <multiplicative expression> 
+	;
+
+<shift expression>
+	:	<additive expression> 
+	|	<shift expression> '<<' <additive expression> 
+	|	<shift expression> '>>' <additive expression> 
+	;
+
+<relational expression>
+	:	<shift expression> 
+	|	<relational expression> '<' <shift expression> 
+	|	<relational expression> '>' <shift expression> 
+	|	<relational expression> '<=' <shift expression> 
+	|	<relational expression> '>=' <shift expression> 
+	;
+
+<equality expression>
+	:	<relational expression> 
+	|	<equality expression> '==' <relational expression> 
+	|	<equality expression> '!=' <relational expression> 
+	;
+
+<and expression>
+	:	<equality expression> 
+	|	<and expression> '&' <equality expression> 
+	;
+
+<xor expression>
+	:	<and expression> 
+	|	<xor expression> '^' <and expression> 
+	;
+
+<or expression>
+	:	<xor expression> 
+	|	<or expression> '|' <xor expression> 
+	;
+
+<conjunction expression>
+	:	<or expression> 
+	|	<conjunction expression> '&&' <or expression> 
+	;
+
+<disjunction expression>
+	:	<conjunction expression> 
+	|	<disjunction expression> '||' <conjunction expression> 
+	;
+
+%}
+
+[ Declarations Id='mathDecls' ]
+[ Lexer Id='mathLexer' ]
+[ CompilationInfo ClassName='MathParser2' NameSpace='Math.Parser2' Access='public' CodeDir='mathParser2' ]
+%parser mathParser2
+%{
+
+[ Start ]
+expression
+	:
+		(
+			:signing-expression:
+			(
+				:basic-operand:
+					NUMBER
+				|	'(' expression ')'
+			)
+			|	'+' basic-operand
+			|	'-' basic-operand
+		)
+		+ [ '*' | '/' ]
+		+ [ '+' | '-' ]
+		+ [ '<<' | '>>' ]
+		+ [ '<' | '>' | '<=' | '>=' ]
+		+ [ '==' | '!=' ]
+		+ [ '&' ]
+		+ [ '^' ]
+		+ [ '|' ]
+		+ [ '&&' ]
+		+ [ '||' ]
+	;
+
+%}
+
+[ Declarations Id='mathDecls' ]
+[ Lexer Id='mathLexer' ]
+[ CompilationInfo ClassName='MathParser3' NameSpace='Math.Parser3' Access='public' CodeDir='mathParser3' ]
+%parser mathParser3
+%{
+
+[ Start ]
+<expression>
+	:	signing-expression 
+	|	<expression> '*'  signing-expression 
+	|	<expression> '/'  signing-expression 
+	|	<expression> '+'  signing-expression 
+	|	<expression> '-'  signing-expression 
+	|	<expression> '<<' signing-expression 
+	|	<expression> '>>' signing-expression 
+	|	<expression> '<'  signing-expression 
+	|	<expression> '>'  signing-expression 
+	|	<expression> '<=' signing-expression 
+	|	<expression> '>=' signing-expression 
+	|	<expression> '==' signing-expression 
+	|	<expression> '!=' signing-expression 
+	|	<expression> '&'  signing-expression 
+	|	<expression> '^'  signing-expression 
+	|	<expression> '|'  signing-expression 
+	|	<expression> '&&' signing-expression 
+	|	<expression> '||' signing-expression 
+	;
+
+basic-operand
+	:	NUMBER 
+	|	'(' <expression> ')' 
+	;
+
+signing-expression
+	:	basic-operand 
+	|	'+' basic-operand 
+	|	'-' basic-operand 
+	;
+
+%}

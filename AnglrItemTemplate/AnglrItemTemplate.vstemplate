@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>AnglrItemTemplate</Name>
+    <Description>File containing Anglr syntax rules</Description>
+    <Icon>AnglrItemTemplate.ico</Icon>
+    <TemplateID>39413083-c9bc-4218-b0f6-7f2a0aaa4406</TemplateID>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <DefaultName>Syntax.anglr</DefaultName>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>System</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem TargetFileName="$fileinputname$.anglr" ReplaceParameters="true">Syntax.anglr</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

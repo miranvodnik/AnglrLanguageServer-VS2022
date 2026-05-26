@@ -1,0 +1,1578 @@
+﻿@page
+@model ParserPartModel
+@{
+    ViewData ["Title"] = "Parser Part of Anglr File";
+    ViewData ["Content"] = "Parser part of Anglr file: definition of syntax rules, cardinality operators";
+}
+            <section id="parser-part">
+                <h1>Parser Part of Anglr File</h1>
+                <hr />
+                <h4>Introduction</h4>
+                <p>
+                    In this section, we specify the syntax rules for the syntax analyzer that we want to produce. The text that we will
+                    analyze with this syntax analyzer must comply with these rules. The descriptions in this section are at first glance
+                    a little confusing because things are describing themselves. However, they will also be shown with examples that will
+                    help you to understand content more easily.
+                </p>
+                <h4>Syntax</h4>
+                <p>
+                    The following are syntax rules that are used to create syntax rules for the syntax analyzer.
+                </p>
+                <hr />
+                <p id="rule-p-1">RULE P-1</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;parser part&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%parser&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;%{&#39;</span> <span class="rule-ref">&lt;anglr syntax rule list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%}&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-2">RULE P-2</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;anglr syntax rule list&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;anglr syntax rule&gt;</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-3">RULE P-3</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;anglr syntax rule&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;:&#39;</span> <span class="rule-ref">&lt;anglr syntax production list&gt;</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">|</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;{&#39;</span> <span class="rule-ref">&lt;anglr syntax rule list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-4">RULE P-4</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;anglr nested rule&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;anglr syntax production list name&gt;</span> <span class="reserved-word">?</span> <span class="rule-ref">&lt;anglr syntax production list&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-5">RULE P-5</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;anglr syntax production list name&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;:&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;:&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-6">RULE P-6</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;anglr syntax production list&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;anglr syntax production&gt;</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;|&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-7">RULE P-7</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;anglr syntax production&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;production name&gt;</span> <span class="reserved-word">?</span> <span class="rule-ref">&lt;name list&gt;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;%empty&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-8">RULE P-8</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;production name&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;&#64;&#64;&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-9">RULE P-9</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;name list&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;g name&gt;</span> <span class="reserved-word">-</span> <span class="def-separator">[</span> <span class="rule-ref">&lt;marker list&gt;</span> <span class="reserved-word">?</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p id="rule-p-10">RULE P-10</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;marker list&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;marker&gt;</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-11">RULE P-11</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;marker&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;&#64&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-12">RULE P-12</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;g name&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;name&gt;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">&lt;anglr nested rule&gt;</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">|</span> <span class="rule-ref">&lt;g name&gt;</span> <span class="rule-ref">&lt;cardinality delimiter&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-13">RULE P-13</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;name&gt;</span>
+    <span class="def-separator">:</span> <span class="identifier-name">&lt;any&gt;</span>
+    <span class="def-separator">|</span> <span class="identifier-name">&lt;cstring&gt;</span>
+    <span class="def-separator">|</span> <span class="identifier-name">&lt;identifier&gt;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-14">RULE P-14</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;cardinality delimiter&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;cardinality&gt;</span> <span class="rule-ref">&lt;delimiter&gt;</span> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-15">RULE P-15</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;cardinality&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;?&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;*&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;~+&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;~-&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;~*&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;~/&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;{&#39;</span> <span class="identifier-name">&lt;number&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;,&#39;</span> <span class="identifier-name">&lt;number&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p id="rule-p-16">RULE P-16</p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">&lt;delimiter&gt;</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;[&#39;</span> <span class="rule-ref">&lt;anglr nested rule&gt;</span> <span class="string-name">&#39;]&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <h4>Introductory Examples</h4>
+                <p>
+                    We will use these examples in many places where it will be necessary to clarify the syntax rules that we need to draw up syntax rules.
+                    Examples consist of several parser parts. All parts define equivalent syntax rules since they derive the same languages:
+                    a set of simple arithmetical expressions. These examples give us insight into almost all expressive possibilities of ANGLR language.
+                    The syntax rules are built so that each subsequent one is just a more compact version of the previous one. In this way, we gradually
+                    come from the initial, simple rules, written widely, to a more compact form that can be written in a single line.
+                </p>
+                <p>
+                    Example 1:
+                </p>
+                <div class="panel border bg-light" id="example-001">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of parser for simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser1</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    Example 2:
+                </p>
+                <div class="panel border bg-light" id="example-002">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;compact definition of parser for simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;using iterators&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser2</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">|</span> <span class="rule-ref">unary-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    Example 3:
+                </p>
+                <div class="panel border bg-light" id="example-003">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;more compact definition of parser for simple&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;arithmetic expressions using iterators&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser3</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    Example 4:
+                </p>
+                <div class="panel border bg-light" id="example-004">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;compact definition of parser for simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;using iterators and nested syntax rules&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser4</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">additive-expression</span> <span class="def-separator">:</span>
+            <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">multiplicative-expression</span> <span class="def-separator">:</span>
+                <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">unary-expression</span> <span class="def-separator">:</span>
+                    <span class="identifier-name">NUMBER</span>
+                <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+                <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+            <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">)</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    Example 5:
+                </p>
+                <div class="panel border bg-light" id="example-005">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;compact definition of parser for simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;using iterators and anonymous nested syntax rules&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser5</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span>
+            <span class="def-separator">(</span>
+                <span class="def-separator">(</span>
+                    <span class="identifier-name">NUMBER</span>
+                <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+                <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span>
+            <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+        <span class="def-separator">)</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    Example 6:
+                </p>
+                <div class="panel border bg-light" id="example-006">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;single line compact definition of parser for simple arithmetic&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;expressions using iterators and anonymous nested syntax rules.&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Syntax rules are nested to the depth of two. Every nested rule&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;is iterated with single iterator&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">CodeDir</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathParser6&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser6</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span><span class="def-separator">(</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span> <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    Example 7:
+                </p>
+                <div class="panel border bg-light" id="example-006">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;single line compact definition of parser for simple arithmetic&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;expressions using iterators and single anonymous nested syntax&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;rule, which is iterated twice.&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name">CodeDir</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathParser7&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name">mathParser7</span>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="reserved-word">?</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span> <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <hr />
+                <h4>Discussion</h4>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-1 - Structure of Parser Part</h6>
+                <p>
+                    Rule <a href="#rule-p-1">RULE P-1</a> defines the top structure of the the parser part. This part is composed in a similar way to all other parts of anglr file:
+                </p>
+                <ul>
+                    <li>
+                        the part is preceded by possibly empty attribute list
+                    </li>
+                    <li>
+                        followed by reserved word %parser and an identifier representing parser part name
+                    </li>
+                    <li>
+                        between part braces %{ and %} is located content of the parser part - list of syntax rules, whic can also be empty.
+                    </li>
+                </ul>
+                <p>
+                    Following this description, we can observe that the structure of the parser part from the example <a href="#example-001">above</a> can be laid down in the following way:
+                </p>
+                <ul>
+                    <li>
+                        parser part is preceded with this attribute list:
+                        <div class="panel border bg-light">
+                            <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;definition of parser for simple arithmetic expressions&#39;</span><span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Declarations</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathDecls&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">Lexer</span> <span class="attribute-val-name">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;mathLexer&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;MathParser&#39;</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Math.Parser&#39;</span> <span class="attribute-val-name">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span><span class="attribute-brace">]</span>
+                            </pre>
+                        </div>
+                    </li>
+                    <li>
+                        its name is:
+                        <div class="panel border bg-light">
+                            <pre>
+<span class="part-token">%parser</span> <span class="part-name">mathParser1</span>
+                            </pre>
+                        </div>
+                    </li>
+                    <li>
+                        part's content is equal to:
+                        <div class="panel border bg-light" id="example-007">
+                            <pre>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                            </pre>
+                        </div>
+                    </li>
+                </ul>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-2 - List of Syntax Rules</h6>
+                <p>
+                    Rule <a href="#rule-p-2">RULE P-2</a> defines the list of syntax rules: it is a nonempty sequence of syntax rules with no special separators between them.
+                    Everything between part delimiters %{ and %} is a list of syntax rules. We need to understand this in a broader sense because there are comments between the rules
+                    and rules can be grouped as we will see in the discussion of the next rule. A simple example of a syntax rule list is specified in the discussion of the previous rule:
+                </p>
+                        <div class="panel border bg-light" id="example-007">
+                            <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+                            </pre>
+                        </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-3 - Syntax Rule and Block of Syntax Rules</h6>
+                <p>
+                    Rule <a href="#rule-p-3">RULE P-3</a> defines two kinds of syntax rules:
+                </p>
+                <ul>
+                    <li>
+                        the first production<br />
+                        <div class="panel border bg-light">
+                            <pre>
+    <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;:&#39;</span> <span class="rule-ref">&lt;anglr syntax production list&gt;</span> <span class="string-name">&#39;;&#39;</span>
+                            </pre>
+                        </div>
+                        defines the outer structure of the syntax rule
+                        <ul>
+                            <li>
+                                it is preceded by possibly an empty attribute list
+                            </li>
+                            <li>
+                                next comes the syntax rule name
+                            </li>
+                            <li>
+                                between colon and semicolon characters is a list of productions for a particular syntax rule
+                            </li>
+                        </ul>
+                        <p>
+                            <span class="identifier-name">&lt;identifier&gt;</span> representing syntax rule name is actually the definition of a non-terminal symbol. Non-terminal symbols cannot
+                            be declared another way, although they should be defined multiple times, specifying every production of syntax rule with a set of equally named syntax rules.
+                            For example:
+                        </p>
+                        <div class="panel border bg-light" id="example-007">
+                            <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                            </pre>
+                        </div>
+                        <ul>
+                            <li>
+                                syntax rule has no attribute list
+                            </li>
+                            <li>
+                                name of syntax rule is <span class="rule-name">additive-expression</span>
+                            </li>
+                            <li>
+                                it has the following list of productions:
+                                <div class="panel border bg-light" id="example-007">
+                                    <pre>
+      <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+                                    </pre>
+                                </div>
+                                note that leading colon and trailing semicolon characters does not belong to the list of productions
+                            </li>
+                        </ul>
+                        <p>
+                            Syntax rule <span class="rule-name">additive-expression</span> should also be written in the following way:
+                        </p>
+                        <div class="panel border bg-light" id="example-007">
+                            <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                            </pre>
+                        </div>
+                        <p>
+                            In general: every definition of syntax rule should be spread across the anglr file (in fact: across the single parser part)
+                        </p>
+                    </li>
+                    <li>
+                        The second production<br />
+                        <div class="panel border bg-light">
+                            <pre>
+    <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;{&#39;</span> <span class="rule-ref">&lt;anglr syntax rule list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+                            </pre>
+                        </div>
+                        is something completely different: it is the definition of group of syntax rules. Structure of syntax rule group is very similar to structure of parser part itself:
+                        <ul>
+                            <li>
+                                it is preceded by possibly empty attribute list
+                            </li>
+                            <li>
+                                it has name although without keyword %parser
+                            </li>
+                            <li>
+                                content of group is equal to that of parser part: possibly empty list of syntax rules (and other, nested groups). The difference is in group braces which are { and }
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <p>
+                    Syntax rule groups can be introduced very easily. One can just select any number of syntax rules, enclose them with curly braces preceded by group name and possibly empty attribute list.
+                    For example. Let's take parser part <a href="#example-007">above</a>. Selecting rules additive-expression and multiplicative-expression, enclosing them with curly braces and giving them a name,
+                    we get new group as shown below:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="group-name">Expressions</span>
+<span class="def-separator">{</span>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">;</span>
+<span class="def-separator">}</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    It should be noted here, that with introduction of groups we don't change the sysntax of the language. We just introduce another level of organization of anglr file. Since groups could be
+                    nested we introduce a hierarchicaly organized syntax rules in the anglr file.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-4 - Nested Syntax Rule</h6>
+                <p>
+                    Rule <a href="#rule-p-4">RULE P-4</a> introduces the concept of nested syntax rule. The syntax rules that we have seen in previous examples are so-called standalone syntax rules. Nested rules are
+                    very similar to standalone rules, except that they are always defined inside other rules. They have slightly different syntax:
+                </p>
+                <ul>
+                    <li>
+                        they need not to have a name. Name is mandatory in standalone rules.
+                    </li>
+                    <li>
+                        they hay no leading ':' and trailing ';'. These characters are mandatory in standalone rules.
+                    </li>
+                </ul>
+                <p>
+                    But they have the same body composed of productions separated by '|' character. More about nested syntax rules will be told later in the discussion of syntax rule structure and cardinality operators.
+                    Using nested rules, parser part <a href="#example-007">above</a> can be writen in this way:
+                </p>
+                <div class="panel border bg-light" id="example-008">
+                    <pre>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="def-separator">(</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">)</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">(</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">)</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    In the above example we introduced two nested rules:
+                </p>
+                <ul>
+                    <li>
+                        <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span>
+                    </li>
+                    and
+                    <li>
+                        <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span>
+                    </li>
+                </ul>
+                <p>
+                    Rounded parentheses ( and ) are operators which introduce nested syntax rule in the body of syntax rule production.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-5 - Nested Syntax Rule Name</h6>
+                <p>
+                    Rule <a href="#rule-p-5">RULE P-5</a> defines the name of nested syntax rule. It is an identifier enclosed between two ':' characters.
+                </p>
+                <p>
+                    Nested rules from the <a href="#example-008">previous example</a> are unnamed. In the simplest case, when nested syntax rule consists of only one production and when
+                    this production consists of one symbol (terminal or non-terminal), this is not a problem. In more complex cases like those showed above, anglr compiler will generate
+                    names for those nested rules. If we will reference source code generated by anglr compiler for these productions, it is always better to give te name to the nested
+                    syntax rules. With named nested rules, the example <a href="#example-008">above</a>, should be rewriten in this way:
+                </p>
+                <div class="panel border bg-light" id="example-009">
+                    <pre>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">add-operators</span> <span class="def-separator">:</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">)</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">mul-operators</span> <span class="def-separator">:</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">)</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    We have now introduced two named nested rules:
+                </p>
+                <ul>
+                    <li>
+                        <span class="def-separator">:</span> <span class="rule-name">add-operators</span> <span class="def-separator">:</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span>
+                    </li>
+                    and
+                    <li>
+                        <span class="def-separator">:</span> <span class="rule-name">mul-operators</span> <span class="def-separator">:</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span>
+                    </li>
+                </ul>
+                <p>
+                    They are equivalent to these standalone rules:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">add-operators</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;+&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">mul-operators</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;*&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    This is always the case: named nested rules can be easily transformed in standalone form and vice-versa. Using standalone rules, example <a href="#example-009">above</a> can be rewriten in this way:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="rule-ref">add-operators</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="rule-ref">mul-operators</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">add-operators</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;+&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">mul-operators</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;*&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-6 - List of Produtions</h6>
+                <p>
+                    Rule <a href="#rule-p-6">RULE P-6</a> defines the structure of syntax rule body, the list of syntax rule productions. It is a nonempty sequence of productions, delimited by '|' character.
+                    Given any syntax rule, we can very easily extract production list from it. Just eliminate syntax rule name and leading : and trailing ; and the remainder is list of syntax rule productions.
+                    If we again look at <a href="#example-007">this</a> example, we can observe these production lists:
+                </p>
+                <ul>
+                    <li>
+                        <span class="rule-name">expression</span> has production list composed of only one production:
+                        <div class="panel border bg-light">
+                            <pre>
+      <span class="rule-ref">additive-expression</span>
+                            </pre>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="rule-name">additive-expression</span> has production list with three productions:
+                        <div class="panel border bg-light">
+                            <pre>
+      <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+                            </pre>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="rule-name">multiplicative-expression</span> has also three productions:
+                        <div class="panel border bg-light">
+                            <pre>
+      <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">unary-expression</span>
+                            </pre>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="rule-name">unary-expression</span> has production list with two productions
+                        <div class="panel border bg-light">
+                            <pre>
+      <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+                            </pre>
+                        </div>
+                    </li>
+                </ul>
+                <p>
+                    It should be noted here, that format of syntax rule is not important. Specifically: it is not necessary to write each production of syntax rule in its own line. It is perfectly well
+                    to write the whole syntax rule in single line or whatever form one like. For example: syntax rules for the example <a href="#example-007">above</a> should be writen in the following way:
+                </p>
+                <div class="panel border bg-light" id="example-007">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span> <span class="rule-name">expression</span> <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span> <span class="def-separator">;</span>
+<span class="rule-name">additive-expression</span> <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">|</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span> <span class="def-separator">;</span>
+<span class="rule-name">multiplicative-expression</span> <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span> <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">unary-expression</span> <span class="def-separator">|</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">unary-expression</span> <span class="def-separator">;</span>
+<span class="rule-name">unary-expression</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-7 - Structure of Production</h6>
+                <p>
+                    Rule <a href="#rule-p-7">RULE P-7</a> defines the overall structure of syntax rule production. There are two kinds of productions
+                </p>
+                <ul>
+                    <li>
+                        Nonempty production, defined with first production of syntax rule <a href="#rule-p-7">RULE P-7</a>:<br />
+                        <div class="panel border bg-light">
+                            <pre>
+    <span class="rule-ref">&lt;production name&gt;</span> <span class="reserved-word">?</span> <span class="rule-ref">&lt;name list&gt;</span>
+                            </pre>
+                        </div>
+                        Nonempty production is composed on the following way:
+                        <ul>
+                            <li>
+                                it can be named, althoug not mandatory.
+                            </li>
+                            <li>
+                                name (or nothing if production has no name) is followed by non-empty list of mostly terminal and non-terminal symbols, but there can also be other elements in this list.
+                                Nature of elements in this list is explained later.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        and empty production, defined with second production of syntax rule <a href="#rule-p-7">RULE P-7</a>:<br />
+                        <div class="panel border bg-light">
+                            <pre>
+    <span class="string-name">&#39;%empty&#39;</span>
+                            </pre>
+                        </div>
+                        <p>
+                            Keyword %empty can be used only in this context and labels production which always derives an empty string.
+                        </p>
+                    </li>
+                </ul>
+                <p>
+                    Syntax rules, which contain empty productions, can derive empty trings. That's why also non-empty productions can derive empty strings if
+                    they are composed by non-terminal symbols which represent syntax rules which derive empty strings.
+                </p>
+                <p>
+                    If we again look at the example <a href="#example-007">above</a>, we can see that syntax rules of this example contain these productions:
+                </p>
+                <ul>
+                    <li>
+                        <span class="rule-name">expression</span> has only one production:
+                        <ul>
+                            <li>
+                                <span class="rule-ref">additive-expression</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="rule-name">additive-expression</span> has three productions:
+                        <ul>
+                            <li>
+                                <span class="rule-ref">multiplicative-expression</span>
+                            </li>
+                            <li>
+                                <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+                            </li>
+                            <li>
+                                <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="rule-name">multiplicative-expression</span> has also three productions:
+                        <ul>
+                            <li>
+                                <span class="rule-ref">unary-expression</span>
+                            </li>
+                            <li>
+                                <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">unary-expression</span>
+                            </li>
+                            <li>
+                                <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">unary-expression</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="rule-name">unary-expression</span> has two productions:
+                        <ul>
+                            <li>
+                                <span class="identifier-name">NUMBER</span>
+                            </li>
+                            <li>
+                                <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <p>
+                    These productions are very simple, since they are composed solely of terminal and non-terminal symbols. But we will see later in the discussion of parser part, that there are
+                    also other consituent elements of productions, which are established with the introduction of nested rules and cardinality operators. However, anglr compiler always maps
+                    these elements in basic elements - terminal and non-terminal symbols.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-8 - Production Name</h6>
+                <p>
+                    Rule <a href="#rule-p-8">RULE P-8</a> defines the structure of production name. It is an identifier preceded by double at sign '&#64'.
+                </p>
+                <p>
+                    We can give names to some productions in <a href="#example-007">this example</a> and we get:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="part-brace">%{</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name">expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">additive-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="production-name">&#64;&#64;</span><span class="production-name">addition</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="production-name">&#64;&#64;</span><span class="production-name">subtraction</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="production-name">&#64;&#64;</span><span class="production-name">multiplication</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="production-name">&#64;&#64;</span><span class="production-name">division</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">unary-expression</span>
+    <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    Production names does not change the syntax of the rule. Production names must vary within particular syntax rule, but they can be repeated in other rules.
+                </p>
+                <p>
+                    Following is an example of illegal use of production names, because productions within the same syntax rule should not have same names:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="production-name">&#64;&#64;</span><span class="production-name">arithmetic-expression</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="production-name">&#64;&#64;</span><span class="production-name">arithmetic-expression</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    Also this example has illegal use of production names, because productions within the same syntax rule should not have same names, regardless that these rules are
+                    specified with two distinct expressions:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="production-name">&#64;&#64;</span><span class="production-name">arithmetic-expression</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="production-name">&#64;&#64;</span><span class="production-name">arithmetic-expression</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    But this example is perfectly OK, since productions with same names are used in different syntax rules:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="production-name">&#64;&#64;</span><span class="production-name">name-one</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="production-name">&#64;&#64;</span><span class="production-name">name-two</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name">multiplicative-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="production-name">&#64;&#64;</span><span class="production-name">name-one</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;*&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">|</span> <span class="production-name">&#64;&#64;</span><span class="production-name">name-two</span> <span class="rule-ref">multiplicative-expression</span> <span class="string-name">&#39;/&#39;</span> <span class="rule-ref">unary-expression</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-9 - List of Production Building Blocks</h6>
+                <p>
+                    Rule <a href="#rule-p-9">RULE P-9</a> defines the structure of syntax rule production <span class="rule-ref">&lt;name list&gt;</span>. It represents a production without its name, of course,
+                    if that name even exists.It is nonempty sequence of basic building blocks surrounded with (possibly empty) list of <a href="#positional_markers">positional markers</a>. In the most simple case these
+                    building blocks are terminal (together with textual representation) and non-terminal symbols. In more advanced scenarios these building blocks should also be nested syntax rules or these same
+                    basic building blocks with cardinality operators. Before anGLR compiler translates these rules, it converts them to a basic format that contains only terminal and non-terminal symbols. Nested
+                    rules are replaced by non-terminal symbols (nested rule names), cardinality operators shall be converted according to rules specifying how they are represented in the basic form containig only
+                    terminal and nonterminal symbols.
+                </p>
+                <p>
+                    Here is an example of production with very simple structure:
+                    <div class="panel border bg-light">
+                        <pre>
+    <span class="production-name">&#64;&#64;</span><span class="production-name">addition</span> <span class="rule-ref">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+                        </pre>
+                    </div>
+                    It contains only terminal and non-terminal symbols (note that production name <span class="production-name">&#64;&#64;</span><span class="production-name">addition</span>
+                    is not part of <span class="rule-ref">&lt;name list&gt;</span>):
+                </p>
+                <ul>
+                    <li>
+                        non-terminal symbol <span class="rule-ref">additive-expression</span>
+                    </li>
+                    <li>
+                        character string representation of terminal symbol <span class="string-name">&#39;+&#39;</span>
+                    </li>
+                    <li>
+                        and another non-terminal symbol <span class="rule-ref">multiplicative-expression</span><br />
+                    </li>
+                </ul>
+                <p>
+                    And here is another example of production building block list, which contains also positional markers:
+                    <div class="panel border bg-light">
+                        <pre>
+    <span class="production-name">&#64;&#64;</span><span class="production-name">field</span> <span class="rule-ref">valuefieldreference-token</span> <span class="rule-ref">Type</span> <span class="identifier-name">UNIQUE</span> <span class="reserved-word">?</span> <span class="marker-name">&#64;</span><span class="marker-name">push-governor</span> <span class="rule-ref">ValueOptionalitySpec</span> <span class="reserved-word">?</span> <span class="marker-name">&#64;</span><span class="marker-name">pop-governor</span>
+                        </pre>
+                    </div>
+                    It contains these building blocks:
+                    <ul>
+                        <li>
+                            nontermial symbol <span class="rule-ref">valuefieldreference-token</span>
+                        </li>
+                        <li>
+                            nonterminal symbol <span class="rule-ref">Type</span>
+                        </li>
+                        <li>
+                            <a href="#cardinality-expression">cardinality expression</a> <span class="identifier-name">UNIQUE</span> <span class="reserved-word">?</span>
+                        </li>
+                        <li>
+                            and another <a href="#cardinality-expression">cardinality expression</a> <span class="rule-ref">ValueOptionalitySpec</span> <span class="reserved-word">?</span>
+                        </li>
+                    </ul>
+                    It contains following positional markers:
+                    <ul>
+                        <li>
+                            <span class="marker-name">&#64;</span><span class="marker-name">push-governor</span>
+                        </li>
+                        <li>
+                            <span class="marker-name">&#64;</span><span class="marker-name">pop-governor</span>
+                        </li>
+                    </ul>
+                    Note that positional markers does not change the meaning of syntax rule production.
+                </p>
+                <p>
+                    This production is more advanced:<br />
+                    <div class="panel border bg-light">
+                        <pre>
+    <span class="rule-ref">additive-expression</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">add-operators</span> <span class="def-separator">:</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">)</span> <span class="rule-ref">multiplicative-expression</span>
+                        </pre>
+                    </div>
+                    It is also composed of three basic building blocks:
+                </p>
+                <ul>
+                    <li>
+                        non-terminal symbol <span class="rule-ref">additive-expression</span>
+                    </li>
+                    <li>
+                        nested syntax rule <span class="def-separator">:</span> <span class="rule-name">add-operators</span> <span class="def-separator">:</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span>
+                        enclosed within rounded braces ( and ).
+                    </li>
+                    <li>
+                        and another non-terminal symbol <span class="rule-ref">multiplicative-expression</span><br />
+                    </li>
+                </ul>
+                <p>
+                    Here is an example of even more advanced production:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+    <span class="def-separator">(</span><span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">number</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">)</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&lt;&lt;&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&gt;&gt;&#39;</span> <span class="def-separator">]</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+                    </pre>
+                </div>
+                <p>
+                    It is composed of only one building block: series of three cardinality operators applied to nested syntax rule (which is also composed of nested rule and simple prodution):
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+    <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">number</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">)</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> 
+                    </pre>
+                </div>
+                <p>
+                    It is an interesting example of how to introduce arithmetic operators priority:
+                </p>
+                <ul>
+                    <li>
+                        shift operators &lt;&lt; and &gt;&gt; have highest priority
+                    </li>
+                    <li>
+                        multiplication and division operators ( * and / respectively) have lower priority
+                    </li>
+                    <li>
+                        and finally addition and subtraction ( + and - respectively) have the lowest priority
+                    </li>
+                </ul>
+                <hr />
+                <h6 style="font-weight:bold" id="positional_markers">RULE P-10 - List of Positional Markers</h6>
+                <p>
+                    Rule <a href="#rule-p-10">RULE P-10</a> defines list of positional markers
+                </p>
+                <hr />
+                <h6 style="font-weight:bold" id="positional_markers">RULE P-11 - Positional Marker</h6>
+                <p>
+                    Rule <a href="#rule-p-11">RULE P-11</a> defines positional marker within syntax rule production. They are zero based indexes of basic building blocks of production. Their names
+                    must vary within particular production, but may be repeated in other productions also in the productions within the same syntax rule. Production in which the marker appears must be named.
+                </p>
+                <p>
+                    Here is an example of positional markers usage:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="rule-name">VariableTypeValueFieldSpec</span>
+    <span class="def-separator">:</span> <span class="production-name">&#64;&#64;</span><span class="production-name">field</span> <span class="rule-ref">valuefieldreference-token</span> <span class="rule-ref">FieldName</span> <span class="marker-name">&#64;</span><span class="marker-name">push-governor</span> <span class="rule-ref">ValueOptionalitySpec</span> <span class="reserved-word">?</span> <span class="marker-name">&#64;</span><span class="marker-name">pop-governor</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    In the example above two positional markers are defined:
+                </p>
+                <ul>
+                    <li>
+                        positional marker <span class="marker-name">&#64;</span><span class="marker-name">push-governor</span> surrounds <span class="rule-ref">FieldName</span> from the right side
+                        and <span class="rule-ref">ValueOptionalitySpec</span> <span class="reserved-word">?</span> from the left.
+                    </li>
+                    <li>
+                        positional marker <span class="marker-name">&#64;</span><span class="marker-name">pop-governor</span> surrounds <span class="rule-ref">ValueOptionalitySpec</span> <span class="reserved-word">?</span>
+                        from the right.
+                    </li>
+                </ul>
+                <p>
+                    From above example we can see that it is not easy to see which building block is surronded by which positional marker. This is always about interpretation.
+                    Whoever introduces markers knows what they're surrounding and why.
+                </p>
+                <p>
+                    Positional markers have no special meaning in syntax rules. The syntax rule is always the same, no matter how many positional markers it contains. The markers are connected to the generated code.
+                    The programmer introduces them to better address the semantics of that part of the source code governed by the particular syntax rule.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-12 - Kinds of Production Building Blocks</h6>
+                <p>
+                    Rule <a href="#rule-p-12">RULE P-12</a> defines different kinds of 'generalized' name - basic building block of production. It can be one of these:
+                </p>
+                <ul>
+                    <li>
+                        <span class="rule-ref">&lt;name&gt;</span>, like an identifier (representing terminal and non-terminal symbols) or character string (representing textual representations of terminal symbols).
+                    </li>
+                    <li>
+                        <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">&lt;anglr nested rule&gt;</span> <span class="string-name">&#39;)&#39;</span>, nested syntax rule enclosed with round brackets ( and ).
+                    </li>
+                    <li id="cardinality-expression">
+                        <span class="rule-ref">&lt;g name&gt;</span> <span class="rule-ref">&lt;cardinality delimiter&gt;</span>, cardinality expressions: anything above appended with unlimited number of cardinality operators.
+                    </li>
+                </ul>
+                <div class="alert alert-primary" role="alert">
+                    <span><img src="~/images/icons8-info-squared-48.png" /></span>
+                    Note: <span class="rule-ref">&lt;name&gt;</span>s are sole building blocks used in canonical forms, other building blocks (nested rules and cardinality expressions) are used
+                    to construct extended forms of syntax rules.
+                </div>
+                <p>
+                    To identify building blocks of production, follow these steps:
+                    <ul>
+                        <li>
+                            first identify end ignore all positional markers and produciton name
+                        </li>
+                        <li>
+                            then identify all outermost nested syntax rules. To identify it, follow this procedure:
+                            <ul>
+                                <li>
+                                    start counting with count = 0
+                                </li>
+                                <li>
+                                    whenever you find opend round bracket, increment count: count = count + 1
+                                </li>
+                                <li>
+                                    whenever you find closed round bracket, decrement count: count = count - 1. If count reaches zero, you have found the outermost nested syntax rule
+                                </li>
+                            </ul>
+                            Repeat this procedure as many times as needed. Don't count rounded brackets in character strings.
+                        </li>
+                        <li>
+                            next identify all terminal and non-terminal symbols and also character string representations of terminal symbols which are not part of nested syntax rules
+                            identified in previous step.
+                        </li>
+                        <li>
+                            all cardinality operators that appear to the right of some element identified above are part of that element and change the nature of that element: it becomes cardinality expression.
+                        </li>
+                    </ul>
+                </p>
+                <p>
+                    Let's take an example:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+    <span class="production-name">&#64;&#64;</span><span class="production-name">field</span> <span class="rule-ref">valuefieldreference-token</span> <span class="rule-ref">Type</span> <span class="identifier-name">UNIQUE</span> <span class="reserved-word">?</span> <span class="marker-name">&#64;</span><span class="marker-name">push-governor</span> <span class="rule-ref">ValueOptionalitySpec</span> <span class="reserved-word">?</span> <span class="marker-name">&#64;</span><span class="marker-name">pop-governor</span>
+                    </pre>
+                </div>
+                <p>
+                    If we ignore production name and positional markers, we get:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+    <span class="rule-ref">valuefieldreference-token</span> <span class="rule-ref">Type</span> <span class="identifier-name">UNIQUE</span> <span class="reserved-word">?</span> <span class="rule-ref">ValueOptionalitySpec</span> <span class="reserved-word">?</span>
+                    </pre>
+                </div>
+                <p>
+                    We can easily see that production contains the following terminal and nonterminal symbols:
+                    <ul>
+                        <li>
+                            <span class="rule-ref">valuefieldreference-token</span>
+                        </li>
+                        <li>
+                            <span class="rule-ref">Type</span>
+                        </li>
+                        <li>
+                            <span class="identifier-name">UNIQUE</span>
+                        </li>
+                        <li>
+                            <span class="rule-ref">ValueOptionalitySpec</span>
+                        </li>
+                    </ul>
+                    Two of them, <span class="identifier-name">UNIQUE</span> and <span class="rule-ref">ValueOptionalitySpec</span>, have cardinality operators to the right of them, so that we
+                    can conclude, that production above has the following building blocks:
+                    <ul>
+                        <li>
+                            non-terminal symbol <span class="rule-ref">valuefieldreference-token</span>
+                        </li>
+                        <li>
+                            non-terminal symbol <span class="rule-ref">Type</span>
+                        </li>
+                        <li>
+                            cardinality expression <span class="identifier-name">UNIQUE</span> <span class="reserved-word">?</span>
+                        </li>
+                        <li>
+                            and another cardinality expression <span class="rule-ref">ValueOptionalitySpec</span> <span class="reserved-word">?</span>
+                        </li>
+                    </ul>
+                    <div class="alert alert-primary" role="alert">
+                        <span><img src="~/images/icons8-info-squared-48.png" /></span>
+                        Note: <span class="rule-ref">UNIQUE</span> and <span class="rule-ref">ValueOptionalitySpec</span> are not building blocks of production from above example. Cardinality
+                        expressions containing them are production's building blocks. This is a very important fact that we must take into account when using the source code generated by the ANGLR compiler.
+                    </div>
+                </p>
+                <p>
+                    Now, take a look at the following example again:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+    <span class="def-separator">(</span><span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">number</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">)</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&lt;&lt;&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&gt;&gt;&#39;</span> <span class="def-separator">]</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+                    </pre>
+                </div>
+                <p>
+                    Following instructions for identification of nested syntax rule, we find the following facts:
+                    <ul>
+                        <li>
+                            <span class="def-separator">(</span><span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">number</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">)</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span>
+                            is the outermost nested syntax rule
+                        </li>
+                        <li>
+                            <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&lt;&lt;&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&gt;&gt;&#39;</span> <span class="def-separator">]</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+                            is the series of cardinality operators
+                        </li>
+                    </ul>
+                    We can conclude, that production consists of one building block - cardinality expression built of above nested syntax rule and series of cardinality operators.
+                </p>
+                <p>
+                    Let's write the above example in sligtly different but equivalent way:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+    <span class="def-separator">(</span><span class="def-separator">(</span><span class="def-separator">(</span><span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">number</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">)</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&lt;&lt;&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&gt;&gt;&#39;</span> <span class="def-separator">]</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+                    </pre>
+                </div>
+                <p>
+                    Now we have the following partition of production:
+                    <ul>
+                        <li>
+                            <span class="def-separator">(</span><span class="def-separator">(</span><span class="def-separator">(</span><span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">number</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">)</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&lt;&lt;&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&gt;&gt;&#39;</span> <span class="def-separator">]</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span> <span class="def-separator">)</span>
+                        </li>
+                        <li>
+                            <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+                        </li>
+                    </ul>
+                </p>
+                <p>
+                    The second example is a better way to spell a syntax rule. Anglr compiler will silently translate the first form in the second one. Nevertheless, either examples have the same drawbacks.
+                    They introduce anonymous nested rules. Although the compiler will generate their names, the problem is that we don't know in advance what they are. It may also happen that the compiler will
+                    generate different names if we change the contents of the anglr file. Therefore, stick to the following advice: don't use anonymous nested syntax rules, give them names, like in the following example:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+    <span class="def-separator">:</span> <span class="rule-name">additive-expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">multiplicative-expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">shift-expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">unary-expression</span> <span class="def-separator">:</span> <span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">number</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">)</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;&lt;&lt;&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;&gt;&gt;&#39;</span> <span class="def-separator">]</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+                    </pre>
+                </div>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-13 - Basic Building Block of Production</h6>
+                <p>
+                    Rule <a href="#rule-p-13">RULE P-13</a> defines <span class="rule-ref">&lt;name&gt;</span>, the basic building block of any production. It should be:
+                </p>
+                <ul>
+                    <li>
+                        <span class="rule-ref">&lt;any&gt;</span>: this terminal symbol has no textual representation and cannot be produced by lexical analyzer
+                    </li>
+                    <li>
+                        <span class="rule-ref">&lt;string&gt;</span>: textual representation of any terminal symbol, being defined or not
+                    </li>
+                    <li>
+                        <span class="rule-ref">&lt;identifier&gt;</span>: identifier representing terminal or non-terminal symbols. All of them must be defined
+                    </li>
+                </ul>
+                <p>
+                    The compiler will convert every syntax rule, no matter how many nesting rules it contains, no matter how deep these rules nest, no matter how many
+                    cardinal expressions they contain, into a format made up only of terminal and non-terminal symbols. Terminal symbols can be also represented by
+                    textual representations if they have one, but this does not change things, because internaly they are identical to terminal symbols itself.
+                </p>
+                <p>
+                    Let's examine this syntax rule:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+    <span class="def-separator">(</span><span class="def-separator">(</span> <span class="def-separator">:</span> <span class="rule-name">number</span> <span class="def-separator">:</span> <span class="identifier-name">NUMBER</span> <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="identifier-name">number</span> <span class="def-separator">)</span> <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <span class="rule-ref">expression</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;*&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;/&#39;</span> <span class="def-separator">]</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+                    </pre>
+                </div>
+                <p>
+                    Anglr compiler will translate it in this form before generating code:
+                </p>
+                <div class="panel border bg-light">
+                    <pre>
+expression
+	:	&lt;generated-rule-2 set&gt; 
+	|	expression '-' &lt;generated-rule-2 set&gt; 
+	|	expression '+' &lt;generated-rule-2 set&gt; 
+	;
+
+&lt;generated-rule-2 set&gt;
+	:	&lt;generated-rule-2&gt; 
+	|	&lt;generated-rule-2 set&gt; '/' &lt;generated-rule-2&gt; 
+	|	&lt;generated-rule-2 set&gt; '*' &lt;generated-rule-2&gt; 
+	;
+
+&lt;generated-rule-2&gt;
+	:	number 
+	|	'(' expression ')' 
+	;
+
+number
+	:	NUMBER 
+	|	'+' number 
+	|	'-' number 
+	;
+                    </pre>
+                </div>
+                <p>
+                    Above syntax rules contain only terminal and nonterminal symbols.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-14 - Cardinality of Production Building Block</h6>
+                <p>
+                    Rule <a href="#rule-p-14">RULE P-14</a> defines cardinality operators and delimiters, which should be used to form strings of <span class="rule-ref">&lt;name&gt;</span>s.
+                    Cardinality operators always operate on building blocks of productions, making them cardinality expressions, which are also building blocks of productions. Cardinality
+                    operators are used to express specific kinds of recursive syntax rules in much compact form. Use of cardinality operators is higly encouraged. Syntax rules which use
+                    cardinality operators are shorter, more understandable, the generated code is usually faster.
+                </p>
+                <p>
+                    Cardinality is composed of two parts:
+                    <ul>
+                        <li>
+                            cardinality operator
+                        </li>
+                        <li>
+                            non-mandatory delimiter
+                        </li>
+                    </ul>
+                    Simple example of cardinality is the following:
+                    <div class="panel border bg-light">
+                        <pre>
+<span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;|&#39;</span> <span class="def-separator">]</span>
+                        </pre>
+                    </div>
+                    It is composed of:
+                    <ul>
+                        <li>
+                            cardinality operator <span class="reserved-word">+</span>
+                        </li>
+                        <li>
+                            and delimiter <span class="def-separator">[</span> <span class="string-name">&#39;|&#39;</span> <span class="def-separator">]</span>
+                        </li>
+                    </ul>
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-15 - Cardinality Operators</h6>
+                <p>
+                    Rule <a href="#rule-p-15">RULE P-15</a> defines cardinality operators.  They can be:
+                </p>
+                <ul>
+                    <li>
+                        <span class="string-name">&#39;?&#39;</span>: 'general' name may or may not appear in syntax rule production. 
+                    </li>
+                    <li>
+                        <span class="string-name">&#39;+&#39;</span> and <span class="string-name">&#39;-&#39;</span>: 'general' name should be repeated at least one time.
+                    </li>
+                    <li>
+                        <span class="string-name">&#39;*&#39;</span> and <span class="string-name">&#39;/&#39;</span>: 'general' name should be repeated any number of times including zero.
+                    </li>
+                </ul>
+                <p>
+                    Above operators are discussed in detail in the <a href="~/Language/AnglrLanguage/#anglr-operators">introductory section</a> of this web page, since we needed them to explain the presented topics.
+                    However, the definitions set out in that section apply only to simple cases, with no delimiters or very simple one which consist of only one terminal symbol or it's charater representation.
+                    In the discussion of syntax rule P-15 will be explained general rules, which will cover general structure of cardinality delimiters.
+                </p>
+                <hr />
+                <h6 style="font-weight:bold">RULE P-16 - Delimiter</h6>
+                <p>
+                    Rule <a href="#rule-p-16">RULE P-16</a> defines the structure of delimiters. Delimiters are usually simple character strings like ',', '-', '|' etc. However, delimiters can be
+                    arbitrary nested syntax rules. Also simple character strings mentioned before are the simplest nested rules. These nested rules are composed of single production which contains
+                    single terminal symbol (in fact, character string representation of terminal symbol). In general: delimiters are nested rules enclosed with square brackets [ and ].
+                </p>
+                <p>
+                    Unlike nested rules that act in productions of syntax rules, nested syntax rules in delimiters should be anonymous.This is because of the simple fact that nesting rules acting in productions
+                    are replaced by their names, generated by compiler if they are anonymous. On the other hand, the rule for the creation of syntax rule, which represents particular cardinality operator, is
+                    applied for every production of nested syntax rule separately.
+                </p>
+                <p>
+                    Let's take an example of cardinality expression with non-trivial nested syntax rule in delimiter:
+                </p>
+                <div class="panel border bg-light" id="example-008">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    If we strictly obey rule for <a href="~/Language/AnglrLanguage/#anglr-operator-set-delimiter">cardinality operator + with separator</a> we should expect, that Anglr compiler translates above
+                    syntax rule in something like this:
+                </p>
+                <div class="panel border bg-light" id="example-008">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-name">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    However this is not what one would expect, because it's a strange definition of an arithmetic expression. In cases where the nested rule consists of several productions,
+                    Anglr compiler treats each of them separately, as if we had more separate cases. In fact, example above is divided into two separate cases. For every production of nested syntax rule in the delimiter
+                    of cardinality expression we get one cardinality expression:
+                </p>
+                <div class="panel border bg-light" id="example-008">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;+&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;-&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    Translating them into canonical form we get these syntax rules:
+                </p>
+                <div class="panel border bg-light" id="example-008">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-name">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <div class="panel border bg-light" id="example-008">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-name">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    or what is equivalent:
+                </p>
+                <div class="panel border bg-light" id="example-008">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-name">additive-expression</span> <span class="string-name">&#39;+&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-name">additive-expression</span> <span class="string-name">&#39;-&#39;</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    Now, let's imagine more hypotetical example:
+                </p>
+                <div class="panel border bg-light" id="example-008">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">A</span> <span class="string-name">B</span> <span class="def-separator">|</span> <span class="string-name">C</span> <span class="string-name">D</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    Every production of nested rule in above example has two building blocks (terminal or non-terminal symbols). This example would be translated in this canonical form:
+                </p>
+                <div class="panel border bg-light" id="example-008">
+                    <pre>
+<span class="rule-name">additive-expression</span>
+    <span class="def-separator">:</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-name">additive-expression</span> <span class="string-name">A</span> <span class="string-name">B</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">|</span> <span class="rule-name">additive-expression</span> <span class="string-name">C</span> <span class="string-name">D</span> <span class="rule-ref">multiplicative-expression</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <p>
+                    Note that A, B, C and D should be any building blocks - basic, nested syntax rule or cardinality expression
+                </p>
+            </section>

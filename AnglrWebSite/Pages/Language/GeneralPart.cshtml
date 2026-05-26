@@ -1,0 +1,103 @@
+﻿@page
+@model GeneralPartModel
+@{
+    ViewData ["Title"] = "General Part of Anglr File";
+    ViewData ["Content"] = "General part of Anglr file: common definitions";
+}
+            <section id="general-part">
+                <h1>General Part of Anglr File</h1>
+                <hr />
+                <h4>Introduction</h4>
+                <p>
+                    The general part has no content. It contains only attributes that help us define general things.
+                </p>
+                <h4>Syntax</h4>
+                <p>
+                    Syntax of general part is defined as follows:
+                </p>
+                <hr />
+                <p id="rule-g-1">RULE G-1</p>
+                <div class="panel border bg-light" id="example-001">
+                    <pre>
+<span class="rule-name">&lt;general part&gt;</span>
+    <span class="def-separator">:</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%general&#39;</span> <span class="identifier-name">&lt;identifier&gt;</span> <span class="string-name">&#39;%{&#39;</span> <span class="rule-ref">&lt;attribute list&gt;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;%}&#39;</span>
+    <span class="def-separator">;</span>
+                    </pre>
+                </div>
+                <hr />
+                <p>
+                    Structure of general part is composed in that way:
+                </p>
+                <ul>
+                    <li>
+                        general part is preceeded by possibly empty attribute list
+                    </li>
+                    <li>
+                        next follows reserverd word %general
+                    </li>
+                    <li>
+                        followed by &lt;identifier&gt; which represents the name of general part
+                    </li>
+                    <li>
+                        between part separators %{ and %} is another attribute list which should also be empty
+                    </li>
+                </ul>
+                <h2>Attributes</h2>
+                <p>
+                    Anglr compiler recognizes only one attribute which should be present in general part of Anglr file. Its name is CompilationInfo and contains
+                    default value of namespace for generated source code and default directory for generated source code:
+                </p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Value Name</th>
+                            <th>Value</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>CompilationInfo</td>
+                            <td>NameSpace</td>
+                            <td>namespace name</td>
+                            <td>
+                                defult namespce for generated source code if it is not defined by particular part of anglr file. If Namespace
+                                value is not defined, default namespace value is equal to Anglr file name.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>CodeDir</td>
+                            <td>directory path</td>
+                            <td>
+                                default name of source code directory if it is not defined by particular part of anglr file. If CodeDir value
+                                is not defined, default name of directory for generated source code is equal to current working directory.
+                                Current working directory can be explicitely specified by giving CodeDir value of '.'
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+                <h2>Example</h2>
+                <p>
+                    Example below represents general part of Anglr file for Anglr compiler itself:
+                </p>
+                <div class="panel border bg-light" id="example-001">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name">Description</span> <span class="attribute-val-name">Text</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;General settings&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name">CompilationInfo</span> <span class="attribute-val-name">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Anglr&#39;</span> <span class="attribute-val-name">CodeDir</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;.&#39;</span> <span class="attribute-val-name">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%general</span> <span class="part-name">anglrSettings</span>
+<span class="part-brace">%{</span>
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+                <p>
+                    From this example we can see the following:
+                </p>
+                <ul>
+                    <li>
+                        default namespace for generated code is Anglr, which can be seen from the <span class="attribute-val-name">NameSpace</span> value of attribute <span class="attribute-name">CompilationInfo</span>
+                    </li>
+                    <li>
+                        default source code directory for generated code is equal to the current working directory which can be seen from the <span class="attribute-val-name">CodeDir</span> value of attribute <span class="attribute-name">CompilationInfo</span>
+                    </li>
+                </ul>
+            </section>

@@ -1,0 +1,1410 @@
+﻿@page
+@model AnglrWebSite.Pages.Appendix_DModel
+@{
+    ViewData ["Title"] = "Appendix D - Anglr Syntax Rules for Java";
+    ViewData ["Content"] = "Definition of Java language using Anglr language syntax rules";
+}
+            <section id="java">
+                <h1>Anglr Syntax Rules for Java Programming Language</h1>
+                <hr />
+                <h4>Introduction</h4>
+                <p>
+                    This pragraph introduces Anglr syntax rules for Java programming language (early working copy). They are copied from <a href="https://docs.oracle.com/javase/specs/jls/se17/html/index.html">this website</a>
+                    and customized for Anglr.
+                </p>
+                <hr />
+                <h4>Syntax</h4>
+                <div class="panel border bg-light">
+                    <pre>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;JavaDeclarations&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Java.Declarations&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%declarations</span> <span class="part-name" id="javaDecls">javaDecls</span>
+<span class="part-brace">%{</span>
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name" id="TypeIdentifier">TypeIdentifier</span>
+        <span class="token-name" id="Identifier">Identifier</span>
+        <span class="token-name" id="Literal">Literal</span>
+        <span class="token-name" id="UnqualifiedMethodIdentifier">UnqualifiedMethodIdentifier</span>
+        <span class="token-name" id="VariableAccess">VariableAccess</span>
+    <span class="def-separator">}</span>
+
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name" id="abstract">abstract</span>
+        <span class="token-name" id="assert">assert</span>
+        <span class="token-name" id="boolean">boolean</span>
+        <span class="token-name" id="break">break</span>
+        <span class="token-name" id="byte">byte</span>
+        <span class="token-name" id="case">case</span>
+        <span class="token-name" id="catch">catch</span>
+        <span class="token-name" id="char">char</span>
+        <span class="token-name" id="class">class</span>
+        <span class="token-name" id="continue">continue</span>
+        <span class="token-name" id="default">default</span>
+        <span class="token-name" id="do">do</span>
+        <span class="token-name" id="double">double</span>
+        <span class="token-name" id="else">else</span>
+        <span class="token-name" id="enum">enum</span>
+        <span class="token-name" id="exports">exports</span>
+        <span class="token-name" id="extends">extends</span>
+        <span class="token-name" id="final">final</span>
+        <span class="token-name" id="finally">finally</span>
+        <span class="token-name" id="float">float</span>
+        <span class="token-name" id="for">for</span>
+        <span class="token-name" id="if">if</span>
+        <span class="token-name" id="implements">implements</span>
+        <span class="token-name" id="import">import</span>
+        <span class="token-name" id="instanceof">instanceof</span>
+        <span class="token-name" id="int">int</span>
+        <span class="token-name" id="interface">interface</span>
+        <span class="token-name" id="long">long</span>
+        <span class="token-name" id="module">module</span>
+        <span class="token-name" id="native">native</span>
+        <span class="token-name" id="new">new</span>
+        <span class="token-name" id="non-sealed">non-sealed</span>
+        <span class="token-name" id="open">open</span>
+        <span class="token-name" id="opens">opens</span>
+        <span class="token-name" id="package">package</span>
+        <span class="token-name" id="permits">permits</span>
+        <span class="token-name" id="private">private</span>
+        <span class="token-name" id="protected">protected</span>
+        <span class="token-name" id="provides">provides</span>
+        <span class="token-name" id="public">public</span>
+        <span class="token-name" id="record">record</span>
+        <span class="token-name" id="requires">requires</span>
+        <span class="token-name" id="return">return</span>
+        <span class="token-name" id="sealed">sealed</span>
+        <span class="token-name" id="short">short</span>
+        <span class="token-name" id="static">static</span>
+        <span class="token-name" id="strictfp">strictfp</span>
+        <span class="token-name" id="super">super</span>
+        <span class="token-name" id="switch">switch</span>
+        <span class="token-name" id="synchronized">synchronized</span>
+        <span class="token-name" id="this">this</span>
+        <span class="token-name" id="throw">throw</span>
+        <span class="token-name" id="throws">throws</span>
+        <span class="token-name" id="to">to</span>
+        <span class="token-name" id="transient">transient</span>
+        <span class="token-name" id="transitive">transitive</span>
+        <span class="token-name" id="try">try</span>
+        <span class="token-name" id="uses">uses</span>
+        <span class="token-name" id="var">var</span>
+        <span class="token-name" id="void">void</span>
+        <span class="token-name" id="volatile">volatile</span>
+        <span class="token-name" id="while">while</span>
+        <span class="token-name" id="with">with</span>
+        <span class="token-name" id="yield">yield</span>
+    <span class="def-separator">}</span>
+
+    <span class="reserved-word">%terminal</span>
+    <span class="def-separator">{</span>
+        <span class="token-name" id="not-op">not-op</span> <span class="token-value" id="not-op">&#39;!&#39;</span>
+        <span class="token-name" id="not-eq-op">not-eq-op</span> <span class="token-value" id="not-eq-op">&#39;!=&#39;</span>
+        <span class="token-name" id="mod-op">mod-op</span> <span class="token-value" id="mod-op">&#39;%&#39;</span>
+        <span class="token-name" id="mod-eq-op">mod-eq-op</span> <span class="token-value" id="mod-eq-op">&#39;%=&#39;</span>
+        <span class="token-name" id="log-and-op">log-and-op</span> <span class="token-value" id="log-and-op">&#39;&amp;&amp;&#39;</span>
+        <span class="token-name" id="and-op">and-op</span> <span class="token-value" id="and-op">&#39;&amp;&#39;</span>
+        <span class="token-name" id="and-eq-op">and-eq-op</span> <span class="token-value" id="and-eq-op">&#39;&amp;=&#39;</span>
+        <span class="token-name" id="left-br">left-br</span> <span class="token-value" id="left-br">&#39;(&#39;</span>
+        <span class="token-name" id="right-br">right-br</span> <span class="token-value" id="right-br">&#39;)&#39;</span>
+        <span class="token-name" id="mul-op">mul-op</span> <span class="token-value" id="mul-op">&#39;*&#39;</span>
+        <span class="token-name" id="mul-eq-op">mul-eq-op</span> <span class="token-value" id="mul-eq-op">&#39;*=&#39;</span>
+        <span class="token-name" id="add-op">add-op</span> <span class="token-value" id="add-op">&#39;+&#39;</span>
+        <span class="token-name" id="inc-op">inc-op</span> <span class="token-value" id="inc-op">&#39;++&#39;</span>
+        <span class="token-name" id="add-eq-op">add-eq-op</span> <span class="token-value" id="add-eq-op">&#39;+=&#39;</span>
+        <span class="token-name" id="coma">coma</span> <span class="token-value" id="coma">&#39;,&#39;</span>
+        <span class="token-name" id="sub-op">sub-op</span> <span class="token-value" id="sub-op">&#39;-&#39;</span>
+        <span class="token-name" id="dec-op">dec-op</span> <span class="token-value" id="dec-op">&#39;--&#39;</span>
+        <span class="token-name" id="seb-eq-op">seb-eq-op</span> <span class="token-value" id="seb-eq-op">&#39;-=&#39;</span>
+        <span class="token-name" id="lambda-op">lambda-op</span> <span class="token-value" id="lambda-op">&#39;-&gt;&#39;</span>
+        <span class="token-name" id="punctuation">punctuation</span> <span class="token-value" id="punctuation">&#39;.&#39;</span>
+        <span class="token-name" id="elipses">elipses</span> <span class="token-value" id="elipses">&#39;...&#39;</span>
+        <span class="token-name" id="div-op">div-op</span> <span class="token-value" id="div-op">&#39;/&#39;</span>
+        <span class="token-name" id="div-eq-op">div-eq-op</span> <span class="token-value" id="div-eq-op">&#39;/=&#39;</span>
+        <span class="token-name" id="colon">colon</span> <span class="token-value" id="colon">&#39;:&#39;</span>
+        <span class="token-name" id="dcolon">dcolon</span> <span class="token-value" id="dcolon">&#39;::&#39;</span>
+        <span class="token-name" id="semicolon">semicolon</span> <span class="token-value" id="semicolon">&#39;;&#39;</span>
+        <span class="token-name" id="less-op">less-op</span> <span class="token-value" id="less-op">&#39;&lt;&#39;</span>
+        <span class="token-name" id="lsh-op">lsh-op</span> <span class="token-value" id="lsh-op">&#39;&lt;&lt;&#39;</span>
+        <span class="token-name" id="lsh-eq-op">lsh-eq-op</span> <span class="token-value" id="lsh-eq-op">&#39;&lt;&lt;=&#39;</span>
+        <span class="token-name" id="less-eq-op">less-eq-op</span> <span class="token-value" id="less-eq-op">&#39;&lt;=&#39;</span>
+        <span class="token-name" id="neq-op">neq-op</span> <span class="token-value" id="neq-op">&#39;&lt;&gt;&#39;</span>
+        <span class="token-name" id="assign-op">assign-op</span> <span class="token-value" id="assign-op">&#39;=&#39;</span>
+        <span class="token-name" id="equ-op">equ-op</span> <span class="token-value" id="equ-op">&#39;==&#39;</span>
+        <span class="token-name" id="greater-op">greater-op</span> <span class="token-value" id="greater-op">&#39;&gt;&#39;</span>
+        <span class="token-name" id="greater-eq-op">greater-eq-op</span> <span class="token-value" id="greater-eq-op">&#39;&gt;=&#39;</span>
+        <span class="token-name" id="rsh-op">rsh-op</span> <span class="token-value" id="rsh-op">&#39;&gt;&gt;&#39;</span>
+        <span class="token-name" id="rsh-eq-op">rsh-eq-op</span> <span class="token-value" id="rsh-eq-op">&#39;&gt;&gt;=&#39;</span>
+        <span class="token-name" id="rrsh-op">rrsh-op</span> <span class="token-value" id="rrsh-op">&#39;&gt;&gt;&gt;&#39;</span>
+        <span class="token-name" id="rrsh-eq-op">rrsh-eq-op</span> <span class="token-value" id="rrsh-eq-op">&#39;&gt;&gt;&gt;=&#39;</span>
+        <span class="token-name" id="if-op">if-op</span> <span class="token-value" id="if-op">&#39;?&#39;</span>
+        <span class="token-name" id="at-sign">at-sign</span> <span class="token-value" id="at-sign">&#39;&#64&#39;</span>
+        <span class="token-name" id="left-sq-br">left-sq-br</span> <span class="token-value" id="left-sq-br">&#39;[&#39;</span>
+        <span class="token-name" id="right-sq-br">right-sq-br</span> <span class="token-value" id="right-sq-br">&#39;]&#39;</span>
+        <span class="token-name" id="excl-op">excl-op</span> <span class="token-value" id="excl-op">&#39;^&#39;</span>
+        <span class="token-name" id="excl-eq-op">excl-eq-op</span> <span class="token-value" id="excl-eq-op">&#39;^=&#39;</span>
+        <span class="token-name" id="left-cur-br">left-cur-br</span> <span class="token-value" id="left-cur-br">&#39;{&#39;</span>
+        <span class="token-name" id="or-op">or-op</span> <span class="token-value" id="or-op">&#39;|&#39;</span>
+        <span class="token-name" id="or-eq-op">or-eq-op</span> <span class="token-value" id="or-eq-op">&#39;|=&#39;</span>
+        <span class="token-name" id="log-or-op">log-or-op</span> <span class="token-value" id="log-or-op">&#39;||&#39;</span>
+        <span class="token-name" id="right-cur-br">right-cur-br</span> <span class="token-value" id="right-cur-br">&#39;}&#39;</span>
+        <span class="token-name" id="conv-op">conv-op</span> <span class="token-value" id="conv-op">&#39;~&#39;</span>
+    <span class="def-separator">}</span>
+
+    <span class="reserved-word">%regex</span>
+    <span class="def-separator">{</span>
+        <span class="regex-name" id="decimal-digit">decimal-digit</span> <span class="regex-def">0-9</span>
+        <span class="regex-name" id="lower-case-char">lower-case-char</span> <span class="regex-def">a-z</span>
+        <span class="regex-name" id="upper-case-char">upper-case-char</span> <span class="regex-def">A-Z</span>
+        <span class="regex-name" id="alpha-char">alpha-char</span> <span class="regex-def">{lower-case-char}{upper-case-char}</span>
+        <span class="regex-name" id="alpha-num-char">alpha-num-char</span> <span class="regex-def">{alpha-char}{decimal-digit}</span>
+        <span class="regex-name" id="hyphen">hyphen</span> <span class="regex-def">\-</span>
+        <span class="regex-name" id="underscore">underscore</span> <span class="regex-def">_</span>
+        <span class="regex-name" id="identifier">identifier</span> <span class="regex-def">[{alpha-char}{underscore}][{alpha-num-char}{underscore}{hyphen}]*</span>
+    <span class="def-separator">}</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;javaDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;CommentScanner&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Java.Scanner&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name" id="commentScanner">commentScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">[\*]+\/</span>
+    <span class="action-token">pop</span>
+<span class="regex-ref">[\n\r]</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[^\*]+</span>
+    <span class="action-token">skip</span>
+<span class="regex-ref">[\*]+</span>
+    <span class="action-token">skip</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;javaDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;JavaScanner&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Java.Scanner&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%scanner</span> <span class="part-name" id="javaScanner">javaScanner</span>
+<span class="part-brace">%{</span>
+<span class="regex-ref">\/\*</span>
+    <span class="action-token">push</span> <a href="#commentScanner"><span class="action-identifier">commentScanner</span></a>
+<span class="regex-ref">{identifier}</span>
+    <span class="action-token">event</span> <span class="action-identifier" id="identifier">identifier</span>
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span>
+    <span class="attribute-name" id="UseScanner">UseScanner</span>
+        <span class="attribute-val-name" id="ScannerId">ScannerId</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;commentScanner&#39;</span>
+        <span class="attribute-val-name" id="InitialScanner">InitialScanner</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;javaScanner&#39;</span>
+        <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span>
+<span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;JavaLexer&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Java.Lexer&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%lexer</span> <span class="part-name" id="javaLexer">javaLexer</span>
+<span class="part-brace">%{</span>
+
+<span class="part-brace">%}</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Lexer">Lexer</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;javaLexer&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Declarations">Declarations</span> <span class="attribute-val-name" id="Id">Id</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;javaDecls&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="attribute-brace">[</span> <span class="attribute-name" id="CompilationInfo">CompilationInfo</span> <span class="attribute-val-name" id="ClassName">ClassName</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;JavaParser&#39;</span> <span class="attribute-val-name" id="NameSpace">NameSpace</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;Java.Parser&#39;</span> <span class="attribute-val-name" id="Access">Access</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;public&#39;</span> <span class="attribute-val-name" id="Hover">Hover</span><span class="def-separator">=</span><span class="attribute-val-value">&#39;true&#39;</span> <span class="attribute-brace">]</span>
+<span class="part-token">%parser</span> <span class="part-name" id="javaParser">javaParser</span>
+<span class="part-brace">%{</span>
+
+
+
+
+
+
+
+
+<span class="rule-name" id="PrimitiveType">PrimitiveType</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <a href="#NumericType"><span class="rule-ref">NumericType</span></a>
+    <span class="def-separator">|</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <a href="#boolean"><span class="identifier-name">boolean</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="NumericType">NumericType</span>
+    <span class="def-separator">:</span> <a href="#IntegralType"><span class="rule-ref">IntegralType</span></a>
+    <span class="def-separator">|</span> <a href="#FloatingPointType"><span class="rule-ref">FloatingPointType</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="IntegralType">IntegralType</span>
+    <span class="def-separator">:</span> <a href="#byte"><span class="identifier-name">byte</span></a>
+    <span class="def-separator">|</span> <a href="#short"><span class="identifier-name">short</span></a>
+    <span class="def-separator">|</span> <a href="#int"><span class="identifier-name">int</span></a>
+    <span class="def-separator">|</span> <a href="#long"><span class="identifier-name">long</span></a>
+    <span class="def-separator">|</span> <a href="#char"><span class="identifier-name">char</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="FloatingPointType">FloatingPointType</span>
+    <span class="def-separator">:</span> <a href="#float"><span class="identifier-name">float</span></a>
+    <span class="def-separator">|</span> <a href="#double"><span class="identifier-name">double</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ReferenceType">ReferenceType</span>
+    <span class="def-separator">:</span> <a href="#ClassOrInterfaceType"><span class="rule-ref">ClassOrInterfaceType</span></a>
+    <span class="def-separator">|</span> <a href="#TypeVariable"><span class="rule-ref">TypeVariable</span></a>
+    <span class="def-separator">|</span> <a href="#ArrayType"><span class="rule-ref">ArrayType</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassOrInterfaceType">ClassOrInterfaceType</span>
+    <span class="def-separator">:</span> <a href="#ClassType"><span class="rule-ref">ClassType</span></a>
+    <span class="def-separator">|</span> <a href="#InterfaceType"><span class="rule-ref">InterfaceType</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassType">ClassType</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">|</span> <a href="#PackageName"><span class="rule-ref">PackageName</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">|</span> <a href="#ClassOrInterfaceType"><span class="rule-ref">ClassOrInterfaceType</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InterfaceType">InterfaceType</span>
+    <span class="def-separator">:</span> <a href="#ClassType"><span class="rule-ref">ClassType</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypeVariable">TypeVariable</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ArrayType">ArrayType</span>
+    <span class="def-separator">:</span> <a href="#PrimitiveType"><span class="rule-ref">PrimitiveType</span></a> <a href="#Dims"><span class="rule-ref">Dims</span></a>
+    <span class="def-separator">|</span> <a href="#ClassOrInterfaceType"><span class="rule-ref">ClassOrInterfaceType</span></a> <a href="#Dims"><span class="rule-ref">Dims</span></a>
+    <span class="def-separator">|</span> <a href="#TypeVariable"><span class="rule-ref">TypeVariable</span></a> <a href="#Dims"><span class="rule-ref">Dims</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Dims">Dims</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span><a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;[&#39;</span> <span class="string-name">&#39;]&#39;</span><span class="def-separator">)</span> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypeParameter">TypeParameter</span>
+    <span class="def-separator">:</span> <a href="#TypeParameterModifier"><span class="rule-ref">TypeParameterModifier</span></a> <span class="reserved-word">*</span> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a> <a href="#TypeBound"><span class="rule-ref">TypeBound</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypeParameterModifier">TypeParameterModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypeBound">TypeBound</span>
+    <span class="def-separator">:</span> <a href="#extends"><span class="identifier-name">extends</span></a> <a href="#TypeVariable"><span class="rule-ref">TypeVariable</span></a>
+    <span class="def-separator">|</span> <a href="#extends"><span class="identifier-name">extends</span></a> <a href="#ClassOrInterfaceType"><span class="rule-ref">ClassOrInterfaceType</span></a> <a href="#AdditionalBound"><span class="rule-ref">AdditionalBound</span></a> <span class="reserved-word">*</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="AdditionalBound">AdditionalBound</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;&amp;&#39;</span> <a href="#InterfaceType"><span class="rule-ref">InterfaceType</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypeArguments">TypeArguments</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;&lt;&#39;</span> <a href="#TypeArgumentList"><span class="rule-ref">TypeArgumentList</span></a> <span class="string-name">&#39;&gt;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypeArgumentList">TypeArgumentList</span>
+    <span class="def-separator">:</span> <a href="#TypeArgument"><span class="rule-ref">TypeArgument</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypeArgument">TypeArgument</span>
+    <span class="def-separator">:</span> <a href="#ReferenceType"><span class="rule-ref">ReferenceType</span></a>
+    <span class="def-separator">|</span> <a href="#Wildcard"><span class="rule-ref">Wildcard</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Wildcard">Wildcard</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;?&#39;</span> <a href="#WildcardBounds"><span class="rule-ref">WildcardBounds</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="WildcardBounds">WildcardBounds</span>
+    <span class="def-separator">:</span> <a href="#extends"><span class="identifier-name">extends</span></a> <a href="#ReferenceType"><span class="rule-ref">ReferenceType</span></a>
+    <span class="def-separator">|</span> <a href="#super"><span class="identifier-name">super</span></a> <a href="#ReferenceType"><span class="rule-ref">ReferenceType</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ModuleName">ModuleName</span>
+    <span class="def-separator">:</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;.&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="PackageName">PackageName</span>
+    <span class="def-separator">:</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;.&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypeName">TypeName</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span> <a href="#PackageOrTypeName"><span class="rule-ref">PackageOrTypeName</span></a> <span class="string-name">&#39;.&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">?</span> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ExpressionName">ExpressionName</span>
+    <span class="def-separator">:</span> <a href="#AmbiguousName"><span class="rule-ref">AmbiguousName</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="MethodName">MethodName</span>
+    <span class="def-separator">:</span> <a href="#UnqualifiedMethodIdentifier"><span class="identifier-name">UnqualifiedMethodIdentifier</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="PackageOrTypeName">PackageOrTypeName</span>
+    <span class="def-separator">:</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;.&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="AmbiguousName">AmbiguousName</span>
+    <span class="def-separator">:</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;.&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="attribute-brace">[</span> <span class="attribute-name" id="Start">Start</span> <span class="attribute-brace">]</span>
+<span class="rule-name" id="CompilationUnit">CompilationUnit</span>
+    <span class="def-separator">:</span> <a href="#OrdinaryCompilationUnit"><span class="rule-ref">OrdinaryCompilationUnit</span></a>
+    <span class="def-separator">|</span> <a href="#ModularCompilationUnit"><span class="rule-ref">ModularCompilationUnit</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="OrdinaryCompilationUnit">OrdinaryCompilationUnit</span>
+    <span class="def-separator">:</span> <a href="#PackageDeclaration"><span class="rule-ref">PackageDeclaration</span></a> <span class="reserved-word">?</span> <a href="#ImportDeclaration"><span class="rule-ref">ImportDeclaration</span></a> <span class="reserved-word">*</span> <a href="#TopLevelClassOrInterfaceDeclaration"><span class="rule-ref">TopLevelClassOrInterfaceDeclaration</span></a> <span class="reserved-word">*</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ModularCompilationUnit">ModularCompilationUnit</span>
+    <span class="def-separator">:</span> <a href="#ImportDeclaration"><span class="rule-ref">ImportDeclaration</span></a> <span class="reserved-word">*</span> <a href="#ModuleDeclaration"><span class="rule-ref">ModuleDeclaration</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="PackageDeclaration">PackageDeclaration</span>
+    <span class="def-separator">:</span> <a href="#PackageModifier"><span class="rule-ref">PackageModifier</span></a> <span class="reserved-word">*</span> <a href="#package"><span class="identifier-name">package</span></a> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;.&#39;</span> <span class="def-separator">]</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="PackageModifier">PackageModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ImportDeclaration">ImportDeclaration</span>
+    <span class="def-separator">:</span> <a href="#SingleTypeImportDeclaration"><span class="rule-ref">SingleTypeImportDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#TypeImportOnDemandDeclaration"><span class="rule-ref">TypeImportOnDemandDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#SingleStaticImportDeclaration"><span class="rule-ref">SingleStaticImportDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#StaticImportOnDemandDeclaration"><span class="rule-ref">StaticImportOnDemandDeclaration</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="SingleTypeImportDeclaration">SingleTypeImportDeclaration</span>
+    <span class="def-separator">:</span> <a href="#import"><span class="identifier-name">import</span></a> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypeImportOnDemandDeclaration">TypeImportOnDemandDeclaration</span>
+    <span class="def-separator">:</span> <a href="#import"><span class="identifier-name">import</span></a> <a href="#PackageOrTypeName"><span class="rule-ref">PackageOrTypeName</span></a> <span class="string-name">&#39;.&#39;</span> <span class="string-name">&#39;*&#39;</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="SingleStaticImportDeclaration">SingleStaticImportDeclaration</span>
+    <span class="def-separator">:</span> <a href="#import"><span class="identifier-name">import</span></a> <a href="#static"><span class="identifier-name">static</span></a> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="StaticImportOnDemandDeclaration">StaticImportOnDemandDeclaration</span>
+    <span class="def-separator">:</span> <a href="#import"><span class="identifier-name">import</span></a> <a href="#static"><span class="identifier-name">static</span></a> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="string-name">&#39;.&#39;</span> <span class="string-name">&#39;*&#39;</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TopLevelClassOrInterfaceDeclaration">TopLevelClassOrInterfaceDeclaration</span>
+    <span class="def-separator">:</span> <a href="#ClassDeclaration"><span class="rule-ref">ClassDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#InterfaceDeclaration"><span class="rule-ref">InterfaceDeclaration</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ModuleDeclaration">ModuleDeclaration</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <a href="#open"><span class="identifier-name">open</span></a> <span class="reserved-word">?</span> <a href="#module"><span class="identifier-name">module</span></a> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;.&#39;</span> <span class="def-separator">]</span> <span class="string-name">&#39;{&#39;</span> <a href="#ModuleDirective"><span class="rule-ref">ModuleDirective</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ModuleDirective">ModuleDirective</span>
+    <span class="def-separator">:</span> <a href="#requires"><span class="identifier-name">requires</span></a> <a href="#RequiresModifier"><span class="rule-ref">RequiresModifier</span></a> <span class="reserved-word">*</span> <a href="#ModuleName"><span class="rule-ref">ModuleName</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">|</span> <a href="#exports"><span class="identifier-name">exports</span></a> <a href="#PackageName"><span class="rule-ref">PackageName</span></a> <span class="def-separator">(</span><a href="#to"><span class="identifier-name">to</span></a> <a href="#ModuleName"><span class="rule-ref">ModuleName</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span> <span class="def-separator">)</span> <span class="reserved-word">?</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">|</span> <a href="#opens"><span class="identifier-name">opens</span></a> <a href="#PackageName"><span class="rule-ref">PackageName</span></a> <span class="def-separator">(</span><a href="#to"><span class="identifier-name">to</span></a> <a href="#ModuleName"><span class="rule-ref">ModuleName</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span> <span class="def-separator">)</span> <span class="reserved-word">?</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">|</span> <a href="#uses"><span class="identifier-name">uses</span></a> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">|</span> <a href="#provides"><span class="identifier-name">provides</span></a> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <a href="#with"><span class="identifier-name">with</span></a> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="RequiresModifier">RequiresModifier</span>
+    <span class="def-separator">:</span> <a href="#transitive"><span class="identifier-name">transitive</span></a>
+    <span class="def-separator">|</span> <a href="#static"><span class="identifier-name">static</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassDeclaration">ClassDeclaration</span>
+    <span class="def-separator">:</span> <a href="#NormalClassDeclaration"><span class="rule-ref">NormalClassDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#EnumDeclaration"><span class="rule-ref">EnumDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#RecordDeclaration"><span class="rule-ref">RecordDeclaration</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="NormalClassDeclaration">NormalClassDeclaration</span>
+    <span class="def-separator">:</span> <a href="#ClassModifier"><span class="rule-ref">ClassModifier</span></a> <span class="reserved-word">*</span> <a href="#class"><span class="identifier-name">class</span></a> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a> <a href="#TypeParameters"><span class="rule-ref">TypeParameters</span></a> <span class="reserved-word">?</span> <a href="#ClassExtends"><span class="rule-ref">ClassExtends</span></a> <span class="reserved-word">?</span> <a href="#ClassImplements"><span class="rule-ref">ClassImplements</span></a> <span class="reserved-word">?</span> <a href="#ClassPermits"><span class="rule-ref">ClassPermits</span></a> <span class="reserved-word">?</span> <a href="#ClassBody"><span class="rule-ref">ClassBody</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassModifier">ClassModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">|</span> <a href="#public"><span class="identifier-name">public</span></a>
+    <span class="def-separator">|</span> <a href="#protected"><span class="identifier-name">protected</span></a>
+    <span class="def-separator">|</span> <a href="#private"><span class="identifier-name">private</span></a>
+    <span class="def-separator">|</span> <a href="#abstract"><span class="identifier-name">abstract</span></a>
+    <span class="def-separator">|</span> <a href="#static"><span class="identifier-name">static</span></a>
+    <span class="def-separator">|</span> <a href="#final"><span class="identifier-name">final</span></a>
+    <span class="def-separator">|</span> <a href="#sealed"><span class="identifier-name">sealed</span></a>
+    <span class="def-separator">|</span> <a href="#non-sealed"><span class="identifier-name">non-sealed</span></a>
+    <span class="def-separator">|</span> <a href="#strictfp"><span class="identifier-name">strictfp</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypeParameters">TypeParameters</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;&lt;&#39;</span> <a href="#TypeParameterList"><span class="rule-ref">TypeParameterList</span></a> <span class="string-name">&#39;&gt;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypeParameterList">TypeParameterList</span>
+    <span class="def-separator">:</span> <a href="#TypeParameter"><span class="rule-ref">TypeParameter</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassExtends">ClassExtends</span>
+    <span class="def-separator">:</span> <a href="#extends"><span class="identifier-name">extends</span></a> <a href="#ClassType"><span class="rule-ref">ClassType</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassImplements">ClassImplements</span>
+    <span class="def-separator">:</span> <a href="#implements"><span class="identifier-name">implements</span></a> <a href="#InterfaceTypeList"><span class="rule-ref">InterfaceTypeList</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InterfaceTypeList">InterfaceTypeList</span>
+    <span class="def-separator">:</span> <a href="#InterfaceType"><span class="rule-ref">InterfaceType</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassPermits">ClassPermits</span>
+    <span class="def-separator">:</span> <a href="#permits"><span class="identifier-name">permits</span></a> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassBody">ClassBody</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;{&#39;</span> <a href="#ClassBodyDeclaration"><span class="rule-ref">ClassBodyDeclaration</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassBodyDeclaration">ClassBodyDeclaration</span>
+    <span class="def-separator">:</span> <a href="#ClassMemberDeclaration"><span class="rule-ref">ClassMemberDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#InstanceInitializer"><span class="rule-ref">InstanceInitializer</span></a>
+    <span class="def-separator">|</span> <a href="#StaticInitializer"><span class="rule-ref">StaticInitializer</span></a>
+    <span class="def-separator">|</span> <a href="#ConstructorDeclaration"><span class="rule-ref">ConstructorDeclaration</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassMemberDeclaration">ClassMemberDeclaration</span>
+    <span class="def-separator">:</span> <a href="#FieldDeclaration"><span class="rule-ref">FieldDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#MethodDeclaration"><span class="rule-ref">MethodDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#ClassDeclaration"><span class="rule-ref">ClassDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#InterfaceDeclaration"><span class="rule-ref">InterfaceDeclaration</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="FieldDeclaration">FieldDeclaration</span>
+    <span class="def-separator">:</span> <a href="#FieldModifier"><span class="rule-ref">FieldModifier</span></a> <span class="reserved-word">*</span> <a href="#UnannType"><span class="rule-ref">UnannType</span></a> <a href="#VariableDeclaratorList"><span class="rule-ref">VariableDeclaratorList</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="FieldModifier">FieldModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">|</span> <a href="#public"><span class="identifier-name">public</span></a>
+    <span class="def-separator">|</span> <a href="#protected"><span class="identifier-name">protected</span></a>
+    <span class="def-separator">|</span> <a href="#private"><span class="identifier-name">private</span></a>
+    <span class="def-separator">|</span> <a href="#static"><span class="identifier-name">static</span></a>
+    <span class="def-separator">|</span> <a href="#final"><span class="identifier-name">final</span></a>
+    <span class="def-separator">|</span> <a href="#transient"><span class="identifier-name">transient</span></a>
+    <span class="def-separator">|</span> <a href="#volatile"><span class="identifier-name">volatile</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="VariableDeclaratorList">VariableDeclaratorList</span>
+    <span class="def-separator">:</span> <a href="#VariableDeclarator"><span class="rule-ref">VariableDeclarator</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="VariableDeclarator">VariableDeclarator</span>
+    <span class="def-separator">:</span> <a href="#VariableDeclaratorId"><span class="rule-ref">VariableDeclaratorId</span></a> <span class="def-separator">(</span> <span class="string-name">&#39;=&#39;</span> <a href="#VariableInitializer"><span class="rule-ref">VariableInitializer</span></a> <span class="def-separator">)</span> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="VariableDeclaratorId">VariableDeclaratorId</span>
+    <span class="def-separator">:</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <a href="#Dims"><span class="rule-ref">Dims</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="VariableInitializer">VariableInitializer</span>
+    <span class="def-separator">:</span> <a href="#Expression"><span class="rule-ref">Expression</span></a>
+    <span class="def-separator">|</span> <a href="#ArrayInitializer"><span class="rule-ref">ArrayInitializer</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="UnannType">UnannType</span>
+    <span class="def-separator">:</span> <a href="#UnannPrimitiveType"><span class="rule-ref">UnannPrimitiveType</span></a>
+    <span class="def-separator">|</span> <a href="#UnannReferenceType"><span class="rule-ref">UnannReferenceType</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="UnannPrimitiveType">UnannPrimitiveType</span>
+    <span class="def-separator">:</span> <a href="#NumericType"><span class="rule-ref">NumericType</span></a>
+    <span class="def-separator">|</span> <a href="#boolean"><span class="identifier-name">boolean</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="UnannReferenceType">UnannReferenceType</span>
+    <span class="def-separator">:</span> <a href="#UnannClassOrInterfaceType"><span class="rule-ref">UnannClassOrInterfaceType</span></a>
+    <span class="def-separator">|</span> <a href="#UnannTypeVariable"><span class="rule-ref">UnannTypeVariable</span></a>
+    <span class="def-separator">|</span> <a href="#UnannArrayType"><span class="rule-ref">UnannArrayType</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="UnannClassOrInterfaceType">UnannClassOrInterfaceType</span>
+    <span class="def-separator">:</span> <a href="#UnannClassType"><span class="rule-ref">UnannClassType</span></a>
+    <span class="def-separator">|</span> <a href="#UnannInterfaceType"><span class="rule-ref">UnannInterfaceType</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="UnannClassType">UnannClassType</span>
+    <span class="def-separator">:</span> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">|</span> <a href="#PackageName"><span class="rule-ref">PackageName</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">|</span> <a href="#UnannClassOrInterfaceType"><span class="rule-ref">UnannClassOrInterfaceType</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="UnannInterfaceType">UnannInterfaceType</span>
+    <span class="def-separator">:</span> <a href="#UnannClassType"><span class="rule-ref">UnannClassType</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="UnannTypeVariable">UnannTypeVariable</span>
+    <span class="def-separator">:</span> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="UnannArrayType">UnannArrayType</span>
+    <span class="def-separator">:</span> <a href="#UnannPrimitiveType"><span class="rule-ref">UnannPrimitiveType</span></a> <a href="#Dims"><span class="rule-ref">Dims</span></a>
+    <span class="def-separator">|</span> <a href="#UnannClassOrInterfaceType"><span class="rule-ref">UnannClassOrInterfaceType</span></a> <a href="#Dims"><span class="rule-ref">Dims</span></a>
+    <span class="def-separator">|</span> <a href="#UnannTypeVariable"><span class="rule-ref">UnannTypeVariable</span></a> <a href="#Dims"><span class="rule-ref">Dims</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="MethodDeclaration">MethodDeclaration</span>
+    <span class="def-separator">:</span> <a href="#MethodModifier"><span class="rule-ref">MethodModifier</span></a> <span class="reserved-word">*</span> <a href="#MethodHeader"><span class="rule-ref">MethodHeader</span></a> <a href="#MethodBody"><span class="rule-ref">MethodBody</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="MethodModifier">MethodModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">|</span> <a href="#public"><span class="identifier-name">public</span></a>
+    <span class="def-separator">|</span> <a href="#protected"><span class="identifier-name">protected</span></a>
+    <span class="def-separator">|</span> <a href="#private"><span class="identifier-name">private</span></a>
+    <span class="def-separator">|</span> <a href="#abstract"><span class="identifier-name">abstract</span></a>
+    <span class="def-separator">|</span> <a href="#static"><span class="identifier-name">static</span></a>
+    <span class="def-separator">|</span> <a href="#final"><span class="identifier-name">final</span></a>
+    <span class="def-separator">|</span> <a href="#synchronized"><span class="identifier-name">synchronized</span></a>
+    <span class="def-separator">|</span> <a href="#native"><span class="identifier-name">native</span></a>
+    <span class="def-separator">|</span> <a href="#strictfp"><span class="identifier-name">strictfp</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="MethodHeader">MethodHeader</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span> <a href="#TypeParameters"><span class="rule-ref">TypeParameters</span></a> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <span class="def-separator">)</span> <span class="reserved-word">?</span> <a href="#Result"><span class="rule-ref">Result</span></a> <a href="#MethodDeclarator"><span class="rule-ref">MethodDeclarator</span></a> <a href="#Throws"><span class="rule-ref">Throws</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Result">Result</span>
+    <span class="def-separator">:</span> <a href="#UnannType"><span class="rule-ref">UnannType</span></a>
+    <span class="def-separator">|</span> <a href="#void"><span class="identifier-name">void</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="MethodDeclarator">MethodDeclarator</span>
+    <span class="def-separator">:</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="string-name">&#39;(&#39;</span> <span class="def-separator">(</span> <a href="#ReceiverParameter"><span class="rule-ref">ReceiverParameter</span></a> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">?</span> <a href="#FormalParameterList"><span class="rule-ref">FormalParameterList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span> <a href="#Dims"><span class="rule-ref">Dims</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ReceiverParameter">ReceiverParameter</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <a href="#UnannType"><span class="rule-ref">UnannType</span></a> <span class="def-separator">(</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="string-name">&#39;.&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">?</span> <a href="#this"><span class="identifier-name">this</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="FormalParameterList">FormalParameterList</span>
+    <span class="def-separator">:</span> <a href="#FormalParameter"><span class="rule-ref">FormalParameter</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="FormalParameter">FormalParameter</span>
+    <span class="def-separator">:</span> <a href="#VariableModifier"><span class="rule-ref">VariableModifier</span></a> <span class="reserved-word">*</span> <a href="#UnannType"><span class="rule-ref">UnannType</span></a> <a href="#VariableDeclaratorId"><span class="rule-ref">VariableDeclaratorId</span></a>
+    <span class="def-separator">|</span> <a href="#VariableArityParameter"><span class="rule-ref">VariableArityParameter</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="VariableArityParameter">VariableArityParameter</span>
+    <span class="def-separator">:</span> <a href="#VariableModifier"><span class="rule-ref">VariableModifier</span></a> <span class="reserved-word">*</span> <a href="#UnannType"><span class="rule-ref">UnannType</span></a> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;...&#39;</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="VariableModifier">VariableModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">|</span> <a href="#final"><span class="identifier-name">final</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Throws">Throws</span>
+    <span class="def-separator">:</span> <a href="#throws"><span class="identifier-name">throws</span></a> <a href="#ExceptionTypeList"><span class="rule-ref">ExceptionTypeList</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ExceptionTypeList">ExceptionTypeList</span>
+    <span class="def-separator">:</span> <a href="#ExceptionType"><span class="rule-ref">ExceptionType</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ExceptionType">ExceptionType</span>
+    <span class="def-separator">:</span> <a href="#ClassType"><span class="rule-ref">ClassType</span></a>
+    <span class="def-separator">|</span> <a href="#TypeVariable"><span class="rule-ref">TypeVariable</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="MethodBody">MethodBody</span>
+    <span class="def-separator">:</span> <a href="#Block"><span class="rule-ref">Block</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InstanceInitializer">InstanceInitializer</span>
+    <span class="def-separator">:</span> <a href="#Block"><span class="rule-ref">Block</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="StaticInitializer">StaticInitializer</span>
+    <span class="def-separator">:</span> <a href="#static"><span class="identifier-name">static</span></a> <a href="#Block"><span class="rule-ref">Block</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ConstructorDeclaration">ConstructorDeclaration</span>
+    <span class="def-separator">:</span> <a href="#ConstructorModifier"><span class="rule-ref">ConstructorModifier</span></a> <span class="reserved-word">*</span> <a href="#ConstructorDeclarator"><span class="rule-ref">ConstructorDeclarator</span></a> <a href="#Throws"><span class="rule-ref">Throws</span></a> <span class="reserved-word">?</span> <a href="#ConstructorBody"><span class="rule-ref">ConstructorBody</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ConstructorModifier">ConstructorModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">|</span> <a href="#public"><span class="identifier-name">public</span></a>
+    <span class="def-separator">|</span> <a href="#protected"><span class="identifier-name">protected</span></a>
+    <span class="def-separator">|</span> <a href="#private"><span class="identifier-name">private</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ConstructorDeclarator">ConstructorDeclarator</span>
+    <span class="def-separator">:</span> <a href="#TypeParameters"><span class="rule-ref">TypeParameters</span></a> <span class="reserved-word">?</span> <a href="#SimpleTypeName"><span class="rule-ref">SimpleTypeName</span></a> <span class="string-name">&#39;(&#39;</span> <span class="def-separator">(</span> <a href="#ReceiverParameter"><span class="rule-ref">ReceiverParameter</span></a> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">?</span> <a href="#FormalParameterList"><span class="rule-ref">FormalParameterList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="SimpleTypeName">SimpleTypeName</span>
+    <span class="def-separator">:</span> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ConstructorBody">ConstructorBody</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;{&#39;</span> <a href="#ExplicitConstructorInvocation"><span class="rule-ref">ExplicitConstructorInvocation</span></a> <span class="reserved-word">?</span> <a href="#BlockStatements"><span class="rule-ref">BlockStatements</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ExplicitConstructorInvocation">ExplicitConstructorInvocation</span>
+    <span class="def-separator">:</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#this"><span class="identifier-name">this</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ArgumentList"><span class="rule-ref">ArgumentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">|</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#super"><span class="identifier-name">super</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ArgumentList"><span class="rule-ref">ArgumentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">|</span> <a href="#ExpressionName"><span class="rule-ref">ExpressionName</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#super"><span class="identifier-name">super</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ArgumentList"><span class="rule-ref">ArgumentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">|</span> <a href="#Primary"><span class="rule-ref">Primary</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#super"><span class="identifier-name">super</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ArgumentList"><span class="rule-ref">ArgumentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="EnumDeclaration">EnumDeclaration</span>
+    <span class="def-separator">:</span> <a href="#ClassModifier"><span class="rule-ref">ClassModifier</span></a> <span class="reserved-word">*</span> <a href="#enum"><span class="identifier-name">enum</span></a> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a> <a href="#ClassImplements"><span class="rule-ref">ClassImplements</span></a> <span class="reserved-word">?</span> <a href="#EnumBody"><span class="rule-ref">EnumBody</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="EnumBody">EnumBody</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;{&#39;</span> <a href="#EnumConstantList"><span class="rule-ref">EnumConstantList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;,&#39;</span> <span class="reserved-word">?</span> <a href="#EnumBodyDeclarations"><span class="rule-ref">EnumBodyDeclarations</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="EnumConstantList">EnumConstantList</span>
+    <span class="def-separator">:</span> <a href="#EnumConstant"><span class="rule-ref">EnumConstant</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="EnumConstant">EnumConstant</span>
+    <span class="def-separator">:</span> <a href="#EnumConstantModifier"><span class="rule-ref">EnumConstantModifier</span></a> <span class="reserved-word">*</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="def-separator">(</span> <span class="string-name">&#39;(&#39;</span> <a href="#ArgumentList"><span class="rule-ref">ArgumentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">?</span> <a href="#ClassBody"><span class="rule-ref">ClassBody</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="EnumConstantModifier">EnumConstantModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="EnumBodyDeclarations">EnumBodyDeclarations</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;;&#39;</span> <a href="#ClassBodyDeclaration"><span class="rule-ref">ClassBodyDeclaration</span></a> <span class="reserved-word">*</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="RecordDeclaration">RecordDeclaration</span>
+    <span class="def-separator">:</span> <a href="#ClassModifier"><span class="rule-ref">ClassModifier</span></a> <span class="reserved-word">*</span> <a href="#record"><span class="identifier-name">record</span></a> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a> <a href="#TypeParameters"><span class="rule-ref">TypeParameters</span></a> <span class="reserved-word">?</span> <a href="#RecordHeader"><span class="rule-ref">RecordHeader</span></a> <a href="#ClassImplements"><span class="rule-ref">ClassImplements</span></a> <span class="reserved-word">?</span> <a href="#RecordBody"><span class="rule-ref">RecordBody</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="RecordHeader">RecordHeader</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;(&#39;</span> <a href="#RecordComponentList"><span class="rule-ref">RecordComponentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="RecordComponentList">RecordComponentList</span>
+    <span class="def-separator">:</span> <a href="#RecordComponent"><span class="rule-ref">RecordComponent</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="RecordComponent">RecordComponent</span>
+    <span class="def-separator">:</span> <a href="#RecordComponentModifier"><span class="rule-ref">RecordComponentModifier</span></a> <span class="reserved-word">*</span> <a href="#UnannType"><span class="rule-ref">UnannType</span></a> <a href="#Identifier"><span class="identifier-name">Identifier</span></a>
+    <span class="def-separator">|</span> <a href="#VariableArityRecordComponent"><span class="rule-ref">VariableArityRecordComponent</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="VariableArityRecordComponent">VariableArityRecordComponent</span>
+    <span class="def-separator">:</span> <a href="#RecordComponentModifier"><span class="rule-ref">RecordComponentModifier</span></a> <span class="reserved-word">*</span> <a href="#UnannType"><span class="rule-ref">UnannType</span></a> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;...&#39;</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="RecordComponentModifier">RecordComponentModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="RecordBody">RecordBody</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;{&#39;</span> <a href="#RecordBodyDeclaration"><span class="rule-ref">RecordBodyDeclaration</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="RecordBodyDeclaration">RecordBodyDeclaration</span>
+    <span class="def-separator">:</span> <a href="#ClassBodyDeclaration"><span class="rule-ref">ClassBodyDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#CompactConstructorDeclaration"><span class="rule-ref">CompactConstructorDeclaration</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="CompactConstructorDeclaration">CompactConstructorDeclaration</span>
+    <span class="def-separator">:</span> <a href="#ConstructorModifier"><span class="rule-ref">ConstructorModifier</span></a> <span class="reserved-word">*</span> <a href="#SimpleTypeName"><span class="rule-ref">SimpleTypeName</span></a> <a href="#ConstructorBody"><span class="rule-ref">ConstructorBody</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InterfaceDeclaration">InterfaceDeclaration</span>
+    <span class="def-separator">:</span> <a href="#NormalInterfaceDeclaration"><span class="rule-ref">NormalInterfaceDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#AnnotationInterfaceDeclaration"><span class="rule-ref">AnnotationInterfaceDeclaration</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="NormalInterfaceDeclaration">NormalInterfaceDeclaration</span>
+    <span class="def-separator">:</span> <a href="#InterfaceModifier"><span class="rule-ref">InterfaceModifier</span></a> <span class="reserved-word">*</span> <a href="#interface"><span class="identifier-name">interface</span></a> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a> <a href="#TypeParameters"><span class="rule-ref">TypeParameters</span></a> <span class="reserved-word">?</span> <a href="#InterfaceExtends"><span class="rule-ref">InterfaceExtends</span></a> <span class="reserved-word">?</span> <a href="#InterfacePermits"><span class="rule-ref">InterfacePermits</span></a> <span class="reserved-word">?</span> <a href="#InterfaceBody"><span class="rule-ref">InterfaceBody</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InterfaceModifier">InterfaceModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">|</span> <a href="#public"><span class="identifier-name">public</span></a>
+    <span class="def-separator">|</span> <a href="#protected"><span class="identifier-name">protected</span></a>
+    <span class="def-separator">|</span> <a href="#private"><span class="identifier-name">private</span></a>
+    <span class="def-separator">|</span> <a href="#abstract"><span class="identifier-name">abstract</span></a>
+    <span class="def-separator">|</span> <a href="#static"><span class="identifier-name">static</span></a>
+    <span class="def-separator">|</span> <a href="#sealed"><span class="identifier-name">sealed</span></a>
+    <span class="def-separator">|</span> <a href="#non-sealed"><span class="identifier-name">non-sealed</span></a>
+    <span class="def-separator">|</span> <a href="#strictfp"><span class="identifier-name">strictfp</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InterfaceExtends">InterfaceExtends</span>
+    <span class="def-separator">:</span> <a href="#extends"><span class="identifier-name">extends</span></a> <a href="#InterfaceTypeList"><span class="rule-ref">InterfaceTypeList</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InterfacePermits">InterfacePermits</span>
+    <span class="def-separator">:</span> <a href="#permits"><span class="identifier-name">permits</span></a> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InterfaceBody">InterfaceBody</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;{&#39;</span> <a href="#InterfaceMemberDeclaration"><span class="rule-ref">InterfaceMemberDeclaration</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InterfaceMemberDeclaration">InterfaceMemberDeclaration</span>
+    <span class="def-separator">:</span> <a href="#ConstantDeclaration"><span class="rule-ref">ConstantDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#InterfaceMethodDeclaration"><span class="rule-ref">InterfaceMethodDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#ClassDeclaration"><span class="rule-ref">ClassDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#InterfaceDeclaration"><span class="rule-ref">InterfaceDeclaration</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ConstantDeclaration">ConstantDeclaration</span>
+    <span class="def-separator">:</span> <a href="#ConstantModifier"><span class="rule-ref">ConstantModifier</span></a> <span class="reserved-word">*</span> <a href="#UnannType"><span class="rule-ref">UnannType</span></a> <a href="#VariableDeclaratorList"><span class="rule-ref">VariableDeclaratorList</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ConstantModifier">ConstantModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">|</span> <a href="#public"><span class="identifier-name">public</span></a>
+    <span class="def-separator">|</span> <a href="#static"><span class="identifier-name">static</span></a>
+    <span class="def-separator">|</span> <a href="#final"><span class="identifier-name">final</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InterfaceMethodDeclaration">InterfaceMethodDeclaration</span>
+    <span class="def-separator">:</span> <a href="#InterfaceMethodModifier"><span class="rule-ref">InterfaceMethodModifier</span></a> <span class="reserved-word">*</span> <a href="#MethodHeader"><span class="rule-ref">MethodHeader</span></a> <a href="#MethodBody"><span class="rule-ref">MethodBody</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InterfaceMethodModifier">InterfaceMethodModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">|</span> <a href="#public"><span class="identifier-name">public</span></a>
+    <span class="def-separator">|</span> <a href="#private"><span class="identifier-name">private</span></a>
+    <span class="def-separator">|</span> <a href="#abstract"><span class="identifier-name">abstract</span></a>
+    <span class="def-separator">|</span> <a href="#default"><span class="identifier-name">default</span></a>
+    <span class="def-separator">|</span> <a href="#static"><span class="identifier-name">static</span></a>
+    <span class="def-separator">|</span> <a href="#strictfp"><span class="identifier-name">strictfp</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="AnnotationInterfaceDeclaration">AnnotationInterfaceDeclaration</span>
+    <span class="def-separator">:</span> <a href="#InterfaceModifier"><span class="rule-ref">InterfaceModifier</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;&#64&#39;</span> <a href="#interface"><span class="identifier-name">interface</span></a> <a href="#TypeIdentifier"><span class="identifier-name">TypeIdentifier</span></a> <a href="#AnnotationInterfaceBody"><span class="rule-ref">AnnotationInterfaceBody</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="AnnotationInterfaceBody">AnnotationInterfaceBody</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;{&#39;</span> <a href="#AnnotationInterfaceMemberDeclaration"><span class="rule-ref">AnnotationInterfaceMemberDeclaration</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="AnnotationInterfaceMemberDeclaration">AnnotationInterfaceMemberDeclaration</span>
+    <span class="def-separator">:</span> <a href="#AnnotationInterfaceElementDeclaration"><span class="rule-ref">AnnotationInterfaceElementDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#ConstantDeclaration"><span class="rule-ref">ConstantDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#ClassDeclaration"><span class="rule-ref">ClassDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#InterfaceDeclaration"><span class="rule-ref">InterfaceDeclaration</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="AnnotationInterfaceElementDeclaration">AnnotationInterfaceElementDeclaration</span>
+    <span class="def-separator">:</span> <a href="#AnnotationInterfaceElementModifier"><span class="rule-ref">AnnotationInterfaceElementModifier</span></a> <span class="reserved-word">*</span> <a href="#UnannType"><span class="rule-ref">UnannType</span></a> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="string-name">&#39;(&#39;</span> <span class="string-name">&#39;)&#39;</span> <a href="#Dims"><span class="rule-ref">Dims</span></a> <span class="reserved-word">?</span> <a href="#DefaultValue"><span class="rule-ref">DefaultValue</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="AnnotationInterfaceElementModifier">AnnotationInterfaceElementModifier</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">|</span> <a href="#public"><span class="identifier-name">public</span></a>
+    <span class="def-separator">|</span> <a href="#abstract"><span class="identifier-name">abstract</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="DefaultValue">DefaultValue</span>
+    <span class="def-separator">:</span> <a href="#default"><span class="identifier-name">default</span></a> <a href="#ElementValue"><span class="rule-ref">ElementValue</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Annotation">Annotation</span>
+    <span class="def-separator">:</span> <a href="#NormalAnnotation"><span class="rule-ref">NormalAnnotation</span></a>
+    <span class="def-separator">|</span> <a href="#MarkerAnnotation"><span class="rule-ref">MarkerAnnotation</span></a>
+    <span class="def-separator">|</span> <a href="#SingleElementAnnotation"><span class="rule-ref">SingleElementAnnotation</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="NormalAnnotation">NormalAnnotation</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;&#64&#39;</span> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ElementValuePairList"><span class="rule-ref">ElementValuePairList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ElementValuePairList">ElementValuePairList</span>
+    <span class="def-separator">:</span> <a href="#ElementValuePair"><span class="rule-ref">ElementValuePair</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ElementValuePair">ElementValuePair</span>
+    <span class="def-separator">:</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="string-name">&#39;=&#39;</span> <a href="#ElementValue"><span class="rule-ref">ElementValue</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ElementValue">ElementValue</span>
+    <span class="def-separator">:</span> <a href="#ConditionalExpression"><span class="rule-ref">ConditionalExpression</span></a>
+    <span class="def-separator">|</span> <a href="#ElementValueArrayInitializer"><span class="rule-ref">ElementValueArrayInitializer</span></a>
+    <span class="def-separator">|</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ElementValueArrayInitializer">ElementValueArrayInitializer</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;{&#39;</span> <a href="#ElementValueList"><span class="rule-ref">ElementValueList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;,&#39;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ElementValueList">ElementValueList</span>
+    <span class="def-separator">:</span> <a href="#ElementValue"><span class="rule-ref">ElementValue</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="MarkerAnnotation">MarkerAnnotation</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;&#64&#39;</span> <a href="#TypeName"><span class="rule-ref">TypeName</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="SingleElementAnnotation">SingleElementAnnotation</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;&#64&#39;</span> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ElementValue"><span class="rule-ref">ElementValue</span></a> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ArrayInitializer">ArrayInitializer</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;{&#39;</span> <a href="#VariableInitializerList"><span class="rule-ref">VariableInitializerList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;,&#39;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="VariableInitializerList">VariableInitializerList</span>
+    <span class="def-separator">:</span> <a href="#VariableInitializer"><span class="rule-ref">VariableInitializer</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Block">Block</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;{&#39;</span> <a href="#BlockStatements"><span class="rule-ref">BlockStatements</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="BlockStatements">BlockStatements</span>
+    <span class="def-separator">:</span> <a href="#BlockStatement"><span class="rule-ref">BlockStatement</span></a> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="BlockStatement">BlockStatement</span>
+    <span class="def-separator">:</span> <a href="#LocalClassOrInterfaceDeclaration"><span class="rule-ref">LocalClassOrInterfaceDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#LocalVariableDeclarationStatement"><span class="rule-ref">LocalVariableDeclarationStatement</span></a>
+    <span class="def-separator">|</span> <a href="#Statement"><span class="rule-ref">Statement</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LocalClassOrInterfaceDeclaration">LocalClassOrInterfaceDeclaration</span>
+    <span class="def-separator">:</span> <a href="#ClassDeclaration"><span class="rule-ref">ClassDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#NormalInterfaceDeclaration"><span class="rule-ref">NormalInterfaceDeclaration</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LocalVariableDeclarationStatement">LocalVariableDeclarationStatement</span>
+    <span class="def-separator">:</span> <a href="#LocalVariableDeclaration"><span class="rule-ref">LocalVariableDeclaration</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LocalVariableDeclaration">LocalVariableDeclaration</span>
+    <span class="def-separator">:</span> <a href="#VariableModifier"><span class="rule-ref">VariableModifier</span></a> <span class="reserved-word">*</span> <a href="#LocalVariableType"><span class="rule-ref">LocalVariableType</span></a> <a href="#VariableDeclaratorList"><span class="rule-ref">VariableDeclaratorList</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LocalVariableType">LocalVariableType</span>
+    <span class="def-separator">:</span> <a href="#UnannType"><span class="rule-ref">UnannType</span></a>
+    <span class="def-separator">|</span> <a href="#var"><span class="identifier-name">var</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Statement">Statement</span>
+    <span class="def-separator">:</span> <a href="#StatementWithoutTrailingSubstatement"><span class="rule-ref">StatementWithoutTrailingSubstatement</span></a>
+    <span class="def-separator">|</span> <a href="#LabeledStatement"><span class="rule-ref">LabeledStatement</span></a>
+    <span class="def-separator">|</span> <a href="#IfThenStatement"><span class="rule-ref">IfThenStatement</span></a>
+    <span class="def-separator">|</span> <a href="#IfThenElseStatement"><span class="rule-ref">IfThenElseStatement</span></a>
+    <span class="def-separator">|</span> <a href="#WhileStatement"><span class="rule-ref">WhileStatement</span></a>
+    <span class="def-separator">|</span> <a href="#ForStatement"><span class="rule-ref">ForStatement</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="StatementNoShortIf">StatementNoShortIf</span>
+    <span class="def-separator">:</span> <a href="#StatementWithoutTrailingSubstatement"><span class="rule-ref">StatementWithoutTrailingSubstatement</span></a>
+    <span class="def-separator">|</span> <a href="#LabeledStatementNoShortIf"><span class="rule-ref">LabeledStatementNoShortIf</span></a>
+    <span class="def-separator">|</span> <a href="#IfThenElseStatementNoShortIf"><span class="rule-ref">IfThenElseStatementNoShortIf</span></a>
+    <span class="def-separator">|</span> <a href="#WhileStatementNoShortIf"><span class="rule-ref">WhileStatementNoShortIf</span></a>
+    <span class="def-separator">|</span> <a href="#ForStatementNoShortIf"><span class="rule-ref">ForStatementNoShortIf</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="StatementWithoutTrailingSubstatement">StatementWithoutTrailingSubstatement</span>
+    <span class="def-separator">:</span> <a href="#Block"><span class="rule-ref">Block</span></a>
+    <span class="def-separator">|</span> <a href="#EmptyStatement"><span class="rule-ref">EmptyStatement</span></a>
+    <span class="def-separator">|</span> <a href="#ExpressionStatement"><span class="rule-ref">ExpressionStatement</span></a>
+    <span class="def-separator">|</span> <a href="#AssertStatement"><span class="rule-ref">AssertStatement</span></a>
+    <span class="def-separator">|</span> <a href="#SwitchStatement"><span class="rule-ref">SwitchStatement</span></a>
+    <span class="def-separator">|</span> <a href="#DoStatement"><span class="rule-ref">DoStatement</span></a>
+    <span class="def-separator">|</span> <a href="#BreakStatement"><span class="rule-ref">BreakStatement</span></a>
+    <span class="def-separator">|</span> <a href="#ContinueStatement"><span class="rule-ref">ContinueStatement</span></a>
+    <span class="def-separator">|</span> <a href="#ReturnStatement"><span class="rule-ref">ReturnStatement</span></a>
+    <span class="def-separator">|</span> <a href="#SynchronizedStatement"><span class="rule-ref">SynchronizedStatement</span></a>
+    <span class="def-separator">|</span> <a href="#ThrowStatement"><span class="rule-ref">ThrowStatement</span></a>
+    <span class="def-separator">|</span> <a href="#TryStatement"><span class="rule-ref">TryStatement</span></a>
+    <span class="def-separator">|</span> <a href="#YieldStatement"><span class="rule-ref">YieldStatement</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="EmptyStatement">EmptyStatement</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LabeledStatement">LabeledStatement</span>
+    <span class="def-separator">:</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="string-name">&#39;:&#39;</span> <a href="#Statement"><span class="rule-ref">Statement</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LabeledStatementNoShortIf">LabeledStatementNoShortIf</span>
+    <span class="def-separator">:</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="string-name">&#39;:&#39;</span> <a href="#StatementNoShortIf"><span class="rule-ref">StatementNoShortIf</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ExpressionStatement">ExpressionStatement</span>
+    <span class="def-separator">:</span> <a href="#StatementExpression"><span class="rule-ref">StatementExpression</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="StatementExpression">StatementExpression</span>
+    <span class="def-separator">:</span> <a href="#Assignment"><span class="rule-ref">Assignment</span></a>
+    <span class="def-separator">|</span> <a href="#PreIncrementExpression"><span class="rule-ref">PreIncrementExpression</span></a>
+    <span class="def-separator">|</span> <a href="#PreDecrementExpression"><span class="rule-ref">PreDecrementExpression</span></a>
+    <span class="def-separator">|</span> <a href="#PostIncrementExpression"><span class="rule-ref">PostIncrementExpression</span></a>
+    <span class="def-separator">|</span> <a href="#PostDecrementExpression"><span class="rule-ref">PostDecrementExpression</span></a>
+    <span class="def-separator">|</span> <a href="#MethodInvocation"><span class="rule-ref">MethodInvocation</span></a>
+    <span class="def-separator">|</span> <a href="#ClassInstanceCreationExpression"><span class="rule-ref">ClassInstanceCreationExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="IfThenStatement">IfThenStatement</span>
+    <span class="def-separator">:</span> <a href="#if"><span class="identifier-name">if</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;)&#39;</span> <a href="#Statement"><span class="rule-ref">Statement</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="IfThenElseStatement">IfThenElseStatement</span>
+    <span class="def-separator">:</span> <a href="#if"><span class="identifier-name">if</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;)&#39;</span> <a href="#StatementNoShortIf"><span class="rule-ref">StatementNoShortIf</span></a> <a href="#else"><span class="identifier-name">else</span></a> <a href="#Statement"><span class="rule-ref">Statement</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="IfThenElseStatementNoShortIf">IfThenElseStatementNoShortIf</span>
+    <span class="def-separator">:</span> <a href="#if"><span class="identifier-name">if</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;)&#39;</span> <a href="#StatementNoShortIf"><span class="rule-ref">StatementNoShortIf</span></a> <a href="#else"><span class="identifier-name">else</span></a> <a href="#StatementNoShortIf"><span class="rule-ref">StatementNoShortIf</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="AssertStatement">AssertStatement</span>
+    <span class="def-separator">:</span> <a href="#assert"><span class="identifier-name">assert</span></a> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">|</span> <a href="#assert"><span class="identifier-name">assert</span></a> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;:&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="SwitchStatement">SwitchStatement</span>
+    <span class="def-separator">:</span> <a href="#switch"><span class="identifier-name">switch</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;)&#39;</span> <a href="#SwitchBlock"><span class="rule-ref">SwitchBlock</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="SwitchBlock">SwitchBlock</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;{&#39;</span> <a href="#SwitchRule"><span class="rule-ref">SwitchRule</span></a> <span class="reserved-word">+</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;{&#39;</span> <a href="#SwitchBlockStatementGroup"><span class="rule-ref">SwitchBlockStatementGroup</span></a> <span class="reserved-word">*</span> <span class="def-separator">(</span> <a href="#SwitchLabel"><span class="rule-ref">SwitchLabel</span></a> <span class="string-name">&#39;:&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">*</span> <span class="string-name">&#39;}&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="SwitchRule">SwitchRule</span>
+    <span class="def-separator">:</span> <a href="#SwitchLabel"><span class="rule-ref">SwitchLabel</span></a> <span class="string-name">&#39;-&gt;&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">|</span> <a href="#SwitchLabel"><span class="rule-ref">SwitchLabel</span></a> <span class="string-name">&#39;-&gt;&#39;</span> <a href="#Block"><span class="rule-ref">Block</span></a>
+    <span class="def-separator">|</span> <a href="#SwitchLabel"><span class="rule-ref">SwitchLabel</span></a> <span class="string-name">&#39;-&gt;&#39;</span> <a href="#ThrowStatement"><span class="rule-ref">ThrowStatement</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="SwitchBlockStatementGroup">SwitchBlockStatementGroup</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span> <a href="#SwitchLabel"><span class="rule-ref">SwitchLabel</span></a> <span class="string-name">&#39;:&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">+</span> <a href="#BlockStatements"><span class="rule-ref">BlockStatements</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="SwitchLabel">SwitchLabel</span>
+    <span class="def-separator">:</span> <a href="#case"><span class="identifier-name">case</span></a> <a href="#CaseConstant"><span class="rule-ref">CaseConstant</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">|</span> <a href="#default"><span class="identifier-name">default</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="CaseConstant">CaseConstant</span>
+    <span class="def-separator">:</span> <a href="#ConditionalExpression"><span class="rule-ref">ConditionalExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="WhileStatement">WhileStatement</span>
+    <span class="def-separator">:</span> <a href="#while"><span class="identifier-name">while</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;)&#39;</span> <a href="#Statement"><span class="rule-ref">Statement</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="WhileStatementNoShortIf">WhileStatementNoShortIf</span>
+    <span class="def-separator">:</span> <a href="#while"><span class="identifier-name">while</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;)&#39;</span> <a href="#StatementNoShortIf"><span class="rule-ref">StatementNoShortIf</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="DoStatement">DoStatement</span>
+    <span class="def-separator">:</span> <a href="#do"><span class="identifier-name">do</span></a> <a href="#Statement"><span class="rule-ref">Statement</span></a> <a href="#while"><span class="identifier-name">while</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;)&#39;</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ForStatement">ForStatement</span>
+    <span class="def-separator">:</span> <a href="#BasicForStatement"><span class="rule-ref">BasicForStatement</span></a>
+    <span class="def-separator">|</span> <a href="#EnhancedForStatement"><span class="rule-ref">EnhancedForStatement</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ForStatementNoShortIf">ForStatementNoShortIf</span>
+    <span class="def-separator">:</span> <a href="#BasicForStatementNoShortIf"><span class="rule-ref">BasicForStatementNoShortIf</span></a>
+    <span class="def-separator">|</span> <a href="#EnhancedForStatementNoShortIf"><span class="rule-ref">EnhancedForStatementNoShortIf</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="BasicForStatement">BasicForStatement</span>
+    <span class="def-separator">:</span> <a href="#for"><span class="identifier-name">for</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ForInit"><span class="rule-ref">ForInit</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;;&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;;&#39;</span> <a href="#ForUpdate"><span class="rule-ref">ForUpdate</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span> <a href="#Statement"><span class="rule-ref">Statement</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="BasicForStatementNoShortIf">BasicForStatementNoShortIf</span>
+    <span class="def-separator">:</span> <a href="#for"><span class="identifier-name">for</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ForInit"><span class="rule-ref">ForInit</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;;&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;;&#39;</span> <a href="#ForUpdate"><span class="rule-ref">ForUpdate</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span> <a href="#StatementNoShortIf"><span class="rule-ref">StatementNoShortIf</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ForInit">ForInit</span>
+    <span class="def-separator">:</span> <a href="#StatementExpressionList"><span class="rule-ref">StatementExpressionList</span></a>
+    <span class="def-separator">|</span> <a href="#LocalVariableDeclaration"><span class="rule-ref">LocalVariableDeclaration</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ForUpdate">ForUpdate</span>
+    <span class="def-separator">:</span> <a href="#StatementExpressionList"><span class="rule-ref">StatementExpressionList</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="StatementExpressionList">StatementExpressionList</span>
+    <span class="def-separator">:</span> <a href="#StatementExpression"><span class="rule-ref">StatementExpression</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="EnhancedForStatement">EnhancedForStatement</span>
+    <span class="def-separator">:</span> <a href="#for"><span class="identifier-name">for</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#LocalVariableDeclaration"><span class="rule-ref">LocalVariableDeclaration</span></a> <span class="string-name">&#39;:&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;)&#39;</span> <a href="#Statement"><span class="rule-ref">Statement</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="EnhancedForStatementNoShortIf">EnhancedForStatementNoShortIf</span>
+    <span class="def-separator">:</span> <a href="#for"><span class="identifier-name">for</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#LocalVariableDeclaration"><span class="rule-ref">LocalVariableDeclaration</span></a> <span class="string-name">&#39;:&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;)&#39;</span> <a href="#StatementNoShortIf"><span class="rule-ref">StatementNoShortIf</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="BreakStatement">BreakStatement</span>
+    <span class="def-separator">:</span> <a href="#break"><span class="identifier-name">break</span></a> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="YieldStatement">YieldStatement</span>
+    <span class="def-separator">:</span> <a href="#yield"><span class="identifier-name">yield</span></a> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ContinueStatement">ContinueStatement</span>
+    <span class="def-separator">:</span> <a href="#continue"><span class="identifier-name">continue</span></a> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ReturnStatement">ReturnStatement</span>
+    <span class="def-separator">:</span> <a href="#return"><span class="identifier-name">return</span></a> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ThrowStatement">ThrowStatement</span>
+    <span class="def-separator">:</span> <a href="#throw"><span class="identifier-name">throw</span></a> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="SynchronizedStatement">SynchronizedStatement</span>
+    <span class="def-separator">:</span> <a href="#synchronized"><span class="identifier-name">synchronized</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;)&#39;</span> <a href="#Block"><span class="rule-ref">Block</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TryStatement">TryStatement</span>
+    <span class="def-separator">:</span> <a href="#try"><span class="identifier-name">try</span></a> <a href="#Block"><span class="rule-ref">Block</span></a> <a href="#Catches"><span class="rule-ref">Catches</span></a>
+    <span class="def-separator">|</span> <a href="#try"><span class="identifier-name">try</span></a> <a href="#Block"><span class="rule-ref">Block</span></a> <a href="#Catches"><span class="rule-ref">Catches</span></a> <span class="reserved-word">?</span> <a href="#Finally"><span class="rule-ref">Finally</span></a>
+    <span class="def-separator">|</span> <a href="#TryWithResourcesStatement"><span class="rule-ref">TryWithResourcesStatement</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Catches">Catches</span>
+    <span class="def-separator">:</span> <a href="#CatchClause"><span class="rule-ref">CatchClause</span></a> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="CatchClause">CatchClause</span>
+    <span class="def-separator">:</span> <a href="#catch"><span class="identifier-name">catch</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#CatchFormalParameter"><span class="rule-ref">CatchFormalParameter</span></a> <span class="string-name">&#39;)&#39;</span> <a href="#Block"><span class="rule-ref">Block</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="CatchFormalParameter">CatchFormalParameter</span>
+    <span class="def-separator">:</span> <a href="#VariableModifier"><span class="rule-ref">VariableModifier</span></a> <span class="reserved-word">*</span> <a href="#CatchType"><span class="rule-ref">CatchType</span></a> <a href="#VariableDeclaratorId"><span class="rule-ref">VariableDeclaratorId</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="CatchType">CatchType</span>
+    <span class="def-separator">:</span> <a href="#UnannClassType"><span class="rule-ref">UnannClassType</span></a> <span class="def-separator">(</span> <span class="string-name">&#39;|&#39;</span> <a href="#ClassType"><span class="rule-ref">ClassType</span></a> <span class="def-separator">)</span> <span class="reserved-word">*</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Finally">Finally</span>
+    <span class="def-separator">:</span> <a href="#finally"><span class="identifier-name">finally</span></a> <a href="#Block"><span class="rule-ref">Block</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TryWithResourcesStatement">TryWithResourcesStatement</span>
+    <span class="def-separator">:</span> <a href="#try"><span class="identifier-name">try</span></a> <a href="#ResourceSpecification"><span class="rule-ref">ResourceSpecification</span></a> <a href="#Block"><span class="rule-ref">Block</span></a> <a href="#Catches"><span class="rule-ref">Catches</span></a> <span class="reserved-word">?</span> <a href="#Finally"><span class="rule-ref">Finally</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ResourceSpecification">ResourceSpecification</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;(&#39;</span> <a href="#ResourceList"><span class="rule-ref">ResourceList</span></a> <span class="string-name">&#39;;&#39;</span> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ResourceList">ResourceList</span>
+    <span class="def-separator">:</span> <a href="#Resource"><span class="rule-ref">Resource</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;;&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Resource">Resource</span>
+    <span class="def-separator">:</span> <a href="#LocalVariableDeclaration"><span class="rule-ref">LocalVariableDeclaration</span></a>
+    <span class="def-separator">|</span> <a href="#VariableAccess"><span class="identifier-name">VariableAccess</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Pattern">Pattern</span>
+    <span class="def-separator">:</span> <a href="#TypePattern"><span class="rule-ref">TypePattern</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypePattern">TypePattern</span>
+    <span class="def-separator">:</span> <a href="#LocalVariableDeclaration"><span class="rule-ref">LocalVariableDeclaration</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Primary">Primary</span>
+    <span class="def-separator">:</span> <a href="#PrimaryNoNewArray"><span class="rule-ref">PrimaryNoNewArray</span></a>
+    <span class="def-separator">|</span> <a href="#ArrayCreationExpression"><span class="rule-ref">ArrayCreationExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="PrimaryNoNewArray">PrimaryNoNewArray</span>
+    <span class="def-separator">:</span> <a href="#Literal"><span class="identifier-name">Literal</span></a>
+    <span class="def-separator">|</span> <a href="#ClassLiteral"><span class="rule-ref">ClassLiteral</span></a>
+    <span class="def-separator">|</span> <a href="#this"><span class="identifier-name">this</span></a>
+    <span class="def-separator">|</span> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#this"><span class="identifier-name">this</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">|</span> <a href="#ClassInstanceCreationExpression"><span class="rule-ref">ClassInstanceCreationExpression</span></a>
+    <span class="def-separator">|</span> <a href="#FieldAccess"><span class="rule-ref">FieldAccess</span></a>
+    <span class="def-separator">|</span> <a href="#ArrayAccess"><span class="rule-ref">ArrayAccess</span></a>
+    <span class="def-separator">|</span> <a href="#MethodInvocation"><span class="rule-ref">MethodInvocation</span></a>
+    <span class="def-separator">|</span> <a href="#MethodReference"><span class="rule-ref">MethodReference</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassLiteral">ClassLiteral</span>
+    <span class="def-separator">:</span> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="def-separator">(</span> <span class="string-name">&#39;[&#39;</span> <span class="string-name">&#39;]&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">*</span> <span class="string-name">&#39;.&#39;</span> <a href="#class"><span class="identifier-name">class</span></a>
+    <span class="def-separator">|</span> <a href="#NumericType"><span class="rule-ref">NumericType</span></a> <span class="def-separator">(</span> <span class="string-name">&#39;[&#39;</span> <span class="string-name">&#39;]&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">*</span> <span class="string-name">&#39;.&#39;</span> <a href="#class"><span class="identifier-name">class</span></a>
+    <span class="def-separator">|</span> <a href="#boolean"><span class="identifier-name">boolean</span></a> <span class="def-separator">(</span> <span class="string-name">&#39;[&#39;</span> <span class="string-name">&#39;]&#39;</span> <span class="def-separator">)</span> <span class="reserved-word">*</span> <span class="string-name">&#39;.&#39;</span> <a href="#class"><span class="identifier-name">class</span></a>
+    <span class="def-separator">|</span> <a href="#void"><span class="identifier-name">void</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#class"><span class="identifier-name">class</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassInstanceCreationExpression">ClassInstanceCreationExpression</span>
+    <span class="def-separator">:</span> <a href="#UnqualifiedClassInstanceCreationExpression"><span class="rule-ref">UnqualifiedClassInstanceCreationExpression</span></a>
+    <span class="def-separator">|</span> <a href="#ExpressionName"><span class="rule-ref">ExpressionName</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#UnqualifiedClassInstanceCreationExpression"><span class="rule-ref">UnqualifiedClassInstanceCreationExpression</span></a>
+    <span class="def-separator">|</span> <a href="#Primary"><span class="rule-ref">Primary</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#UnqualifiedClassInstanceCreationExpression"><span class="rule-ref">UnqualifiedClassInstanceCreationExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="UnqualifiedClassInstanceCreationExpression">UnqualifiedClassInstanceCreationExpression</span>
+    <span class="def-separator">:</span> <a href="#new"><span class="identifier-name">new</span></a> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#ClassOrInterfaceTypeToInstantiate"><span class="rule-ref">ClassOrInterfaceTypeToInstantiate</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ArgumentList"><span class="rule-ref">ArgumentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span> <a href="#ClassBody"><span class="rule-ref">ClassBody</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ClassOrInterfaceTypeToInstantiate">ClassOrInterfaceTypeToInstantiate</span>
+    <span class="def-separator">:</span> <span class="def-separator">(</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="def-separator">)</span> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;.&#39;</span> <span class="def-separator">]</span> <a href="#TypeArgumentsOrDiamond"><span class="rule-ref">TypeArgumentsOrDiamond</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="TypeArgumentsOrDiamond">TypeArgumentsOrDiamond</span>
+    <span class="def-separator">:</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;&lt;&gt;&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="FieldAccess">FieldAccess</span>
+    <span class="def-separator">:</span> <a href="#Primary"><span class="rule-ref">Primary</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a>
+    <span class="def-separator">|</span> <a href="#super"><span class="identifier-name">super</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a>
+    <span class="def-separator">|</span> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#super"><span class="identifier-name">super</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ArrayAccess">ArrayAccess</span>
+    <span class="def-separator">:</span> <a href="#ExpressionName"><span class="rule-ref">ExpressionName</span></a> <span class="string-name">&#39;[&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;]&#39;</span>
+    <span class="def-separator">|</span> <a href="#PrimaryNoNewArray"><span class="rule-ref">PrimaryNoNewArray</span></a> <span class="string-name">&#39;[&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;]&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="MethodInvocation">MethodInvocation</span>
+    <span class="def-separator">:</span> <a href="#MethodName"><span class="rule-ref">MethodName</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ArgumentList"><span class="rule-ref">ArgumentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">|</span> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ArgumentList"><span class="rule-ref">ArgumentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">|</span> <a href="#ExpressionName"><span class="rule-ref">ExpressionName</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ArgumentList"><span class="rule-ref">ArgumentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">|</span> <a href="#Primary"><span class="rule-ref">Primary</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ArgumentList"><span class="rule-ref">ArgumentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">|</span> <a href="#super"><span class="identifier-name">super</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ArgumentList"><span class="rule-ref">ArgumentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">|</span> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#super"><span class="identifier-name">super</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#ArgumentList"><span class="rule-ref">ArgumentList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ArgumentList">ArgumentList</span>
+    <span class="def-separator">:</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="MethodReference">MethodReference</span>
+    <span class="def-separator">:</span> <a href="#ExpressionName"><span class="rule-ref">ExpressionName</span></a> <span class="string-name">&#39;::&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a>
+    <span class="def-separator">|</span> <a href="#Primary"><span class="rule-ref">Primary</span></a> <span class="string-name">&#39;::&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a>
+    <span class="def-separator">|</span> <a href="#ReferenceType"><span class="rule-ref">ReferenceType</span></a> <span class="string-name">&#39;::&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a>
+    <span class="def-separator">|</span> <a href="#super"><span class="identifier-name">super</span></a> <span class="string-name">&#39;::&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a>
+    <span class="def-separator">|</span> <a href="#TypeName"><span class="rule-ref">TypeName</span></a> <span class="string-name">&#39;.&#39;</span> <a href="#super"><span class="identifier-name">super</span></a> <span class="string-name">&#39;::&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a>
+    <span class="def-separator">|</span> <a href="#ClassType"><span class="rule-ref">ClassType</span></a> <span class="string-name">&#39;::&#39;</span> <a href="#TypeArguments"><span class="rule-ref">TypeArguments</span></a> <span class="reserved-word">?</span> <a href="#new"><span class="identifier-name">new</span></a>
+    <span class="def-separator">|</span> <a href="#ArrayType"><span class="rule-ref">ArrayType</span></a> <span class="string-name">&#39;::&#39;</span> <a href="#new"><span class="identifier-name">new</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ArrayCreationExpression">ArrayCreationExpression</span>
+    <span class="def-separator">:</span> <a href="#new"><span class="identifier-name">new</span></a> <a href="#PrimitiveType"><span class="rule-ref">PrimitiveType</span></a> <a href="#DimExprs"><span class="rule-ref">DimExprs</span></a> <a href="#Dims"><span class="rule-ref">Dims</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">|</span> <a href="#new"><span class="identifier-name">new</span></a> <a href="#ClassOrInterfaceType"><span class="rule-ref">ClassOrInterfaceType</span></a> <a href="#DimExprs"><span class="rule-ref">DimExprs</span></a> <a href="#Dims"><span class="rule-ref">Dims</span></a> <span class="reserved-word">?</span>
+    <span class="def-separator">|</span> <a href="#new"><span class="identifier-name">new</span></a> <a href="#PrimitiveType"><span class="rule-ref">PrimitiveType</span></a> <a href="#Dims"><span class="rule-ref">Dims</span></a> <a href="#ArrayInitializer"><span class="rule-ref">ArrayInitializer</span></a>
+    <span class="def-separator">|</span> <a href="#new"><span class="identifier-name">new</span></a> <a href="#ClassOrInterfaceType"><span class="rule-ref">ClassOrInterfaceType</span></a> <a href="#Dims"><span class="rule-ref">Dims</span></a> <a href="#ArrayInitializer"><span class="rule-ref">ArrayInitializer</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="DimExprs">DimExprs</span>
+    <span class="def-separator">:</span> <a href="#DimExpr"><span class="rule-ref">DimExpr</span></a> <span class="reserved-word">+</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="DimExpr">DimExpr</span>
+    <span class="def-separator">:</span> <a href="#Annotation"><span class="rule-ref">Annotation</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;[&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;]&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Expression">Expression</span>
+    <span class="def-separator">:</span> <a href="#LambdaExpression"><span class="rule-ref">LambdaExpression</span></a>
+    <span class="def-separator">|</span> <a href="#AssignmentExpression"><span class="rule-ref">AssignmentExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LambdaExpression">LambdaExpression</span>
+    <span class="def-separator">:</span> <a href="#LambdaParameters"><span class="rule-ref">LambdaParameters</span></a> <span class="string-name">&#39;-&gt;&#39;</span> <a href="#LambdaBody"><span class="rule-ref">LambdaBody</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LambdaParameters">LambdaParameters</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;(&#39;</span> <a href="#LambdaParameterList"><span class="rule-ref">LambdaParameterList</span></a> <span class="reserved-word">?</span> <span class="string-name">&#39;)&#39;</span>
+    <span class="def-separator">|</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LambdaParameterList">LambdaParameterList</span>
+    <span class="def-separator">:</span> <a href="#LambdaParameter"><span class="rule-ref">LambdaParameter</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">|</span> <a href="#Identifier"><span class="identifier-name">Identifier</span></a> <span class="reserved-word">+</span> <span class="def-separator">[</span> <span class="string-name">&#39;,&#39;</span> <span class="def-separator">]</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LambdaParameter">LambdaParameter</span>
+    <span class="def-separator">:</span> <a href="#VariableModifier"><span class="rule-ref">VariableModifier</span></a> <span class="reserved-word">*</span> <a href="#LambdaParameterType"><span class="rule-ref">LambdaParameterType</span></a> <a href="#VariableDeclaratorId"><span class="rule-ref">VariableDeclaratorId</span></a>
+    <span class="def-separator">|</span> <a href="#VariableArityParameter"><span class="rule-ref">VariableArityParameter</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LambdaParameterType">LambdaParameterType</span>
+    <span class="def-separator">:</span> <a href="#UnannType"><span class="rule-ref">UnannType</span></a>
+    <span class="def-separator">|</span> <a href="#var"><span class="identifier-name">var</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LambdaBody">LambdaBody</span>
+    <span class="def-separator">:</span> <a href="#Expression"><span class="rule-ref">Expression</span></a>
+    <span class="def-separator">|</span> <a href="#Block"><span class="rule-ref">Block</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="AssignmentExpression">AssignmentExpression</span>
+    <span class="def-separator">:</span> <a href="#ConditionalExpression"><span class="rule-ref">ConditionalExpression</span></a>
+    <span class="def-separator">|</span> <a href="#Assignment"><span class="rule-ref">Assignment</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="Assignment">Assignment</span>
+    <span class="def-separator">:</span> <a href="#LeftHandSide"><span class="rule-ref">LeftHandSide</span></a> <a href="#AssignmentOperator"><span class="rule-ref">AssignmentOperator</span></a> <a href="#Expression"><span class="rule-ref">Expression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="LeftHandSide">LeftHandSide</span>
+    <span class="def-separator">:</span> <a href="#ExpressionName"><span class="rule-ref">ExpressionName</span></a>
+    <span class="def-separator">|</span> <a href="#FieldAccess"><span class="rule-ref">FieldAccess</span></a>
+    <span class="def-separator">|</span> <a href="#ArrayAccess"><span class="rule-ref">ArrayAccess</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="AssignmentOperator">AssignmentOperator</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;=&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;*=&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;/=&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;%=&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+=&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-=&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;&lt;&lt;=&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;&gt;&gt;=&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;&gt;&gt;&gt;=&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;&amp;=&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;^=&#39;</span>
+    <span class="def-separator">|</span> <span class="string-name">&#39;|=&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ConditionalExpression">ConditionalExpression</span>
+    <span class="def-separator">:</span> <a href="#ConditionalOrExpression"><span class="rule-ref">ConditionalOrExpression</span></a>
+    <span class="def-separator">|</span> <a href="#ConditionalOrExpression"><span class="rule-ref">ConditionalOrExpression</span></a> <span class="string-name">&#39;?&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;:&#39;</span> <a href="#ConditionalExpression"><span class="rule-ref">ConditionalExpression</span></a>
+    <span class="def-separator">|</span> <a href="#ConditionalOrExpression"><span class="rule-ref">ConditionalOrExpression</span></a> <span class="string-name">&#39;?&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;:&#39;</span> <a href="#LambdaExpression"><span class="rule-ref">LambdaExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ConditionalOrExpression">ConditionalOrExpression</span>
+    <span class="def-separator">:</span> <a href="#ConditionalAndExpression"><span class="rule-ref">ConditionalAndExpression</span></a>
+    <span class="def-separator">|</span> <a href="#ConditionalOrExpression"><span class="rule-ref">ConditionalOrExpression</span></a> <span class="string-name">&#39;||&#39;</span> <a href="#ConditionalAndExpression"><span class="rule-ref">ConditionalAndExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ConditionalAndExpression">ConditionalAndExpression</span>
+    <span class="def-separator">:</span> <a href="#InclusiveOrExpression"><span class="rule-ref">InclusiveOrExpression</span></a>
+    <span class="def-separator">|</span> <a href="#ConditionalAndExpression"><span class="rule-ref">ConditionalAndExpression</span></a> <span class="string-name">&#39;&amp;&amp;&#39;</span> <a href="#InclusiveOrExpression"><span class="rule-ref">InclusiveOrExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InclusiveOrExpression">InclusiveOrExpression</span>
+    <span class="def-separator">:</span> <a href="#ExclusiveOrExpression"><span class="rule-ref">ExclusiveOrExpression</span></a>
+    <span class="def-separator">|</span> <a href="#InclusiveOrExpression"><span class="rule-ref">InclusiveOrExpression</span></a> <span class="string-name">&#39;|&#39;</span> <a href="#ExclusiveOrExpression"><span class="rule-ref">ExclusiveOrExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ExclusiveOrExpression">ExclusiveOrExpression</span>
+    <span class="def-separator">:</span> <a href="#AndExpression"><span class="rule-ref">AndExpression</span></a>
+    <span class="def-separator">|</span> <a href="#ExclusiveOrExpression"><span class="rule-ref">ExclusiveOrExpression</span></a> <span class="string-name">&#39;^&#39;</span> <a href="#AndExpression"><span class="rule-ref">AndExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="AndExpression">AndExpression</span>
+    <span class="def-separator">:</span> <a href="#EqualityExpression"><span class="rule-ref">EqualityExpression</span></a>
+    <span class="def-separator">|</span> <a href="#AndExpression"><span class="rule-ref">AndExpression</span></a> <span class="string-name">&#39;&amp;&#39;</span> <a href="#EqualityExpression"><span class="rule-ref">EqualityExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="EqualityExpression">EqualityExpression</span>
+    <span class="def-separator">:</span> <a href="#RelationalExpression"><span class="rule-ref">RelationalExpression</span></a>
+    <span class="def-separator">|</span> <a href="#EqualityExpression"><span class="rule-ref">EqualityExpression</span></a> <span class="string-name">&#39;==&#39;</span> <a href="#RelationalExpression"><span class="rule-ref">RelationalExpression</span></a>
+    <span class="def-separator">|</span> <a href="#EqualityExpression"><span class="rule-ref">EqualityExpression</span></a> <span class="string-name">&#39;!=&#39;</span> <a href="#RelationalExpression"><span class="rule-ref">RelationalExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="RelationalExpression">RelationalExpression</span>
+    <span class="def-separator">:</span> <a href="#ShiftExpression"><span class="rule-ref">ShiftExpression</span></a>
+    <span class="def-separator">|</span> <a href="#RelationalExpression"><span class="rule-ref">RelationalExpression</span></a> <span class="string-name">&#39;&lt;&#39;</span> <a href="#ShiftExpression"><span class="rule-ref">ShiftExpression</span></a>
+    <span class="def-separator">|</span> <a href="#RelationalExpression"><span class="rule-ref">RelationalExpression</span></a> <span class="string-name">&#39;&gt;&#39;</span> <a href="#ShiftExpression"><span class="rule-ref">ShiftExpression</span></a>
+    <span class="def-separator">|</span> <a href="#RelationalExpression"><span class="rule-ref">RelationalExpression</span></a> <span class="string-name">&#39;&lt;=&#39;</span> <a href="#ShiftExpression"><span class="rule-ref">ShiftExpression</span></a>
+    <span class="def-separator">|</span> <a href="#RelationalExpression"><span class="rule-ref">RelationalExpression</span></a> <span class="string-name">&#39;&gt;=&#39;</span> <a href="#ShiftExpression"><span class="rule-ref">ShiftExpression</span></a>
+    <span class="def-separator">|</span> <a href="#InstanceofExpression"><span class="rule-ref">InstanceofExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="InstanceofExpression">InstanceofExpression</span>
+    <span class="def-separator">:</span> <a href="#RelationalExpression"><span class="rule-ref">RelationalExpression</span></a> <a href="#instanceof"><span class="identifier-name">instanceof</span></a> <a href="#ReferenceType"><span class="rule-ref">ReferenceType</span></a>
+    <span class="def-separator">|</span> <a href="#RelationalExpression"><span class="rule-ref">RelationalExpression</span></a> <a href="#instanceof"><span class="identifier-name">instanceof</span></a> <a href="#Pattern"><span class="rule-ref">Pattern</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="ShiftExpression">ShiftExpression</span>
+    <span class="def-separator">:</span> <a href="#AdditiveExpression"><span class="rule-ref">AdditiveExpression</span></a>
+    <span class="def-separator">|</span> <a href="#ShiftExpression"><span class="rule-ref">ShiftExpression</span></a> <span class="string-name">&#39;&lt;&lt;&#39;</span> <a href="#AdditiveExpression"><span class="rule-ref">AdditiveExpression</span></a>
+    <span class="def-separator">|</span> <a href="#ShiftExpression"><span class="rule-ref">ShiftExpression</span></a> <span class="string-name">&#39;&gt;&gt;&#39;</span> <a href="#AdditiveExpression"><span class="rule-ref">AdditiveExpression</span></a>
+    <span class="def-separator">|</span> <a href="#ShiftExpression"><span class="rule-ref">ShiftExpression</span></a> <span class="string-name">&#39;&gt;&gt;&gt;&#39;</span> <a href="#AdditiveExpression"><span class="rule-ref">AdditiveExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="AdditiveExpression">AdditiveExpression</span>
+    <span class="def-separator">:</span> <a href="#MultiplicativeExpression"><span class="rule-ref">MultiplicativeExpression</span></a>
+    <span class="def-separator">|</span> <a href="#AdditiveExpression"><span class="rule-ref">AdditiveExpression</span></a> <span class="string-name">&#39;+&#39;</span> <a href="#MultiplicativeExpression"><span class="rule-ref">MultiplicativeExpression</span></a>
+    <span class="def-separator">|</span> <a href="#AdditiveExpression"><span class="rule-ref">AdditiveExpression</span></a> <span class="string-name">&#39;-&#39;</span> <a href="#MultiplicativeExpression"><span class="rule-ref">MultiplicativeExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="MultiplicativeExpression">MultiplicativeExpression</span>
+    <span class="def-separator">:</span> <a href="#UnaryExpression"><span class="rule-ref">UnaryExpression</span></a>
+    <span class="def-separator">|</span> <a href="#MultiplicativeExpression"><span class="rule-ref">MultiplicativeExpression</span></a> <span class="string-name">&#39;*&#39;</span> <a href="#UnaryExpression"><span class="rule-ref">UnaryExpression</span></a>
+    <span class="def-separator">|</span> <a href="#MultiplicativeExpression"><span class="rule-ref">MultiplicativeExpression</span></a> <span class="string-name">&#39;/&#39;</span> <a href="#UnaryExpression"><span class="rule-ref">UnaryExpression</span></a>
+    <span class="def-separator">|</span> <a href="#MultiplicativeExpression"><span class="rule-ref">MultiplicativeExpression</span></a> <span class="string-name">&#39;%&#39;</span> <a href="#UnaryExpression"><span class="rule-ref">UnaryExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="UnaryExpression">UnaryExpression</span>
+    <span class="def-separator">:</span> <a href="#PreIncrementExpression"><span class="rule-ref">PreIncrementExpression</span></a>
+    <span class="def-separator">|</span> <a href="#PreDecrementExpression"><span class="rule-ref">PreDecrementExpression</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;+&#39;</span> <a href="#UnaryExpression"><span class="rule-ref">UnaryExpression</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;-&#39;</span> <a href="#UnaryExpression"><span class="rule-ref">UnaryExpression</span></a>
+    <span class="def-separator">|</span> <a href="#UnaryExpressionNotPlusMinus"><span class="rule-ref">UnaryExpressionNotPlusMinus</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="PreIncrementExpression">PreIncrementExpression</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;++&#39;</span> <a href="#UnaryExpression"><span class="rule-ref">UnaryExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="PreDecrementExpression">PreDecrementExpression</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;--&#39;</span> <a href="#UnaryExpression"><span class="rule-ref">UnaryExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="UnaryExpressionNotPlusMinus">UnaryExpressionNotPlusMinus</span>
+    <span class="def-separator">:</span> <a href="#PostfixExpression"><span class="rule-ref">PostfixExpression</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;~&#39;</span> <a href="#UnaryExpression"><span class="rule-ref">UnaryExpression</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;!&#39;</span> <a href="#UnaryExpression"><span class="rule-ref">UnaryExpression</span></a>
+    <span class="def-separator">|</span> <a href="#CastExpression"><span class="rule-ref">CastExpression</span></a>
+    <span class="def-separator">|</span> <a href="#SwitchExpression"><span class="rule-ref">SwitchExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="PostfixExpression">PostfixExpression</span>
+    <span class="def-separator">:</span> <a href="#Primary"><span class="rule-ref">Primary</span></a>
+    <span class="def-separator">|</span> <a href="#ExpressionName"><span class="rule-ref">ExpressionName</span></a>
+    <span class="def-separator">|</span> <a href="#PostIncrementExpression"><span class="rule-ref">PostIncrementExpression</span></a>
+    <span class="def-separator">|</span> <a href="#PostDecrementExpression"><span class="rule-ref">PostDecrementExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="PostIncrementExpression">PostIncrementExpression</span>
+    <span class="def-separator">:</span> <a href="#PostfixExpression"><span class="rule-ref">PostfixExpression</span></a> <span class="string-name">&#39;++&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="PostDecrementExpression">PostDecrementExpression</span>
+    <span class="def-separator">:</span> <a href="#PostfixExpression"><span class="rule-ref">PostfixExpression</span></a> <span class="string-name">&#39;--&#39;</span>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="CastExpression">CastExpression</span>
+    <span class="def-separator">:</span> <span class="string-name">&#39;(&#39;</span> <a href="#PrimitiveType"><span class="rule-ref">PrimitiveType</span></a> <span class="string-name">&#39;)&#39;</span> <a href="#UnaryExpression"><span class="rule-ref">UnaryExpression</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <a href="#ReferenceType"><span class="rule-ref">ReferenceType</span></a> <a href="#AdditionalBound"><span class="rule-ref">AdditionalBound</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;)&#39;</span> <a href="#UnaryExpressionNotPlusMinus"><span class="rule-ref">UnaryExpressionNotPlusMinus</span></a>
+    <span class="def-separator">|</span> <span class="string-name">&#39;(&#39;</span> <a href="#ReferenceType"><span class="rule-ref">ReferenceType</span></a> <a href="#AdditionalBound"><span class="rule-ref">AdditionalBound</span></a> <span class="reserved-word">*</span> <span class="string-name">&#39;)&#39;</span> <a href="#LambdaExpression"><span class="rule-ref">LambdaExpression</span></a>
+    <span class="def-separator">;</span>
+
+<span class="rule-name" id="SwitchExpression">SwitchExpression</span>
+    <span class="def-separator">:</span> <a href="#switch"><span class="identifier-name">switch</span></a> <span class="string-name">&#39;(&#39;</span> <a href="#Expression"><span class="rule-ref">Expression</span></a> <span class="string-name">&#39;)&#39;</span> <a href="#SwitchBlock"><span class="rule-ref">SwitchBlock</span></a>
+    <span class="def-separator">;</span>
+
+
+
+
+
+
+
+<span class="part-brace">%}</span>
+                    </pre>
+                </div>
+            </section>
