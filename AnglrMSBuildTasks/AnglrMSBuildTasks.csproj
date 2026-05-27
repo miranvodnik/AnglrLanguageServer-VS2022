@@ -3,11 +3,27 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <version>$(VersionPrefix)</version>
-    <title>AnglrMSBuildTasks</title>
-    <authors>Miran Vodnik</authors>
-    <description>Compiles AnGLR source file to set of C# files. See https://www.angstlr.com/ for details.</description>
-    <tags>ANGLR;syntax;LR;generalised LR;parse;syntax tree;grammar;LR grammar</tags>
-    <copyright>Copyright ©AnGLR 2022</copyright>
+    <PackageId>AnglrMSBuildTasks</PackageId>
+    <Title>Anglr MSBuild Tasks for Parsing, Syntax Trees, and Code Generation</Title>
+    <Description>
+      AnglrMSBuildTasks provides MSBuild tasks for parsing Anglr source files and generating
+      structured outputs such as parse trees, syntax trees, and intermediate representations.
+      These tasks integrate directly into the build pipeline, enabling automatic parsing,
+      tree construction, code generation, and artifact emission. Supports per-file metadata,
+      incremental builds, and seamless integration with the Anglr toolchain.
+    </Description>
+    <Summary>
+      MSBuild tasks for parsing Anglr files, generating parse trees, syntax trees, and code output.
+    </Summary>
+    <PackageTags>
+      anglr parser parse parse-tree syntax syntax-tree ast grammar lr glr msbuild msbuild-tasks code-generation language-processing
+    </PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Authors>Miran Vodnik</Authors>
+    <Company>Anglr</Company>
+    <RepositoryUrl>https://github.com/miranvodnik/AnglrLanguageServer-VS2022</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/miranvodnik/AnglrLanguageServer-VS2022</PackageProjectUrl>
+    <Copyright>Copyright ©AnGLR 2022</Copyright>
     <!-- we need the assemblies bundled, so set this so we don't expose any dependencies to the outside world -->
     <GenerateDependencyFile>true</GenerateDependencyFile>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
@@ -30,6 +46,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AnglrParserLibrary\AnglrParserLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="ResolveReferences">

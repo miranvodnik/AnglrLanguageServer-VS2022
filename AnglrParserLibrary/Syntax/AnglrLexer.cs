@@ -15,16 +15,16 @@ namespace Anglr.Lexer
 
 	public class AnglrLexer : LexerBase
 	{
-		internal CommentScanner CommentScanner { get { return (CommentScanner) regarray [comment_scanner]; } }
-		internal LineCommentScanner LineCommentScanner { get { return (LineCommentScanner) regarray [line_comment_scanner]; } }
-		internal AttributeScanner AttributeScanner { get { return (AttributeScanner) regarray [attribute_scanner]; } }
-		internal ScannerIdScanner ScannerIdScanner { get { return (ScannerIdScanner) regarray [scanner_id_scanner]; } }
-		internal ScannerPartScanner ScannerPartScanner { get { return (ScannerPartScanner) regarray [scanner_part_scanner]; } }
-		internal RegexIdScanner RegexIdScanner { get { return (RegexIdScanner) regarray [regex_id_scanner]; } }
-		internal RegexPartScanner RegexPartScanner { get { return (RegexPartScanner) regarray [regex_part_scanner]; } }
-		internal RegexBlockScanner RegexBlockScanner { get { return (RegexBlockScanner) regarray [regex_block_scanner]; } }
-		internal RegexBlockPartScanner RegexBlockPartScanner { get { return (RegexBlockPartScanner) regarray [regex_block_part_scanner]; } }
-		internal AnglrScanner AnglrScanner { get { return (AnglrScanner) regarray [anglrScanner]; } }
+		public CommentScanner CommentScanner { get { return (CommentScanner) regarray [comment_scanner]; } }
+		public LineCommentScanner LineCommentScanner { get { return (LineCommentScanner) regarray [line_comment_scanner]; } }
+		public AttributeScanner AttributeScanner { get { return (AttributeScanner) regarray [attribute_scanner]; } }
+		public ScannerIdScanner ScannerIdScanner { get { return (ScannerIdScanner) regarray [scanner_id_scanner]; } }
+		public ScannerPartScanner ScannerPartScanner { get { return (ScannerPartScanner) regarray [scanner_part_scanner]; } }
+		public RegexIdScanner RegexIdScanner { get { return (RegexIdScanner) regarray [regex_id_scanner]; } }
+		public RegexPartScanner RegexPartScanner { get { return (RegexPartScanner) regarray [regex_part_scanner]; } }
+		public RegexBlockScanner RegexBlockScanner { get { return (RegexBlockScanner) regarray [regex_block_scanner]; } }
+		public RegexBlockPartScanner RegexBlockPartScanner { get { return (RegexBlockPartScanner) regarray [regex_block_part_scanner]; } }
+		public AnglrScanner AnglrScanner { get { return (AnglrScanner) regarray [anglrScanner]; } }
 		public object [] Info { get; private set; }
 		public AnglrLexer (TextReader textReader, object [] info = null)
 		{

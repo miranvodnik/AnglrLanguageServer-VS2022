@@ -4,10 +4,23 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <version>$(VersionPrefix)</version>
     <title>AnglrParserLibrary</title>
-    <authors>Miran Vodnik</authors>
-    <description>AnGLR comiler library</description>
-    <tags>ANGLR;syntax;LR;generalised LR;parse;syntax tree;grammar;LR grammar</tags>
-    <copyright>Copyright ©AnGLR 2022</copyright>
+    <Title>Anglr Compiler Library for Parsing, Syntax Trees, and Code Generation</Title>
+    <Description>
+      AnglrParserLibrary provides Anglr Compiler Library for parsing Anglr source files and generating
+      structured outputs such as parse trees, syntax trees, and intermediate representations.
+    </Description>
+    <Summary>
+      Anglr compiler library for parsing Anglr files, generating parse trees, syntax trees, and code output.
+    </Summary>
+    <PackageTags>
+      anglr parser parse parse-tree syntax syntax-tree ast grammar lr glr msbuild msbuild-tasks code-generation language-processing
+    </PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Authors>Miran Vodnik</Authors>
+    <Company>Anglr</Company>
+    <RepositoryUrl>https://github.com/miranvodnik/AnglrLanguageServer-VS2022</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/miranvodnik/AnglrLanguageServer-VS2022</PackageProjectUrl>
+    <Copyright>Copyright ©AnGLR 2022</Copyright>
     <!-- we need the assemblies bundled, so set this so we don't expose any dependencies to the outside world -->
     <GenerateDependencyFile>true</GenerateDependencyFile>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
@@ -92,6 +105,12 @@
     <ProjectReference Include="..\AnglrDebugBridge\AnglrDebugBridge.csproj" />
     <ProjectReference Include="..\AnglrLogLibrary\AnglrLogLibrary.csproj" />
     <ProjectReference Include="..\AnglrParserCore\AnglrParserCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

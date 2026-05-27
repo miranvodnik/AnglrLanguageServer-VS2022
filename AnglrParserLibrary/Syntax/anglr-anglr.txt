@@ -68,7 +68,7 @@
 (<cstring optional>, __cstring_optional__ID, 67, 1, _eof_token)
 (<number optional>, __number_optional__ID, 68, 1, _eof_token)
 CREATE 1
-2026-04-22 19:00:08.029 - Info - Parse grammar file '..\anglr.anglr'
+2026-05-26 19:17:17.984 - Info - Parse grammar file '..\anglr.anglr'
 STEP   1, 1
 TOKEN  '' (302)
 STEP   2, 1
@@ -14329,105 +14329,105 @@ ACCEPT 1 '' (1) <272, 0, 2> : 234
          split =  0
          join =   0
          steps =  2967
-2026-04-22 19:00:08.218 - Warn - Unknown general attribute: Description
-2026-04-22 19:00:08.219 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown general attribute: Description
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown general attribute: Description
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown general attribute: Description
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown general attribute: Description
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown general attribute: Description
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown general attribute: Description
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown general attribute: Description
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown general attribute: Description
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown general attribute: Description
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown general attribute: Description
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-04-22 19:00:08.220 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-04-22 19:00:08.221 - Warn - Unknown lexer attribute: Description
-2026-04-22 19:00:08.221 - Warn - Unknown name-value pair for UseScanner attribute :Hover = 'true'
-2026-04-22 19:00:08.221 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-04-22 19:00:08.222 - Warn - Unknown general attribute: Description
-2026-04-22 19:00:08.222 - Warn - Unknown name-value pair for Lexer attribute :Hover = 'true'
-2026-04-22 19:00:08.222 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-04-22 19:00:08.223 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.171 - Warn - Unknown general attribute: Description
+2026-05-26 19:17:18.171 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown general attribute: Description
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown general attribute: Description
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown general attribute: Description
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown general attribute: Description
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown general attribute: Description
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown general attribute: Description
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.172 - Warn - Unknown general attribute: Description
+2026-05-26 19:17:18.172 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-05-26 19:17:18.173 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.173 - Warn - Unknown general attribute: Description
+2026-05-26 19:17:18.173 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-05-26 19:17:18.173 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.173 - Warn - Unknown general attribute: Description
+2026-05-26 19:17:18.173 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-05-26 19:17:18.173 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.173 - Warn - Unknown general attribute: Description
+2026-05-26 19:17:18.173 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-05-26 19:17:18.173 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.173 - Warn - Unknown lexer attribute: Description
+2026-05-26 19:17:18.173 - Warn - Unknown name-value pair for UseScanner attribute :Hover = 'true'
+2026-05-26 19:17:18.174 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-05-26 19:17:18.174 - Warn - Unknown general attribute: Description
+2026-05-26 19:17:18.175 - Warn - Unknown name-value pair for Lexer attribute :Hover = 'true'
+2026-05-26 19:17:18.175 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-05-26 19:17:18.175 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
 Collect symbols
-2026-04-22 19:00:08.231 - Debug - Regular expression part vertical-bar = '\|'
-2026-04-22 19:00:08.231 - Debug - Regular expression part comma = '\,'
-2026-04-22 19:00:08.231 - Debug - Regular expression part colon = '\:'
-2026-04-22 19:00:08.231 - Debug - Regular expression part semicolon = '\;'
-2026-04-22 19:00:08.231 - Debug - Regular expression part left-curly-bracket = '\{'
-2026-04-22 19:00:08.231 - Debug - Regular expression part right-curly-bracket = '\}'
-2026-04-22 19:00:08.231 - Debug - Regular expression part left-bracket = '\('
-2026-04-22 19:00:08.231 - Debug - Regular expression part right-bracket = '\)'
-2026-04-22 19:00:08.231 - Debug - Regular expression part left-scanner-bracket = '\%\{'
-2026-04-22 19:00:08.231 - Debug - Regular expression part right-scanner-bracket = '\%\}'
-2026-04-22 19:00:08.231 - Debug - Regular expression part left-square-bracket = '\['
-2026-04-22 19:00:08.231 - Debug - Regular expression part right-square-bracket = '\]'
-2026-04-22 19:00:08.231 - Debug - Regular expression part at-sign = '\@'
-2026-04-22 19:00:08.231 - Debug - Regular expression part double-at-sign = '\@\@'
-2026-04-22 19:00:08.231 - Debug - Regular expression part equals-sign = '\='
-2026-04-22 19:00:08.231 - Debug - Regular expression part question-mark = '\?'
-2026-04-22 19:00:08.231 - Debug - Regular expression part plus-sign = '\+'
-2026-04-22 19:00:08.231 - Debug - Regular expression part minus-sign = '\-'
-2026-04-22 19:00:08.231 - Debug - Regular expression part asterisk = '\*'
-2026-04-22 19:00:08.231 - Debug - Regular expression part slash = '\/'
-2026-04-22 19:00:08.231 - Debug - Regular expression part inv-plus-sign = '\~\+'
-2026-04-22 19:00:08.231 - Debug - Regular expression part inv-minus-sign = '\~\-'
-2026-04-22 19:00:08.231 - Debug - Regular expression part inv-asterisk = '\~\*'
-2026-04-22 19:00:08.231 - Debug - Regular expression part inv-slash = '\~\/'
-2026-04-22 19:00:08.231 - Debug - Regular expression part empty = '%[ \t]*empty'
-2026-04-22 19:00:08.231 - Debug - Regular expression part terminal = '%[ \t]*terminal'
-2026-04-22 19:00:08.231 - Debug - Regular expression part general = '%[ \t]*general'
-2026-04-22 19:00:08.231 - Debug - Regular expression part declarations = '%[ \t]*declarations'
-2026-04-22 19:00:08.231 - Debug - Regular expression part rregex = '%[ \t]*regex'
-2026-04-22 19:00:08.231 - Debug - Regular expression part scanner = '%[ \t]*scanner'
-2026-04-22 19:00:08.231 - Debug - Regular expression part lexer = '%[ \t]*lexer'
-2026-04-22 19:00:08.231 - Debug - Regular expression part parser = '%[ \t]*parser'
-2026-04-22 19:00:08.231 - Debug - Regular expression part priority = '%[ \t]*prio(rity)?'
-2026-04-22 19:00:08.231 - Debug - Regular expression part associativity = '%[ \t]*assoc(iativity)?'
-2026-04-22 19:00:08.231 - Debug - Regular expression part skip = 'skip'
-2026-04-22 19:00:08.231 - Debug - Regular expression part ttoken = 'terminal'
-2026-04-22 19:00:08.231 - Debug - Regular expression part revent = 'event'
-2026-04-22 19:00:08.231 - Debug - Regular expression part push = 'push'
-2026-04-22 19:00:08.231 - Debug - Regular expression part pop = 'pop'
-2026-04-22 19:00:08.231 - Debug - Regular expression part letter = '[a-zA-Z_]'
-2026-04-22 19:00:08.231 - Debug - Regular expression part digit = '[0-9]'
-2026-04-22 19:00:08.231 - Debug - Regular expression part identifier = '{letter}({letter}|{digit}|[-\.])*|<{letter}({letter}|{digit}|[-\. ])*>'
-2026-04-22 19:00:08.231 - Debug - Regular expression part cstring = '\"([^"]|\"\")*\"|\'([^']|\'\')*\''
-2026-04-22 19:00:08.231 - Debug - Regular expression part number = '{digit}+'
-2026-04-22 19:00:08.231 - Debug - Regular expression part lexical-unit-1 = '{vertical-bar}|{comma}|{colon}|{semicolon}'
-2026-04-22 19:00:08.231 - Debug - Regular expression part lexical-unit-2 = '{left-curly-bracket}|{right-curly-bracket}|{left-scanner-bracket}|{right-scanner-bracket}|{left-square-bracket}|{right-square-bracket}'
-2026-04-22 19:00:08.231 - Debug - Regular expression part lexical-unit-3 = '{equals-sign}|{empty}|{terminal}|{declarations}|{general}|{rregex}|{scanner}|{parser}|{identifier}|{cstring}'
-2026-04-22 19:00:08.231 - Debug - Regular expression part lexical-unit = '{lexical-unit-1}|{lexical-unit-2}|{lexical-unit-3}'
-2026-04-22 19:00:08.237 - Warn - default skip action for RE: \*+\/
+2026-05-26 19:17:18.184 - Debug - Regular expression part vertical-bar = '\|'
+2026-05-26 19:17:18.184 - Debug - Regular expression part comma = '\,'
+2026-05-26 19:17:18.184 - Debug - Regular expression part colon = '\:'
+2026-05-26 19:17:18.184 - Debug - Regular expression part semicolon = '\;'
+2026-05-26 19:17:18.184 - Debug - Regular expression part left-curly-bracket = '\{'
+2026-05-26 19:17:18.184 - Debug - Regular expression part right-curly-bracket = '\}'
+2026-05-26 19:17:18.184 - Debug - Regular expression part left-bracket = '\('
+2026-05-26 19:17:18.184 - Debug - Regular expression part right-bracket = '\)'
+2026-05-26 19:17:18.184 - Debug - Regular expression part left-scanner-bracket = '\%\{'
+2026-05-26 19:17:18.184 - Debug - Regular expression part right-scanner-bracket = '\%\}'
+2026-05-26 19:17:18.184 - Debug - Regular expression part left-square-bracket = '\['
+2026-05-26 19:17:18.184 - Debug - Regular expression part right-square-bracket = '\]'
+2026-05-26 19:17:18.184 - Debug - Regular expression part at-sign = '\@'
+2026-05-26 19:17:18.184 - Debug - Regular expression part double-at-sign = '\@\@'
+2026-05-26 19:17:18.184 - Debug - Regular expression part equals-sign = '\='
+2026-05-26 19:17:18.184 - Debug - Regular expression part question-mark = '\?'
+2026-05-26 19:17:18.184 - Debug - Regular expression part plus-sign = '\+'
+2026-05-26 19:17:18.184 - Debug - Regular expression part minus-sign = '\-'
+2026-05-26 19:17:18.184 - Debug - Regular expression part asterisk = '\*'
+2026-05-26 19:17:18.184 - Debug - Regular expression part slash = '\/'
+2026-05-26 19:17:18.184 - Debug - Regular expression part inv-plus-sign = '\~\+'
+2026-05-26 19:17:18.184 - Debug - Regular expression part inv-minus-sign = '\~\-'
+2026-05-26 19:17:18.184 - Debug - Regular expression part inv-asterisk = '\~\*'
+2026-05-26 19:17:18.184 - Debug - Regular expression part inv-slash = '\~\/'
+2026-05-26 19:17:18.184 - Debug - Regular expression part empty = '%[ \t]*empty'
+2026-05-26 19:17:18.184 - Debug - Regular expression part terminal = '%[ \t]*terminal'
+2026-05-26 19:17:18.184 - Debug - Regular expression part general = '%[ \t]*general'
+2026-05-26 19:17:18.184 - Debug - Regular expression part declarations = '%[ \t]*declarations'
+2026-05-26 19:17:18.184 - Debug - Regular expression part rregex = '%[ \t]*regex'
+2026-05-26 19:17:18.184 - Debug - Regular expression part scanner = '%[ \t]*scanner'
+2026-05-26 19:17:18.184 - Debug - Regular expression part lexer = '%[ \t]*lexer'
+2026-05-26 19:17:18.184 - Debug - Regular expression part parser = '%[ \t]*parser'
+2026-05-26 19:17:18.184 - Debug - Regular expression part priority = '%[ \t]*prio(rity)?'
+2026-05-26 19:17:18.184 - Debug - Regular expression part associativity = '%[ \t]*assoc(iativity)?'
+2026-05-26 19:17:18.184 - Debug - Regular expression part skip = 'skip'
+2026-05-26 19:17:18.184 - Debug - Regular expression part ttoken = 'terminal'
+2026-05-26 19:17:18.184 - Debug - Regular expression part revent = 'event'
+2026-05-26 19:17:18.184 - Debug - Regular expression part push = 'push'
+2026-05-26 19:17:18.184 - Debug - Regular expression part pop = 'pop'
+2026-05-26 19:17:18.184 - Debug - Regular expression part letter = '[a-zA-Z_]'
+2026-05-26 19:17:18.184 - Debug - Regular expression part digit = '[0-9]'
+2026-05-26 19:17:18.184 - Debug - Regular expression part identifier = '{letter}({letter}|{digit}|[-\.])*|<{letter}({letter}|{digit}|[-\. ])*>'
+2026-05-26 19:17:18.184 - Debug - Regular expression part cstring = '\"([^"]|\"\")*\"|\'([^']|\'\')*\''
+2026-05-26 19:17:18.184 - Debug - Regular expression part number = '{digit}+'
+2026-05-26 19:17:18.184 - Debug - Regular expression part lexical-unit-1 = '{vertical-bar}|{comma}|{colon}|{semicolon}'
+2026-05-26 19:17:18.184 - Debug - Regular expression part lexical-unit-2 = '{left-curly-bracket}|{right-curly-bracket}|{left-scanner-bracket}|{right-scanner-bracket}|{left-square-bracket}|{right-square-bracket}'
+2026-05-26 19:17:18.184 - Debug - Regular expression part lexical-unit-3 = '{equals-sign}|{empty}|{terminal}|{declarations}|{general}|{rregex}|{scanner}|{parser}|{identifier}|{cstring}'
+2026-05-26 19:17:18.184 - Debug - Regular expression part lexical-unit = '{lexical-unit-1}|{lexical-unit-2}|{lexical-unit-3}'
+2026-05-26 19:17:18.189 - Warn - default skip action for RE: \*+\/
 Lexer regular expression = '\*+\/'
 Lexer regular expression = '\*+[^\*\/]'
 Lexer regular expression = '[^\*]+'
 comment_scanner = (?<g1>\*+\/)|(?<g2>\*+[^\*\/])|(?<g3>[^\*]+)
 Generate scanner source file 'CommentScanner.cs'
-2026-04-22 19:00:08.240 - Warn - default skip action for RE: [^\n]*\n
+2026-05-26 19:17:18.192 - Warn - default skip action for RE: [^\n]*\n
 Lexer regular expression = '[^\n]*\n'
 line_comment_scanner = (?<g1>[^\n]*\n)
 Generate scanner source file 'LineCommentScanner.cs'
-2026-04-22 19:00:08.241 - Warn - default skip action for RE: \]\]
+2026-05-26 19:17:18.193 - Warn - default skip action for RE: \]\]
 Lexer regular expression = '\]\]'
 Lexer regular expression, input = '{identifier}', output = '[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>'
 Lexer regular expression, input = '{equals-sign}', output = '\='
@@ -14435,22 +14435,22 @@ Lexer regular expression, input = '{cstring}', output = '\"([^"]|\"\")*\"|\'([^'
 Lexer regular expression = '[ \t\n\r]'
 attribute_scanner = (?<g1>\]\])|(?<g2>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g3>\=)|(?<g4>\"([^"]|\"\")*\"|\'([^']|\'\')*\')|(?<g5>[ \t\n\r])
 Generate scanner source file 'AttributeScanner.cs'
-2026-04-22 19:00:08.242 - Warn - default skip action for RE: \/\*
+2026-05-26 19:17:18.194 - Warn - default skip action for RE: \/\*
 Lexer regular expression = '\/\*'
-2026-04-22 19:00:08.242 - Warn - default skip action for RE: \[\[
+2026-05-26 19:17:18.194 - Warn - default skip action for RE: \[\[
 Lexer regular expression = '\[\['
-2026-04-22 19:00:08.242 - Warn - default skip action for RE: \/\/
+2026-05-26 19:17:18.194 - Warn - default skip action for RE: \/\/
 Lexer regular expression = '\/\/'
 Lexer regular expression, input = '{identifier}', output = '[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>'
 Lexer regular expression = '[ \t]+'
 Lexer regular expression = '[\n\r]'
 scanner_id_scanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g5>[ \t]+)|(?<g6>[\n\r])
 Generate scanner source file 'ScannerIdScanner.cs'
-2026-04-22 19:00:08.242 - Warn - default skip action for RE: \/\*
+2026-05-26 19:17:18.195 - Warn - default skip action for RE: \/\*
 Lexer regular expression = '\/\*'
-2026-04-22 19:00:08.242 - Warn - default skip action for RE: \[\[
+2026-05-26 19:17:18.195 - Warn - default skip action for RE: \[\[
 Lexer regular expression = '\[\['
-2026-04-22 19:00:08.242 - Warn - default skip action for RE: \/\/
+2026-05-26 19:17:18.195 - Warn - default skip action for RE: \/\/
 Lexer regular expression = '\/\/'
 Lexer regular expression, input = '{left-scanner-bracket}', output = '\%\{'
 Lexer regular expression, input = '{right-scanner-bracket}', output = '\%\}'
@@ -14465,11 +14465,11 @@ Lexer regular expression = '.+'
 Lexer regular expression = '[\n\r]'
 scanner_part_scanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>\%\{)|(?<g5>\%\})|(?<g6>skip)|(?<g7>terminal)|(?<g8>event)|(?<g9>push)|(?<g10>pop)|(?<g11>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g12>[ \t]+)|(?<g13>.+)|(?<g14>[\n\r])
 Generate scanner source file 'ScannerPartScanner.cs'
-2026-04-22 19:00:08.243 - Warn - default skip action for RE: \/\*
+2026-05-26 19:17:18.196 - Warn - default skip action for RE: \/\*
 Lexer regular expression = '\/\*'
-2026-04-22 19:00:08.244 - Warn - default skip action for RE: \[\[
+2026-05-26 19:17:18.196 - Warn - default skip action for RE: \[\[
 Lexer regular expression = '\[\['
-2026-04-22 19:00:08.244 - Warn - default skip action for RE: \/\/
+2026-05-26 19:17:18.196 - Warn - default skip action for RE: \/\/
 Lexer regular expression = '\/\/'
 Lexer regular expression, input = '{identifier}', output = '[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>'
 Lexer regular expression, input = '{left-curly-bracket}', output = '\{'
@@ -14478,44 +14478,44 @@ Lexer regular expression = '[ \t]+'
 Lexer regular expression = '[\n\r]'
 regex_id_scanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g5>\{)|(?<g6>\%\})|(?<g7>[ \t]+)|(?<g8>[\n\r])
 Generate scanner source file 'RegexIdScanner.cs'
-2026-04-22 19:00:08.245 - Warn - default skip action for RE: \/\*
+2026-05-26 19:17:18.197 - Warn - default skip action for RE: \/\*
 Lexer regular expression = '\/\*'
-2026-04-22 19:00:08.245 - Warn - default skip action for RE: \[\[
+2026-05-26 19:17:18.197 - Warn - default skip action for RE: \[\[
 Lexer regular expression = '\[\['
-2026-04-22 19:00:08.245 - Warn - default skip action for RE: \/\/
+2026-05-26 19:17:18.197 - Warn - default skip action for RE: \/\/
 Lexer regular expression = '\/\/'
 Lexer regular expression = '[ \t]+'
 Lexer regular expression = '.+'
 Lexer regular expression = '[\n\r]'
 regex_part_scanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>[ \t]+)|(?<g5>.+)|(?<g6>[\n\r])
 Generate scanner source file 'RegexPartScanner.cs'
-2026-04-22 19:00:08.246 - Warn - default skip action for RE: \/\*
+2026-05-26 19:17:18.198 - Warn - default skip action for RE: \/\*
 Lexer regular expression = '\/\*'
-2026-04-22 19:00:08.246 - Warn - default skip action for RE: \[\[
+2026-05-26 19:17:18.198 - Warn - default skip action for RE: \[\[
 Lexer regular expression = '\[\['
-2026-04-22 19:00:08.246 - Warn - default skip action for RE: \/\/
+2026-05-26 19:17:18.198 - Warn - default skip action for RE: \/\/
 Lexer regular expression = '\/\/'
 Lexer regular expression = '[ \t\n]+'
 Lexer regular expression, input = '{right-curly-bracket}', output = '\}'
 Lexer regular expression, input = '{identifier}', output = '[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>'
 regex_block_scanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>[ \t\n]+)|(?<g5>\})|(?<g6>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)
 Generate scanner source file 'RegexBlockScanner.cs'
-2026-04-22 19:00:08.247 - Warn - default skip action for RE: \/\*
+2026-05-26 19:17:18.199 - Warn - default skip action for RE: \/\*
 Lexer regular expression = '\/\*'
-2026-04-22 19:00:08.247 - Warn - default skip action for RE: \[\[
+2026-05-26 19:17:18.199 - Warn - default skip action for RE: \[\[
 Lexer regular expression = '\[\['
-2026-04-22 19:00:08.247 - Warn - default skip action for RE: \/\/
+2026-05-26 19:17:18.199 - Warn - default skip action for RE: \/\/
 Lexer regular expression = '\/\/'
 Lexer regular expression = '[ \t]+'
 Lexer regular expression = '.+'
 Lexer regular expression = '[\n\r]'
 regex_block_part_scanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>[ \t]+)|(?<g5>.+)|(?<g6>[\n\r])
 Generate scanner source file 'RegexBlockPartScanner.cs'
-2026-04-22 19:00:08.248 - Warn - default skip action for RE: \/\*
+2026-05-26 19:17:18.200 - Warn - default skip action for RE: \/\*
 Lexer regular expression = '\/\*'
-2026-04-22 19:00:08.248 - Warn - default skip action for RE: \[\[
+2026-05-26 19:17:18.200 - Warn - default skip action for RE: \[\[
 Lexer regular expression = '\[\['
-2026-04-22 19:00:08.248 - Warn - default skip action for RE: \/\/
+2026-05-26 19:17:18.200 - Warn - default skip action for RE: \/\/
 Lexer regular expression = '\/\/'
 Lexer regular expression, input = '{vertical-bar}', output = '\|'
 Lexer regular expression, input = '{comma}', output = '\,'
@@ -14560,7 +14560,7 @@ Lexer regular expression = '.'
 anglrScanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>\|)|(?<g5>\,)|(?<g6>\:)|(?<g7>\;)|(?<g8>\{)|(?<g9>\})|(?<g10>\()|(?<g11>\))|(?<g12>\%\{)|(?<g13>\%\})|(?<g14>\[)|(?<g15>\])|(?<g16>\=)|(?<g17>\@\@)|(?<g18>\@)|(?<g19>\?)|(?<g20>\+)|(?<g21>\-)|(?<g22>\*)|(?<g23>\/)|(?<g24>\~\+)|(?<g25>\~\-)|(?<g26>\~\*)|(?<g27>\~\/)|(?<g28>%[ \t]*empty)|(?<g29>%[ \t]*terminal)|(?<g30>%[ \t]*general)|(?<g31>%[ \t]*declarations)|(?<g32>%[ \t]*regex)|(?<g33>%[ \t]*scanner)|(?<g34>%[ \t]*lexer)|(?<g35>%[ \t]*parser)|(?<g36>%[ \t]*prio(rity)?)|(?<g37>%[ \t]*assoc(iativity)?)|(?<g38>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g39>\"([^"]|\"\")*\"|\'([^']|\'\')*\')|(?<g40>[0-9]+)|(?<g41>[ \t]+)|(?<g42>[\n\r])|(?<g43>.)
 Generate scanner source file 'AnglrScanner.cs'
 Generate lexer source file 'AnglrLexer.cs'
-2026-04-22 19:00:08.260 - Info - Generate parser: anglrParser
+2026-05-26 19:17:18.210 - Info - Generate parser: anglrParser
 COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
 COMPILE RULE: <name value list optional>:%empty|<name value list>;
 COMPILE RULE: <anglr file part list optional>:%empty|<anglr file part list>;
@@ -16623,82 +16623,82 @@ INFO: HIERARCHICALY VIEW OF PRODUCTIONS
 
 Check productions
 Make cannonical RHS sets
-2026-04-22 19:00:08.334 - Warn - non-terminal symbol '$accept' is not used
+2026-05-26 19:17:18.271 - Warn - non-terminal symbol '$accept' is not used
 Compute epsilon conditions
 Compute start sets
 Compute transition sets
 Compute follow sets
 Prepare table generator
 Generate parser source file 'AnglrParser.cs'
-2026-04-22 19:00:08.361 - Warn - default goto 370 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 371 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 372 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 373 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 374 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 375 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 376 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 377 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 378 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 379 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 380 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 381 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 382 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 383 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 384 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 385 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 386 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 387 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 388 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 389 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 390 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 391 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 392 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 393 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 394 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 395 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 396 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 397 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 398 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 399 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 400 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 401 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 402 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 403 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 404 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 405 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 406 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 407 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 408 > 273
-2026-04-22 19:00:08.361 - Warn - default goto 409 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 410 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 411 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 412 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 413 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 414 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 415 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 416 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 417 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 418 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 419 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 420 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 421 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 422 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 423 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 424 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 425 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 426 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 427 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 428 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 429 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 430 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 431 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 432 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 433 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 434 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 435 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 436 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 437 > 273
-2026-04-22 19:00:08.362 - Warn - default goto 438 > 273
+2026-05-26 19:17:18.298 - Warn - default goto 370 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 371 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 372 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 373 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 374 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 375 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 376 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 377 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 378 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 379 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 380 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 381 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 382 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 383 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 384 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 385 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 386 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 387 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 388 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 389 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 390 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 391 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 392 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 393 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 394 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 395 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 396 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 397 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 398 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 399 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 400 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 401 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 402 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 403 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 404 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 405 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 406 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 407 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 408 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 409 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 410 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 411 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 412 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 413 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 414 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 415 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 416 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 417 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 418 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 419 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 420 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 421 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 422 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 423 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 424 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 425 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 426 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 427 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 428 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 429 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 430 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 431 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 432 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 433 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 434 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 435 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 436 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 437 > 273
+2026-05-26 19:17:18.299 - Warn - default goto 438 > 273
 Generate source file '_anglr_file_fragment_.cs'
 Generate source file '_attribute_list_.cs'
 Generate source file '_attribute_.cs'

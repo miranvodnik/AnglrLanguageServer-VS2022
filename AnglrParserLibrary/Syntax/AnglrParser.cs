@@ -57,7 +57,7 @@ namespace Anglr.Parser
 		public AnglrDebuggerClientBridge AnglrDebugBridgeObj { get; private set; }
 #endif
 
-		internal AnglrParser (string fragmentName = null, IAnglrLogger anglrLogger = null) : base ()
+		public AnglrParser (string fragmentName = null, IAnglrLogger anglrLogger = null) : base ()
 		{
 			AnglrLogger = anglrLogger;
 			(int id, int state, int token, string tokenName) fragmentInfo = AnglrFragments.GetFragmentInfo (fragmentName);
@@ -83,7 +83,7 @@ namespace Anglr.Parser
 			stackSet.Add (new ParserStack (this));
 		}
 
-		internal bool CheckTokenInStack (ParserStack parserStack, int token)
+		public bool CheckTokenInStack (ParserStack parserStack, int token)
 		{
 			int stackDepth = parserStack.stackDepth;
 			while (stackDepth-- > 0)
@@ -106,7 +106,7 @@ namespace Anglr.Parser
 		}
 #endif
 
-		internal int parse (AnglrLexer scanner)
+		public int parse (AnglrLexer scanner)
 		{
 			int step = 0;
 			int finalCount = 0;
@@ -1108,8 +1108,8 @@ namespace Anglr.Parser
 		private static bool g_createParseTree = false;
 		private static bool g_loopDetection = false;
 
-		internal ParserToken token { get; private set; }
-		internal stackset stackSet { get; private set; }
+		public ParserToken token { get; private set; }
+		public stackset stackSet { get; private set; }
 		public parselist parseList { get; private set; }
 
 		internal readonly static int g_magicNumber = 2629197;
@@ -3641,6 +3641,39 @@ namespace Anglr.Parser
 		{
 			Traverse (p__number_optional_);
 			TraverseCommon (p__number_optional_);
+		}
+	}
+
+	internal class AnglrParserExample
+	{
+		static void Main (string [] args)
+		{
+			// parse every source file named in command line
+			foreach (string arg in args)
+			{
+				AnglrParser parser = new AnglrParser ();
+				AnglrLexer lexer = new AnglrLexer (new StreamReader (arg));
+
+				// register method reporting syntax errors
+				parser.Error_Event += (int lineno, int column, int token, string tokenString) =>
+				{
+					Console.Error.WriteLine ($"Syntax error: file ({arg}), line ({lineno}), column ({column}), token ({token} - {tokenString}");
+					return true;	// continue parsing
+				};
+
+
+				// invoke parser
+				AnglrParser.createParseTree = true;
+				if (parser.parse (lexer) != 0)
+					continue;	// errors, skip current file
+
+				// visit every node of every syntax tree generated for current source file
+				foreach (var syntaxTree in parser.parseList)
+				{
+					AnglrParser_TEST testWalker = new AnglrParser_TEST ();
+					testWalker.Traverse (syntaxTree as _anglr_file_fragment_);
+				}
+			}
 		}
 	}
 }
