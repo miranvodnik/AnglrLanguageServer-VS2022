@@ -7,6 +7,8 @@ Basically, this is an [Language Server Protocol](https://microsoft.github.io/lan
 
 It is best to use it together with the NuGet package [AnglrMSBuildTasks](https://www.nuget.org/packages/AnglrMSBuildTasks).
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/miranvodnik/AnglrLanguageServer-VS2022)
+
 ## How it Works
 
 -   **VSIX Installation** — Install extension from **Visual Studio Marketplace** or install it using **vsixinstaller** from **Developer Command Prompt**, if you obtained the file AnglrMSBuildTasks.vsix in some other way
