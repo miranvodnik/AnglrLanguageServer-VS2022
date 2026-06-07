@@ -1,44 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <!--Defining all the text files input parameters-->
-  <ItemGroup>
-    <AnglrFiles Include="$(MSBuildProjectDirectory)\*.anglr" >
-      <Debug>false</Debug>
-      <Tree>true</Tree>
-      <Loop>true</Loop>
-      <Iterator>false</Iterator>
-      <Precedence>false</Precedence>
-      <OutputDir>Syntax\</OutputDir>
-      <Code>cs</Code>
-    </AnglrFiles>
-  </ItemGroup>
+  <UsingTask TaskName="AnglrMSBuildTasks.Anglr"
+             AssemblyFile="$(AnglrTaskAssemblyPath)" />
 
-  <!--It is generated a target which is executed before the compilation-->
-  <Target Name="BeforeCompile" Inputs="@(AnglrFiles)" Outputs="$(GeneratedSourceFileList)">
-    <!--Calling our custom task-->
+  <Target Name="RunAnglr"
+          BeforeTargets="BeforeCompile"
+          Inputs="@(AnglrFile)"
+          Outputs="@(AnglrFile->'$(IntermediateOutputPath)%(Filename).g.cs')"
+          Condition="'@(AnglrFile)' != ''">
+
+    <Message Text="Running Anglr on @(AnglrFile)" Importance="Low" />
+
     <Anglr 
-      SourceFile="@(AnglrFiles)" 
-      Debug="%(AnglrFiles.Debug)" 
-      Tree="%(AnglrFiles.Tree)" 
-      Loop="%(AnglrFiles.Loop)" 
-      Iterator="%(AnglrFiles.Iterator)" 
-      Precedence="%(AnglrFiles.Precedence)"
-      OutputDir="%(AnglrFiles.OutputDir)" 
-      Code="%(AnglrFiles.Code)" >
-      <Output TaskParameter="OutputSourceFileList" PropertyName="GeneratedSourceFileList" />
-      <Output TaskParameter="OutputLibraryFileList" PropertyName="GeneratedLibraryFileList" />
+      SourceFile="@(AnglrFile)"
+      Debug="%(AnglrFile.Debug)"
+      Tree="%(AnglrFile.Tree)"
+      Loop="%(AnglrFile.Loop)"
+      Iterator="%(AnglrFile.Iterator)"
+      Precedence="%(AnglrFile.Precedence)"
+      OutputDir="%(AnglrFile.OutputDir)"
+      Code="%(AnglrFile.Code)">
+      <Output TaskParameter="OutputSourceFileList" ItemName="GeneratedSources" />
     </Anglr>
-    <!--Our generated file is included to be compiled-->
+
+    <!-- Add generated files to compilation -->
     <ItemGroup>
-      <Compile Remove="$(GeneratedSourceFileList)" />
-      <Compile Include="$(GeneratedSourceFileList)" />
+      <Compile Include="@(GeneratedSources)" />
     </ItemGroup>
+
   </Target>
 
-  <!--The generated file is deleted after a general clean. It will force the regeneration on rebuild-->
-  <Target Name="AfterClean">
-    <Delete Files="$(GeneratedSourceFileList)" />
-    <Delete Files="$(GeneratedLibraryFileList)" />
-  </Target>
 </Project>

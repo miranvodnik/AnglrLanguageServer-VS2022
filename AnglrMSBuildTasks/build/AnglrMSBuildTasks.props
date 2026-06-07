@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<!--defining properties interesting for my task-->
+
 	<PropertyGroup>
-		<!--The folder where the custom task will be present. It points to inside the NuGet package. -->
-		<CustomTasksFolder>$(MSBuildThisFileDirectory)..\lib\netstandard2.0</CustomTasksFolder>
-		<!--Reference to the assembly which contains the MSBuild Task-->
-		<CustomTasksAssembly>$(CustomTasksFolder)\AnglrMSBuildTasks.dll</CustomTasksAssembly>
+    <AnglrTaskAssemblyPath>$(MSBuildThisFileDirectory)..\lib\netstandard2.0\AnglrMSBuildTasks.dll</AnglrTaskAssemblyPath>
+    <AnglrDefaultDebug>false</AnglrDefaultDebug>
+    <AnglrDefaultTree>true</AnglrDefaultTree>
+    <AnglrDefaultLoop>true</AnglrDefaultLoop>
+    <AnglrDefaultIterator>false</AnglrDefaultIterator>
+    <AnglrDefaultPrecedence>false</AnglrDefaultPrecedence>
+    <AnglrDefaultOutputDir>Syntax\</AnglrDefaultOutputDir>
+    <AnglrDefaultCode>cs</AnglrDefaultCode>
 	</PropertyGroup>
 
-	<!--Register our custom task-->
-	<UsingTask TaskName="AnglrMSBuildTasks.Anglr" AssemblyFile="$(CustomTasksAssembly)"/>
+  <ItemDefinitionGroup>
+    <AnglrFile>
+      <Debug>$(AnglrDefaultDebug)</Debug>
+      <Tree>$(AnglrDefaultTree)</Tree>
+      <Loop>$(AnglrDefaultLoop)</Loop>
+      <Iterator>$(AnglrDefaultIterator)</Iterator>
+      <Precedence>$(AnglrDefaultPrecedence)</Precedence>
+      <OutputDir>$(AnglrDefaultOutputDir)</OutputDir>
+      <Code>$(AnglrDefaultCode)</Code>
+    </AnglrFile>
+  </ItemDefinitionGroup>
 
-	<!--Task parameters default values, this can be overridden-->
-	<PropertyGroup>
-    <Debug Condition="'$(Debug)' == ''">false</Debug>
-    <Tree Condition="'$(Tree)' == ''">true</Tree>
-    <Loop Condition="'$(Loop)' == ''">true</Loop>
-    <Iterator Condition="'$(Iterator)' == ''">true</Iterator>
-    <Precedence Condition="'$(Precedence)' == ''">true</Precedence>
-    <OutputDir Condition="'$(OutputDir)' == ''">Syntax\</OutputDir>
-    <Code Condition="'$(Code)' == ''">cs</Code>
-    <GeneratedSourceFileList Condition="'$(GeneratedSourceFileList)' == ''">$(MSBuildProjectDirectory)\$(OutputDir)\*.cs</GeneratedSourceFileList>
-    <GeneratedLibraryFileList Condition="'$(GeneratedLibraryFileList)' == ''">$(MSBuildProjectDirectory)\$(OutputDir)\*.dll</GeneratedLibraryFileList>
-  </PropertyGroup>
+  <ItemGroup>
+    <AvailableItemName Include="Anglr" />
+  </ItemGroup>
+
 </Project>

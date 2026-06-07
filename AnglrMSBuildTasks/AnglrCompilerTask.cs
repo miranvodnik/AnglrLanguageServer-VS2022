@@ -129,33 +129,34 @@ namespace AnglrMSBuildTasks
 
         public override bool Execute ()
         {
-            Logger.InfoLine ($"ANGLR project: '{BuildEngine.ProjectFileOfTaskNode}'");
-
             int errorCount = 0;
             foreach (ITaskItem taskItem in SourceFile)
             {
                 currentSourceFile = taskItem.ItemSpec;
-                try { Debug = bool.Parse (taskItem.GetMetadata ("Debug")); } catch (Exception) { }
-                try { Tree = bool.Parse (taskItem.GetMetadata ("Tree")); } catch (Exception) { }
-                try { Loop = bool.Parse (taskItem.GetMetadata ("Loop")); } catch (Exception) { }
-                try { Iterator = bool.Parse (taskItem.GetMetadata ("Iterator")); } catch (Exception) { }
-                try { Precedence = bool.Parse (taskItem.GetMetadata ("Precedence")); } catch (Exception) { }
-                OutputDir = taskItem.GetMetadata ("OutputDir");
-                Code = taskItem.GetMetadata ("Code");
+                try { bool debug = bool.Parse (taskItem.GetMetadata ("Debug")); Debug = debug; } catch (Exception) { }
+                try { bool tree = bool.Parse (taskItem.GetMetadata ("Tree")); Tree = tree; } catch (Exception) { }
+                try { bool loop = bool.Parse (taskItem.GetMetadata ("Loop")); Loop = loop; } catch (Exception) { }
+                try { bool iterator = bool.Parse (taskItem.GetMetadata ("Iterator")); Iterator = iterator; } catch (Exception) { }
+                try { bool precedence = bool.Parse (taskItem.GetMetadata ("Precedence")); Precedence = precedence; } catch (Exception) { }
+                try { string outputDir = taskItem.GetMetadata ("OutputDir"); OutputDir = outputDir; } catch (Exception) { }
+                try { string code = taskItem.GetMetadata ("Code"); Code = code; } catch (Exception) { }
 
-                Logger.InfoLine ($"ANGLR: compile parser specification file: '{currentSourceFile}'");
+                Logger.InfoLine ($"ANGLR file settings for: '{currentSourceFile}'");
+                Logger.InfoLine ($"\tDebug = {Debug}");
+                Logger.InfoLine ($"\tGenerate Syntax Tree = {Tree}");
+                Logger.InfoLine ($"\tEnable Loop Detection = {Loop}");
+                Logger.InfoLine ($"\tIterator Preference = {Iterator}");
+                Logger.InfoLine ($"\tCreate Precedence Grammar= {Precedence}");
+                Logger.InfoLine ($"\tOutput Directory Path = '{OutputDir}'");
+                Logger.InfoLine ($"\tTarget Language = {Code}");
+
                 try
                 {
-                    if (Debug)
-                        AnglrParser.debug = true;
-                    if (Tree)
-                        AnglrParser.createParseTree = true;
-                    if (Loop)
-                        AnglrParser.loopDetection = true;
-                    if (Iterator)
-                        anglrCompiler.createIterators = true;
-                    if (Precedence)
-                        anglrCompiler.createPrecedenceGrammar = true;
+                    AnglrParser.debug = Debug;
+                    AnglrParser.createParseTree = Tree;
+                    AnglrParser.loopDetection = Loop;
+                    anglrCompiler.createIterators = Iterator;
+                    anglrCompiler.createPrecedenceGrammar = Precedence;
 
                     anglrCompiler parser = new anglrCompiler ();
                     parser.Error_Event += Invoke_Error_Callback;
@@ -229,9 +230,6 @@ namespace AnglrMSBuildTasks
                                     Logger.InfoLine ($"ANGLR: invalid code generator specifier: '{Code}'");
                                     continue;
                                 }
-                                Logger.InfoLine ($"ANGLR: no code generator specified, using default: cs'");
-                                CSharpGenerator p_CSGenerator = new CSharpGenerator ((_anglr_file_fragment_) node, OutputDir, parser);
-                                p_CSGenerator.GenerateCsCode (parser.startSyntaxRule);
                             }
                             break;
                         }

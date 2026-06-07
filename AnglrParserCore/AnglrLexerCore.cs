@@ -218,7 +218,7 @@ namespace Anglr.Lexer.Core
 		public int lineno { get; private set; } = 0;
 		public int column { get; private set; } = 0;
 		public int token { get; private set; } = -1;
-		public int secondary { get; private set; } = -1;
-		public string text { get; private set; } = "";
+		public int secondary { get; set; } = -1;
+		public string text { get; set; } = "";
 	}
 }

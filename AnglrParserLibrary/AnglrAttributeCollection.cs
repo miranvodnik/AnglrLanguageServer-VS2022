@@ -13,6 +13,17 @@ using System.Text.RegularExpressions;
 
 namespace AnglrParserLibrary
 {
+    static public class AnglrExtensions
+    {
+        public static string Correct (this string name)
+        {
+            string correctName = "";
+            foreach (char c in name)
+                correctName += (char.IsLetterOrDigit (c)) ? c : '_';
+            return correctName;
+        }
+    }
+
     public class GeneralPart
     {
         public anglrCompiler Compiler { get; private set; }
@@ -30,6 +41,9 @@ namespace AnglrParserLibrary
             Compiler = compiler;
             SymbolTable = Compiler?.symbolTable;
             AnglrLogger = Compiler?.AnglrLogger ?? new VoidAnglrLogger ();
+
+            defaultNameSpace = Path.GetFileNameWithoutExtension (Compiler?.sourceFileName).Correct ();
+            codeDir = @".\";
 
             this.part = p__general_part_;
             this.counter = index;
@@ -109,6 +123,9 @@ namespace AnglrParserLibrary
             this.part = p__declaration_part_;
             this.counter = index;
             this.declarationPartSymbol = declSymbol;
+
+            declarationsNameSpace = Path.GetFileNameWithoutExtension (Compiler?.sourceFileName).Correct ();
+            declarationsClassName = declSymbol?.correctName;
 
             p__declaration_part_.m__attribute_list_optional_.m__attribute_list_?.Iterate (null, (node, appData) =>
             {
@@ -314,7 +331,7 @@ namespace AnglrParserLibrary
         public string declarationsId { get; private set; } = "";
         public string regexNameSpace { get; private set; } = "";
         public string regexClassName { get; private set; } = "";
-        public string regexAccess { get; private set; } = "";
+        public string regexAccess { get; private set; } = "public";
         public string codeDir { get; private set; } = @".\";
         public List<string> lexRegSet { get; private set; } = new List<string> ();
         public string matchCode { get; private set; } = "";
@@ -414,6 +431,9 @@ namespace AnglrParserLibrary
             this.part = p__scanner_part_;
             this.counter = index;
             this.scannerPartSymbol = scannerPartSymbol;
+
+            regexNameSpace = $"{Path.GetFileNameWithoutExtension (Compiler?.sourceFileName).Correct()}.Scanners";
+            regexClassName = scannerPartSymbol?.correctName;
 
             p__scanner_part_.m__attribute_list_optional_.m__attribute_list_?.Iterate (null, (node, appData) =>
             {
@@ -552,7 +572,7 @@ namespace AnglrParserLibrary
         public SymbolToken initialScanner { get; private set; } = null;
         public string lexerClassName { get; private set; } = "";
         public string lexerNameSpace { get; private set; } = "";
-        public string lexerAccess { get; private set; } = "";
+        public string lexerAccess { get; private set; } = "public";
         public string codeDir { get; private set; } = @".\";
 
         private SymbolToken firstScanner = null;
@@ -638,6 +658,9 @@ namespace AnglrParserLibrary
             Compiler = compiler;
             SymbolTable = Compiler?.symbolTable;
             AnglrLogger = Compiler?.AnglrLogger ?? new VoidAnglrLogger ();
+
+            lexerNameSpace = $"{Path.GetFileNameWithoutExtension (Compiler?.sourceFileName).Correct()}.Lexers";
+            lexerClassName = lexerPartSymbol.correctName;
 
             this.part = p__lexer_part_;
             this.counter = index;
@@ -862,6 +885,9 @@ namespace AnglrParserLibrary
             this.part = p__parser_part_;
             this.counter = index;
             this.parserPartSymbol = parserPartSymbol;
+
+            parserNameSpace = $"{Path.GetFileNameWithoutExtension (Compiler?.sourceFileName).Correct()}.Parsers";
+            parserClassName = parserPartSymbol.correctName;
 
             p__parser_part_.m__attribute_list_optional_.m__attribute_list_?.Iterate (null, (node, appData) =>
             {

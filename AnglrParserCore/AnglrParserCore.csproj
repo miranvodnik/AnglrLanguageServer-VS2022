@@ -3,8 +3,23 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Core interfaces for ANGLR generated parser</Title>
     <Version>$(VersionPrefix)</Version>
+    <Title>Core interfaces for ANGLR generated parser</Title>
+    <Description>
+      AnglrParserCore implements core interfaces for all Anglr toolchain: core lexer and parser
+      interfaces as well as core interfaces for syntax tree builders and visitors
+    </Description>
+    <Summary>
+      Anglr core interfaces: lexers, parsers, syntax tree builders and valkers.
+    </Summary>
+    <PackageTags>
+      anglr generalized parser generator parse parse-tree syntax tree builder valker syntax-tree ast context free grammar cfg lr glr msbuild msbuild-tasks code-generation language-processing
+    </PackageTags>
+    <Authors>Miran Vodnik</Authors>
+    <Company>Anglr</Company>
+    <RepositoryUrl>https://github.com/miranvodnik/AnglrLanguageServer-VS2022</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/miranvodnik/AnglrLanguageServer-VS2022</PackageProjectUrl>
+    <Copyright>Copyright ©AnGLR 2022</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

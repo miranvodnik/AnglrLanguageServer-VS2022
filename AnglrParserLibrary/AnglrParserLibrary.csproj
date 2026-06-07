@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <version>$(VersionPrefix)</version>
-    <title>AnglrParserLibrary</title>
     <Title>Anglr Compiler Library for Parsing, Syntax Trees, and Code Generation</Title>
     <Description>
       AnglrParserLibrary provides Anglr Compiler Library for parsing Anglr source files and generating
@@ -13,7 +12,7 @@
       Anglr compiler library for parsing Anglr files, generating parse trees, syntax trees, and code output.
     </Summary>
     <PackageTags>
-      anglr parser parse parse-tree syntax syntax-tree ast grammar lr glr msbuild msbuild-tasks code-generation language-processing
+      anglr generalized parser generator parse parse-tree syntax tree builder valker syntax-tree ast context free grammar cfg lr glr msbuild msbuild-tasks code-generation language-processing
     </PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>Miran Vodnik</Authors>
