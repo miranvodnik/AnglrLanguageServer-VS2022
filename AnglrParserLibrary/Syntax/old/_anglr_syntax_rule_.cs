@@ -89,27 +89,29 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__anglr_syntax_rule_.kind)
 			{
-			case production_kind.g__anglr_syntax_rule__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 5);
-				children[0] = m__attribute_list_optional_ = p__anglr_syntax_rule_.m__attribute_list_optional_;
-				children[1] = m__identifier_ = p__anglr_syntax_rule_.m__identifier_;
-				children[2] = m__colon_ = p__anglr_syntax_rule_.m__colon_;
-				children[3] = m__anglr_syntax_production_list_ = p__anglr_syntax_rule_.m__anglr_syntax_production_list_;
-				children[4] = m__semicolon_ = p__anglr_syntax_rule_.m__semicolon_;
-				break;
-			case production_kind.g__anglr_syntax_rule__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 5);
-				children[0] = m__attribute_list_optional_ = p__anglr_syntax_rule_.m__attribute_list_optional_;
-				children[1] = m__identifier_ = p__anglr_syntax_rule_.m__identifier_;
-				children[2] = m__left_curly_bracket_ = p__anglr_syntax_rule_.m__left_curly_bracket_;
-				children[3] = m__anglr_syntax_rule_list_optional_ = p__anglr_syntax_rule_.m__anglr_syntax_rule_list_optional_;
-				children[4] = m__right_curly_bracket_ = p__anglr_syntax_rule_.m__right_curly_bracket_;
-				break;
-			default:
-				string[] args = new string[] { "_anglr_syntax_rule_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__anglr_syntax_rule__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 5);
+					if ((children [0] = m__attribute_list_optional_ = (p__anglr_syntax_rule_.m__attribute_list_optional_ != null) ? new _attribute_list_optional_ (p__anglr_syntax_rule_.m__attribute_list_optional_) : null) != null) m__attribute_list_optional_.parent = this;
+					if ((children [1] = m__identifier_ = (p__anglr_syntax_rule_.m__identifier_ != null) ? new SyntaxTreeToken (p__anglr_syntax_rule_.m__identifier_) : null) != null) m__identifier_.parent = this;
+					if ((children [2] = m__colon_ = (p__anglr_syntax_rule_.m__colon_ != null) ? new SyntaxTreeToken (p__anglr_syntax_rule_.m__colon_) : null) != null) m__colon_.parent = this;
+					if ((children [3] = m__anglr_syntax_production_list_ = (p__anglr_syntax_rule_.m__anglr_syntax_production_list_ != null) ? new _anglr_syntax_production_list_ (p__anglr_syntax_rule_.m__anglr_syntax_production_list_) : null) != null) m__anglr_syntax_production_list_.parent = this;
+					if ((children [4] = m__semicolon_ = (p__anglr_syntax_rule_.m__semicolon_ != null) ? new SyntaxTreeToken (p__anglr_syntax_rule_.m__semicolon_) : null) != null) m__semicolon_.parent = this;
+					break;
+				case production_kind.g__anglr_syntax_rule__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 5);
+					if ((children [0] = m__attribute_list_optional_ = (p__anglr_syntax_rule_.m__attribute_list_optional_ != null) ? new _attribute_list_optional_ (p__anglr_syntax_rule_.m__attribute_list_optional_) : null) != null) m__attribute_list_optional_.parent = this;
+					if ((children [1] = m__identifier_ = (p__anglr_syntax_rule_.m__identifier_ != null) ? new SyntaxTreeToken (p__anglr_syntax_rule_.m__identifier_) : null) != null) m__identifier_.parent = this;
+					if ((children [2] = m__left_curly_bracket_ = (p__anglr_syntax_rule_.m__left_curly_bracket_ != null) ? new SyntaxTreeToken (p__anglr_syntax_rule_.m__left_curly_bracket_) : null) != null) m__left_curly_bracket_.parent = this;
+					if ((children [3] = m__anglr_syntax_rule_list_optional_ = (p__anglr_syntax_rule_.m__anglr_syntax_rule_list_optional_ != null) ? new _anglr_syntax_rule_list_optional_ (p__anglr_syntax_rule_.m__anglr_syntax_rule_list_optional_) : null) != null) m__anglr_syntax_rule_list_optional_.parent = this;
+					if ((children [4] = m__right_curly_bracket_ = (p__anglr_syntax_rule_.m__right_curly_bracket_ != null) ? new SyntaxTreeToken (p__anglr_syntax_rule_.m__right_curly_bracket_) : null) != null) m__right_curly_bracket_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_anglr_syntax_rule_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

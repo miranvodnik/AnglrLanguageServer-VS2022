@@ -161,7 +161,7 @@ namespace anglr_cs
 
     public class AnglrLRStackViewSet : Dictionary<int, AnglrDebuggerStackView> { }
 
-    public class DbgProcessRpc : IAnglrServerSideDebugger
+    public class DbgProcessRpc : IAnglrClientSideDebugger
     {
         public ObservableCollection<AnglrDebuggerStackView> LRStackViewCollection { get; set; }
         private AnglrLRStackViewSet lRStackViewSet;
@@ -186,13 +186,11 @@ namespace anglr_cs
         {
         }
 
-        public AnglrDebuggerLogResponse LogMessageHandler (object sender, EventArgs e)
+        public void LogMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerLogRequest logMessageRequest = e as AnglrDebuggerLogRequest;
             if (logMessageRequest == null)
-                return new AnglrDebuggerLogResponse () { SequenceNr = -1 };
-
-            return new AnglrDebuggerLogResponse () { SequenceNr = logMessageRequest.SequenceNr };
+                return;
         }
 
         public AnglrDebuggerConnectResponse ConnectMessageHandler (object sender, EventArgs e)
@@ -218,11 +216,11 @@ namespace anglr_cs
             return new AnglrDebuggerConnectResponse () { SequenceNr = connectMessageRequest.SequenceNr, Valid = true };
         }
 
-        public AnglrDebuggerSyntaxErrorResponse SyntaxErrorMessageHandler (object sender, EventArgs e)
+        public void SyntaxErrorMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerSyntaxErrorRequest syntaxErrorMessageRequest = e as AnglrDebuggerSyntaxErrorRequest;
             if (syntaxErrorMessageRequest == null)
-                return new AnglrDebuggerSyntaxErrorResponse () { SequenceNr = -1 };
+                return;
             try
             {
                 LRStackViewCollection.Remove (lRStackViewSet [syntaxErrorMessageRequest.StackNr]);
@@ -233,14 +231,13 @@ namespace anglr_cs
                 Logger?.ErrorLine ($"SyntaxErrorMessageHandler exception: {ex.Message}");
                 Logger?.ErrorLine ($"\t{ex.StackTrace}");
             }
-            return new AnglrDebuggerSyntaxErrorResponse () { SequenceNr = syntaxErrorMessageRequest.SequenceNr };
         }
 
-        public AnglrDebuggerShiftStepResponse ShiftStepMessageHandler (object sender, EventArgs e)
+        public void ShiftStepMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerShiftStepRequest shiftStepMessageRequest = e as AnglrDebuggerShiftStepRequest;
             if (shiftStepMessageRequest == null)
-                return new AnglrDebuggerShiftStepResponse () { SequenceNr = -1 };
+                return;
             try
             {
                 lRStackViewSet [shiftStepMessageRequest.StackNr].ParserStack.Push
@@ -260,14 +257,13 @@ namespace anglr_cs
                 Logger?.ErrorLine ($"ShiftStepMessageInvoker exception: {ex.Message}");
                 Logger?.ErrorLine ($"\t{ex.StackTrace}");
             }
-            return new AnglrDebuggerShiftStepResponse () { SequenceNr = shiftStepMessageRequest.SequenceNr };
         }
 
-        public AnglrDebuggerReduceStepResponse ReduceStepMessageHandler (object sender, EventArgs e)
+        public void ReduceStepMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerReduceStepRequest reduceStepMessageRequest = e as AnglrDebuggerReduceStepRequest;
             if (reduceStepMessageRequest == null)
-                return new AnglrDebuggerReduceStepResponse () { SequenceNr = -1 };
+                return;
             try
             {
                 lRStackViewSet [reduceStepMessageRequest.StackNr].ReducedValue = "";
@@ -290,14 +286,13 @@ namespace anglr_cs
                 Logger?.ErrorLine ($"ReduceStepMessageInvoker exception: {ex.Message}");
                 Logger?.ErrorLine ($"\t{ex.StackTrace}");
             }
-            return new AnglrDebuggerReduceStepResponse () { SequenceNr = reduceStepMessageRequest.SequenceNr };
         }
 
-        public AnglrDebuggerSplitStepResponse SplitStepMessageHandler (object sender, EventArgs e)
+        public void SplitStepMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerSplitStepRequest splitStepMessageRequest = e as AnglrDebuggerSplitStepRequest;
             if (splitStepMessageRequest == null)
-                return new AnglrDebuggerSplitStepResponse () { SequenceNr = -1 };
+                return;
             try
             {
                 if (splitStepMessageRequest.Begin)
@@ -317,14 +312,13 @@ namespace anglr_cs
                 Logger?.ErrorLine ($"SplitStepMessageInvoker exception: {ex.Message}");
                 Logger?.ErrorLine ($"\t{ex.StackTrace}");
             }
-            return new AnglrDebuggerSplitStepResponse () { SequenceNr = splitStepMessageRequest.SequenceNr };
         }
 
-        public AnglrDebuggerLoopStepResponse LoopStepMessageHandler (object sender, EventArgs e)
+        public void LoopStepMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerLoopStepRequest loopStepMessageRequest = e as AnglrDebuggerLoopStepRequest;
             if (loopStepMessageRequest == null)
-                return new AnglrDebuggerLoopStepResponse () { SequenceNr = -1 };
+                return;
             try
             {
                 LRStackViewCollection.Remove (lRStackViewSet [loopStepMessageRequest.StackNr]);
@@ -335,14 +329,13 @@ namespace anglr_cs
                 Logger?.ErrorLine ($"LoopStepMessageInvoker exception: {ex.Message}");
                 Logger?.ErrorLine ($"\t{ex.StackTrace}");
             }
-            return new AnglrDebuggerLoopStepResponse () { SequenceNr = loopStepMessageRequest.SequenceNr };
         }
 
-        public AnglrDebuggerJoinResponse JoinMessageHandler (object sender, EventArgs e)
+        public void JoinMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerJoinRequest joinMessageRequest = e as AnglrDebuggerJoinRequest;
             if (joinMessageRequest == null)
-                return new AnglrDebuggerJoinResponse () { SequenceNr = -1 };
+                return;
             try
             {
                 LRStackViewCollection.Remove (lRStackViewSet [joinMessageRequest.StackNr]);
@@ -353,23 +346,27 @@ namespace anglr_cs
                 Logger?.ErrorLine ($"JoinMessageInvoker exception: {ex.Message}");
                 Logger?.ErrorLine ($"\t{ex.StackTrace}");
             }
-            return new AnglrDebuggerJoinResponse () { SequenceNr = joinMessageRequest.SequenceNr };
         }
 
-        public AnglrDebuggerFinalStepResponse FinalStepMessageHandler (object sender, EventArgs e)
+        public void FinalStepMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerFinalStepRequest finalStepRequest = e as AnglrDebuggerFinalStepRequest;
             if ((finalStepRequest == null))
-                return new AnglrDebuggerFinalStepResponse () { SequenceNr = -1 };
-            return new AnglrDebuggerFinalStepResponse () { SequenceNr = finalStepRequest.SequenceNr };
+                return;
         }
 
-        public AnglrDebuggerStopParserResponse StopParserMessageHandler (object sender, EventArgs e)
+        public void StopParserMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerStopParserRequest stopParserRequest = e as AnglrDebuggerStopParserRequest;
             if (stopParserRequest == null)
-                return new AnglrDebuggerStopParserResponse () { SequenceNr = -1 };
-            return new AnglrDebuggerStopParserResponse () { SequenceNr = stopParserRequest.SequenceNr };
+                return;
+        }
+
+        public void DbgBreakPointHitMessageHandler (object sender, EventArgs e)
+        {
+            AnglrDebuggerDbgBreakPointHitRequest dbgBreakPointHitRequest = e as AnglrDebuggerDbgBreakPointHitRequest;
+            if (dbgBreakPointHitRequest == null)
+                return;
         }
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.ConnectMessageName)]
@@ -377,39 +374,43 @@ namespace anglr_cs
             ConnectMessageHandler (this, connectMessage.ToObject<AnglrDebuggerConnectRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.SyntaxErrorMessageName)]
-        public AnglrDebuggerSyntaxErrorResponse HandleSyntaxErrorMessage (JToken syntaxErrorMessage) =>
+        public void HandleSyntaxErrorMessage (JToken syntaxErrorMessage) =>
             SyntaxErrorMessageHandler (this, syntaxErrorMessage.ToObject<AnglrDebuggerSyntaxErrorRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.ShiftStepMessageName)]
-        public AnglrDebuggerShiftStepResponse HandleShiftStepMessage (JToken shiftStepMessage) =>
+        public void HandleShiftStepMessage (JToken shiftStepMessage) =>
             ShiftStepMessageHandler (this, shiftStepMessage.ToObject<AnglrDebuggerShiftStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.ReduceStepMessageName)]
-        public AnglrDebuggerReduceStepResponse HandleReduceStepMessage (JToken reduceStepMessage) =>
+        public void HandleReduceStepMessage (JToken reduceStepMessage) =>
             ReduceStepMessageHandler (this, reduceStepMessage.ToObject<AnglrDebuggerReduceStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.SplitStepMessageName)]
-        public AnglrDebuggerSplitStepResponse HandleSplitStepMessage (JToken splitStepMessage) =>
+        public void HandleSplitStepMessage (JToken splitStepMessage) =>
             SplitStepMessageHandler (this, splitStepMessage.ToObject<AnglrDebuggerSplitStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.LoopStepMessageName)]
-        public AnglrDebuggerLoopStepResponse HandleLoopStepMessage (JToken loopStepMessage) =>
+        public void HandleLoopStepMessage (JToken loopStepMessage) =>
             LoopStepMessageHandler (this, loopStepMessage.ToObject<AnglrDebuggerLoopStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.JoinMessageName)]
-        public AnglrDebuggerJoinResponse HandleJoinMessage (JToken joinMessage) =>
+        public void HandleJoinMessage (JToken joinMessage) =>
             JoinMessageHandler (this, joinMessage.ToObject<AnglrDebuggerJoinRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.FinalStepMessageName)]
-        public AnglrDebuggerFinalStepResponse HandleFinalStepMessage (JToken finalStepMessage) =>
+        public void HandleFinalStepMessage (JToken finalStepMessage) =>
             FinalStepMessageHandler (this, finalStepMessage.ToObject<AnglrDebuggerFinalStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.StopParserMessageName)]
-        public AnglrDebuggerStopParserResponse HandleStopParserMessage (JToken stopParserMessage) =>
+        public void HandleStopParserMessage (JToken stopParserMessage) =>
             StopParserMessageHandler (this, stopParserMessage.ToObject<AnglrDebuggerStopParserRequest> ());
+
+        [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.DbgBreakPointHitMessageName)]
+        public void HandleDbgBreakPointHitMessage (JToken dbgBreakPointHitMessage) =>
+            DbgBreakPointHitMessageHandler (this, dbgBreakPointHitMessage.ToObject<AnglrDebuggerDbgBreakPointHitRequest> ());
     }
 
-    public class DbgProcessCtrl : IAnglrServerSideDebuggerInvoker
+    public class DbgProcessCtrl : IAnglrClientSideDebuggerInvoker
     {
         public JsonRpc Rpc { get; set; }
 
@@ -417,22 +418,22 @@ namespace anglr_cs
 
         private void Rpc_Disconnected (object sender, JsonRpcDisconnectedEventArgs e)
         {
-            Logger?.InfoLine ($"<AnglrDebuggerServerBridge>: RPC disconnected, reason: {e.Reason}");
+            Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: RPC disconnected, reason: {e.Reason}");
         }
 
         public void InvokeRpcSession (int counter, Stream pipe, CancellationToken token)
         {
             _ = Task.Run (() =>
             {
-                Logger?.InfoLine ($"<AnglrDebuggerServerBridge>: rpc channel {counter} trying to attach");
+                Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: rpc channel {counter} trying to attach");
                 DbgProcessRpc dbgProcessRpc = new DbgProcessRpc ();
                 Rpc = dbgProcessRpc.Rpc = JsonRpc.Attach (pipe, pipe, dbgProcessRpc);
-                Logger?.InfoLine ($"<AnglrDebuggerServerBridge>: rpc channel {counter} created");
+                Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: rpc channel {counter} created");
                 Rpc.Disconnected += Rpc_Disconnected;
                 Rpc.Completion.ConfigureAwait (false).GetAwaiter ().GetResult ();
-                Logger?.InfoLine ($"<AnglrDebuggerServerBridge>: rpc channel {counter} completed");
+                Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: rpc channel {counter} completed");
                 Rpc.Dispose ();
-                Logger?.InfoLine ($"<AnglrDebuggerServerBridge>: rpc channel {counter} disposed");
+                Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: rpc channel {counter} disposed");
                 Rpc = null;
             });
         }
@@ -440,7 +441,7 @@ namespace anglr_cs
 
     public class AnglrCompilerTestProgram
     {
-        public static AnglrDebuggerServerBridge anglrDebuggerServerBridge = null;
+        public static AnglrDebuggerClientBridge anglrDebuggerServerBridge = null;
         public static async Task MainTask (string [] args)
         {
             if (args.Length < 3)
@@ -448,7 +449,7 @@ namespace anglr_cs
                 Console.WriteLine ("Usage: <program path> <program args> <program working directory> <output redirection file> <error redirection file>");
                 return;
             }
-            anglrDebuggerServerBridge = new AnglrDebuggerServerBridge (args [0], args [1], args [2], (args.Length > 3) ? args [3] : null, (args.Length > 4) ? args [4] : null);
+            anglrDebuggerServerBridge = new AnglrDebuggerClientBridge (args [0], args [1], args [2], (args.Length > 3) ? args [3] : null, (args.Length > 4) ? args [4] : null);
             await Task.Run (() => anglrDebuggerServerBridge.DebuggedProcessCtrlAsync (new DbgProcessCtrl ()));
             Console.WriteLine ("Press return key to continue");
             await Console.In.ReadLineAsync ();

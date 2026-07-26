@@ -185,41 +185,43 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__priority_assoc_specification_.kind)
 			{
-			case production_kind.g__priority_assoc_specification__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__priority_specification_ = p__priority_assoc_specification_.m__priority_specification_;
-				children[1] = m__associativity_specification_ = p__priority_assoc_specification_.m__associativity_specification_;
-				break;
-			case production_kind.g__priority_assoc_specification__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__associativity_specification_ = p__priority_assoc_specification_.m__associativity_specification_;
-				children[1] = m__priority_specification_ = p__priority_assoc_specification_.m__priority_specification_;
-				break;
-			case production_kind.g__priority_assoc_specification__3:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__priority_specification_ = p__priority_assoc_specification_.m__priority_specification_;
-				break;
-			case production_kind.g__priority_assoc_specification__4:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__associativity_specification_ = p__priority_assoc_specification_.m__associativity_specification_;
-				break;
-			case production_kind.g__priority_assoc_specification__5:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
-				children[0] = m__priority_specification_ = p__priority_assoc_specification_.m__priority_specification_;
-				children[1] = m__comma_ = p__priority_assoc_specification_.m__comma_;
-				children[2] = m__associativity_specification_ = p__priority_assoc_specification_.m__associativity_specification_;
-				break;
-			case production_kind.g__priority_assoc_specification__6:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
-				children[0] = m__associativity_specification_ = p__priority_assoc_specification_.m__associativity_specification_;
-				children[1] = m__comma_ = p__priority_assoc_specification_.m__comma_;
-				children[2] = m__priority_specification_ = p__priority_assoc_specification_.m__priority_specification_;
-				break;
-			default:
-				string[] args = new string[] { "_priority_assoc_specification_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__priority_assoc_specification__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__priority_specification_ = (p__priority_assoc_specification_.m__priority_specification_ != null) ? new _priority_specification_ (p__priority_assoc_specification_.m__priority_specification_) : null) != null) m__priority_specification_.parent = this;
+					if ((children [1] = m__associativity_specification_ = (p__priority_assoc_specification_.m__associativity_specification_ != null) ? new _associativity_specification_ (p__priority_assoc_specification_.m__associativity_specification_) : null) != null) m__associativity_specification_.parent = this;
+					break;
+				case production_kind.g__priority_assoc_specification__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__associativity_specification_ = (p__priority_assoc_specification_.m__associativity_specification_ != null) ? new _associativity_specification_ (p__priority_assoc_specification_.m__associativity_specification_) : null) != null) m__associativity_specification_.parent = this;
+					if ((children [1] = m__priority_specification_ = (p__priority_assoc_specification_.m__priority_specification_ != null) ? new _priority_specification_ (p__priority_assoc_specification_.m__priority_specification_) : null) != null) m__priority_specification_.parent = this;
+					break;
+				case production_kind.g__priority_assoc_specification__3:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__priority_specification_ = (p__priority_assoc_specification_.m__priority_specification_ != null) ? new _priority_specification_ (p__priority_assoc_specification_.m__priority_specification_) : null) != null) m__priority_specification_.parent = this;
+					break;
+				case production_kind.g__priority_assoc_specification__4:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__associativity_specification_ = (p__priority_assoc_specification_.m__associativity_specification_ != null) ? new _associativity_specification_ (p__priority_assoc_specification_.m__associativity_specification_) : null) != null) m__associativity_specification_.parent = this;
+					break;
+				case production_kind.g__priority_assoc_specification__5:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
+					if ((children [0] = m__priority_specification_ = (p__priority_assoc_specification_.m__priority_specification_ != null) ? new _priority_specification_ (p__priority_assoc_specification_.m__priority_specification_) : null) != null) m__priority_specification_.parent = this;
+					if ((children [1] = m__comma_ = (p__priority_assoc_specification_.m__comma_ != null) ? new SyntaxTreeToken (p__priority_assoc_specification_.m__comma_) : null) != null) m__comma_.parent = this;
+					if ((children [2] = m__associativity_specification_ = (p__priority_assoc_specification_.m__associativity_specification_ != null) ? new _associativity_specification_ (p__priority_assoc_specification_.m__associativity_specification_) : null) != null) m__associativity_specification_.parent = this;
+					break;
+				case production_kind.g__priority_assoc_specification__6:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
+					if ((children [0] = m__associativity_specification_ = (p__priority_assoc_specification_.m__associativity_specification_ != null) ? new _associativity_specification_ (p__priority_assoc_specification_.m__associativity_specification_) : null) != null) m__associativity_specification_.parent = this;
+					if ((children [1] = m__comma_ = (p__priority_assoc_specification_.m__comma_ != null) ? new SyntaxTreeToken (p__priority_assoc_specification_.m__comma_) : null) != null) m__comma_.parent = this;
+					if ((children [2] = m__priority_specification_ = (p__priority_assoc_specification_.m__priority_specification_ != null) ? new _priority_specification_ (p__priority_assoc_specification_.m__priority_specification_) : null) != null) m__priority_specification_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_priority_assoc_specification_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

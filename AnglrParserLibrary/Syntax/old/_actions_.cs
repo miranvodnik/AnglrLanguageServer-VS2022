@@ -81,20 +81,22 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__actions_.kind)
 			{
-			case production_kind.g__actions__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__action_ = p__actions_.m__action_;
-				break;
-			case production_kind.g__actions__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__actions_ = p__actions_.m__actions_;
-				children[1] = m__action_ = p__actions_.m__action_;
-				break;
-			default:
-				string[] args = new string[] { "_actions_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__actions__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__action_ = (p__actions_.m__action_ != null) ? new _action_ (p__actions_.m__action_) : null) != null) m__action_.parent = this;
+					break;
+				case production_kind.g__actions__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__actions_ = (p__actions_.m__actions_ != null) ? new _actions_ (p__actions_.m__actions_) : null) != null) m__actions_.parent = this;
+					if ((children [1] = m__action_ = (p__actions_.m__action_ != null) ? new _action_ (p__actions_.m__action_) : null) != null) m__action_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_actions_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

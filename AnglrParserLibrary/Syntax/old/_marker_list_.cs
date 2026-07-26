@@ -81,20 +81,22 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__marker_list_.kind)
 			{
-			case production_kind.g__marker_list__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__marker_ = p__marker_list_.m__marker_;
-				break;
-			case production_kind.g__marker_list__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__marker_list_ = p__marker_list_.m__marker_list_;
-				children[1] = m__marker_ = p__marker_list_.m__marker_;
-				break;
-			default:
-				string[] args = new string[] { "_marker_list_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__marker_list__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__marker_ = (p__marker_list_.m__marker_ != null) ? new _marker_ (p__marker_list_.m__marker_) : null) != null) m__marker_.parent = this;
+					break;
+				case production_kind.g__marker_list__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__marker_list_ = (p__marker_list_.m__marker_list_ != null) ? new _marker_list_ (p__marker_list_.m__marker_list_) : null) != null) m__marker_list_.parent = this;
+					if ((children [1] = m__marker_ = (p__marker_list_.m__marker_ != null) ? new _marker_ (p__marker_list_.m__marker_) : null) != null) m__marker_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_marker_list_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

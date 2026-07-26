@@ -58,18 +58,20 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__block_of_terminal_definitions_.kind)
 			{
-			case production_kind.g__block_of_terminal_definitions__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 4);
-				children[0] = m__terminal_ = p__block_of_terminal_definitions_.m__terminal_;
-				children[1] = m__left_curly_bracket_ = p__block_of_terminal_definitions_.m__left_curly_bracket_;
-				children[2] = m__block_terminal_definitions_optional_ = p__block_of_terminal_definitions_.m__block_terminal_definitions_optional_;
-				children[3] = m__right_curly_bracket_ = p__block_of_terminal_definitions_.m__right_curly_bracket_;
-				break;
-			default:
-				string[] args = new string[] { "_block_of_terminal_definitions_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__block_of_terminal_definitions__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 4);
+					if ((children [0] = m__terminal_ = (p__block_of_terminal_definitions_.m__terminal_ != null) ? new SyntaxTreeToken (p__block_of_terminal_definitions_.m__terminal_) : null) != null) m__terminal_.parent = this;
+					if ((children [1] = m__left_curly_bracket_ = (p__block_of_terminal_definitions_.m__left_curly_bracket_ != null) ? new SyntaxTreeToken (p__block_of_terminal_definitions_.m__left_curly_bracket_) : null) != null) m__left_curly_bracket_.parent = this;
+					if ((children [2] = m__block_terminal_definitions_optional_ = (p__block_of_terminal_definitions_.m__block_terminal_definitions_optional_ != null) ? new _block_terminal_definitions_optional_ (p__block_of_terminal_definitions_.m__block_terminal_definitions_optional_) : null) != null) m__block_terminal_definitions_optional_.parent = this;
+					if ((children [3] = m__right_curly_bracket_ = (p__block_of_terminal_definitions_.m__right_curly_bracket_ != null) ? new SyntaxTreeToken (p__block_of_terminal_definitions_.m__right_curly_bracket_) : null) != null) m__right_curly_bracket_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_block_of_terminal_definitions_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

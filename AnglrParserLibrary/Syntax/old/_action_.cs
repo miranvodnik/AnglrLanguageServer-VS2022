@@ -151,31 +151,33 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__action_.kind)
 			{
-			case production_kind.g__action__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__skip_action_ = p__action_.m__skip_action_;
-				break;
-			case production_kind.g__action__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__terminal_action_ = p__action_.m__terminal_action_;
-				break;
-			case production_kind.g__action__3:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__event_action_ = p__action_.m__event_action_;
-				break;
-			case production_kind.g__action__4:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__push_action_ = p__action_.m__push_action_;
-				break;
-			case production_kind.g__action__5:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__pop_action_ = p__action_.m__pop_action_;
-				break;
-			default:
-				string[] args = new string[] { "_action_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__action__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__skip_action_ = (p__action_.m__skip_action_ != null) ? new _skip_action_ (p__action_.m__skip_action_) : null) != null) m__skip_action_.parent = this;
+					break;
+				case production_kind.g__action__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__terminal_action_ = (p__action_.m__terminal_action_ != null) ? new _terminal_action_ (p__action_.m__terminal_action_) : null) != null) m__terminal_action_.parent = this;
+					break;
+				case production_kind.g__action__3:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__event_action_ = (p__action_.m__event_action_ != null) ? new _event_action_ (p__action_.m__event_action_) : null) != null) m__event_action_.parent = this;
+					break;
+				case production_kind.g__action__4:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__push_action_ = (p__action_.m__push_action_ != null) ? new _push_action_ (p__action_.m__push_action_) : null) != null) m__push_action_.parent = this;
+					break;
+				case production_kind.g__action__5:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__pop_action_ = (p__action_.m__pop_action_ != null) ? new _pop_action_ (p__action_.m__pop_action_) : null) != null) m__pop_action_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_action_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

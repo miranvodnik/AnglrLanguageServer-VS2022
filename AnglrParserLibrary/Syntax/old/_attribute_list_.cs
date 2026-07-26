@@ -81,20 +81,22 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__attribute_list_.kind)
 			{
-			case production_kind.g__attribute_list__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__attribute_ = p__attribute_list_.m__attribute_;
-				break;
-			case production_kind.g__attribute_list__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__attribute_list_ = p__attribute_list_.m__attribute_list_;
-				children[1] = m__attribute_ = p__attribute_list_.m__attribute_;
-				break;
-			default:
-				string[] args = new string[] { "_attribute_list_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__attribute_list__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__attribute_ = (p__attribute_list_.m__attribute_ != null) ? new _attribute_ (p__attribute_list_.m__attribute_) : null) != null) m__attribute_.parent = this;
+					break;
+				case production_kind.g__attribute_list__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__attribute_list_ = (p__attribute_list_.m__attribute_list_ != null) ? new _attribute_list_ (p__attribute_list_.m__attribute_list_) : null) != null) m__attribute_list_.parent = this;
+					if ((children [1] = m__attribute_ = (p__attribute_list_.m__attribute_ != null) ? new _attribute_ (p__attribute_list_.m__attribute_) : null) != null) m__attribute_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_attribute_list_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

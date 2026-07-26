@@ -32,11 +32,11 @@
                         x:Name="anglrSyntaxTree"
                         Grid.Row="0"
                         Grid.Column="0"
-                        Grid.ColumnSpan="2"
+                        Grid.ColumnSpan="3"
                         SelectedItemChanged="anglrSyntaxTree_SelectedItemChanged"
                         MouseRightButtonDown="anglrSyntaxTree_MouseRightButtonDown"
                         KeyDown="anglrSyntaxTree_KeyDown" 
-                        Margin="0,-2,0,2"
+                        Margin="0,1,144,-1"
                         >
                         <TreeView.ItemContainerStyle>
                             <Style TargetType="{x:Type TreeViewItem}">
@@ -120,13 +120,33 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <StackPanel x:Name="stateViewPanel" Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
                             <Label x:Name="stateName" Content="" BorderThickness="1" Margin="0,0,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Arial" FontSize="20"/>
                             <Button x:Name="openState" Click="openState_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0">Open State</Button>
                         </StackPanel>
-                        <WebBrowser x:Name="stateBrowser" Grid.Row="1" Grid.Column="0" Margin="0,0,-2,0" Navigating="stateBrowser_Navigating" />
+                        <src:DrawingCanvas
+                            x:Name="syntaxRuleVisual"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Background="White"
+                            ClipToBounds="True"
+                            Height="50"
+                            Margin="2,2,2,2"
+                            MouseDown="syntaxRuleVisual_MouseDown"
+                            MouseEnter="syntaxRuleVisual_MouseEnter"
+                            MouseLeave="syntaxRuleVisual_MouseLeave"
+                            MouseLeftButtonDown="syntaxRuleVisual_MouseLeftButtonDown"
+                            MouseLeftButtonUp="syntaxRuleVisual_MouseLeftButtonUp"
+                            MouseMove="syntaxRuleVisual_MouseMove"
+                            MouseRightButtonDown="syntaxRuleVisual_MouseRightButtonDown"
+                            MouseRightButtonUp="syntaxRuleVisual_MouseRightButtonUp"
+                            MouseUp="syntaxRuleVisual_MouseUp"
+                            MouseWheel="syntaxRuleVisual_MouseWheel"
+                            />
+                        <WebBrowser x:Name="stateBrowser" Grid.Row="2" Grid.Column="0" Margin="0,0,-2,0" Navigating="stateBrowser_Navigating" />
                     </Grid>
                 </Grid>
             </TabItem>

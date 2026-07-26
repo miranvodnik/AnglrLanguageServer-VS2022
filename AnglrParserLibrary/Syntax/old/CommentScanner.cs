@@ -12,7 +12,7 @@ using Anglr.Declarations;
 
 namespace Anglr.ScannerLib
 {
-	internal class CommentScanner : Regex, RegexInterface
+	public class CommentScanner : Regex, RegexInterface
 	{
 		public CommentScanner (LexerBase scanner) : base (@"(?<g1>\*+\/)|(?<g2>\*+[^\*\/])|(?<g3>[^\*]+)", RegexOptions.ExplicitCapture)
 		{

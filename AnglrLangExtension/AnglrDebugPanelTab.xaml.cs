@@ -33,7 +33,7 @@ namespace AnglrLangExtension
     /// <summary>
     /// Interaction logic for AnglrDebugPanelTab.xaml
     /// </summary>
-    public partial class AnglrDebugPanelTab : UserControl, IAnglrServerSideDebuggerInvoker
+    public partial class AnglrDebugPanelTab : UserControl, IAnglrClientSideDebuggerInvoker
     {
         private int sessionCounter;
         private IAnglrLangService anglrLangService;
@@ -51,7 +51,7 @@ namespace AnglrLangExtension
         /// <param name="anglrDebuggerServerBridge">
         /// reference to object implementing JsonRpc between this TabItem and executable being debugged
         /// </param>
-        public AnglrDebugPanelTab (IAnglrLangService anglrLangService, string fileName, AnglrDebuggerServerBridge anglrDebuggerServerBridge)
+        public AnglrDebugPanelTab (IAnglrLangService anglrLangService, string fileName, AnglrDebuggerClientBridge anglrDebuggerServerBridge)
         {
             InitializeComponent ();
 

@@ -12,7 +12,7 @@ using Anglr.Declarations;
 
 namespace Anglr.ScannerLib
 {
-	internal class AnglrScanner : Regex, RegexInterface
+	public class AnglrScanner : Regex, RegexInterface
 	{
 		public AnglrScanner (LexerBase scanner) : base (@"(?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>\|)|(?<g5>\,)|(?<g6>\:)|(?<g7>\;)|(?<g8>\{)|(?<g9>\})|(?<g10>\()|(?<g11>\))|(?<g12>\%\{)|(?<g13>\%\})|(?<g14>\[)|(?<g15>\])|(?<g16>\=)|(?<g17>\@\@)|(?<g18>\@)|(?<g19>\?)|(?<g20>\+)|(?<g21>\-)|(?<g22>\*)|(?<g23>\/)|(?<g24>\~\+)|(?<g25>\~\-)|(?<g26>\~\*)|(?<g27>\~\/)|(?<g28>%[ \t]*empty)|(?<g29>%[ \t]*terminal)|(?<g30>%[ \t]*general)|(?<g31>%[ \t]*declarations)|(?<g32>%[ \t]*regex)|(?<g33>%[ \t]*scanner)|(?<g34>%[ \t]*lexer)|(?<g35>%[ \t]*parser)|(?<g36>%[ \t]*prio(rity)?)|(?<g37>%[ \t]*assoc(iativity)?)|(?<g38>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g39>\""([^""]|\""\"")*\""|\'([^']|\'\')*\')|(?<g40>[0-9]+)|(?<g41>[ \t]+)|(?<g42>[\n\r])|(?<g43>.)", RegexOptions.ExplicitCapture)
 		{

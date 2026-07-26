@@ -57,16 +57,18 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__anglr_definition_with_attribute_.kind)
 			{
-			case production_kind.g__anglr_definition_with_attribute__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__attribute_list_optional_ = p__anglr_definition_with_attribute_.m__attribute_list_optional_;
-				children[1] = m__anglr_definition_ = p__anglr_definition_with_attribute_.m__anglr_definition_;
-				break;
-			default:
-				string[] args = new string[] { "_anglr_definition_with_attribute_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__anglr_definition_with_attribute__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__attribute_list_optional_ = (p__anglr_definition_with_attribute_.m__attribute_list_optional_ != null) ? new _attribute_list_optional_ (p__anglr_definition_with_attribute_.m__attribute_list_optional_) : null) != null) m__attribute_list_optional_.parent = this;
+					if ((children [1] = m__anglr_definition_ = (p__anglr_definition_with_attribute_.m__anglr_definition_ != null) ? new _anglr_definition_ (p__anglr_definition_with_attribute_.m__anglr_definition_) : null) != null) m__anglr_definition_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_anglr_definition_with_attribute_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

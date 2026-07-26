@@ -77,18 +77,20 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__anglr_syntax_production_list_name_optional_.kind)
 			{
-			case production_kind.g__anglr_syntax_production_list_name_optional__1:
-				children = Array.Empty <SyntaxTreeBase> ();
-				break;
-			case production_kind.g__anglr_syntax_production_list_name_optional__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__anglr_syntax_production_list_name_ = p__anglr_syntax_production_list_name_optional_.m__anglr_syntax_production_list_name_;
-				break;
-			default:
-				string[] args = new string[] { "_anglr_syntax_production_list_name_optional_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__anglr_syntax_production_list_name_optional__1:
+					children = Array.Empty <SyntaxTreeBase> ();
+					break;
+				case production_kind.g__anglr_syntax_production_list_name_optional__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__anglr_syntax_production_list_name_ = (p__anglr_syntax_production_list_name_optional_.m__anglr_syntax_production_list_name_ != null) ? new _anglr_syntax_production_list_name_ (p__anglr_syntax_production_list_name_optional_.m__anglr_syntax_production_list_name_) : null) != null) m__anglr_syntax_production_list_name_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_anglr_syntax_production_list_name_optional_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

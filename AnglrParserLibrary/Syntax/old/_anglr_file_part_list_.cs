@@ -81,20 +81,22 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__anglr_file_part_list_.kind)
 			{
-			case production_kind.g__anglr_file_part_list__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__anglr_file_part_ = p__anglr_file_part_list_.m__anglr_file_part_;
-				break;
-			case production_kind.g__anglr_file_part_list__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_file_part_list_ = p__anglr_file_part_list_.m__anglr_file_part_list_;
-				children[1] = m__anglr_file_part_ = p__anglr_file_part_list_.m__anglr_file_part_;
-				break;
-			default:
-				string[] args = new string[] { "_anglr_file_part_list_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__anglr_file_part_list__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__anglr_file_part_ = (p__anglr_file_part_list_.m__anglr_file_part_ != null) ? new _anglr_file_part_ (p__anglr_file_part_list_.m__anglr_file_part_) : null) != null) m__anglr_file_part_.parent = this;
+					break;
+				case production_kind.g__anglr_file_part_list__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_file_part_list_ = (p__anglr_file_part_list_.m__anglr_file_part_list_ != null) ? new _anglr_file_part_list_ (p__anglr_file_part_list_.m__anglr_file_part_list_) : null) != null) m__anglr_file_part_list_.parent = this;
+					if ((children [1] = m__anglr_file_part_ = (p__anglr_file_part_list_.m__anglr_file_part_ != null) ? new _anglr_file_part_ (p__anglr_file_part_list_.m__anglr_file_part_) : null) != null) m__anglr_file_part_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_anglr_file_part_list_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

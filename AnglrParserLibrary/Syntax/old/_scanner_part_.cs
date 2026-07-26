@@ -61,20 +61,22 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__scanner_part_.kind)
 			{
-			case production_kind.g__scanner_part__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 6);
-				children[0] = m__attribute_list_optional_ = p__scanner_part_.m__attribute_list_optional_;
-				children[1] = m__scanner_ = p__scanner_part_.m__scanner_;
-				children[2] = m__identifier_ = p__scanner_part_.m__identifier_;
-				children[3] = m__left_part_bracket_ = p__scanner_part_.m__left_part_bracket_;
-				children[4] = m__regular_expression_list_optional_ = p__scanner_part_.m__regular_expression_list_optional_;
-				children[5] = m__right_part_bracket_ = p__scanner_part_.m__right_part_bracket_;
-				break;
-			default:
-				string[] args = new string[] { "_scanner_part_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__scanner_part__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 6);
+					if ((children [0] = m__attribute_list_optional_ = (p__scanner_part_.m__attribute_list_optional_ != null) ? new _attribute_list_optional_ (p__scanner_part_.m__attribute_list_optional_) : null) != null) m__attribute_list_optional_.parent = this;
+					if ((children [1] = m__scanner_ = (p__scanner_part_.m__scanner_ != null) ? new SyntaxTreeToken (p__scanner_part_.m__scanner_) : null) != null) m__scanner_.parent = this;
+					if ((children [2] = m__identifier_ = (p__scanner_part_.m__identifier_ != null) ? new SyntaxTreeToken (p__scanner_part_.m__identifier_) : null) != null) m__identifier_.parent = this;
+					if ((children [3] = m__left_part_bracket_ = (p__scanner_part_.m__left_part_bracket_ != null) ? new SyntaxTreeToken (p__scanner_part_.m__left_part_bracket_) : null) != null) m__left_part_bracket_.parent = this;
+					if ((children [4] = m__regular_expression_list_optional_ = (p__scanner_part_.m__regular_expression_list_optional_ != null) ? new _regular_expression_list_optional_ (p__scanner_part_.m__regular_expression_list_optional_) : null) != null) m__regular_expression_list_optional_.parent = this;
+					if ((children [5] = m__right_part_bracket_ = (p__scanner_part_.m__right_part_bracket_ != null) ? new SyntaxTreeToken (p__scanner_part_.m__right_part_bracket_) : null) != null) m__right_part_bracket_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_scanner_part_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

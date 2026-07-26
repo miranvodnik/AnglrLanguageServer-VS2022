@@ -55,16 +55,18 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__regex_definition_.kind)
 			{
-			case production_kind.g__regex_definition__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__identifier_ = p__regex_definition_.m__identifier_;
-				children[1] = m__regular_expression_ = p__regex_definition_.m__regular_expression_;
-				break;
-			default:
-				string[] args = new string[] { "_regex_definition_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__regex_definition__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__identifier_ = (p__regex_definition_.m__identifier_ != null) ? new SyntaxTreeToken (p__regex_definition_.m__identifier_) : null) != null) m__identifier_.parent = this;
+					if ((children [1] = m__regular_expression_ = (p__regex_definition_.m__regular_expression_ != null) ? new SyntaxTreeToken (p__regex_definition_.m__regular_expression_) : null) != null) m__regular_expression_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_regex_definition_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

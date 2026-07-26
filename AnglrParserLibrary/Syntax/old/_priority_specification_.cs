@@ -80,22 +80,24 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__priority_specification_.kind)
 			{
-			case production_kind.g__priority_specification__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__priority_ = p__priority_specification_.m__priority_;
-				children[1] = m__number_ = p__priority_specification_.m__number_;
-				break;
-			case production_kind.g__priority_specification__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
-				children[0] = m__priority_ = p__priority_specification_.m__priority_;
-				children[1] = m__equals_sign_ = p__priority_specification_.m__equals_sign_;
-				children[2] = m__number_ = p__priority_specification_.m__number_;
-				break;
-			default:
-				string[] args = new string[] { "_priority_specification_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__priority_specification__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__priority_ = (p__priority_specification_.m__priority_ != null) ? new SyntaxTreeToken (p__priority_specification_.m__priority_) : null) != null) m__priority_.parent = this;
+					if ((children [1] = m__number_ = (p__priority_specification_.m__number_ != null) ? new SyntaxTreeToken (p__priority_specification_.m__number_) : null) != null) m__number_.parent = this;
+					break;
+				case production_kind.g__priority_specification__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
+					if ((children [0] = m__priority_ = (p__priority_specification_.m__priority_ != null) ? new SyntaxTreeToken (p__priority_specification_.m__priority_) : null) != null) m__priority_.parent = this;
+					if ((children [1] = m__equals_sign_ = (p__priority_specification_.m__equals_sign_ != null) ? new SyntaxTreeToken (p__priority_specification_.m__equals_sign_) : null) != null) m__equals_sign_.parent = this;
+					if ((children [2] = m__number_ = (p__priority_specification_.m__number_ != null) ? new SyntaxTreeToken (p__priority_specification_.m__number_) : null) != null) m__number_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_priority_specification_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

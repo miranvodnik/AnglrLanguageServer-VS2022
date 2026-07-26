@@ -77,18 +77,20 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__priority_assoc_specification_optional_.kind)
 			{
-			case production_kind.g__priority_assoc_specification_optional__1:
-				children = Array.Empty <SyntaxTreeBase> ();
-				break;
-			case production_kind.g__priority_assoc_specification_optional__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__priority_assoc_specification_ = p__priority_assoc_specification_optional_.m__priority_assoc_specification_;
-				break;
-			default:
-				string[] args = new string[] { "_priority_assoc_specification_optional_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__priority_assoc_specification_optional__1:
+					children = Array.Empty <SyntaxTreeBase> ();
+					break;
+				case production_kind.g__priority_assoc_specification_optional__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__priority_assoc_specification_ = (p__priority_assoc_specification_optional_.m__priority_assoc_specification_ != null) ? new _priority_assoc_specification_ (p__priority_assoc_specification_optional_.m__priority_assoc_specification_) : null) != null) m__priority_assoc_specification_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_priority_assoc_specification_optional_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

@@ -81,20 +81,22 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__regular_expression_list_.kind)
 			{
-			case production_kind.g__regular_expression_list__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__regular_expression_usage_ = p__regular_expression_list_.m__regular_expression_usage_;
-				break;
-			case production_kind.g__regular_expression_list__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__regular_expression_list_ = p__regular_expression_list_.m__regular_expression_list_;
-				children[1] = m__regular_expression_usage_ = p__regular_expression_list_.m__regular_expression_usage_;
-				break;
-			default:
-				string[] args = new string[] { "_regular_expression_list_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__regular_expression_list__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__regular_expression_usage_ = (p__regular_expression_list_.m__regular_expression_usage_ != null) ? new _regular_expression_usage_ (p__regular_expression_list_.m__regular_expression_usage_) : null) != null) m__regular_expression_usage_.parent = this;
+					break;
+				case production_kind.g__regular_expression_list__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__regular_expression_list_ = (p__regular_expression_list_.m__regular_expression_list_ != null) ? new _regular_expression_list_ (p__regular_expression_list_.m__regular_expression_list_) : null) != null) m__regular_expression_list_.parent = this;
+					if ((children [1] = m__regular_expression_usage_ = (p__regular_expression_list_.m__regular_expression_usage_ != null) ? new _regular_expression_usage_ (p__regular_expression_list_.m__regular_expression_usage_) : null) != null) m__regular_expression_usage_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_regular_expression_list_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

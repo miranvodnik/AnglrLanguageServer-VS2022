@@ -61,20 +61,22 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__general_part_.kind)
 			{
-			case production_kind.g__general_part__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 6);
-				children[0] = m__attribute_list_optional_ = p__general_part_.m__attribute_list_optional_;
-				children[1] = m__general_ = p__general_part_.m__general_;
-				children[2] = m__identifier_ = p__general_part_.m__identifier_;
-				children[3] = m__left_part_bracket_ = p__general_part_.m__left_part_bracket_;
-				children[4] = m__attribute_list_optional__1 = p__general_part_.m__attribute_list_optional__1;
-				children[5] = m__right_part_bracket_ = p__general_part_.m__right_part_bracket_;
-				break;
-			default:
-				string[] args = new string[] { "_general_part_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__general_part__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 6);
+					if ((children [0] = m__attribute_list_optional_ = (p__general_part_.m__attribute_list_optional_ != null) ? new _attribute_list_optional_ (p__general_part_.m__attribute_list_optional_) : null) != null) m__attribute_list_optional_.parent = this;
+					if ((children [1] = m__general_ = (p__general_part_.m__general_ != null) ? new SyntaxTreeToken (p__general_part_.m__general_) : null) != null) m__general_.parent = this;
+					if ((children [2] = m__identifier_ = (p__general_part_.m__identifier_ != null) ? new SyntaxTreeToken (p__general_part_.m__identifier_) : null) != null) m__identifier_.parent = this;
+					if ((children [3] = m__left_part_bracket_ = (p__general_part_.m__left_part_bracket_ != null) ? new SyntaxTreeToken (p__general_part_.m__left_part_bracket_) : null) != null) m__left_part_bracket_.parent = this;
+					if ((children [4] = m__attribute_list_optional__1 = (p__general_part_.m__attribute_list_optional__1 != null) ? new _attribute_list_optional_ (p__general_part_.m__attribute_list_optional__1) : null) != null) m__attribute_list_optional__1.parent = this;
+					if ((children [5] = m__right_part_bracket_ = (p__general_part_.m__right_part_bracket_ != null) ? new SyntaxTreeToken (p__general_part_.m__right_part_bracket_) : null) != null) m__right_part_bracket_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_general_part_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

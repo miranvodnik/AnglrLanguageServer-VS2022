@@ -56,16 +56,18 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__regular_expression_usage_.kind)
 			{
-			case production_kind.g__regular_expression_usage__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__regular_expression_ = p__regular_expression_usage_.m__regular_expression_;
-				children[1] = m__actions_optional_ = p__regular_expression_usage_.m__actions_optional_;
-				break;
-			default:
-				string[] args = new string[] { "_regular_expression_usage_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__regular_expression_usage__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__regular_expression_ = (p__regular_expression_usage_.m__regular_expression_ != null) ? new SyntaxTreeToken (p__regular_expression_usage_.m__regular_expression_) : null) != null) m__regular_expression_.parent = this;
+					if ((children [1] = m__actions_optional_ = (p__regular_expression_usage_.m__actions_optional_ != null) ? new _actions_optional_ (p__regular_expression_usage_.m__actions_optional_) : null) != null) m__actions_optional_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_regular_expression_usage_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

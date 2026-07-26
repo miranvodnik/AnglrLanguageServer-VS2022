@@ -77,18 +77,20 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__marker_list_optional_.kind)
 			{
-			case production_kind.g__marker_list_optional__1:
-				children = Array.Empty <SyntaxTreeBase> ();
-				break;
-			case production_kind.g__marker_list_optional__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__marker_list_ = p__marker_list_optional_.m__marker_list_;
-				break;
-			default:
-				string[] args = new string[] { "_marker_list_optional_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__marker_list_optional__1:
+					children = Array.Empty <SyntaxTreeBase> ();
+					break;
+				case production_kind.g__marker_list_optional__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__marker_list_ = (p__marker_list_optional_.m__marker_list_ != null) ? new _marker_list_ (p__marker_list_optional_.m__marker_list_) : null) != null) m__marker_list_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_marker_list_optional_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

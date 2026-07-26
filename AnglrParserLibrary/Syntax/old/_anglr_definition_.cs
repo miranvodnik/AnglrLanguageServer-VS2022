@@ -127,27 +127,29 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__anglr_definition_.kind)
 			{
-			case production_kind.g__anglr_definition__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__single_terminal_definition_ = p__anglr_definition_.m__single_terminal_definition_;
-				break;
-			case production_kind.g__anglr_definition__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__single_regex_definition_ = p__anglr_definition_.m__single_regex_definition_;
-				break;
-			case production_kind.g__anglr_definition__3:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__block_of_terminal_definitions_ = p__anglr_definition_.m__block_of_terminal_definitions_;
-				break;
-			case production_kind.g__anglr_definition__4:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__block_of_regex_definitions_ = p__anglr_definition_.m__block_of_regex_definitions_;
-				break;
-			default:
-				string[] args = new string[] { "_anglr_definition_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__anglr_definition__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__single_terminal_definition_ = (p__anglr_definition_.m__single_terminal_definition_ != null) ? new _single_terminal_definition_ (p__anglr_definition_.m__single_terminal_definition_) : null) != null) m__single_terminal_definition_.parent = this;
+					break;
+				case production_kind.g__anglr_definition__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__single_regex_definition_ = (p__anglr_definition_.m__single_regex_definition_ != null) ? new _single_regex_definition_ (p__anglr_definition_.m__single_regex_definition_) : null) != null) m__single_regex_definition_.parent = this;
+					break;
+				case production_kind.g__anglr_definition__3:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__block_of_terminal_definitions_ = (p__anglr_definition_.m__block_of_terminal_definitions_ != null) ? new _block_of_terminal_definitions_ (p__anglr_definition_.m__block_of_terminal_definitions_) : null) != null) m__block_of_terminal_definitions_.parent = this;
+					break;
+				case production_kind.g__anglr_definition__4:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__block_of_regex_definitions_ = (p__anglr_definition_.m__block_of_regex_definitions_ != null) ? new _block_of_regex_definitions_ (p__anglr_definition_.m__block_of_regex_definitions_) : null) != null) m__block_of_regex_definitions_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_anglr_definition_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

@@ -57,16 +57,18 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__cardinality_delimiter_.kind)
 			{
-			case production_kind.g__cardinality_delimiter__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__cardinality_ = p__cardinality_delimiter_.m__cardinality_;
-				children[1] = m__delimiter_optional_ = p__cardinality_delimiter_.m__delimiter_optional_;
-				break;
-			default:
-				string[] args = new string[] { "_cardinality_delimiter_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__cardinality_delimiter__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__cardinality_ = (p__cardinality_delimiter_.m__cardinality_ != null) ? new _cardinality_ (p__cardinality_delimiter_.m__cardinality_) : null) != null) m__cardinality_.parent = this;
+					if ((children [1] = m__delimiter_optional_ = (p__cardinality_delimiter_.m__delimiter_optional_ != null) ? new _delimiter_optional_ (p__cardinality_delimiter_.m__delimiter_optional_) : null) != null) m__delimiter_optional_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_cardinality_delimiter_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

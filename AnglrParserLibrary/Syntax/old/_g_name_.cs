@@ -107,26 +107,28 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__g_name_.kind)
 			{
-			case production_kind.g__g_name__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__name_ = p__g_name_.m__name_;
-				break;
-			case production_kind.g__g_name__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
-				children[0] = m__left_bracket_ = p__g_name_.m__left_bracket_;
-				children[1] = m__anglr_nested_rule_ = p__g_name_.m__anglr_nested_rule_;
-				children[2] = m__right_bracket_ = p__g_name_.m__right_bracket_;
-				break;
-			case production_kind.g__g_name__3:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__g_name_ = p__g_name_.m__g_name_;
-				children[1] = m__cardinality_delimiter_ = p__g_name_.m__cardinality_delimiter_;
-				break;
-			default:
-				string[] args = new string[] { "_g_name_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__g_name__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__name_ = (p__g_name_.m__name_ != null) ? new _name_ (p__g_name_.m__name_) : null) != null) m__name_.parent = this;
+					break;
+				case production_kind.g__g_name__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
+					if ((children [0] = m__left_bracket_ = (p__g_name_.m__left_bracket_ != null) ? new SyntaxTreeToken (p__g_name_.m__left_bracket_) : null) != null) m__left_bracket_.parent = this;
+					if ((children [1] = m__anglr_nested_rule_ = (p__g_name_.m__anglr_nested_rule_ != null) ? new _anglr_nested_rule_ (p__g_name_.m__anglr_nested_rule_) : null) != null) m__anglr_nested_rule_.parent = this;
+					if ((children [2] = m__right_bracket_ = (p__g_name_.m__right_bracket_ != null) ? new SyntaxTreeToken (p__g_name_.m__right_bracket_) : null) != null) m__right_bracket_.parent = this;
+					break;
+				case production_kind.g__g_name__3:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__g_name_ = (p__g_name_.m__g_name_ != null) ? new _g_name_ (p__g_name_.m__g_name_) : null) != null) m__g_name_.parent = this;
+					if ((children [1] = m__cardinality_delimiter_ = (p__g_name_.m__cardinality_delimiter_ != null) ? new _cardinality_delimiter_ (p__g_name_.m__cardinality_delimiter_) : null) != null) m__cardinality_delimiter_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_g_name_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

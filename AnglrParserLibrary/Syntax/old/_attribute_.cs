@@ -58,18 +58,20 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__attribute_.kind)
 			{
-			case production_kind.g__attribute__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 4);
-				children[0] = m__left_square_bracket_ = p__attribute_.m__left_square_bracket_;
-				children[1] = m__identifier_ = p__attribute_.m__identifier_;
-				children[2] = m__name_value_list_optional_ = p__attribute_.m__name_value_list_optional_;
-				children[3] = m__right_square_bracket_ = p__attribute_.m__right_square_bracket_;
-				break;
-			default:
-				string[] args = new string[] { "_attribute_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__attribute__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 4);
+					if ((children [0] = m__left_square_bracket_ = (p__attribute_.m__left_square_bracket_ != null) ? new SyntaxTreeToken (p__attribute_.m__left_square_bracket_) : null) != null) m__left_square_bracket_.parent = this;
+					if ((children [1] = m__identifier_ = (p__attribute_.m__identifier_ != null) ? new SyntaxTreeToken (p__attribute_.m__identifier_) : null) != null) m__identifier_.parent = this;
+					if ((children [2] = m__name_value_list_optional_ = (p__attribute_.m__name_value_list_optional_ != null) ? new _name_value_list_optional_ (p__attribute_.m__name_value_list_optional_) : null) != null) m__name_value_list_optional_.parent = this;
+					if ((children [3] = m__right_square_bracket_ = (p__attribute_.m__right_square_bracket_ != null) ? new SyntaxTreeToken (p__attribute_.m__right_square_bracket_) : null) != null) m__right_square_bracket_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_attribute_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

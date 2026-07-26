@@ -1,20 +1,29 @@
 ﻿using Anglr.Parser;
 using AnglrJsonRpcMethods;
+using AnglrLibrary;
 using AnglrLogLibrary;
 using Microsoft.VisualStudio.LanguageServer.Protocol;
+using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Drawing.Printing;
+using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 
 namespace AnglrLangExtension
 {
     using static System.Windows.Forms.AxHost;
+    using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
     using UserControl = System.Windows.Controls.UserControl;
     /// <summary>
     /// Interaction logic for AnglrLangWindowControl.
@@ -63,12 +72,12 @@ namespace AnglrLangExtension
         }
     }
 
-    public class AnglrLangDictionary : Dictionary<int, (AnglrLangItem, AnglrStateItem, AnglrGetParserSyntaxRulesResult)>
+    public class AnglrLangDictionary : Dictionary<int, (AnglrLangItem, AnglrStateItem, AnglrGetParserSyntaxRulesResult, AnglrDrawingDictionary)>
     {
         private static AnglrLangDictionary AnglrLangRepo = new AnglrLangDictionary ();
         public static bool HasItem (int id) => AnglrLangRepo.TryGetValue (id, out _);
-        public static (AnglrLangItem, AnglrStateItem, AnglrGetParserSyntaxRulesResult) AddItem (int id, (AnglrLangItem, AnglrStateItem, AnglrGetParserSyntaxRulesResult) item) => HasItem (id) ? default : AnglrLangRepo [id] = item;
-        public static (AnglrLangItem, AnglrStateItem, AnglrGetParserSyntaxRulesResult) GetItem (int id) => AnglrLangRepo.TryGetValue (id, out var item) ? item : default;
+        public static (AnglrLangItem, AnglrStateItem, AnglrGetParserSyntaxRulesResult, AnglrDrawingDictionary) AddItem (int id, (AnglrLangItem, AnglrStateItem, AnglrGetParserSyntaxRulesResult, AnglrDrawingDictionary) item) => HasItem (id) ? default : AnglrLangRepo [id] = item;
+        public static (AnglrLangItem, AnglrStateItem, AnglrGetParserSyntaxRulesResult, AnglrDrawingDictionary) GetItem (int id) => AnglrLangRepo.TryGetValue (id, out var item) ? item : default;
     }
 
     public partial class AnglrLangWindowControl : UserControl
@@ -413,14 +422,16 @@ namespace AnglrLangExtension
                     }
                 );
 
-                AnglrLangItem anglrLangItem = new AnglrLangItem (null, (int) ProductionID.__anglr_file__ID, name, $"{(int) ProductionID.__anglr_file__ID}-1");
-                AnglrStateItem anglrStateItem = new AnglrStateItem (null, true, name, 0, 0, new TreeViewItemSet ());
+                int _magicNr = magicNr.HasValue ? magicNr.Value : 0;
+                AnglrLangItem anglrLangItem = new AnglrLangRootItem (null, (int) ProductionID.__anglr_file__ID, name, $"{(int) ProductionID.__anglr_file__ID}-1", _magicNr);
+                AnglrStateItem anglrStateItem = new AnglrStateRootItem (null, true, name, 0, 0, new TreeViewItemSet (), _magicNr);
                 AnglrDetailViewItemWindow anglrDetailViewItemWindow = new AnglrDetailViewItemWindow ();
                 anglrDetailViewItemWindow.FileName = name;
                 anglrDetailViewItemWindow.AnglrGetParserSyntaxRuleDatas = new AnglrGetParserSyntaxRuleDataCollection (anglrGetParserSyntaxRulesResult?.SyntaxRuleList);
+                AnglrDrawingDictionary dictionary = AnglrSyntaxRuleDrawingBuilder.BuildSyntaxRulesDrawings (anglrGetParserSyntaxRulesResult);
 
                 if (magicNr.HasValue)
-                    AnglrLangDictionary.AddItem (magicNr.Value, (anglrLangItem, anglrStateItem, anglrGetParserSyntaxRulesResult));
+                    AnglrLangDictionary.AddItem (magicNr.Value, (anglrLangItem, anglrStateItem, anglrGetParserSyntaxRulesResult, dictionary));
 
                 anglrSyntaxTree.Items.Add (anglrLangItem);
                 anglrParserStates.Items.Add (anglrStateItem);
@@ -783,14 +794,14 @@ namespace AnglrLangExtension
             rightButtonSource = null;
         }
 
-        private void anglrSyntaxTree_MouseRightButtonDown (object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void anglrSyntaxTree_MouseRightButtonDown (object sender, MouseButtonEventArgs e)
         {
             rightButtonSource = e.Source;
         }
 
-        private void anglrSyntaxTree_KeyDown (object sender, System.Windows.Input.KeyEventArgs e)
+        private void anglrSyntaxTree_KeyDown (object sender, KeyEventArgs e)
         {
-            if (e.Key != System.Windows.Input.Key.Enter)
+            if (e.Key != Key.Enter)
                 return;
 
             if (anglrSyntaxTree.SelectedItem == null)
@@ -923,6 +934,58 @@ namespace AnglrLangExtension
                 stateTab.Tag = selectedViewItem;
                 stateName.Content = $"State {selectedViewItem.State}";
                 stateBrowser.NavigateToString (selectedViewItem.Text);
+
+                AnglrStateRootItem anglrStateRootItem = selectedViewItem.RootItem as AnglrStateRootItem;
+                if (anglrStateRootItem != null)
+                {
+                    var chunk = AnglrLangDictionary.GetItem (anglrStateRootItem.MagicNr);
+                    if ((chunk != default) && (chunk.Item4 != null))
+                    {
+                        AnglrDrawingDictionary dictionary = chunk.Item4;
+                        if (dictionary != null)
+                        {
+                            int index = 0;
+                            double verticalOffset = 0.0;
+                            syntaxRuleVisual.Clear ();
+                            foreach (var coreData in anglrStateItem.getParserStateItemResult.CoreSet)
+                            {
+                                var production = coreData.Production;
+                                var position = coreData.Position;
+                                if (!dictionary.TryGetValue (production.ProductionNumber, out var visual))
+                                {
+                                    logger?.WarnLine ($"cannot access visual representation of production nr.: {production.ProductionNumber}");
+                                    continue;
+                                }
+                                AnglrDrawingVisual container = visual.Clone ();
+                                container.Offset = new Vector (0, verticalOffset);
+                                syntaxRuleVisual.AddVisual (container);
+                                Rect bounds = container.ContentBounds;
+                                bounds.Union (container.DescendantBounds);
+                                verticalOffset += bounds.Height + 2 * AnglrDrawingVisual.Margin;
+                            }
+                            verticalOffset += 10.0;
+                            foreach (var coreData in anglrStateItem.getParserStateItemResult.ClosureSet)
+                            {
+                                foreach (var production in coreData.ProductionNode.ProductionSet)
+                                {
+                                    if (!dictionary.TryGetValue (production.ProductionNumber, out var visual))
+                                    {
+                                        logger?.WarnLine ($"cannot access visual representation of production nr.: {production.ProductionNumber}");
+                                        continue;
+                                    }
+                                    AnglrDrawingVisual container = visual.Clone ();
+                                    container.Offset = new Vector (0, verticalOffset);
+                                    syntaxRuleVisual.AddVisual (container);
+                                    Rect bounds = container.ContentBounds;
+                                    bounds.Union (container.DescendantBounds);
+                                    verticalOffset += bounds.Height + 2 * AnglrDrawingVisual.Margin;
+                                }
+                            }
+                            syntaxRuleVisual.Height = verticalOffset;
+                        }
+                    }
+                }
+
                 //anglrLangService.Log ($"HTML START");
                 //anglrLangService.Log (selectedViewItem.Text);
                 //anglrLangService.Log ($"HTML STOP");
@@ -935,12 +998,12 @@ namespace AnglrLangExtension
             }
         }
 
-        private void anglrParserStates_MouseRightButtonDown (object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void anglrParserStates_MouseRightButtonDown (object sender, MouseButtonEventArgs e)
         {
 
         }
 
-        private void anglrParserStates_KeyDown (object sender, System.Windows.Input.KeyEventArgs e)
+        private void anglrParserStates_KeyDown (object sender, KeyEventArgs e)
         {
             if (e.Key != System.Windows.Input.Key.Enter)
                 return;
@@ -978,7 +1041,7 @@ namespace AnglrLangExtension
             treeViewItem.BringIntoView ();
         }
 
-        private void anglrParserStates_MouseDoubleClick (object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void anglrParserStates_MouseDoubleClick (object sender, MouseButtonEventArgs e)
         {
             // try to find TreeViewItem parent of item being clicked
             TreeViewItem treeViewItem = (e.OriginalSource as DependencyObject)?.GetParentOfType<TreeViewItem> ();
@@ -1296,6 +1359,87 @@ namespace AnglrLangExtension
         {
 
         }
+
+        private void syntaxRuleVisual_MouseDown (object sender, MouseButtonEventArgs e)
+        {
+            var p = e.GetPosition (sender as IInputElement);
+            if (p == null)
+                return;
+
+            List<Visual> visuals = new List<Visual> ();
+            VisualTreeHelper.HitTest
+            (
+                sender as Visual,
+                null,
+                (result) =>
+                {
+                    if (result.VisualHit is Visual visual)
+                        visuals.Add (visual);
+                    return HitTestResultBehavior.Continue;
+                },
+                new PointHitTestParameters (p)
+            );
+
+            logger?.InfoLine ($"mouse down in ({p})");
+            foreach (Visual visual in visuals)
+            {
+                Vector offset = new Vector (p.X, p.Y);
+                for (DrawingVisual parent = visual as DrawingVisual; parent != null; parent = parent.Parent as DrawingVisual)
+                {
+                    Rect bounds = parent.ContentBounds;
+                    bounds.Union (parent.DescendantBounds);
+                    logger?.InfoLine ($"visual: offset = {parent.Offset}, bounds = {bounds}");
+                    offset -= parent.Offset;
+                    logger?.InfoLine ($"offset = ({offset})");
+                }
+                (visual as IAnglrEventHandler)?.OnMouseDown (sender, e, new Point (offset.X, offset.Y), logger);
+            }
+        }
+
+        private void syntaxRuleVisual_MouseEnter (object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void syntaxRuleVisual_MouseLeave (object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void syntaxRuleVisual_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void syntaxRuleVisual_MouseLeftButtonUp (object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void syntaxRuleVisual_MouseMove (object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void syntaxRuleVisual_MouseRightButtonDown (object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void syntaxRuleVisual_MouseRightButtonUp (object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void syntaxRuleVisual_MouseUp (object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void syntaxRuleVisual_MouseWheel (object sender, MouseWheelEventArgs e)
+        {
+
+        }
     }
 
     public class AnglrLangItem
@@ -1328,6 +1472,15 @@ namespace AnglrLangExtension
         public string Id { get; private set; }
         public int Specie { get; private set; }
         public ObservableCollection<AnglrLangItem> anglrLangItems { get; set; }
+    }
+
+    public class AnglrLangRootItem : AnglrLangItem
+    {
+        public int MagicNr { get; private set; }
+        public AnglrLangRootItem (AnglrLangItem parent, int specie, string name, string id, int magicNr) : base (parent, specie, name, id)
+        {
+            MagicNr = magicNr;
+        }
     }
 
     public class AnglrStateItem
@@ -1789,6 +1942,15 @@ namespace AnglrLangExtension
                 path = new ViablePrefix ();
             path.Add (this);
             return path;
+        }
+    }
+
+    public class AnglrStateRootItem : AnglrStateItem
+    {
+        public int MagicNr { get; private set; }
+        public AnglrStateRootItem (AnglrStateItem parentItem, bool isShift, string name, int state, uint conflicts, TreeViewItemSet treeViewItemSet, int magicNr) : base (parentItem, isShift, name, state, conflicts, treeViewItemSet)
+        {
+            MagicNr = magicNr;
         }
     }
 

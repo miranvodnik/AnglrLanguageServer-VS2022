@@ -93,6 +93,8 @@
     <Compile Include="AnglrSyntaxRuleDetailsWindow.xaml.cs">
       <DependentUpon>AnglrSyntaxRuleDetailsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AnglrVisualizer.cs" />
+    <Compile Include="DrawingCanvas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AnglrLangExtensionPackage.cs" />
     <Compile Include="RhsNodeSetToStringConverter.cs" />
@@ -230,6 +232,10 @@
       <Name>AnglrLSPServerProcess</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\AnglrParserCore\AnglrParserCore.csproj">
+      <Project>{5806a921-b65a-440e-9645-05a41076418f}</Project>
+      <Name>AnglrParserCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\AnglrParserLibrary\AnglrParserLibrary.csproj">
       <Project>{C30AFD47-6DF9-467B-8150-86BCBE90A74D}</Project>

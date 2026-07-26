@@ -55,16 +55,18 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__terminal_action_.kind)
 			{
-			case production_kind.g__terminal_action__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__ttoken_ = p__terminal_action_.m__ttoken_;
-				children[1] = m__identifier_ = p__terminal_action_.m__identifier_;
-				break;
-			default:
-				string[] args = new string[] { "_terminal_action_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__terminal_action__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__ttoken_ = (p__terminal_action_.m__ttoken_ != null) ? new SyntaxTreeToken (p__terminal_action_.m__ttoken_) : null) != null) m__ttoken_.parent = this;
+					if ((children [1] = m__identifier_ = (p__terminal_action_.m__identifier_ != null) ? new SyntaxTreeToken (p__terminal_action_.m__identifier_) : null) != null) m__identifier_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_terminal_action_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

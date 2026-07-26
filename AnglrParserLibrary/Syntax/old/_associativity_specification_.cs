@@ -133,22 +133,35 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__associativity_specification_.kind)
 			{
-			case production_kind.g__associativity_specification__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__associativity_ = p__associativity_specification_.m__associativity_;
-				children[1] = m__cstring_ = p__associativity_specification_.m__cstring_;
-				break;
-			case production_kind.g__associativity_specification__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
-				children[0] = m__associativity_ = p__associativity_specification_.m__associativity_;
-				children[1] = m__equals_sign_ = p__associativity_specification_.m__equals_sign_;
-				children[2] = m__cstring_ = p__associativity_specification_.m__cstring_;
-				break;
-			default:
-				string[] args = new string[] { "_associativity_specification_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__associativity_specification__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__associativity_ = (p__associativity_specification_.m__associativity_ != null) ? new SyntaxTreeToken (p__associativity_specification_.m__associativity_) : null) != null) m__associativity_.parent = this;
+					if ((children [1] = m__cstring_ = (p__associativity_specification_.m__cstring_ != null) ? new SyntaxTreeToken (p__associativity_specification_.m__cstring_) : null) != null) m__cstring_.parent = this;
+					break;
+				case production_kind.g__associativity_specification__3:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__associativity_ = (p__associativity_specification_.m__associativity_ != null) ? new SyntaxTreeToken (p__associativity_specification_.m__associativity_) : null) != null) m__associativity_.parent = this;
+					if ((children [1] = m__identifier_ = (p__associativity_specification_.m__identifier_ != null) ? new SyntaxTreeToken (p__associativity_specification_.m__identifier_) : null) != null) m__identifier_.parent = this;
+					break;
+				case production_kind.g__associativity_specification__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
+					if ((children [0] = m__associativity_ = (p__associativity_specification_.m__associativity_ != null) ? new SyntaxTreeToken (p__associativity_specification_.m__associativity_) : null) != null) m__associativity_.parent = this;
+					if ((children [1] = m__equals_sign_ = (p__associativity_specification_.m__equals_sign_ != null) ? new SyntaxTreeToken (p__associativity_specification_.m__equals_sign_) : null) != null) m__equals_sign_.parent = this;
+					if ((children [2] = m__cstring_ = (p__associativity_specification_.m__cstring_ != null) ? new SyntaxTreeToken (p__associativity_specification_.m__cstring_) : null) != null) m__cstring_.parent = this;
+					break;
+				case production_kind.g__associativity_specification__4:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
+					if ((children [0] = m__associativity_ = (p__associativity_specification_.m__associativity_ != null) ? new SyntaxTreeToken (p__associativity_specification_.m__associativity_) : null) != null) m__associativity_.parent = this;
+					if ((children [1] = m__equals_sign_ = (p__associativity_specification_.m__equals_sign_ != null) ? new SyntaxTreeToken (p__associativity_specification_.m__equals_sign_) : null) != null) m__equals_sign_.parent = this;
+					if ((children [2] = m__identifier_ = (p__associativity_specification_.m__identifier_ != null) ? new SyntaxTreeToken (p__associativity_specification_.m__identifier_) : null) != null) m__identifier_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_associativity_specification_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

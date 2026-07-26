@@ -1,15 +1,17 @@
 ﻿using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
+using AnglrBreakPointDBLibrary;
 using AnglrDebuggerJsonRpcMessages;
 using AnglrLogLibrary;
-using AnglrBreakPointDBLibrary;
 using Microsoft.VisualStudio.Threading;
+using Newtonsoft.Json;
 using StreamJsonRpc;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.SymbolStore;
 using System.IO;
 using System.IO.Pipes;
 using System.Linq;
@@ -17,23 +19,23 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace AnglrDebuggerBridge
 {
-    public class AnglrDebuggerClientBridge : IAnglrClientSideDebugger
+    public class AnglrDebuggerServerBridge : IAnglrServerSideDebugger
     {
         public AnglrLogLevel LogLevel { get; private set; }
         public ParserInterface ParserInterface { get; private set; }
         public NamedPipeClientStream AnglrDebuggerClientStream { get; private set; }
         public JsonRpc Rpc { get; set; }
-        public AnglrClientSideDebuggerJsonRpcMessagesHandler AnglrDebugger { get; private set; }
+        public AnglrServerSideDebuggerJsonRpcMessagesHandler AnglrDebugger { get; private set; }
         private AutoResetEvent ParserStepEvent { get; set; }
         public AnglrBreakPointDBChunk AnglrBreakPointDBChunk { get; private set; }
         public AnglrBitField AnglrProdBitField { get; private set; }
         public AnglrBitField AnglrShiftBitField { get; private set; }
         public AnglrBitField AnglrGotoBitField { get; private set; }
         private object LockingObject { get; set; }
+        private bool DetailedNotifications { get; set; }
         private bool SingleStepBreakPoint { get; set; }
         private bool BreakBreakPoint { get; set; }
         private int SequenceCount;
@@ -42,15 +44,16 @@ namespace AnglrDebuggerBridge
         private ManualResetEventSlim MessageCountEvent { get; set; }
         private bool MessageCountFlag { get; set; }
 #endif
-        public AnglrDebuggerClientBridge (ParserInterface parserInterface)
+        public AnglrDebuggerServerBridge (ParserInterface parserInterface)
         {
             LogLevel = AnglrLogLevel.Info;
             ParserInterface = parserInterface;
-            AnglrDebugger = new AnglrClientSideDebuggerJsonRpcMessagesHandler (this);
+            AnglrDebugger = new AnglrServerSideDebuggerJsonRpcMessagesHandler (this);
 
             ParserStepEvent = new AutoResetEvent (false);
 
             LockingObject = new object ();
+            DetailedNotifications = false;
             SingleStepBreakPoint = false;
             BreakBreakPoint = false;
 
@@ -70,16 +73,16 @@ namespace AnglrDebuggerBridge
 
             Process process = Process.GetCurrentProcess ();
             AnglrDebuggerClientStream = new NamedPipeClientStream (".", $"anglr-debugger-{process.Id}", PipeDirection.InOut, PipeOptions.Asynchronous);
-            Log (AnglrLogLevel.Info, $"<AnglrDebuggerClientBridge>: client pipe 'anglr-debugger-{process.Id}' created");
+            Log (AnglrLogLevel.Info, $"<AnglrDebuggerServerBridge>: client pipe 'anglr-debugger-{process.Id}' created");
 
             try
             {
                 AnglrDebuggerClientStream.Connect (1000);
                 if (AnglrDebuggerClientStream.IsConnected)
                 {
-                    Log (AnglrLogLevel.Info, $"<AnglrDebuggerClientBridge>: client connected");
+                    Log (AnglrLogLevel.Info, $"<AnglrDebuggerServerBridge>: client connected");
                     Rpc = JsonRpc.Attach (AnglrDebuggerClientStream, AnglrDebuggerClientStream, AnglrDebugger);
-                    Log (AnglrLogLevel.Info, $"<AnglrDebuggerClientBridge>: client rpc created");
+                    Log (AnglrLogLevel.Info, $"<AnglrDebuggerServerBridge>: client rpc created");
                     Rpc.Disconnected += Rpc_Disconnected;
                 }
             }
@@ -109,7 +112,7 @@ namespace AnglrDebuggerBridge
 
         private void AnglrBreakPointDBChunk_AnglrReduceBPEvent (AnglrReduceBP bp, bool removed)
         {
-            Log (AnglrLogLevel.Info, $"change syntax rule break-point: production = {bp.ProductionNumber}, set = {removed}");
+            Log (AnglrLogLevel.Info, $"change syntax rule break-point: production = {bp.ProductionNumber}, set = {!removed}");
             if (removed)
                 AnglrProdBitField.Clear ((uint) bp.ProductionNumber);
             else
@@ -130,7 +133,7 @@ namespace AnglrDebuggerBridge
 
             if (Rpc != null)
             {
-                Log (AnglrLogLevel.Info, $"<AnglrDebuggerClientBridge>: RPC disposed");
+                Log (AnglrLogLevel.Info, $"<AnglrDebuggerServerBridge>: RPC disposed");
 #if !ANGLR_DBG_SYNC_RPC
                 int count = 0;
                 lock (LockingObject)
@@ -172,7 +175,7 @@ namespace AnglrDebuggerBridge
             SingleStepBreakPoint = false;
             BreakBreakPoint = false;
 
-            Log (AnglrLogLevel.Info, $"<AnglrDebuggerClientBridge>: RPC disconnected, reason: {e.Reason}");
+            Log (AnglrLogLevel.Info, $"<AnglrDebuggerServerBridge>: RPC disconnected, reason: {e.Reason}");
         }
 
         public void Log (AnglrLogLevel logLevel, string message)
@@ -183,7 +186,7 @@ namespace AnglrDebuggerBridge
                 return;
             try
             {
-                _ = Rpc.InvokeAsync<AnglrDebuggerLogResponse>
+                _ = Rpc.NotifyAsync
                 (
                     AnglrDebuggerJsonRpcMessageNames.LogMessageName,
                     new AnglrDebuggerLogRequest ()
@@ -219,12 +222,25 @@ namespace AnglrDebuggerBridge
 
         private bool CheckBreakPoint ()
         {
+            bool check;
             lock (LockingObject)
             {
-                bool check = SingleStepBreakPoint || BreakBreakPoint;
+                check = SingleStepBreakPoint || BreakBreakPoint;
                 SingleStepBreakPoint = BreakBreakPoint = false;
-                return check;
             }
+            if (check)
+            {
+                _ = Rpc.NotifyAsync
+                (
+                    AnglrDebuggerJsonRpcMessageNames.DbgBreakPointHitMessageName,
+                    new AnglrDebuggerDbgBreakPointHitRequest ()
+                    {
+                        SequenceNr = ++SequenceCount
+                    }
+                );
+                ParserStepEvent.WaitOne ();
+            }
+            return check;
         }
 
         //
@@ -266,7 +282,7 @@ namespace AnglrDebuggerBridge
             {
                 //ParserStepEvent.WaitOne ();
 
-                Log (AnglrLogLevel.Info, $"<AnglrDebuggerClientBridge>: client connection request task created");
+                Log (AnglrLogLevel.Info, $"<AnglrDebuggerServerBridge>: client connection request task created");
                 AnglrDebuggerConnectResponse anglrDebuggerConnectResponse = Rpc.InvokeAsync<AnglrDebuggerConnectResponse>
                 (
                     AnglrDebuggerJsonRpcMessageNames.ConnectMessageName,
@@ -278,10 +294,10 @@ namespace AnglrDebuggerBridge
                         Info = info
                     }
                 ).Result;
-                Log (AnglrLogLevel.Info, $"<AnglrDebuggerClientBridge>: client connection response received");
+                Log (AnglrLogLevel.Info, $"<AnglrDebuggerServerBridge>: client connection response received");
                 if (anglrDebuggerConnectResponse == null)
                 {
-                    Log (AnglrLogLevel.Info, $"<AnglrDebuggerClientBridge>: client connection response invalid, dispose client side pipe");
+                    Log (AnglrLogLevel.Warn, $"<AnglrDebuggerServerBridge>: client connection response invalid, dispose client side pipe");
                     AnglrDebuggerClientStream.Dispose ();
                     return;
                 }
@@ -303,21 +319,22 @@ namespace AnglrDebuggerBridge
 
             try
             {
-                if (CheckBreakPoint ())
-                    ParserStepEvent.WaitOne ();
-
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client syntax error request task created");
-                _ = Rpc.InvokeAsync<AnglrDebuggerSyntaxErrorResponse>
-                (
-                    AnglrDebuggerJsonRpcMessageNames.SyntaxErrorMessageName,
-                    new AnglrDebuggerSyntaxErrorRequest ()
-                    {
-                        SequenceNr = ++SequenceCount,
-                        StackNr = stackNr,
-                        State = state
-                    }
-                );
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client syntax error response received");
+                if (DetailedNotifications)
+                {
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client syntax error request task created");
+                    _ = Rpc.NotifyAsync
+                    (
+                        AnglrDebuggerJsonRpcMessageNames.SyntaxErrorMessageName,
+                        new AnglrDebuggerSyntaxErrorRequest ()
+                        {
+                            SequenceNr = ++SequenceCount,
+                            StackNr = stackNr,
+                            State = state
+                        }
+                    );
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client syntax error response received");
+                }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -332,25 +349,26 @@ namespace AnglrDebuggerBridge
 
             try
             {
-                if (CheckBreakPoint ())
-                    ParserStepEvent.WaitOne ();
-
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client shift step request task created");
-                _ = Rpc.InvokeAsync<AnglrDebuggerShiftStepResponse>
-                (
-                    AnglrDebuggerJsonRpcMessageNames.ShiftStepMessageName,
-                    new AnglrDebuggerShiftStepRequest ()
-                    {
-                        SequenceNr = ++SequenceCount,
-                        StackNr = stackNr,
-                        State = state,
-                        TokenValue = tokenValue,
-                        TokenName = tokenName,
-                        TokenText = tokenText,
-                        Conflict = conflict
-                    }
-                );
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client shift step response received");
+                if (DetailedNotifications)
+                {
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client shift step request task created");
+                    _ = Rpc.NotifyAsync
+                    (
+                        AnglrDebuggerJsonRpcMessageNames.ShiftStepMessageName,
+                        new AnglrDebuggerShiftStepRequest ()
+                        {
+                            SequenceNr = ++SequenceCount,
+                            StackNr = stackNr,
+                            State = state,
+                            TokenValue = tokenValue,
+                            TokenName = tokenName,
+                            TokenText = tokenText,
+                            Conflict = conflict
+                        }
+                    );
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client shift step response received");
+                }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -365,28 +383,29 @@ namespace AnglrDebuggerBridge
 
             try
             {
-                if (CheckBreakPoint ())
-                    ParserStepEvent.WaitOne ();
-
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client reduce step request task created");
-                _ = Rpc.InvokeAsync<AnglrDebuggerReduceStepResponse>
-                (
-                    AnglrDebuggerJsonRpcMessageNames.ReduceStepMessageName,
-                    new AnglrDebuggerReduceStepRequest ()
-                    {
-                        SequenceNr = ++SequenceCount,
-                        StackNr = stackNr,
-                        ProdNr = prodNr,
-                        RuleNr = ruleNr,
-                        RuleName = ruleName,
-                        ProdLen = prodLen,
-                        FallingState = fallingState,
-                        BottomState = bottomState,
-                        RisingState = risingState,
-                        Conflict = conflict
-                    }
-                );
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client reduce step response received");
+                if (DetailedNotifications)
+                {
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client reduce step request task created");
+                    _ = Rpc.NotifyAsync
+                    (
+                        AnglrDebuggerJsonRpcMessageNames.ReduceStepMessageName,
+                        new AnglrDebuggerReduceStepRequest ()
+                        {
+                            SequenceNr = ++SequenceCount,
+                            StackNr = stackNr,
+                            ProdNr = prodNr,
+                            RuleNr = ruleNr,
+                            RuleName = ruleName,
+                            ProdLen = prodLen,
+                            FallingState = fallingState,
+                            BottomState = bottomState,
+                            RisingState = risingState,
+                            Conflict = conflict
+                        }
+                    );
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client reduce step response received");
+                }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -395,12 +414,12 @@ namespace AnglrDebuggerBridge
             if (AnglrProdBitField.Check ((uint) prodNr) == 0)
                 return;
             BreakBreakPoint = true;
-            Log (AnglrLogLevel.Info, $"syntax rule break-point");
+            Log (AnglrLogLevel.Info, $"syntax rule break-point {stackNr}");
             Log (AnglrLogLevel.Info, $"\tsyntax rule name:  {ruleName}");
             Log (AnglrLogLevel.Info, $"\tproduction number: {prodNr}");
             Log (AnglrLogLevel.Info, $"\tsyntax rule nr.:   {ruleNr}");
             Log (AnglrLogLevel.Info, $"\tstate transitions: {fallingState} --> {bottomState} --> {risingState}");
-            Log (AnglrLogLevel.Info, $"\tsyntax rule text:  {currentValue.Emit (-1)}");
+            //Log (AnglrLogLevel.Info, $"\tsyntax rule text:  {currentValue.Emit (-1)}");
         }
 
         private void ParserInterface_SplitStepEvent_Async (int oldStackNr, int newStackNr, bool begin)
@@ -410,22 +429,23 @@ namespace AnglrDebuggerBridge
 
             try
             {
-                if (CheckBreakPoint ())
-                    ParserStepEvent.WaitOne ();
-
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client split step request task created");
-                _ = Rpc.InvokeAsync<AnglrDebuggerSplitStepResponse>
-                (
-                    AnglrDebuggerJsonRpcMessageNames.SplitStepMessageName,
-                    new AnglrDebuggerSplitStepRequest ()
-                    {
-                        SequenceNr = ++SequenceCount,
-                        OldStackNr = oldStackNr,
-                        NewStackNr = newStackNr,
-                        Begin = begin
-                    }
-                );
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client split step response received");
+                if (DetailedNotifications)
+                {
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client split step request task created");
+                    _ = Rpc.NotifyAsync
+                    (
+                        AnglrDebuggerJsonRpcMessageNames.SplitStepMessageName,
+                        new AnglrDebuggerSplitStepRequest ()
+                        {
+                            SequenceNr = ++SequenceCount,
+                            OldStackNr = oldStackNr,
+                            NewStackNr = newStackNr,
+                            Begin = begin
+                        }
+                    );
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client split step response received");
+                }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -440,21 +460,22 @@ namespace AnglrDebuggerBridge
 
             try
             {
-                if (CheckBreakPoint ())
-                    ParserStepEvent.WaitOne ();
-
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client loop step request task created");
-                _ = Rpc.InvokeAsync<AnglrDebuggerLoopStepResponse>
-                (
-                    AnglrDebuggerJsonRpcMessageNames.LoopStepMessageName,
-                    new AnglrDebuggerLoopStepRequest ()
-                    {
-                        SequenceNr = ++SequenceCount,
-                        StackNr = stackNr,
-                        State = state
-                    }
-                );
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client loop step response received");
+                if (DetailedNotifications)
+                {
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client loop step request task created");
+                    _ = Rpc.NotifyAsync
+                    (
+                        AnglrDebuggerJsonRpcMessageNames.LoopStepMessageName,
+                        new AnglrDebuggerLoopStepRequest ()
+                        {
+                            SequenceNr = ++SequenceCount,
+                            StackNr = stackNr,
+                            State = state
+                        }
+                    );
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client loop step response received");
+                }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -469,21 +490,22 @@ namespace AnglrDebuggerBridge
 
             try
             {
-                if (CheckBreakPoint ())
-                    ParserStepEvent.WaitOne ();
-
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client join request task created");
-                _ = Rpc.InvokeAsync<AnglrDebuggerJoinResponse>
-                (
-                    AnglrDebuggerJsonRpcMessageNames.JoinMessageName,
-                    new AnglrDebuggerJoinRequest ()
-                    {
-                        SequenceNr = ++SequenceCount,
-                        StackNr = stackNr,
-                        JoinNr = joinNr
-                    }
-                );
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client join response received");
+                if (DetailedNotifications)
+                {
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client join request task created");
+                    _ = Rpc.NotifyAsync
+                    (
+                        AnglrDebuggerJsonRpcMessageNames.JoinMessageName,
+                        new AnglrDebuggerJoinRequest ()
+                        {
+                            SequenceNr = ++SequenceCount,
+                            StackNr = stackNr,
+                            JoinNr = joinNr
+                        }
+                    );
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client join response received");
+                }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -498,20 +520,21 @@ namespace AnglrDebuggerBridge
 
             try
             {
-                if (CheckBreakPoint ())
-                    ParserStepEvent.WaitOne ();
-
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client final step request task created");
-                _ = Rpc.InvokeAsync<AnglrDebuggerFinalStepResponse>
-                (
-                    AnglrDebuggerJsonRpcMessageNames.FinalStepMessageName,
-                    new AnglrDebuggerFinalStepRequest ()
-                    {
-                        SequenceNr = ++SequenceCount,
-                        StackNr = stackNr
-                    }
-                );
-                Log (AnglrLogLevel.Trace, $"<AnglrDebuggerClientBridge>: client final step response received");
+                if (DetailedNotifications)
+                {
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client final step request task created");
+                    _ = Rpc.NotifyAsync
+                    (
+                        AnglrDebuggerJsonRpcMessageNames.FinalStepMessageName,
+                        new AnglrDebuggerFinalStepRequest ()
+                        {
+                            SequenceNr = ++SequenceCount,
+                            StackNr = stackNr
+                        }
+                    );
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client final step response received");
+                }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -526,19 +549,20 @@ namespace AnglrDebuggerBridge
 
             try
             {
-                if (CheckBreakPoint ())
-                    ParserStepEvent.WaitOne ();
-
-                Log (AnglrLogLevel.Info, $"<AnglrDebuggerClientBridge>: client stop parser request task created");
-                _ = Rpc.InvokeAsync<AnglrDebuggerStopParserResponse>
-                (
-                    AnglrDebuggerJsonRpcMessageNames.StopParserMessageName,
-                    new AnglrDebuggerStopParserRequest ()
-                    {
-                        SequenceNr = ++SequenceCount
-                    }
-                ).Result;
-                Log (AnglrLogLevel.Info, $"<AnglrDebuggerClientBridge>: client stop parser response received");
+                if (DetailedNotifications)
+                {
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client stop parser request task created");
+                    _ = Rpc.NotifyAsync
+                    (
+                        AnglrDebuggerJsonRpcMessageNames.StopParserMessageName,
+                        new AnglrDebuggerStopParserRequest ()
+                        {
+                            SequenceNr = ++SequenceCount
+                        }
+                    );
+                    Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client stop parser response received");
+                }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -928,6 +952,101 @@ namespace AnglrDebuggerBridge
             {
             }
         }
+
+        public AnglrDebuggerGetPDASnapshotResponse GetPDASnapshotMessageHandler (object sender, EventArgs e)
+        {
+            AnglrDebuggerGetPDASnapshotRequest getPDASnapshotRequest = e as AnglrDebuggerGetPDASnapshotRequest;
+            if (getPDASnapshotRequest == null)
+            {
+                Log (AnglrLogLevel.Info, $"empty PDA snapshot request");
+                return null;
+            }
+
+            Log (AnglrLogLevel.Info, $"PDA snapshot request nr. {getPDASnapshotRequest.SequenceNr}");
+            try
+            {
+                int step = 0;
+                AnglrDebuggerGetPDASnapshotResponse getPDASnapshotResponse = new AnglrDebuggerGetPDASnapshotResponse ()
+                {
+                    SequenceNr = getPDASnapshotRequest.SequenceNr,
+                    PDAStackSet = new AnglrDebuggerGetPDAStack [ParserInterface.parserStacks.Count]
+                };
+                AnglrDebuggerGetPDAStack [] PDAStackSet = getPDASnapshotResponse.PDAStackSet;
+                int stackCounter = 0;
+                foreach (var stack in ParserInterface.parserStacks)
+                {
+                    int [] stateStack = stack.stateStack.ToArray ();
+                    SyntaxTreeBase [] valueStack = stack.valueStack.ToArray ();
+                    int depth = stack.stateStack.stackDepth;
+                    AnglrDebuggerGetPDAStackCell [] PdaStackCells = new AnglrDebuggerGetPDAStackCell [depth];
+                    for (int i = 0; i < depth; i++)
+                    {
+                        SyntaxTreeBase symbol = valueStack [i];
+                        if (symbol == null)
+                        {
+                            AnglrDebuggerGetPDAStackCell cell = new AnglrDebuggerGetPDAStackCell ()
+                            {
+                                IsTerminal = false,
+                                Id = 0,
+                                Name = "null",
+                                State = stateStack [i],
+                            };
+                            PdaStackCells [i] = cell;
+                        }
+                        else if (symbol is SyntaxTreeToken)
+                        {
+                            SyntaxTreeToken token = (SyntaxTreeToken) symbol;
+                            string name = "none";
+                            if (token.token < ParserInterface.minNonTerminalCode ())
+                            {
+                                if (token.token >= ParserInterface.minTerminalCode ())
+                                    name = ParserInterface.terminalNames () [token.token - ParserInterface.minTerminalCode ()];
+                            }
+                            else
+                                name = ParserInterface.nonTerminalNames () [token.token - ParserInterface.minNonTerminalCode ()];
+                            AnglrDebuggerGetPDAStackCell cell = new AnglrDebuggerGetPDAStackCell ()
+                                {
+                                    IsTerminal = token.token < ParserInterface.minNonTerminalCode (),
+                                    Id = (int) token.token,
+                                    Name = name,
+                                    State = stateStack [i],
+                                };
+                            PdaStackCells [i] = cell;
+                        }
+                        else
+                        {
+                            string name = "none";
+                            if (symbol.id < ParserInterface.minNonTerminalCode ())
+                            {
+                                if (symbol.id >= ParserInterface.minTerminalCode ())
+                                    name = ParserInterface.terminalNames () [symbol.id - ParserInterface.minTerminalCode ()];
+                            }
+                            else
+                                name = ParserInterface.nonTerminalNames () [symbol.id - ParserInterface.minNonTerminalCode ()];
+                            AnglrDebuggerGetPDAStackCell cell = new AnglrDebuggerGetPDAStackCell ()
+                            {
+                                IsTerminal = symbol.id < ParserInterface.minNonTerminalCode (),
+                                Id = (int) symbol.id,
+                                Name = name,
+                                State = stateStack [i],
+                            };
+                            PdaStackCells [i] = cell;
+                        }
+                    }
+                    PDAStackSet [stackCounter++] = new AnglrDebuggerGetPDAStack ()
+                    {
+                        PDAStackId = stack.stackCounter,
+                        PDAStackCells = PdaStackCells
+                    };
+                }
+                return getPDASnapshotResponse;
+            }
+            catch (Exception ex)
+            {
+                Log (AnglrLogLevel.Error, ex.ToString ());
+                return null;
+            }
+        }
     }
 
     /// <summary>
@@ -935,9 +1054,9 @@ namespace AnglrDebuggerBridge
     /// parallel execution of parser debugging tasks initiated by external
     /// process using JsonRpc communication.
     /// </summary>
-    public class AnglrDebuggerServerBridge
+    public class AnglrDebuggerClientBridge
     {
-        [Obfuscation(Exclude = true)]
+        [Obfuscation (Exclude = true)]
         public AnglrLogLevel LogLevel { get; set; }
 
         [Obfuscation (Exclude = true)]
@@ -958,7 +1077,7 @@ namespace AnglrDebuggerBridge
         /// <summary>
         /// default constructor used by save/restore methods
         /// </summary>
-        public AnglrDebuggerServerBridge ()
+        public AnglrDebuggerClientBridge ()
         {
             LogLevel = AnglrLogLevel.Info;
             FileName = "";
@@ -988,7 +1107,7 @@ namespace AnglrDebuggerBridge
         /// <param name="errFileName">
         /// error file path
         /// </param>
-        public AnglrDebuggerServerBridge (string fileName, string arguments, string workingDirectory, string outFileName = null, string errFileName = null)
+        public AnglrDebuggerClientBridge (string fileName, string arguments, string workingDirectory, string outFileName = null, string errFileName = null)
         {
             LogLevel = AnglrLogLevel.Trace;
             FileName = fileName;
@@ -1020,7 +1139,7 @@ namespace AnglrDebuggerBridge
         /// <param name="exception">
         /// reference to reported exception
         /// </param>
-        private void LogException (IAnglrServerSideDebuggerInvoker userInterface, Exception exception)
+        private void LogException (IAnglrClientSideDebuggerInvoker userInterface, Exception exception)
         {
             StackTrace stackTrace = new StackTrace ();
             if (stackTrace.FrameCount < 2)
@@ -1088,7 +1207,7 @@ namespace AnglrDebuggerBridge
         /// IAnglrServerSideDebuggerInvoker
         /// </param>
         /// <returns></returns>
-        public async Task DebuggedProcessCtrlAsync (IAnglrServerSideDebuggerInvoker userInterface)
+        public async Task DebuggedProcessCtrlAsync (IAnglrClientSideDebuggerInvoker userInterface)
         {
             using (process = new Process ())
             {
@@ -1118,22 +1237,22 @@ namespace AnglrDebuggerBridge
                         tasks.Add (errTask);
 
                     IsRunning = true;
-                    userInterface?.Logger?.InfoLine ($"<AnglrDebuggerServerBridge>: process'{FileName}' started");
+                    userInterface?.Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: process'{FileName}' started");
 
                     // manage all syntax tree debuggers in a detached task
                     _ = DebuggedPipeCtrlAsync (userInterface, cancellationToken.Token, process.Id);
 
                     // await draining tasks for all established redirections
-                    userInterface?.Logger?.DebugLine ($"<AnglrDebuggerServerBridge>: wait for draining tasks");
+                    userInterface?.Logger?.DebugLine ($"<AnglrDebuggerClientBridge>: wait for draining tasks");
                     await Task.WhenAll (tasks);
                     outTask?.Dispose ();
                     errTask?.Dispose ();
 
                     // await process termination
-                    userInterface?.Logger?.InfoLine ($"<AnglrDebuggerServerBridge>: process'{FileName}' wait until terminated");
+                    userInterface?.Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: process'{FileName}' wait until terminated");
                     await process.WaitForExitAsync (cancellationToken.Token);
                     process.Dispose ();
-                    userInterface?.Logger?.InfoLine ($"<AnglrDebuggerServerBridge>: process'{FileName}' terminated");
+                    userInterface?.Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: process'{FileName}' terminated");
 
                     // cancel  all debugger tasks which are eventually stil running
                     cancellationToken.Cancel ();
@@ -1141,26 +1260,26 @@ namespace AnglrDebuggerBridge
                     IsRunning = false;
                 }
                 else
-                    userInterface?.Logger?.WarnLine ($"<AnglrDebuggerServerBridge>: Program {info.FileName} not started");
+                    userInterface?.Logger?.WarnLine ($"<AnglrDebuggerClientBridge>: Program {info.FileName} not started");
             }
         }
 
         private int pipeCount = 0;
 
-        private async Task DebuggedPipeCtrlAsync (IAnglrServerSideDebuggerInvoker userInterface, CancellationToken cancellationToken, int pid)
+        private async Task DebuggedPipeCtrlAsync (IAnglrClientSideDebuggerInvoker userInterface, CancellationToken cancellationToken, int pid)
         {
             while (true)
             {
                 ++pipeCount;
                 // for every syntax tree being debugged create named pipe server stream distinguished by process id of process being debugged
                 NamedPipeServerStream AnglrDebuggerServerStream = new NamedPipeServerStream ($"anglr-debugger-{pid}", PipeDirection.InOut, NamedPipeServerStream.MaxAllowedServerInstances, PipeTransmissionMode.Message, PipeOptions.Asynchronous);
-                userInterface?.Logger?.InfoLine ($"<AnglrDebuggerServerBridge>: server pipe {pipeCount} 'anglr-debugger-{pid}' created");
+                userInterface?.Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: server pipe {pipeCount} 'anglr-debugger-{pid}' created");
 
                 try
                 {
                     // wait for connection request. For every parsing task being executed by debugged process there should be one connection request
                     await AnglrDebuggerServerStream.WaitForConnectionAsync (cancellationToken);
-                    userInterface?.Logger?.InfoLine ($"<AnglrDebuggerServerBridge>: client pipe {pipeCount} connected");
+                    userInterface?.Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: client pipe {pipeCount} connected");
 
                     // debug parsing with detached task
                     userInterface.InvokeRpcSession (pipeCount, AnglrDebuggerServerStream, cancellationToken);
@@ -1174,5 +1293,5 @@ namespace AnglrDebuggerBridge
         }
     }
 
-    public class AnglrDebuggerServerBridgeSet : ObservableCollection<AnglrDebuggerServerBridge> { }
+    public class AnglrDebuggerClientBridgeSet : ObservableCollection<AnglrDebuggerClientBridge> { }
 }

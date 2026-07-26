@@ -57,16 +57,18 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__block_regex_definition_.kind)
 			{
-			case production_kind.g__block_regex_definition__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__attribute_list_optional_ = p__block_regex_definition_.m__attribute_list_optional_;
-				children[1] = m__regex_definition_ = p__block_regex_definition_.m__regex_definition_;
-				break;
-			default:
-				string[] args = new string[] { "_block_regex_definition_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__block_regex_definition__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__attribute_list_optional_ = (p__block_regex_definition_.m__attribute_list_optional_ != null) ? new _attribute_list_optional_ (p__block_regex_definition_.m__attribute_list_optional_) : null) != null) m__attribute_list_optional_.parent = this;
+					if ((children [1] = m__regex_definition_ = (p__block_regex_definition_.m__regex_definition_ != null) ? new _regex_definition_ (p__block_regex_definition_.m__regex_definition_) : null) != null) m__regex_definition_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_block_regex_definition_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

@@ -83,21 +83,23 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__name_list_.kind)
 			{
-			case production_kind.g__name_list__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__marker_list_optional_ = p__name_list_.m__marker_list_optional_;
-				break;
-			case production_kind.g__name_list__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
-				children[0] = m__name_list_ = p__name_list_.m__name_list_;
-				children[1] = m__g_name_ = p__name_list_.m__g_name_;
-				children[2] = m__marker_list_optional_ = p__name_list_.m__marker_list_optional_;
-				break;
-			default:
-				string[] args = new string[] { "_name_list_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__name_list__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__marker_list_optional_ = (p__name_list_.m__marker_list_optional_ != null) ? new _marker_list_optional_ (p__name_list_.m__marker_list_optional_) : null) != null) m__marker_list_optional_.parent = this;
+					break;
+				case production_kind.g__name_list__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
+					if ((children [0] = m__name_list_ = (p__name_list_.m__name_list_ != null) ? new _name_list_ (p__name_list_.m__name_list_) : null) != null) m__name_list_.parent = this;
+					if ((children [1] = m__g_name_ = (p__name_list_.m__g_name_ != null) ? new _g_name_ (p__name_list_.m__g_name_) : null) != null) m__g_name_.parent = this;
+					if ((children [2] = m__marker_list_optional_ = (p__name_list_.m__marker_list_optional_ != null) ? new _marker_list_optional_ (p__name_list_.m__marker_list_optional_) : null) != null) m__marker_list_optional_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_name_list_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

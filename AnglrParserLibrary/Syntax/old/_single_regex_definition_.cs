@@ -56,16 +56,18 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__single_regex_definition_.kind)
 			{
-			case production_kind.g__single_regex_definition__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__regex_ = p__single_regex_definition_.m__regex_;
-				children[1] = m__regex_definition_ = p__single_regex_definition_.m__regex_definition_;
-				break;
-			default:
-				string[] args = new string[] { "_single_regex_definition_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__single_regex_definition__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__regex_ = (p__single_regex_definition_.m__regex_ != null) ? new SyntaxTreeToken (p__single_regex_definition_.m__regex_) : null) != null) m__regex_.parent = this;
+					if ((children [1] = m__regex_definition_ = (p__single_regex_definition_.m__regex_definition_ != null) ? new _regex_definition_ (p__single_regex_definition_.m__regex_definition_) : null) != null) m__regex_definition_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_single_regex_definition_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

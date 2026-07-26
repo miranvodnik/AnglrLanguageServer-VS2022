@@ -81,20 +81,22 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__block_regex_definitions_.kind)
 			{
-			case production_kind.g__block_regex_definitions__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__block_regex_definition_ = p__block_regex_definitions_.m__block_regex_definition_;
-				break;
-			case production_kind.g__block_regex_definitions__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__block_regex_definitions_ = p__block_regex_definitions_.m__block_regex_definitions_;
-				children[1] = m__block_regex_definition_ = p__block_regex_definitions_.m__block_regex_definition_;
-				break;
-			default:
-				string[] args = new string[] { "_block_regex_definitions_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__block_regex_definitions__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__block_regex_definition_ = (p__block_regex_definitions_.m__block_regex_definition_ != null) ? new _block_regex_definition_ (p__block_regex_definitions_.m__block_regex_definition_) : null) != null) m__block_regex_definition_.parent = this;
+					break;
+				case production_kind.g__block_regex_definitions__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__block_regex_definitions_ = (p__block_regex_definitions_.m__block_regex_definitions_ != null) ? new _block_regex_definitions_ (p__block_regex_definitions_.m__block_regex_definitions_) : null) != null) m__block_regex_definitions_.parent = this;
+					if ((children [1] = m__block_regex_definition_ = (p__block_regex_definitions_.m__block_regex_definition_ != null) ? new _block_regex_definition_ (p__block_regex_definitions_.m__block_regex_definition_) : null) != null) m__block_regex_definition_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_block_regex_definitions_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

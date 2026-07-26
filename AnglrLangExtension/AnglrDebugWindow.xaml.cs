@@ -58,8 +58,8 @@ namespace AnglrLangExtension
             }
         }
 
-        public AnglrDebuggerServerBridgeSet AnglrDebuggers { get; private set; }
-        private AnglrDebuggerServerBridge anglrDebuggerServerBridge = null;
+        public AnglrDebuggerClientBridgeSet AnglrDebuggers { get; private set; }
+        private AnglrDebuggerClientBridge anglrDebuggerServerBridge = null;
         private string anglrLocalDirName;
         private string anglrDebugWindowSettingsFileName;
 
@@ -101,14 +101,14 @@ namespace AnglrLangExtension
             if (Directory.Exists (anglrLocalDirName))
                 try
                 {
-                    AnglrDebuggers = JsonConvert.DeserializeObject<AnglrDebuggerServerBridgeSet> (File.ReadAllText (anglrDebugWindowSettingsFileName));
+                    AnglrDebuggers = JsonConvert.DeserializeObject<AnglrDebuggerClientBridgeSet> (File.ReadAllText (anglrDebugWindowSettingsFileName));
                     return;
                 }
                 catch (Exception ex)
                 {
                     LogException (ex);
                 }
-            AnglrDebuggers = new AnglrDebuggerServerBridgeSet ();
+            AnglrDebuggers = new AnglrDebuggerClientBridgeSet ();
         }
 
         private void startProgramPathBrowser_Click (object sender, RoutedEventArgs e)
@@ -146,7 +146,7 @@ namespace AnglrLangExtension
         {
             try
             {
-                AnglrDebuggerServerBridge anglrDebuggerServerBridge = anglrDebugWindowGrid.SelectedItem as AnglrDebuggerServerBridge;
+                AnglrDebuggerClientBridge anglrDebuggerServerBridge = anglrDebugWindowGrid.SelectedItem as AnglrDebuggerClientBridge;
                 if (anglrDebuggerServerBridge == null)
                 {
                     logger?.DebugLine ($"cannot start debugger, selected item is null");
@@ -199,7 +199,7 @@ namespace AnglrLangExtension
                 return;
             try
             {
-                AnglrDebuggers.Add (new AnglrDebuggerServerBridge (startProgramPathValue.Text, commandLineParametersValue.Text, workingDirectoryPathValue.Text));
+                AnglrDebuggers.Add (new AnglrDebuggerClientBridge (startProgramPathValue.Text, commandLineParametersValue.Text, workingDirectoryPathValue.Text));
                 SaveSettings (false);
             }
             catch (Exception ex)
@@ -212,7 +212,7 @@ namespace AnglrLangExtension
         {
             try
             {
-                AnglrDebuggerServerBridge anglrDebuggerServerBridge = anglrDebugWindowGrid.SelectedItem as AnglrDebuggerServerBridge;
+                AnglrDebuggerClientBridge anglrDebuggerServerBridge = anglrDebugWindowGrid.SelectedItem as AnglrDebuggerClientBridge;
                 if (anglrDebuggerServerBridge == null)
                 {
                     logger?.DebugLine ($"cannot start debugger, selected item is null");

@@ -77,18 +77,20 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__delimiter_optional_.kind)
 			{
-			case production_kind.g__delimiter_optional__1:
-				children = Array.Empty <SyntaxTreeBase> ();
-				break;
-			case production_kind.g__delimiter_optional__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__delimiter_ = p__delimiter_optional_.m__delimiter_;
-				break;
-			default:
-				string[] args = new string[] { "_delimiter_optional_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__delimiter_optional__1:
+					children = Array.Empty <SyntaxTreeBase> ();
+					break;
+				case production_kind.g__delimiter_optional__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__delimiter_ = (p__delimiter_optional_.m__delimiter_ != null) ? new _delimiter_ (p__delimiter_optional_.m__delimiter_) : null) != null) m__delimiter_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_delimiter_optional_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

@@ -1731,351 +1731,353 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__anglr_file_fragment_.kind)
 			{
-			case production_kind.g__anglr_file_fragment__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__attribute_list_terminal_ = p__anglr_file_fragment_.m__attribute_list_terminal_;
-				children[1] = m__attribute_list_ = p__anglr_file_fragment_.m__attribute_list_;
-				break;
-			case production_kind.g__anglr_file_fragment__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__attribute_terminal_ = p__anglr_file_fragment_.m__attribute_terminal_;
-				children[1] = m__attribute_ = p__anglr_file_fragment_.m__attribute_;
-				break;
-			case production_kind.g__anglr_file_fragment__3:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__name_value_list_terminal_ = p__anglr_file_fragment_.m__name_value_list_terminal_;
-				children[1] = m__name_value_list_ = p__anglr_file_fragment_.m__name_value_list_;
-				break;
-			case production_kind.g__anglr_file_fragment__4:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__name_value_pair_terminal_ = p__anglr_file_fragment_.m__name_value_pair_terminal_;
-				children[1] = m__name_value_pair_ = p__anglr_file_fragment_.m__name_value_pair_;
-				break;
-			case production_kind.g__anglr_file_fragment__5:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_file_terminal_ = p__anglr_file_fragment_.m__anglr_file_terminal_;
-				children[1] = m__anglr_file_ = p__anglr_file_fragment_.m__anglr_file_;
-				break;
-			case production_kind.g__anglr_file_fragment__6:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_file_part_list_terminal_ = p__anglr_file_fragment_.m__anglr_file_part_list_terminal_;
-				children[1] = m__anglr_file_part_list_ = p__anglr_file_fragment_.m__anglr_file_part_list_;
-				break;
-			case production_kind.g__anglr_file_fragment__7:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_file_part_terminal_ = p__anglr_file_fragment_.m__anglr_file_part_terminal_;
-				children[1] = m__anglr_file_part_ = p__anglr_file_fragment_.m__anglr_file_part_;
-				break;
-			case production_kind.g__anglr_file_fragment__8:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__general_part_terminal_ = p__anglr_file_fragment_.m__general_part_terminal_;
-				children[1] = m__general_part_ = p__anglr_file_fragment_.m__general_part_;
-				break;
-			case production_kind.g__anglr_file_fragment__9:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__declaration_part_terminal_ = p__anglr_file_fragment_.m__declaration_part_terminal_;
-				children[1] = m__declaration_part_ = p__anglr_file_fragment_.m__declaration_part_;
-				break;
-			case production_kind.g__anglr_file_fragment__10:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_definition_list_terminal_ = p__anglr_file_fragment_.m__anglr_definition_list_terminal_;
-				children[1] = m__anglr_definition_list_ = p__anglr_file_fragment_.m__anglr_definition_list_;
-				break;
-			case production_kind.g__anglr_file_fragment__11:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_definition_with_attribute_list_terminal_ = p__anglr_file_fragment_.m__anglr_definition_with_attribute_list_terminal_;
-				children[1] = m__anglr_definition_with_attribute_ = p__anglr_file_fragment_.m__anglr_definition_with_attribute_;
-				break;
-			case production_kind.g__anglr_file_fragment__12:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_definition_terminal_ = p__anglr_file_fragment_.m__anglr_definition_terminal_;
-				children[1] = m__anglr_definition_ = p__anglr_file_fragment_.m__anglr_definition_;
-				break;
-			case production_kind.g__anglr_file_fragment__13:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__single_terminal_definition_terminal_ = p__anglr_file_fragment_.m__single_terminal_definition_terminal_;
-				children[1] = m__single_terminal_definition_ = p__anglr_file_fragment_.m__single_terminal_definition_;
-				break;
-			case production_kind.g__anglr_file_fragment__14:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__single_regex_definition_terminal_ = p__anglr_file_fragment_.m__single_regex_definition_terminal_;
-				children[1] = m__single_regex_definition_ = p__anglr_file_fragment_.m__single_regex_definition_;
-				break;
-			case production_kind.g__anglr_file_fragment__15:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__block_of_terminal_definitions_terminal_ = p__anglr_file_fragment_.m__block_of_terminal_definitions_terminal_;
-				children[1] = m__block_of_terminal_definitions_ = p__anglr_file_fragment_.m__block_of_terminal_definitions_;
-				break;
-			case production_kind.g__anglr_file_fragment__16:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__block_of_regex_definitions_terminal_ = p__anglr_file_fragment_.m__block_of_regex_definitions_terminal_;
-				children[1] = m__block_of_regex_definitions_ = p__anglr_file_fragment_.m__block_of_regex_definitions_;
-				break;
-			case production_kind.g__anglr_file_fragment__17:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__terminal_definition_terminal_ = p__anglr_file_fragment_.m__terminal_definition_terminal_;
-				children[1] = m__terminal_definition_ = p__anglr_file_fragment_.m__terminal_definition_;
-				break;
-			case production_kind.g__anglr_file_fragment__18:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__regex_definition_terminal_ = p__anglr_file_fragment_.m__regex_definition_terminal_;
-				children[1] = m__regex_definition_ = p__anglr_file_fragment_.m__regex_definition_;
-				break;
-			case production_kind.g__anglr_file_fragment__19:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__block_terminal_definitions_terminal_ = p__anglr_file_fragment_.m__block_terminal_definitions_terminal_;
-				children[1] = m__block_terminal_definitions_ = p__anglr_file_fragment_.m__block_terminal_definitions_;
-				break;
-			case production_kind.g__anglr_file_fragment__20:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__block_terminal_definition_terminal_ = p__anglr_file_fragment_.m__block_terminal_definition_terminal_;
-				children[1] = m__block_terminal_definition_ = p__anglr_file_fragment_.m__block_terminal_definition_;
-				break;
-			case production_kind.g__anglr_file_fragment__21:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__block_regex_definitions_terminal_ = p__anglr_file_fragment_.m__block_regex_definitions_terminal_;
-				children[1] = m__block_regex_definitions_ = p__anglr_file_fragment_.m__block_regex_definitions_;
-				break;
-			case production_kind.g__anglr_file_fragment__22:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__block_regex_definition_terminal_ = p__anglr_file_fragment_.m__block_regex_definition_terminal_;
-				children[1] = m__block_regex_definition_ = p__anglr_file_fragment_.m__block_regex_definition_;
-				break;
-			case production_kind.g__anglr_file_fragment__23:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__scanner_part_terminal_ = p__anglr_file_fragment_.m__scanner_part_terminal_;
-				children[1] = m__scanner_part_ = p__anglr_file_fragment_.m__scanner_part_;
-				break;
-			case production_kind.g__anglr_file_fragment__24:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__regular_expression_list_terminal_ = p__anglr_file_fragment_.m__regular_expression_list_terminal_;
-				children[1] = m__regular_expression_list_ = p__anglr_file_fragment_.m__regular_expression_list_;
-				break;
-			case production_kind.g__anglr_file_fragment__25:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__regular_expression_usage_terminal_ = p__anglr_file_fragment_.m__regular_expression_usage_terminal_;
-				children[1] = m__regular_expression_usage_ = p__anglr_file_fragment_.m__regular_expression_usage_;
-				break;
-			case production_kind.g__anglr_file_fragment__26:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__actions_terminal_ = p__anglr_file_fragment_.m__actions_terminal_;
-				children[1] = m__actions_ = p__anglr_file_fragment_.m__actions_;
-				break;
-			case production_kind.g__anglr_file_fragment__27:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__action_terminal_ = p__anglr_file_fragment_.m__action_terminal_;
-				children[1] = m__action_ = p__anglr_file_fragment_.m__action_;
-				break;
-			case production_kind.g__anglr_file_fragment__28:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__skip_action_terminal_ = p__anglr_file_fragment_.m__skip_action_terminal_;
-				children[1] = m__skip_action_ = p__anglr_file_fragment_.m__skip_action_;
-				break;
-			case production_kind.g__anglr_file_fragment__29:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__terminal_action_terminal_ = p__anglr_file_fragment_.m__terminal_action_terminal_;
-				children[1] = m__terminal_action_ = p__anglr_file_fragment_.m__terminal_action_;
-				break;
-			case production_kind.g__anglr_file_fragment__30:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__event_action_terminal_ = p__anglr_file_fragment_.m__event_action_terminal_;
-				children[1] = m__event_action_ = p__anglr_file_fragment_.m__event_action_;
-				break;
-			case production_kind.g__anglr_file_fragment__31:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__push_action_terminal_ = p__anglr_file_fragment_.m__push_action_terminal_;
-				children[1] = m__push_action_ = p__anglr_file_fragment_.m__push_action_;
-				break;
-			case production_kind.g__anglr_file_fragment__32:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__pop_action_terminal_ = p__anglr_file_fragment_.m__pop_action_terminal_;
-				children[1] = m__pop_action_ = p__anglr_file_fragment_.m__pop_action_;
-				break;
-			case production_kind.g__anglr_file_fragment__33:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__lexer_part_terminal_ = p__anglr_file_fragment_.m__lexer_part_terminal_;
-				children[1] = m__lexer_part_ = p__anglr_file_fragment_.m__lexer_part_;
-				break;
-			case production_kind.g__anglr_file_fragment__34:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__parser_part_terminal_ = p__anglr_file_fragment_.m__parser_part_terminal_;
-				children[1] = m__parser_part_ = p__anglr_file_fragment_.m__parser_part_;
-				break;
-			case production_kind.g__anglr_file_fragment__35:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_syntax_rule_list_terminal_ = p__anglr_file_fragment_.m__anglr_syntax_rule_list_terminal_;
-				children[1] = m__anglr_syntax_rule_list_ = p__anglr_file_fragment_.m__anglr_syntax_rule_list_;
-				break;
-			case production_kind.g__anglr_file_fragment__36:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_syntax_rule_terminal_ = p__anglr_file_fragment_.m__anglr_syntax_rule_terminal_;
-				children[1] = m__anglr_syntax_rule_ = p__anglr_file_fragment_.m__anglr_syntax_rule_;
-				break;
-			case production_kind.g__anglr_file_fragment__37:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_nested_rule_terminal_ = p__anglr_file_fragment_.m__anglr_nested_rule_terminal_;
-				children[1] = m__anglr_nested_rule_ = p__anglr_file_fragment_.m__anglr_nested_rule_;
-				break;
-			case production_kind.g__anglr_file_fragment__38:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_syntax_production_list_name_terminal_ = p__anglr_file_fragment_.m__anglr_syntax_production_list_name_terminal_;
-				children[1] = m__anglr_syntax_production_list_name_ = p__anglr_file_fragment_.m__anglr_syntax_production_list_name_;
-				break;
-			case production_kind.g__anglr_file_fragment__39:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_syntax_production_list_terminal_ = p__anglr_file_fragment_.m__anglr_syntax_production_list_terminal_;
-				children[1] = m__anglr_syntax_production_list_ = p__anglr_file_fragment_.m__anglr_syntax_production_list_;
-				break;
-			case production_kind.g__anglr_file_fragment__40:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_syntax_production_terminal_ = p__anglr_file_fragment_.m__anglr_syntax_production_terminal_;
-				children[1] = m__anglr_syntax_production_ = p__anglr_file_fragment_.m__anglr_syntax_production_;
-				break;
-			case production_kind.g__anglr_file_fragment__41:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__priority_assoc_specification_terminal_ = p__anglr_file_fragment_.m__priority_assoc_specification_terminal_;
-				children[1] = m__priority_assoc_specification_ = p__anglr_file_fragment_.m__priority_assoc_specification_;
-				break;
-			case production_kind.g__anglr_file_fragment__42:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__priority_specification_terminal_ = p__anglr_file_fragment_.m__priority_specification_terminal_;
-				children[1] = m__priority_specification_ = p__anglr_file_fragment_.m__priority_specification_;
-				break;
-			case production_kind.g__anglr_file_fragment__43:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__associativity_specification_terminal_ = p__anglr_file_fragment_.m__associativity_specification_terminal_;
-				children[1] = m__associativity_specification_ = p__anglr_file_fragment_.m__associativity_specification_;
-				break;
-			case production_kind.g__anglr_file_fragment__44:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__production_name_terminal_ = p__anglr_file_fragment_.m__production_name_terminal_;
-				children[1] = m__production_name_ = p__anglr_file_fragment_.m__production_name_;
-				break;
-			case production_kind.g__anglr_file_fragment__45:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__name_list_terminal_ = p__anglr_file_fragment_.m__name_list_terminal_;
-				children[1] = m__name_list_ = p__anglr_file_fragment_.m__name_list_;
-				break;
-			case production_kind.g__anglr_file_fragment__46:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__marker_list_terminal_ = p__anglr_file_fragment_.m__marker_list_terminal_;
-				children[1] = m__marker_list_ = p__anglr_file_fragment_.m__marker_list_;
-				break;
-			case production_kind.g__anglr_file_fragment__47:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__marker_terminal_ = p__anglr_file_fragment_.m__marker_terminal_;
-				children[1] = m__marker_ = p__anglr_file_fragment_.m__marker_;
-				break;
-			case production_kind.g__anglr_file_fragment__48:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__g_name_terminal_ = p__anglr_file_fragment_.m__g_name_terminal_;
-				children[1] = m__g_name_ = p__anglr_file_fragment_.m__g_name_;
-				break;
-			case production_kind.g__anglr_file_fragment__49:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__name_terminal_ = p__anglr_file_fragment_.m__name_terminal_;
-				children[1] = m__name_ = p__anglr_file_fragment_.m__name_;
-				break;
-			case production_kind.g__anglr_file_fragment__50:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__cardinality_delimiter_terminal_ = p__anglr_file_fragment_.m__cardinality_delimiter_terminal_;
-				children[1] = m__cardinality_delimiter_ = p__anglr_file_fragment_.m__cardinality_delimiter_;
-				break;
-			case production_kind.g__anglr_file_fragment__51:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__cardinality_terminal_ = p__anglr_file_fragment_.m__cardinality_terminal_;
-				children[1] = m__cardinality_ = p__anglr_file_fragment_.m__cardinality_;
-				break;
-			case production_kind.g__anglr_file_fragment__52:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__delimiter_terminal_ = p__anglr_file_fragment_.m__delimiter_terminal_;
-				children[1] = m__delimiter_ = p__anglr_file_fragment_.m__delimiter_;
-				break;
-			case production_kind.g__anglr_file_fragment__53:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__attribute_list_optional_terminal_ = p__anglr_file_fragment_.m__attribute_list_optional_terminal_;
-				children[1] = m__attribute_list_optional_ = p__anglr_file_fragment_.m__attribute_list_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__54:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__name_value_list_optional_terminal_ = p__anglr_file_fragment_.m__name_value_list_optional_terminal_;
-				children[1] = m__name_value_list_optional_ = p__anglr_file_fragment_.m__name_value_list_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__55:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_file_part_list_optional_terminal_ = p__anglr_file_fragment_.m__anglr_file_part_list_optional_terminal_;
-				children[1] = m__anglr_file_part_list_optional_ = p__anglr_file_fragment_.m__anglr_file_part_list_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__56:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_definition_list_optional_terminal_ = p__anglr_file_fragment_.m__anglr_definition_list_optional_terminal_;
-				children[1] = m__anglr_definition_list_optional_ = p__anglr_file_fragment_.m__anglr_definition_list_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__57:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__block_terminal_definitions_optional_terminal_ = p__anglr_file_fragment_.m__block_terminal_definitions_optional_terminal_;
-				children[1] = m__block_terminal_definitions_optional_ = p__anglr_file_fragment_.m__block_terminal_definitions_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__58:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__block_regex_definitions_optional_terminal_ = p__anglr_file_fragment_.m__block_regex_definitions_optional_terminal_;
-				children[1] = m__block_regex_definitions_optional_ = p__anglr_file_fragment_.m__block_regex_definitions_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__59:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__regular_expression_list_optional_terminal_ = p__anglr_file_fragment_.m__regular_expression_list_optional_terminal_;
-				children[1] = m__regular_expression_list_optional_ = p__anglr_file_fragment_.m__regular_expression_list_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__60:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__actions_optional_terminal_ = p__anglr_file_fragment_.m__actions_optional_terminal_;
-				children[1] = m__actions_optional_ = p__anglr_file_fragment_.m__actions_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__61:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_syntax_rule_list_optional_terminal_ = p__anglr_file_fragment_.m__anglr_syntax_rule_list_optional_terminal_;
-				children[1] = m__anglr_syntax_rule_list_optional_ = p__anglr_file_fragment_.m__anglr_syntax_rule_list_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__62:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__anglr_syntax_production_list_name_optional_terminal_ = p__anglr_file_fragment_.m__anglr_syntax_production_list_name_optional_terminal_;
-				children[1] = m__anglr_syntax_production_list_name_optional_ = p__anglr_file_fragment_.m__anglr_syntax_production_list_name_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__63:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__production_name_optional_terminal_ = p__anglr_file_fragment_.m__production_name_optional_terminal_;
-				children[1] = m__production_name_optional_ = p__anglr_file_fragment_.m__production_name_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__64:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__priority_assoc_specification_optional_terminal_ = p__anglr_file_fragment_.m__priority_assoc_specification_optional_terminal_;
-				children[1] = m__priority_assoc_specification_optional_ = p__anglr_file_fragment_.m__priority_assoc_specification_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__65:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__marker_list_optional_terminal_ = p__anglr_file_fragment_.m__marker_list_optional_terminal_;
-				children[1] = m__marker_list_optional_ = p__anglr_file_fragment_.m__marker_list_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__66:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__delimiter_optional_terminal_ = p__anglr_file_fragment_.m__delimiter_optional_terminal_;
-				children[1] = m__delimiter_optional_ = p__anglr_file_fragment_.m__delimiter_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__67:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__cstring_optional_terminal_ = p__anglr_file_fragment_.m__cstring_optional_terminal_;
-				children[1] = m__cstring_optional_ = p__anglr_file_fragment_.m__cstring_optional_;
-				break;
-			case production_kind.g__anglr_file_fragment__68:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__number_optional_terminal_ = p__anglr_file_fragment_.m__number_optional_terminal_;
-				children[1] = m__number_optional_ = p__anglr_file_fragment_.m__number_optional_;
-				break;
-			default:
-				string[] args = new string[] { "_anglr_file_fragment_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__anglr_file_fragment__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__attribute_list_terminal_ = (p__anglr_file_fragment_.m__attribute_list_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__attribute_list_terminal_) : null) != null) m__attribute_list_terminal_.parent = this;
+					if ((children [1] = m__attribute_list_ = (p__anglr_file_fragment_.m__attribute_list_ != null) ? new _attribute_list_ (p__anglr_file_fragment_.m__attribute_list_) : null) != null) m__attribute_list_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__attribute_terminal_ = (p__anglr_file_fragment_.m__attribute_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__attribute_terminal_) : null) != null) m__attribute_terminal_.parent = this;
+					if ((children [1] = m__attribute_ = (p__anglr_file_fragment_.m__attribute_ != null) ? new _attribute_ (p__anglr_file_fragment_.m__attribute_) : null) != null) m__attribute_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__3:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__name_value_list_terminal_ = (p__anglr_file_fragment_.m__name_value_list_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__name_value_list_terminal_) : null) != null) m__name_value_list_terminal_.parent = this;
+					if ((children [1] = m__name_value_list_ = (p__anglr_file_fragment_.m__name_value_list_ != null) ? new _name_value_list_ (p__anglr_file_fragment_.m__name_value_list_) : null) != null) m__name_value_list_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__4:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__name_value_pair_terminal_ = (p__anglr_file_fragment_.m__name_value_pair_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__name_value_pair_terminal_) : null) != null) m__name_value_pair_terminal_.parent = this;
+					if ((children [1] = m__name_value_pair_ = (p__anglr_file_fragment_.m__name_value_pair_ != null) ? new _name_value_pair_ (p__anglr_file_fragment_.m__name_value_pair_) : null) != null) m__name_value_pair_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__5:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_file_terminal_ = (p__anglr_file_fragment_.m__anglr_file_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_file_terminal_) : null) != null) m__anglr_file_terminal_.parent = this;
+					if ((children [1] = m__anglr_file_ = (p__anglr_file_fragment_.m__anglr_file_ != null) ? new _anglr_file_ (p__anglr_file_fragment_.m__anglr_file_) : null) != null) m__anglr_file_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__6:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_file_part_list_terminal_ = (p__anglr_file_fragment_.m__anglr_file_part_list_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_file_part_list_terminal_) : null) != null) m__anglr_file_part_list_terminal_.parent = this;
+					if ((children [1] = m__anglr_file_part_list_ = (p__anglr_file_fragment_.m__anglr_file_part_list_ != null) ? new _anglr_file_part_list_ (p__anglr_file_fragment_.m__anglr_file_part_list_) : null) != null) m__anglr_file_part_list_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__7:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_file_part_terminal_ = (p__anglr_file_fragment_.m__anglr_file_part_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_file_part_terminal_) : null) != null) m__anglr_file_part_terminal_.parent = this;
+					if ((children [1] = m__anglr_file_part_ = (p__anglr_file_fragment_.m__anglr_file_part_ != null) ? new _anglr_file_part_ (p__anglr_file_fragment_.m__anglr_file_part_) : null) != null) m__anglr_file_part_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__8:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__general_part_terminal_ = (p__anglr_file_fragment_.m__general_part_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__general_part_terminal_) : null) != null) m__general_part_terminal_.parent = this;
+					if ((children [1] = m__general_part_ = (p__anglr_file_fragment_.m__general_part_ != null) ? new _general_part_ (p__anglr_file_fragment_.m__general_part_) : null) != null) m__general_part_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__9:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__declaration_part_terminal_ = (p__anglr_file_fragment_.m__declaration_part_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__declaration_part_terminal_) : null) != null) m__declaration_part_terminal_.parent = this;
+					if ((children [1] = m__declaration_part_ = (p__anglr_file_fragment_.m__declaration_part_ != null) ? new _declaration_part_ (p__anglr_file_fragment_.m__declaration_part_) : null) != null) m__declaration_part_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__10:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_definition_list_terminal_ = (p__anglr_file_fragment_.m__anglr_definition_list_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_definition_list_terminal_) : null) != null) m__anglr_definition_list_terminal_.parent = this;
+					if ((children [1] = m__anglr_definition_list_ = (p__anglr_file_fragment_.m__anglr_definition_list_ != null) ? new _anglr_definition_list_ (p__anglr_file_fragment_.m__anglr_definition_list_) : null) != null) m__anglr_definition_list_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__11:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_definition_with_attribute_list_terminal_ = (p__anglr_file_fragment_.m__anglr_definition_with_attribute_list_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_definition_with_attribute_list_terminal_) : null) != null) m__anglr_definition_with_attribute_list_terminal_.parent = this;
+					if ((children [1] = m__anglr_definition_with_attribute_ = (p__anglr_file_fragment_.m__anglr_definition_with_attribute_ != null) ? new _anglr_definition_with_attribute_ (p__anglr_file_fragment_.m__anglr_definition_with_attribute_) : null) != null) m__anglr_definition_with_attribute_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__12:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_definition_terminal_ = (p__anglr_file_fragment_.m__anglr_definition_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_definition_terminal_) : null) != null) m__anglr_definition_terminal_.parent = this;
+					if ((children [1] = m__anglr_definition_ = (p__anglr_file_fragment_.m__anglr_definition_ != null) ? new _anglr_definition_ (p__anglr_file_fragment_.m__anglr_definition_) : null) != null) m__anglr_definition_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__13:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__single_terminal_definition_terminal_ = (p__anglr_file_fragment_.m__single_terminal_definition_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__single_terminal_definition_terminal_) : null) != null) m__single_terminal_definition_terminal_.parent = this;
+					if ((children [1] = m__single_terminal_definition_ = (p__anglr_file_fragment_.m__single_terminal_definition_ != null) ? new _single_terminal_definition_ (p__anglr_file_fragment_.m__single_terminal_definition_) : null) != null) m__single_terminal_definition_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__14:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__single_regex_definition_terminal_ = (p__anglr_file_fragment_.m__single_regex_definition_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__single_regex_definition_terminal_) : null) != null) m__single_regex_definition_terminal_.parent = this;
+					if ((children [1] = m__single_regex_definition_ = (p__anglr_file_fragment_.m__single_regex_definition_ != null) ? new _single_regex_definition_ (p__anglr_file_fragment_.m__single_regex_definition_) : null) != null) m__single_regex_definition_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__15:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__block_of_terminal_definitions_terminal_ = (p__anglr_file_fragment_.m__block_of_terminal_definitions_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__block_of_terminal_definitions_terminal_) : null) != null) m__block_of_terminal_definitions_terminal_.parent = this;
+					if ((children [1] = m__block_of_terminal_definitions_ = (p__anglr_file_fragment_.m__block_of_terminal_definitions_ != null) ? new _block_of_terminal_definitions_ (p__anglr_file_fragment_.m__block_of_terminal_definitions_) : null) != null) m__block_of_terminal_definitions_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__16:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__block_of_regex_definitions_terminal_ = (p__anglr_file_fragment_.m__block_of_regex_definitions_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__block_of_regex_definitions_terminal_) : null) != null) m__block_of_regex_definitions_terminal_.parent = this;
+					if ((children [1] = m__block_of_regex_definitions_ = (p__anglr_file_fragment_.m__block_of_regex_definitions_ != null) ? new _block_of_regex_definitions_ (p__anglr_file_fragment_.m__block_of_regex_definitions_) : null) != null) m__block_of_regex_definitions_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__17:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__terminal_definition_terminal_ = (p__anglr_file_fragment_.m__terminal_definition_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__terminal_definition_terminal_) : null) != null) m__terminal_definition_terminal_.parent = this;
+					if ((children [1] = m__terminal_definition_ = (p__anglr_file_fragment_.m__terminal_definition_ != null) ? new _terminal_definition_ (p__anglr_file_fragment_.m__terminal_definition_) : null) != null) m__terminal_definition_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__18:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__regex_definition_terminal_ = (p__anglr_file_fragment_.m__regex_definition_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__regex_definition_terminal_) : null) != null) m__regex_definition_terminal_.parent = this;
+					if ((children [1] = m__regex_definition_ = (p__anglr_file_fragment_.m__regex_definition_ != null) ? new _regex_definition_ (p__anglr_file_fragment_.m__regex_definition_) : null) != null) m__regex_definition_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__19:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__block_terminal_definitions_terminal_ = (p__anglr_file_fragment_.m__block_terminal_definitions_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__block_terminal_definitions_terminal_) : null) != null) m__block_terminal_definitions_terminal_.parent = this;
+					if ((children [1] = m__block_terminal_definitions_ = (p__anglr_file_fragment_.m__block_terminal_definitions_ != null) ? new _block_terminal_definitions_ (p__anglr_file_fragment_.m__block_terminal_definitions_) : null) != null) m__block_terminal_definitions_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__20:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__block_terminal_definition_terminal_ = (p__anglr_file_fragment_.m__block_terminal_definition_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__block_terminal_definition_terminal_) : null) != null) m__block_terminal_definition_terminal_.parent = this;
+					if ((children [1] = m__block_terminal_definition_ = (p__anglr_file_fragment_.m__block_terminal_definition_ != null) ? new _block_terminal_definition_ (p__anglr_file_fragment_.m__block_terminal_definition_) : null) != null) m__block_terminal_definition_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__21:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__block_regex_definitions_terminal_ = (p__anglr_file_fragment_.m__block_regex_definitions_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__block_regex_definitions_terminal_) : null) != null) m__block_regex_definitions_terminal_.parent = this;
+					if ((children [1] = m__block_regex_definitions_ = (p__anglr_file_fragment_.m__block_regex_definitions_ != null) ? new _block_regex_definitions_ (p__anglr_file_fragment_.m__block_regex_definitions_) : null) != null) m__block_regex_definitions_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__22:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__block_regex_definition_terminal_ = (p__anglr_file_fragment_.m__block_regex_definition_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__block_regex_definition_terminal_) : null) != null) m__block_regex_definition_terminal_.parent = this;
+					if ((children [1] = m__block_regex_definition_ = (p__anglr_file_fragment_.m__block_regex_definition_ != null) ? new _block_regex_definition_ (p__anglr_file_fragment_.m__block_regex_definition_) : null) != null) m__block_regex_definition_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__23:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__scanner_part_terminal_ = (p__anglr_file_fragment_.m__scanner_part_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__scanner_part_terminal_) : null) != null) m__scanner_part_terminal_.parent = this;
+					if ((children [1] = m__scanner_part_ = (p__anglr_file_fragment_.m__scanner_part_ != null) ? new _scanner_part_ (p__anglr_file_fragment_.m__scanner_part_) : null) != null) m__scanner_part_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__24:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__regular_expression_list_terminal_ = (p__anglr_file_fragment_.m__regular_expression_list_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__regular_expression_list_terminal_) : null) != null) m__regular_expression_list_terminal_.parent = this;
+					if ((children [1] = m__regular_expression_list_ = (p__anglr_file_fragment_.m__regular_expression_list_ != null) ? new _regular_expression_list_ (p__anglr_file_fragment_.m__regular_expression_list_) : null) != null) m__regular_expression_list_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__25:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__regular_expression_usage_terminal_ = (p__anglr_file_fragment_.m__regular_expression_usage_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__regular_expression_usage_terminal_) : null) != null) m__regular_expression_usage_terminal_.parent = this;
+					if ((children [1] = m__regular_expression_usage_ = (p__anglr_file_fragment_.m__regular_expression_usage_ != null) ? new _regular_expression_usage_ (p__anglr_file_fragment_.m__regular_expression_usage_) : null) != null) m__regular_expression_usage_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__26:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__actions_terminal_ = (p__anglr_file_fragment_.m__actions_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__actions_terminal_) : null) != null) m__actions_terminal_.parent = this;
+					if ((children [1] = m__actions_ = (p__anglr_file_fragment_.m__actions_ != null) ? new _actions_ (p__anglr_file_fragment_.m__actions_) : null) != null) m__actions_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__27:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__action_terminal_ = (p__anglr_file_fragment_.m__action_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__action_terminal_) : null) != null) m__action_terminal_.parent = this;
+					if ((children [1] = m__action_ = (p__anglr_file_fragment_.m__action_ != null) ? new _action_ (p__anglr_file_fragment_.m__action_) : null) != null) m__action_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__28:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__skip_action_terminal_ = (p__anglr_file_fragment_.m__skip_action_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__skip_action_terminal_) : null) != null) m__skip_action_terminal_.parent = this;
+					if ((children [1] = m__skip_action_ = (p__anglr_file_fragment_.m__skip_action_ != null) ? new _skip_action_ (p__anglr_file_fragment_.m__skip_action_) : null) != null) m__skip_action_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__29:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__terminal_action_terminal_ = (p__anglr_file_fragment_.m__terminal_action_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__terminal_action_terminal_) : null) != null) m__terminal_action_terminal_.parent = this;
+					if ((children [1] = m__terminal_action_ = (p__anglr_file_fragment_.m__terminal_action_ != null) ? new _terminal_action_ (p__anglr_file_fragment_.m__terminal_action_) : null) != null) m__terminal_action_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__30:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__event_action_terminal_ = (p__anglr_file_fragment_.m__event_action_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__event_action_terminal_) : null) != null) m__event_action_terminal_.parent = this;
+					if ((children [1] = m__event_action_ = (p__anglr_file_fragment_.m__event_action_ != null) ? new _event_action_ (p__anglr_file_fragment_.m__event_action_) : null) != null) m__event_action_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__31:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__push_action_terminal_ = (p__anglr_file_fragment_.m__push_action_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__push_action_terminal_) : null) != null) m__push_action_terminal_.parent = this;
+					if ((children [1] = m__push_action_ = (p__anglr_file_fragment_.m__push_action_ != null) ? new _push_action_ (p__anglr_file_fragment_.m__push_action_) : null) != null) m__push_action_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__32:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__pop_action_terminal_ = (p__anglr_file_fragment_.m__pop_action_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__pop_action_terminal_) : null) != null) m__pop_action_terminal_.parent = this;
+					if ((children [1] = m__pop_action_ = (p__anglr_file_fragment_.m__pop_action_ != null) ? new _pop_action_ (p__anglr_file_fragment_.m__pop_action_) : null) != null) m__pop_action_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__33:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__lexer_part_terminal_ = (p__anglr_file_fragment_.m__lexer_part_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__lexer_part_terminal_) : null) != null) m__lexer_part_terminal_.parent = this;
+					if ((children [1] = m__lexer_part_ = (p__anglr_file_fragment_.m__lexer_part_ != null) ? new _lexer_part_ (p__anglr_file_fragment_.m__lexer_part_) : null) != null) m__lexer_part_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__34:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__parser_part_terminal_ = (p__anglr_file_fragment_.m__parser_part_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__parser_part_terminal_) : null) != null) m__parser_part_terminal_.parent = this;
+					if ((children [1] = m__parser_part_ = (p__anglr_file_fragment_.m__parser_part_ != null) ? new _parser_part_ (p__anglr_file_fragment_.m__parser_part_) : null) != null) m__parser_part_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__35:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_syntax_rule_list_terminal_ = (p__anglr_file_fragment_.m__anglr_syntax_rule_list_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_syntax_rule_list_terminal_) : null) != null) m__anglr_syntax_rule_list_terminal_.parent = this;
+					if ((children [1] = m__anglr_syntax_rule_list_ = (p__anglr_file_fragment_.m__anglr_syntax_rule_list_ != null) ? new _anglr_syntax_rule_list_ (p__anglr_file_fragment_.m__anglr_syntax_rule_list_) : null) != null) m__anglr_syntax_rule_list_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__36:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_syntax_rule_terminal_ = (p__anglr_file_fragment_.m__anglr_syntax_rule_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_syntax_rule_terminal_) : null) != null) m__anglr_syntax_rule_terminal_.parent = this;
+					if ((children [1] = m__anglr_syntax_rule_ = (p__anglr_file_fragment_.m__anglr_syntax_rule_ != null) ? new _anglr_syntax_rule_ (p__anglr_file_fragment_.m__anglr_syntax_rule_) : null) != null) m__anglr_syntax_rule_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__37:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_nested_rule_terminal_ = (p__anglr_file_fragment_.m__anglr_nested_rule_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_nested_rule_terminal_) : null) != null) m__anglr_nested_rule_terminal_.parent = this;
+					if ((children [1] = m__anglr_nested_rule_ = (p__anglr_file_fragment_.m__anglr_nested_rule_ != null) ? new _anglr_nested_rule_ (p__anglr_file_fragment_.m__anglr_nested_rule_) : null) != null) m__anglr_nested_rule_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__38:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_syntax_production_list_name_terminal_ = (p__anglr_file_fragment_.m__anglr_syntax_production_list_name_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_syntax_production_list_name_terminal_) : null) != null) m__anglr_syntax_production_list_name_terminal_.parent = this;
+					if ((children [1] = m__anglr_syntax_production_list_name_ = (p__anglr_file_fragment_.m__anglr_syntax_production_list_name_ != null) ? new _anglr_syntax_production_list_name_ (p__anglr_file_fragment_.m__anglr_syntax_production_list_name_) : null) != null) m__anglr_syntax_production_list_name_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__39:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_syntax_production_list_terminal_ = (p__anglr_file_fragment_.m__anglr_syntax_production_list_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_syntax_production_list_terminal_) : null) != null) m__anglr_syntax_production_list_terminal_.parent = this;
+					if ((children [1] = m__anglr_syntax_production_list_ = (p__anglr_file_fragment_.m__anglr_syntax_production_list_ != null) ? new _anglr_syntax_production_list_ (p__anglr_file_fragment_.m__anglr_syntax_production_list_) : null) != null) m__anglr_syntax_production_list_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__40:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_syntax_production_terminal_ = (p__anglr_file_fragment_.m__anglr_syntax_production_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_syntax_production_terminal_) : null) != null) m__anglr_syntax_production_terminal_.parent = this;
+					if ((children [1] = m__anglr_syntax_production_ = (p__anglr_file_fragment_.m__anglr_syntax_production_ != null) ? new _anglr_syntax_production_ (p__anglr_file_fragment_.m__anglr_syntax_production_) : null) != null) m__anglr_syntax_production_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__41:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__priority_assoc_specification_terminal_ = (p__anglr_file_fragment_.m__priority_assoc_specification_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__priority_assoc_specification_terminal_) : null) != null) m__priority_assoc_specification_terminal_.parent = this;
+					if ((children [1] = m__priority_assoc_specification_ = (p__anglr_file_fragment_.m__priority_assoc_specification_ != null) ? new _priority_assoc_specification_ (p__anglr_file_fragment_.m__priority_assoc_specification_) : null) != null) m__priority_assoc_specification_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__42:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__priority_specification_terminal_ = (p__anglr_file_fragment_.m__priority_specification_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__priority_specification_terminal_) : null) != null) m__priority_specification_terminal_.parent = this;
+					if ((children [1] = m__priority_specification_ = (p__anglr_file_fragment_.m__priority_specification_ != null) ? new _priority_specification_ (p__anglr_file_fragment_.m__priority_specification_) : null) != null) m__priority_specification_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__43:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__associativity_specification_terminal_ = (p__anglr_file_fragment_.m__associativity_specification_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__associativity_specification_terminal_) : null) != null) m__associativity_specification_terminal_.parent = this;
+					if ((children [1] = m__associativity_specification_ = (p__anglr_file_fragment_.m__associativity_specification_ != null) ? new _associativity_specification_ (p__anglr_file_fragment_.m__associativity_specification_) : null) != null) m__associativity_specification_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__44:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__production_name_terminal_ = (p__anglr_file_fragment_.m__production_name_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__production_name_terminal_) : null) != null) m__production_name_terminal_.parent = this;
+					if ((children [1] = m__production_name_ = (p__anglr_file_fragment_.m__production_name_ != null) ? new _production_name_ (p__anglr_file_fragment_.m__production_name_) : null) != null) m__production_name_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__45:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__name_list_terminal_ = (p__anglr_file_fragment_.m__name_list_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__name_list_terminal_) : null) != null) m__name_list_terminal_.parent = this;
+					if ((children [1] = m__name_list_ = (p__anglr_file_fragment_.m__name_list_ != null) ? new _name_list_ (p__anglr_file_fragment_.m__name_list_) : null) != null) m__name_list_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__46:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__marker_list_terminal_ = (p__anglr_file_fragment_.m__marker_list_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__marker_list_terminal_) : null) != null) m__marker_list_terminal_.parent = this;
+					if ((children [1] = m__marker_list_ = (p__anglr_file_fragment_.m__marker_list_ != null) ? new _marker_list_ (p__anglr_file_fragment_.m__marker_list_) : null) != null) m__marker_list_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__47:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__marker_terminal_ = (p__anglr_file_fragment_.m__marker_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__marker_terminal_) : null) != null) m__marker_terminal_.parent = this;
+					if ((children [1] = m__marker_ = (p__anglr_file_fragment_.m__marker_ != null) ? new _marker_ (p__anglr_file_fragment_.m__marker_) : null) != null) m__marker_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__48:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__g_name_terminal_ = (p__anglr_file_fragment_.m__g_name_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__g_name_terminal_) : null) != null) m__g_name_terminal_.parent = this;
+					if ((children [1] = m__g_name_ = (p__anglr_file_fragment_.m__g_name_ != null) ? new _g_name_ (p__anglr_file_fragment_.m__g_name_) : null) != null) m__g_name_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__49:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__name_terminal_ = (p__anglr_file_fragment_.m__name_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__name_terminal_) : null) != null) m__name_terminal_.parent = this;
+					if ((children [1] = m__name_ = (p__anglr_file_fragment_.m__name_ != null) ? new _name_ (p__anglr_file_fragment_.m__name_) : null) != null) m__name_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__50:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__cardinality_delimiter_terminal_ = (p__anglr_file_fragment_.m__cardinality_delimiter_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__cardinality_delimiter_terminal_) : null) != null) m__cardinality_delimiter_terminal_.parent = this;
+					if ((children [1] = m__cardinality_delimiter_ = (p__anglr_file_fragment_.m__cardinality_delimiter_ != null) ? new _cardinality_delimiter_ (p__anglr_file_fragment_.m__cardinality_delimiter_) : null) != null) m__cardinality_delimiter_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__51:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__cardinality_terminal_ = (p__anglr_file_fragment_.m__cardinality_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__cardinality_terminal_) : null) != null) m__cardinality_terminal_.parent = this;
+					if ((children [1] = m__cardinality_ = (p__anglr_file_fragment_.m__cardinality_ != null) ? new _cardinality_ (p__anglr_file_fragment_.m__cardinality_) : null) != null) m__cardinality_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__52:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__delimiter_terminal_ = (p__anglr_file_fragment_.m__delimiter_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__delimiter_terminal_) : null) != null) m__delimiter_terminal_.parent = this;
+					if ((children [1] = m__delimiter_ = (p__anglr_file_fragment_.m__delimiter_ != null) ? new _delimiter_ (p__anglr_file_fragment_.m__delimiter_) : null) != null) m__delimiter_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__53:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__attribute_list_optional_terminal_ = (p__anglr_file_fragment_.m__attribute_list_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__attribute_list_optional_terminal_) : null) != null) m__attribute_list_optional_terminal_.parent = this;
+					if ((children [1] = m__attribute_list_optional_ = (p__anglr_file_fragment_.m__attribute_list_optional_ != null) ? new _attribute_list_optional_ (p__anglr_file_fragment_.m__attribute_list_optional_) : null) != null) m__attribute_list_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__54:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__name_value_list_optional_terminal_ = (p__anglr_file_fragment_.m__name_value_list_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__name_value_list_optional_terminal_) : null) != null) m__name_value_list_optional_terminal_.parent = this;
+					if ((children [1] = m__name_value_list_optional_ = (p__anglr_file_fragment_.m__name_value_list_optional_ != null) ? new _name_value_list_optional_ (p__anglr_file_fragment_.m__name_value_list_optional_) : null) != null) m__name_value_list_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__55:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_file_part_list_optional_terminal_ = (p__anglr_file_fragment_.m__anglr_file_part_list_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_file_part_list_optional_terminal_) : null) != null) m__anglr_file_part_list_optional_terminal_.parent = this;
+					if ((children [1] = m__anglr_file_part_list_optional_ = (p__anglr_file_fragment_.m__anglr_file_part_list_optional_ != null) ? new _anglr_file_part_list_optional_ (p__anglr_file_fragment_.m__anglr_file_part_list_optional_) : null) != null) m__anglr_file_part_list_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__56:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_definition_list_optional_terminal_ = (p__anglr_file_fragment_.m__anglr_definition_list_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_definition_list_optional_terminal_) : null) != null) m__anglr_definition_list_optional_terminal_.parent = this;
+					if ((children [1] = m__anglr_definition_list_optional_ = (p__anglr_file_fragment_.m__anglr_definition_list_optional_ != null) ? new _anglr_definition_list_optional_ (p__anglr_file_fragment_.m__anglr_definition_list_optional_) : null) != null) m__anglr_definition_list_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__57:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__block_terminal_definitions_optional_terminal_ = (p__anglr_file_fragment_.m__block_terminal_definitions_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__block_terminal_definitions_optional_terminal_) : null) != null) m__block_terminal_definitions_optional_terminal_.parent = this;
+					if ((children [1] = m__block_terminal_definitions_optional_ = (p__anglr_file_fragment_.m__block_terminal_definitions_optional_ != null) ? new _block_terminal_definitions_optional_ (p__anglr_file_fragment_.m__block_terminal_definitions_optional_) : null) != null) m__block_terminal_definitions_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__58:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__block_regex_definitions_optional_terminal_ = (p__anglr_file_fragment_.m__block_regex_definitions_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__block_regex_definitions_optional_terminal_) : null) != null) m__block_regex_definitions_optional_terminal_.parent = this;
+					if ((children [1] = m__block_regex_definitions_optional_ = (p__anglr_file_fragment_.m__block_regex_definitions_optional_ != null) ? new _block_regex_definitions_optional_ (p__anglr_file_fragment_.m__block_regex_definitions_optional_) : null) != null) m__block_regex_definitions_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__59:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__regular_expression_list_optional_terminal_ = (p__anglr_file_fragment_.m__regular_expression_list_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__regular_expression_list_optional_terminal_) : null) != null) m__regular_expression_list_optional_terminal_.parent = this;
+					if ((children [1] = m__regular_expression_list_optional_ = (p__anglr_file_fragment_.m__regular_expression_list_optional_ != null) ? new _regular_expression_list_optional_ (p__anglr_file_fragment_.m__regular_expression_list_optional_) : null) != null) m__regular_expression_list_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__60:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__actions_optional_terminal_ = (p__anglr_file_fragment_.m__actions_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__actions_optional_terminal_) : null) != null) m__actions_optional_terminal_.parent = this;
+					if ((children [1] = m__actions_optional_ = (p__anglr_file_fragment_.m__actions_optional_ != null) ? new _actions_optional_ (p__anglr_file_fragment_.m__actions_optional_) : null) != null) m__actions_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__61:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_syntax_rule_list_optional_terminal_ = (p__anglr_file_fragment_.m__anglr_syntax_rule_list_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_syntax_rule_list_optional_terminal_) : null) != null) m__anglr_syntax_rule_list_optional_terminal_.parent = this;
+					if ((children [1] = m__anglr_syntax_rule_list_optional_ = (p__anglr_file_fragment_.m__anglr_syntax_rule_list_optional_ != null) ? new _anglr_syntax_rule_list_optional_ (p__anglr_file_fragment_.m__anglr_syntax_rule_list_optional_) : null) != null) m__anglr_syntax_rule_list_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__62:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__anglr_syntax_production_list_name_optional_terminal_ = (p__anglr_file_fragment_.m__anglr_syntax_production_list_name_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__anglr_syntax_production_list_name_optional_terminal_) : null) != null) m__anglr_syntax_production_list_name_optional_terminal_.parent = this;
+					if ((children [1] = m__anglr_syntax_production_list_name_optional_ = (p__anglr_file_fragment_.m__anglr_syntax_production_list_name_optional_ != null) ? new _anglr_syntax_production_list_name_optional_ (p__anglr_file_fragment_.m__anglr_syntax_production_list_name_optional_) : null) != null) m__anglr_syntax_production_list_name_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__63:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__production_name_optional_terminal_ = (p__anglr_file_fragment_.m__production_name_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__production_name_optional_terminal_) : null) != null) m__production_name_optional_terminal_.parent = this;
+					if ((children [1] = m__production_name_optional_ = (p__anglr_file_fragment_.m__production_name_optional_ != null) ? new _production_name_optional_ (p__anglr_file_fragment_.m__production_name_optional_) : null) != null) m__production_name_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__64:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__priority_assoc_specification_optional_terminal_ = (p__anglr_file_fragment_.m__priority_assoc_specification_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__priority_assoc_specification_optional_terminal_) : null) != null) m__priority_assoc_specification_optional_terminal_.parent = this;
+					if ((children [1] = m__priority_assoc_specification_optional_ = (p__anglr_file_fragment_.m__priority_assoc_specification_optional_ != null) ? new _priority_assoc_specification_optional_ (p__anglr_file_fragment_.m__priority_assoc_specification_optional_) : null) != null) m__priority_assoc_specification_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__65:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__marker_list_optional_terminal_ = (p__anglr_file_fragment_.m__marker_list_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__marker_list_optional_terminal_) : null) != null) m__marker_list_optional_terminal_.parent = this;
+					if ((children [1] = m__marker_list_optional_ = (p__anglr_file_fragment_.m__marker_list_optional_ != null) ? new _marker_list_optional_ (p__anglr_file_fragment_.m__marker_list_optional_) : null) != null) m__marker_list_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__66:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__delimiter_optional_terminal_ = (p__anglr_file_fragment_.m__delimiter_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__delimiter_optional_terminal_) : null) != null) m__delimiter_optional_terminal_.parent = this;
+					if ((children [1] = m__delimiter_optional_ = (p__anglr_file_fragment_.m__delimiter_optional_ != null) ? new _delimiter_optional_ (p__anglr_file_fragment_.m__delimiter_optional_) : null) != null) m__delimiter_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__67:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__cstring_optional_terminal_ = (p__anglr_file_fragment_.m__cstring_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__cstring_optional_terminal_) : null) != null) m__cstring_optional_terminal_.parent = this;
+					if ((children [1] = m__cstring_optional_ = (p__anglr_file_fragment_.m__cstring_optional_ != null) ? new _cstring_optional_ (p__anglr_file_fragment_.m__cstring_optional_) : null) != null) m__cstring_optional_.parent = this;
+					break;
+				case production_kind.g__anglr_file_fragment__68:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__number_optional_terminal_ = (p__anglr_file_fragment_.m__number_optional_terminal_ != null) ? new SyntaxTreeToken (p__anglr_file_fragment_.m__number_optional_terminal_) : null) != null) m__number_optional_terminal_.parent = this;
+					if ((children [1] = m__number_optional_ = (p__anglr_file_fragment_.m__number_optional_ != null) ? new _number_optional_ (p__anglr_file_fragment_.m__number_optional_) : null) != null) m__number_optional_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_anglr_file_fragment_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="AnglrLangExtension.db402290-5064-4016-bb6f-4952d77e0a71" Version="1.0" Language="en-US" Publisher="Company" />
+        <Identity Id="AnglrLangExtension.db402290-5064-4016-bb6f-4952d77e0a71" Version="2.38" Language="en-US" Publisher="Company" />
         <DisplayName>AnglrLangExtension</DisplayName>
         <Description xml:space="preserve">Anglr Language Server Provider</Description>
         <GettingStartedGuide>googleb8013ce362172132.html</GettingStartedGuide>

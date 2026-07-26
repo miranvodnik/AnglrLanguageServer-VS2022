@@ -56,17 +56,19 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__name_value_pair_.kind)
 			{
-			case production_kind.g__name_value_pair__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
-				children[0] = m__identifier_ = p__name_value_pair_.m__identifier_;
-				children[1] = m__equals_sign_ = p__name_value_pair_.m__equals_sign_;
-				children[2] = m__cstring_ = p__name_value_pair_.m__cstring_;
-				break;
-			default:
-				string[] args = new string[] { "_name_value_pair_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__name_value_pair__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
+					if ((children [0] = m__identifier_ = (p__name_value_pair_.m__identifier_ != null) ? new SyntaxTreeToken (p__name_value_pair_.m__identifier_) : null) != null) m__identifier_.parent = this;
+					if ((children [1] = m__equals_sign_ = (p__name_value_pair_.m__equals_sign_ != null) ? new SyntaxTreeToken (p__name_value_pair_.m__equals_sign_) : null) != null) m__equals_sign_.parent = this;
+					if ((children [2] = m__cstring_ = (p__name_value_pair_.m__cstring_ != null) ? new SyntaxTreeToken (p__name_value_pair_.m__cstring_) : null) != null) m__cstring_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_name_value_pair_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

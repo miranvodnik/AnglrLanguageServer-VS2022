@@ -151,31 +151,33 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__anglr_file_part_.kind)
 			{
-			case production_kind.g__anglr_file_part__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__general_part_ = p__anglr_file_part_.m__general_part_;
-				break;
-			case production_kind.g__anglr_file_part__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__declaration_part_ = p__anglr_file_part_.m__declaration_part_;
-				break;
-			case production_kind.g__anglr_file_part__3:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__scanner_part_ = p__anglr_file_part_.m__scanner_part_;
-				break;
-			case production_kind.g__anglr_file_part__4:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__lexer_part_ = p__anglr_file_part_.m__lexer_part_;
-				break;
-			case production_kind.g__anglr_file_part__5:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__parser_part_ = p__anglr_file_part_.m__parser_part_;
-				break;
-			default:
-				string[] args = new string[] { "_anglr_file_part_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__anglr_file_part__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__general_part_ = (p__anglr_file_part_.m__general_part_ != null) ? new _general_part_ (p__anglr_file_part_.m__general_part_) : null) != null) m__general_part_.parent = this;
+					break;
+				case production_kind.g__anglr_file_part__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__declaration_part_ = (p__anglr_file_part_.m__declaration_part_ != null) ? new _declaration_part_ (p__anglr_file_part_.m__declaration_part_) : null) != null) m__declaration_part_.parent = this;
+					break;
+				case production_kind.g__anglr_file_part__3:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__scanner_part_ = (p__anglr_file_part_.m__scanner_part_ != null) ? new _scanner_part_ (p__anglr_file_part_.m__scanner_part_) : null) != null) m__scanner_part_.parent = this;
+					break;
+				case production_kind.g__anglr_file_part__4:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__lexer_part_ = (p__anglr_file_part_.m__lexer_part_ != null) ? new _lexer_part_ (p__anglr_file_part_.m__lexer_part_) : null) != null) m__lexer_part_.parent = this;
+					break;
+				case production_kind.g__anglr_file_part__5:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__parser_part_ = (p__anglr_file_part_.m__parser_part_ != null) ? new _parser_part_ (p__anglr_file_part_.m__parser_part_) : null) != null) m__parser_part_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_anglr_file_part_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

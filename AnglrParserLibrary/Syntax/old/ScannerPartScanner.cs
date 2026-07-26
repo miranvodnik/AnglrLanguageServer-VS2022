@@ -12,7 +12,7 @@ using Anglr.Declarations;
 
 namespace Anglr.ScannerLib
 {
-	internal class ScannerPartScanner : Regex, RegexInterface
+	public class ScannerPartScanner : Regex, RegexInterface
 	{
 		public ScannerPartScanner (LexerBase scanner) : base (@"(?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>\%\{)|(?<g5>\%\})|(?<g6>skip)|(?<g7>terminal)|(?<g8>event)|(?<g9>push)|(?<g10>pop)|(?<g11>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g12>[ \t]+)|(?<g13>.+)|(?<g14>[\n\r])", RegexOptions.ExplicitCapture)
 		{

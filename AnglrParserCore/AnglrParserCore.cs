@@ -220,6 +220,8 @@ namespace Anglr.Parser.Core
             }
         }
 
+        public T [] ToArray () => m_values;
+
         public int stackDepth { get => m_stackTop; }
 
         private int m_currentPosition = 0;
@@ -563,8 +565,8 @@ namespace Anglr.Parser.Core
             }
 
             valueStack.Reduce (prodLen);
-            AnglrParserObj.ReduceStepReport (this.stackCounter, productionNr, ruleNr, m_nonTerminalNames [ruleNr - m_minNonTerminalCode], prodLen, fallingState, bottomState, risingState, currentValue, valueStack.stackDepth <= 1);
             SaveState ();
+            AnglrParserObj.ReduceStepReport (this.stackCounter, productionNr, ruleNr, m_nonTerminalNames [ruleNr - m_minNonTerminalCode], prodLen, fallingState, bottomState, risingState, currentValue, valueStack.stackDepth <= 1);
             return loop ? StepOutcome.LoopStep : StepOutcome.ReduceStep;
         }
 
@@ -607,7 +609,7 @@ namespace Anglr.Parser.Core
 
         public IAnglrLogger AnglrLogger;
         public static int g_stackCounter;
-        public int stackCounter { get; private set; }
+        public int stackCounter { get; }
         public ParserInterface AnglrParserObj { get; private set; }
         public valstack valueStack { get; private set; }
         public intstack stateStack { get; private set; }
@@ -714,8 +716,9 @@ namespace Anglr.Parser.Core
         void LoopStepReport (int stackNr, int state);
         void JoinReport (int stackNr, int joinNr);
         void FinalStepReport (int stackNr);
-        string [] GetStackText (int stackNr);
         void StopParserReport ();
+        string [] GetStackText (int stackNr);
+        stackset parserStacks { get; }
         ParserToken getToken ();
         bool checkLoopDetection ();
         bool checkDebug ();

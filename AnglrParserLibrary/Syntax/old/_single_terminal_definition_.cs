@@ -56,16 +56,18 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__single_terminal_definition_.kind)
 			{
-			case production_kind.g__single_terminal_definition__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
-				children[0] = m__terminal_ = p__single_terminal_definition_.m__terminal_;
-				children[1] = m__terminal_definition_ = p__single_terminal_definition_.m__terminal_definition_;
-				break;
-			default:
-				string[] args = new string[] { "_single_terminal_definition_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__single_terminal_definition__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					if ((children [0] = m__terminal_ = (p__single_terminal_definition_.m__terminal_ != null) ? new SyntaxTreeToken (p__single_terminal_definition_.m__terminal_) : null) != null) m__terminal_.parent = this;
+					if ((children [1] = m__terminal_definition_ = (p__single_terminal_definition_.m__terminal_definition_ != null) ? new _terminal_definition_ (p__single_terminal_definition_.m__terminal_definition_) : null) != null) m__terminal_definition_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_single_terminal_definition_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

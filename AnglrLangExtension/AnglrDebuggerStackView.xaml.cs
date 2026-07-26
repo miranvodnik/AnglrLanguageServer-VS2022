@@ -32,7 +32,7 @@ namespace AnglrLangExtension
             IsTerminal = item.IsTerminal;
             State = item.State;
             Name = item.Name;
-            Value = item.Value;
+            Value = ""; // item.Value;
         }
     }
 
@@ -128,6 +128,7 @@ namespace AnglrLangExtension
         public void InitParserStack (AnglrDebuggerStackInfo parserStack, int stackNr)
         {
             StackNr = stackNr;
+            return;
             if (parserStack == null)
             {
                 ParserStack = new AnglrDebuggerStackInfo
@@ -167,8 +168,13 @@ namespace AnglrLangExtension
                     return;
 
                 AnglrLogger?.DebugLine ($"AnglrDebuggerStackView_CollectionChanged, value = {element.Value}");
-                string val = element.Value + " " + ReducedValue;
-                ReducedValue = val.Trim ();
+                if (false)
+                {
+                    string val = element.Value + " " + ReducedValue;
+                    ReducedValue = val.Trim ();
+                }
+                else
+                    ReducedValue = "";
             }
         }
     }

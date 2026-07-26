@@ -15,25 +15,23 @@ namespace AnglrDebuggerJsonRpcMessages
 {
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerLogRequest : EventArgs
+    public class AnglrDebuggerBaseMessage : EventArgs
     {
         [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
+    }
+
+    [Obfuscation (Exclude = true)]
+    [DataContract]
+    public class AnglrDebuggerLogRequest : AnglrDebuggerBaseMessage
+    {
         [DataMember (Name = "logLevel")] public int LogLevel { get; set; }
         [DataMember (Name = "message")] public string Message{ get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerLogResponse : EventArgs
+    public class AnglrDebuggerConnectRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
-    }
-
-    [Obfuscation (Exclude = true)]
-    [DataContract]
-    public class AnglrDebuggerConnectRequest : EventArgs
-    {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
         [DataMember (Name = "stackNr")] public int StackNr { get; set; }
         [DataMember (Name = "magicNumber")] public int? MagicNumber { get; set; }
         [DataMember (Name = "info")] public object [] Info { get; set; }
@@ -41,34 +39,24 @@ namespace AnglrDebuggerJsonRpcMessages
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerConnectResponse : EventArgs
+    public class AnglrDebuggerConnectResponse : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
         [DataMember (Name = "valid")] public bool Valid { get; set; }
         [DataMember (Name = "breakPointDB")] public string BreakPointDB { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerSyntaxErrorRequest : EventArgs
+    public class AnglrDebuggerSyntaxErrorRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
         [DataMember (Name = "stackNr")] public int StackNr { get; set; }
         [DataMember (Name = "state")] public int State { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerSyntaxErrorResponse : EventArgs
+    public class AnglrDebuggerShiftStepRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
-    }
-
-    [Obfuscation (Exclude = true)]
-    [DataContract]
-    public class AnglrDebuggerShiftStepRequest : EventArgs
-    {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
         [DataMember (Name = "stackNr")] public int StackNr { get; set; }
         [DataMember (Name = "state")] public int State { get; set; }
         [DataMember (Name = "tokenValue")] public int TokenValue { get; set; }
@@ -79,16 +67,8 @@ namespace AnglrDebuggerJsonRpcMessages
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerShiftStepResponse : EventArgs
+    public class AnglrDebuggerReduceStepRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
-    }
-
-    [Obfuscation (Exclude = true)]
-    [DataContract]
-    public class AnglrDebuggerReduceStepRequest : EventArgs
-    {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
         [DataMember (Name = "stackNr")] public int StackNr { get; set; }
         [DataMember (Name = "prodNr")] public int ProdNr { get; set; }
         [DataMember (Name = "ruleNr")] public int RuleNr { get; set; }
@@ -102,16 +82,8 @@ namespace AnglrDebuggerJsonRpcMessages
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerReduceStepResponse : EventArgs
+    public class AnglrDebuggerSplitStepRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
-    }
-
-    [Obfuscation (Exclude = true)]
-    [DataContract]
-    public class AnglrDebuggerSplitStepRequest : EventArgs
-    {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
         [DataMember (Name = "oldStackNr")] public int OldStackNr { get; set; }
         [DataMember (Name = "newStackNr")] public int NewStackNr { get; set; }
         [DataMember (Name = "begin")] public bool Begin { get; set; }
@@ -119,142 +91,100 @@ namespace AnglrDebuggerJsonRpcMessages
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerSplitStepResponse : EventArgs
+    public class AnglrDebuggerLoopStepRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
-    }
-
-    [Obfuscation (Exclude = true)]
-    [DataContract]
-    public class AnglrDebuggerLoopStepRequest : EventArgs
-    {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
         [DataMember (Name = "stackNr")] public int StackNr { get; set; }
         [DataMember (Name = "state")] public int State { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerLoopStepResponse : EventArgs
+    public class AnglrDebuggerJoinRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
-    }
-
-    [Obfuscation (Exclude = true)]
-    [DataContract]
-    public class AnglrDebuggerJoinRequest : EventArgs
-    {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
         [DataMember (Name = "stackNr")] public int StackNr { get; set; }
         [DataMember (Name = "joinNr")] public int JoinNr { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerJoinResponse : EventArgs
+    public class AnglrDebuggerFinalStepRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
-    }
-
-    [Obfuscation (Exclude = true)]
-    [DataContract]
-    public class AnglrDebuggerFinalStepRequest : EventArgs
-    {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
         [DataMember (Name = "stackNr")] public int StackNr { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerFinalStepResponse : EventArgs
+    public class AnglrDebuggerStopParserRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerStopParserRequest : EventArgs
+    public class AnglrDebuggerDbgSingleStepRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
-    }
-
-    [Obfuscation (Exclude = true)]
-    [DataContract]
-    public class AnglrDebuggerStopParserResponse : EventArgs
-    {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
-    }
-
-    [Obfuscation (Exclude = true)]
-    [DataContract]
-    public class AnglrDebuggerDbgSingleStepRequest : EventArgs
-    {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
         [DataMember (Name = "breakPointDB")] public string BreakPointDB { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerDbgSingleStepResponse : EventArgs
+    public class AnglrDebuggerDbgContinueRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
-    }
-
-    [Obfuscation (Exclude = true)]
-    [DataContract]
-    public class AnglrDebuggerDbgContinueRequest : EventArgs
-    {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
         [DataMember (Name = "breakPointDB")] public string BreakPointDB { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerDbgContinueResponse : EventArgs
+    public class AnglrDebuggerDbgBreakRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerDbgBreakRequest : EventArgs
+    public class AnglrDebuggerDbgBreakPointHitRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerDbgBreakResponse : EventArgs
+    public class AnglrDebuggerDbgAddBreakPointRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerDbgAddBreakPointRequest : EventArgs
+    public class AnglrDebuggerDbgDeleteBreakPointRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerDbgAddBreakPointResponse : EventArgs
+    public class AnglrDebuggerGetPDASnapshotRequest : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerDbgDeleteBreakPointRequest : EventArgs
+    public class AnglrDebuggerGetPDASnapshotResponse : AnglrDebuggerBaseMessage
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
+        [DataMember (Name ="pdaStackSet")] public AnglrDebuggerGetPDAStack [] PDAStackSet { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
     [DataContract]
-    public class AnglrDebuggerDbgDeleteBreakPointResponse : EventArgs
+    public class AnglrDebuggerGetPDAStack
     {
-        [DataMember (Name = "sequenceNr")] public int SequenceNr { get; set; }
+        [DataMember (Name = "pdaStackId")] public int PDAStackId { get; set; }
+        [DataMember (Name = "pdaStack")] public AnglrDebuggerGetPDAStackCell [] PDAStackCells { get; set; }
+    }
+
+    [Obfuscation (Exclude = true)]
+    [DataContract]
+    public class AnglrDebuggerGetPDAStackCell
+    {
+        [DataMember (Name = "isTerminal")] public bool IsTerminal { get; set; }
+        [DataMember (Name = "id")] public int Id { get; set; }
+        [DataMember (Name = "state")] public int State { get; set; }
+        [DataMember (Name = "name")] public string Name { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
@@ -274,12 +204,15 @@ namespace AnglrDebuggerJsonRpcMessages
         public const string DbgSingleStepMessageName = "DbgSingleStepMessage";
         public const string DbgContinueMessageName = "DbgContinueMessage";
         public const string DbgBreakMessageName = "DbgBreakMessage";
+        public const string DbgBreakPointHitMessageName = "DbgBreakPointHitMessage";
         public const string DbgAddBreakPointMessageName = "DbgAddBreakPointMessage";
         public const string DbgDeleteBreakPointMessageName = "DbgDeleteBreakPointMessage";
+
+        public const string GetPDASnapshotMessageName = "GetPDASnapshotMessage";
     }
 
     [Obfuscation (Exclude = true)]
-    public interface IAnglrClientSideDebugger
+    public interface IAnglrServerSideDebugger
     {
         JsonRpc Rpc { get; set; }
         void DbgSingleStepMessageHandler (object sender, EventArgs e);
@@ -287,38 +220,41 @@ namespace AnglrDebuggerJsonRpcMessages
         void DbgBreakMessageHandler (object sender, EventArgs e);
         void DbgAddBreakPointMessageHandler (object sender, EventArgs e);
         void DbgDeleteBreakPointMessageHandler (object sender, EventArgs e);
+        AnglrDebuggerGetPDASnapshotResponse GetPDASnapshotMessageHandler (object sender, EventArgs e);
     }
 
     [Obfuscation (Exclude = true)]
-    public interface IAnglrServerSideDebuggerInvoker
+    public interface IAnglrClientSideDebuggerInvoker
     {
         void InvokeRpcSession (int counter, Stream pipe, CancellationToken token);
         IAnglrLogger Logger { get; }
     }
 
     [Obfuscation (Exclude = true)]
-    public interface IAnglrServerSideDebugger
+    public interface IAnglrClientSideDebugger
     {
         JsonRpc Rpc { get; set; }
-        AnglrDebuggerLogResponse LogMessageHandler (object sender, EventArgs e);
+        void LogMessageHandler (object sender, EventArgs e);
         AnglrDebuggerConnectResponse ConnectMessageHandler (object sender, EventArgs e);
-        AnglrDebuggerSyntaxErrorResponse SyntaxErrorMessageHandler (object sender, EventArgs e);
-        AnglrDebuggerShiftStepResponse ShiftStepMessageHandler (object sender, EventArgs e);
-        AnglrDebuggerReduceStepResponse ReduceStepMessageHandler (object sender, EventArgs e);
-        AnglrDebuggerSplitStepResponse SplitStepMessageHandler (object sender, EventArgs e);
-        AnglrDebuggerLoopStepResponse LoopStepMessageHandler (object sender, EventArgs e);
-        AnglrDebuggerJoinResponse JoinMessageHandler (object sender, EventArgs e);
-        AnglrDebuggerFinalStepResponse FinalStepMessageHandler (object sender, EventArgs e);
-        AnglrDebuggerStopParserResponse StopParserMessageHandler (object sender, EventArgs e);
+        void SyntaxErrorMessageHandler (object sender, EventArgs e);
+        void ShiftStepMessageHandler (object sender, EventArgs e);
+        void ReduceStepMessageHandler (object sender, EventArgs e);
+        void SplitStepMessageHandler (object sender, EventArgs e);
+        void LoopStepMessageHandler (object sender, EventArgs e);
+        void JoinMessageHandler (object sender, EventArgs e);
+        void FinalStepMessageHandler (object sender, EventArgs e);
+        void StopParserMessageHandler (object sender, EventArgs e);
+        void DbgBreakPointHitMessageHandler (object sender, EventArgs e);
+
         IAnglrLogger Logger { get; }
     }
 
     [Obfuscation (Exclude = true)]
-    public class AnglrClientSideDebuggerJsonRpcMessagesHandler
+    public class AnglrServerSideDebuggerJsonRpcMessagesHandler
     {
-        public IAnglrClientSideDebugger Debugger { get; private set; }
+        public IAnglrServerSideDebugger Debugger { get; private set; }
 
-        public AnglrClientSideDebuggerJsonRpcMessagesHandler (IAnglrClientSideDebugger anglrDebugger)
+        public AnglrServerSideDebuggerJsonRpcMessagesHandler (IAnglrServerSideDebugger anglrDebugger)
         {
             Debugger = anglrDebugger;
         }
@@ -357,20 +293,27 @@ namespace AnglrDebuggerJsonRpcMessages
             AnglrDebuggerDbgDeleteBreakPointRequest dbgDeleteBreakPointMessageRequest = dbgDeleteBreakPointMessage.ToObject<AnglrDebuggerDbgDeleteBreakPointRequest> ();
             _ = Task.Run (() => Debugger?.DbgDeleteBreakPointMessageHandler (this, dbgDeleteBreakPointMessageRequest));
         }
+
+        [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.GetPDASnapshotMessageName)]
+        public AnglrDebuggerGetPDASnapshotResponse HandleGetPDASnapshotMessage (JToken getPDASnapshotMessage)
+        {
+            AnglrDebuggerGetPDASnapshotRequest getPDASnapshotRequest = getPDASnapshotMessage.ToObject<AnglrDebuggerGetPDASnapshotRequest> ();
+            return Task.Run (() => Debugger?.GetPDASnapshotMessageHandler (this, getPDASnapshotRequest)).Result;
+        }
     }
 
     [Obfuscation (Exclude = true)]
-    public class AnglrServerSideDebuggerJsonRpcMessagesHandler
+    public class AnglrClientSideDebuggerJsonRpcMessagesHandler
     {
-        public IAnglrServerSideDebugger Debugger { get; private set; }
+        public IAnglrClientSideDebugger Debugger { get; private set; }
 
-        public AnglrServerSideDebuggerJsonRpcMessagesHandler (IAnglrServerSideDebugger anglrDebugger)
+        public AnglrClientSideDebuggerJsonRpcMessagesHandler (IAnglrClientSideDebugger anglrDebugger)
         {
             Debugger = anglrDebugger;
         }
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.LogMessageName)]
-        public AnglrDebuggerLogResponse HandleLogMessage (JToken logMessage) =>
+        public void HandleLogMessage (JToken logMessage) =>
             Debugger?.LogMessageHandler (this, logMessage.ToObject<AnglrDebuggerLogRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.ConnectMessageName)]
@@ -378,35 +321,39 @@ namespace AnglrDebuggerJsonRpcMessages
             Debugger?.ConnectMessageHandler (this, connectMessage.ToObject<AnglrDebuggerConnectRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.SyntaxErrorMessageName)]
-        public AnglrDebuggerSyntaxErrorResponse HandleSyntaxErrorMessage (JToken syntaxErrorMessage)=>
+        public void HandleSyntaxErrorMessage (JToken syntaxErrorMessage)=>
             Debugger?.SyntaxErrorMessageHandler (this, syntaxErrorMessage.ToObject<AnglrDebuggerSyntaxErrorRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.ShiftStepMessageName)]
-        public AnglrDebuggerShiftStepResponse HandleShiftStepMessage (JToken shiftStepMessage)=>
+        public void HandleShiftStepMessage (JToken shiftStepMessage)=>
             Debugger?.ShiftStepMessageHandler (this, shiftStepMessage.ToObject<AnglrDebuggerShiftStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.ReduceStepMessageName)]
-        public AnglrDebuggerReduceStepResponse HandleReduceStepMessage (JToken reduceStepMessage)=>
+        public void HandleReduceStepMessage (JToken reduceStepMessage)=>
             Debugger?.ReduceStepMessageHandler (this, reduceStepMessage.ToObject<AnglrDebuggerReduceStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.SplitStepMessageName)]
-        public AnglrDebuggerSplitStepResponse HandleSplitStepMessage (JToken splitStepMessage) =>
+        public void HandleSplitStepMessage (JToken splitStepMessage) =>
             Debugger?.SplitStepMessageHandler (this, splitStepMessage.ToObject<AnglrDebuggerSplitStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.LoopStepMessageName)]
-        public AnglrDebuggerLoopStepResponse HandleLoopStepMessage (JToken loopStepMessage)=>
+        public void HandleLoopStepMessage (JToken loopStepMessage)=>
             Debugger?.LoopStepMessageHandler (this, loopStepMessage.ToObject<AnglrDebuggerLoopStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.JoinMessageName)]
-        public AnglrDebuggerJoinResponse HandleJoinMessage (JToken joinMessage)=>
+        public void HandleJoinMessage (JToken joinMessage)=>
             Debugger?.JoinMessageHandler (this, joinMessage.ToObject<AnglrDebuggerJoinRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.FinalStepMessageName)]
-        public AnglrDebuggerFinalStepResponse HandleFinalStepMessage (JToken finalStepMessage) =>
+        public void HandleFinalStepMessage (JToken finalStepMessage) =>
             Debugger?.FinalStepMessageHandler (this, finalStepMessage.ToObject<AnglrDebuggerFinalStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.StopParserMessageName)]
-        public AnglrDebuggerStopParserResponse HandleStopParserMessage (JToken stopParserMessage)=>
+        public void HandleStopParserMessage (JToken stopParserMessage)=>
             Debugger?.StopParserMessageHandler (this, stopParserMessage.ToObject<AnglrDebuggerStopParserRequest> ());
+
+        [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.DbgBreakPointHitMessageName)]
+        public void HandleDbgBreakPointHitMessage (JToken dbgBreakPointHitMessage) =>
+            Debugger?.DbgBreakPointHitMessageHandler (this, dbgBreakPointHitMessage.ToObject<AnglrDebuggerDbgBreakPointHitRequest> ());
     }
 }

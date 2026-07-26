@@ -213,23 +213,57 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__cardinality_.kind)
 			{
-			case production_kind.g__cardinality__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
-				children[0] = m__question_mark_ = p__cardinality_.m__question_mark_;
-				break;
-			case production_kind.g__cardinality__2:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 5);
-				children[0] = m__left_curly_bracket_ = p__cardinality_.m__left_curly_bracket_;
-				children[1] = m__number_optional_ = p__cardinality_.m__number_optional_;
-				children[2] = m__comma_ = p__cardinality_.m__comma_;
-				children[3] = m__number_optional__1 = p__cardinality_.m__number_optional__1;
-				children[4] = m__right_curly_bracket_ = p__cardinality_.m__right_curly_bracket_;
-				break;
-			default:
-				string[] args = new string[] { "_cardinality_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__cardinality__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__question_mark_ = (p__cardinality_.m__question_mark_ != null) ? new SyntaxTreeToken (p__cardinality_.m__question_mark_) : null) != null) m__question_mark_.parent = this;
+					break;
+				case production_kind.g__cardinality__2:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__plus_sign_ = (p__cardinality_.m__plus_sign_ != null) ? new SyntaxTreeToken (p__cardinality_.m__plus_sign_) : null) != null) m__plus_sign_.parent = this;
+					break;
+				case production_kind.g__cardinality__3:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__minus_sign_ = (p__cardinality_.m__minus_sign_ != null) ? new SyntaxTreeToken (p__cardinality_.m__minus_sign_) : null) != null) m__minus_sign_.parent = this;
+					break;
+				case production_kind.g__cardinality__4:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__asterisk_ = (p__cardinality_.m__asterisk_ != null) ? new SyntaxTreeToken (p__cardinality_.m__asterisk_) : null) != null) m__asterisk_.parent = this;
+					break;
+				case production_kind.g__cardinality__5:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__slash_ = (p__cardinality_.m__slash_ != null) ? new SyntaxTreeToken (p__cardinality_.m__slash_) : null) != null) m__slash_.parent = this;
+					break;
+				case production_kind.g__cardinality__6:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__inv_plus_sign_ = (p__cardinality_.m__inv_plus_sign_ != null) ? new SyntaxTreeToken (p__cardinality_.m__inv_plus_sign_) : null) != null) m__inv_plus_sign_.parent = this;
+					break;
+				case production_kind.g__cardinality__7:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__inv_minus_sign_ = (p__cardinality_.m__inv_minus_sign_ != null) ? new SyntaxTreeToken (p__cardinality_.m__inv_minus_sign_) : null) != null) m__inv_minus_sign_.parent = this;
+					break;
+				case production_kind.g__cardinality__8:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__inv_asterisk_ = (p__cardinality_.m__inv_asterisk_ != null) ? new SyntaxTreeToken (p__cardinality_.m__inv_asterisk_) : null) != null) m__inv_asterisk_.parent = this;
+					break;
+				case production_kind.g__cardinality__9:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 1);
+					if ((children [0] = m__inv_slash_ = (p__cardinality_.m__inv_slash_ != null) ? new SyntaxTreeToken (p__cardinality_.m__inv_slash_) : null) != null) m__inv_slash_.parent = this;
+					break;
+				case production_kind.g__cardinality__10:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 5);
+					if ((children [0] = m__left_curly_bracket_ = (p__cardinality_.m__left_curly_bracket_ != null) ? new SyntaxTreeToken (p__cardinality_.m__left_curly_bracket_) : null) != null) m__left_curly_bracket_.parent = this;
+					if ((children [1] = m__number_optional_ = (p__cardinality_.m__number_optional_ != null) ? new _number_optional_ (p__cardinality_.m__number_optional_) : null) != null) m__number_optional_.parent = this;
+					if ((children [2] = m__comma_ = (p__cardinality_.m__comma_ != null) ? new SyntaxTreeToken (p__cardinality_.m__comma_) : null) != null) m__comma_.parent = this;
+					if ((children [3] = m__number_optional__1 = (p__cardinality_.m__number_optional__1 != null) ? new _number_optional_ (p__cardinality_.m__number_optional__1) : null) != null) m__number_optional__1.parent = this;
+					if ((children [4] = m__right_curly_bracket_ = (p__cardinality_.m__right_curly_bracket_ != null) ? new SyntaxTreeToken (p__cardinality_.m__right_curly_bracket_) : null) != null) m__right_curly_bracket_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_cardinality_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

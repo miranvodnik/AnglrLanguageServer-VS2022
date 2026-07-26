@@ -57,17 +57,19 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
-			switch ((production_kind) this.kind)
+			switch ((production_kind) p__delimiter_.kind)
 			{
-			case production_kind.g__delimiter__1:
-				children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
-				children[0] = m__left_square_bracket_ = p__delimiter_.m__left_square_bracket_;
-				children[1] = m__anglr_nested_rule_ = p__delimiter_.m__anglr_nested_rule_;
-				children[2] = m__right_square_bracket_ = p__delimiter_.m__right_square_bracket_;
-				break;
-			default:
-				string[] args = new string[] { "_delimiter_" };
-				throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				case production_kind.g__delimiter__1:
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
+					if ((children [0] = m__left_square_bracket_ = (p__delimiter_.m__left_square_bracket_ != null) ? new SyntaxTreeToken (p__delimiter_.m__left_square_bracket_) : null) != null) m__left_square_bracket_.parent = this;
+					if ((children [1] = m__anglr_nested_rule_ = (p__delimiter_.m__anglr_nested_rule_ != null) ? new _anglr_nested_rule_ (p__delimiter_.m__anglr_nested_rule_) : null) != null) m__anglr_nested_rule_.parent = this;
+					if ((children [2] = m__right_square_bracket_ = (p__delimiter_.m__right_square_bracket_ != null) ? new SyntaxTreeToken (p__delimiter_.m__right_square_bracket_) : null) != null) m__right_square_bracket_.parent = this;
+					break;
+				default:
+				{
+					string[] args = new string[] { "_delimiter_" };
+					throw new SyntaxTreeError (SyntaxTreeError.InvalidKindError, args);
+				}
 			}
 		}
 

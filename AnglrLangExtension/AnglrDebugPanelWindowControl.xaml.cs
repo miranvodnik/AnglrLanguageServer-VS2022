@@ -41,7 +41,7 @@ namespace AnglrLangExtension
             this.InitializeComponent ();
         }
 
-        public AnglrDebugPanelTab AddDebugPanelTab (string fileName, AnglrDebuggerServerBridge anglrDebuggerServerBridge)
+        public AnglrDebugPanelTab AddDebugPanelTab (string fileName, AnglrDebuggerClientBridge anglrDebuggerServerBridge)
         {
             AnglrDebugPanelTab anglrDebugPanelTab = new AnglrDebugPanelTab (AnglrLangService, fileName, anglrDebuggerServerBridge);
             TabItem tabItem = new TabItem ();
