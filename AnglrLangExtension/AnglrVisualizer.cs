@@ -2,6 +2,7 @@
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
 using AnglrJsonRpcMethods;
+using AnglrLibrary;
 using AnglrLogLibrary;
 using System;
 using System.Collections.Generic;
@@ -24,9 +25,9 @@ namespace AnglrLangExtension
         public static int FontSize { get; set; } = 14;
         public static Brush Brush { get; set; } = Brushes.Black;
         public static Pen Pen { get; set; } = new Pen (Brush, 1);
-        public static Brush TerminalSymbolBackground { get; set; } = Brushes.LightGray;
-        public static Brush ConstantSymbolBackground { get; set; } = Brushes.White;
-        public static Brush NonTerminalSymbolBackground { get; set; } = Brushes.LightGray;
+        public static Brush TerminalSymbolBackground { get; set; } = Brushes.LightGreen;
+        public static Brush ConstantSymbolBackground { get; set; } = Brushes.LightGray;
+        public static Brush NonTerminalSymbolBackground { get; set; } = Brushes.LightBlue;
         public static int Margin { get; set; } = 2;
         public static int RoundingRadius { get; set; } = 6;
         public static int ConnectorLength { get; set; } = 20;
@@ -73,7 +74,7 @@ namespace AnglrLangExtension
 
                 dc.DrawLine (Pen, new Point (0, (height + 2 * Margin) / 2), new Point (ConnectorLength, (height + 2 * Margin) / 2));
                 dc.PushTransform (new TranslateTransform (ConnectorLength, 0));
-                dc.DrawRectangle (ConstantSymbolBackground, Pen, new Rect (0, 0, width + 2 * Margin, height + 2 * Margin));
+                dc.DrawRectangle (TerminalSymbolBackground, Pen, new Rect (0, 0, width + 2 * Margin, height + 2 * Margin));
                 dc.DrawText (text, new Point (Margin, Margin));
                 dc.Pop ();
             }
@@ -128,7 +129,7 @@ namespace AnglrLangExtension
 
                 dc.DrawLine (Pen, new Point (0, (height + 2 * Margin) / 2), new Point (ConnectorLength, (height + 2 * Margin) / 2));
                 dc.PushTransform (new TranslateTransform (ConnectorLength, 0));
-                dc.DrawRectangle (TerminalSymbolBackground, Pen, new Rect (0, 0, width + 2 * Margin, height + 2 * Margin));
+                dc.DrawRectangle (ConstantSymbolBackground, Pen, new Rect (0, 0, width + 2 * Margin, height + 2 * Margin));
                 dc.DrawText (text, new Point (Margin, Margin));
                 dc.Pop ();
             }
@@ -270,7 +271,7 @@ namespace AnglrLangExtension
             return visual;
         }
 
-        public static AnglrDrawingDictionary BuildSyntaxRulesDrawings (AnglrGetParserSyntaxRulesResult syntaxRulesResult)
+        public static AnglrDrawingDictionary BuildCanonicalSyntaxRulesDrawings (AnglrGetParserSyntaxRulesResult syntaxRulesResult)
         {
             AnglrDrawingDictionary SyntaxRuleVisuals = new AnglrDrawingDictionary ();
             foreach (var syntaxRule in syntaxRulesResult.SyntaxRuleList)
@@ -533,17 +534,28 @@ namespace AnglrLangExtension
                     break;
                 case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
                 {
-                    DrawingGroup ruleTemplate = new DrawingGroup ();
-                    using (var dc = ruleTemplate.Open ())
+                    AnglrDrawingVisual visual = null;
+                    switch (kind)
                     {
-                        dc.DrawRectangle (Brushes.LightGray, new Pen (Brushes.Black, 1),
-                                         new Rect (0, 0, 120, 40));
-                        dc.DrawText (
-                            new FormattedText ("Rule", CultureInfo.InvariantCulture,
-                                              FlowDirection.LeftToRight,
-                                              new Typeface ("Consolas"), 14, Brushes.Black, 0),
-                            new Point (10, 10));
+                        case _name_.production_kind.g__name__1:
+                            break;
+                        case _name_.production_kind.g__name__2:
+                            visual = AnglrSyntaxRuleDrawingBuilder.DrawConstantSymbol (p__name_.m__cstring_.text, -1);
+                            break;
+                        case _name_.production_kind.g__name__3:
+                        {
+                            SymbolToken p_SymbolToken = (SymbolToken) ((AppInfo) p__name_.appInfo) [AppInfoType.SymbolToken];
+                            if (p_SymbolToken == null)
+                                break;
+                            if (p_SymbolToken.declarator != (uint) AnglrClassificationType.NonTerminalName)
+                                visual = AnglrSyntaxRuleDrawingBuilder.DrawTerminalSymbol (p__name_.m__identifier_.text, -1);
+                            else
+                                visual = AnglrSyntaxRuleDrawingBuilder.DrawNonTerminalSymbol (p__name_.m__identifier_.text, -1);
+                        }
+                        break;
                     }
+                    if (visual == null)
+                        break;
                 }
                 break;
             }

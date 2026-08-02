@@ -428,7 +428,7 @@ namespace AnglrLangExtension
                 AnglrDetailViewItemWindow anglrDetailViewItemWindow = new AnglrDetailViewItemWindow ();
                 anglrDetailViewItemWindow.FileName = name;
                 anglrDetailViewItemWindow.AnglrGetParserSyntaxRuleDatas = new AnglrGetParserSyntaxRuleDataCollection (anglrGetParserSyntaxRulesResult?.SyntaxRuleList);
-                AnglrDrawingDictionary dictionary = AnglrSyntaxRuleDrawingBuilder.BuildSyntaxRulesDrawings (anglrGetParserSyntaxRulesResult);
+                AnglrDrawingDictionary dictionary = AnglrSyntaxRuleDrawingBuilder.BuildCanonicalSyntaxRulesDrawings (anglrGetParserSyntaxRulesResult);
 
                 if (magicNr.HasValue)
                     AnglrLangDictionary.AddItem (magicNr.Value, (anglrLangItem, anglrStateItem, anglrGetParserSyntaxRulesResult, dictionary));
