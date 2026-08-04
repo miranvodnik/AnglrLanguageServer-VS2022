@@ -4,8 +4,10 @@ using Anglr.Parser.SyntaxTree;
 using AnglrJsonRpcMethods;
 using AnglrLibrary;
 using AnglrLogLibrary;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -217,6 +219,49 @@ namespace AnglrLangExtension
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
+    public class AnglrGeneralizedNameVisual : AnglrDrawingVisual, IAnglrVisualCloneable, IAnglrEventHandler
+    {
+        public AnglrDrawingVisual GnameVisual { get; private set; }
+        public _cardinality_ Cardinality { get; private set; }
+        public AnglrDrawingVisual DelimiterVisual { get; private set; }
+        public _cardinality_delimiter_ CardinalityDelimiter { get; private set; }
+
+        public AnglrGeneralizedNameVisual (AnglrDrawingVisual gnameVisual, _cardinality_delimiter_ cardinalityDelimiter)
+        {
+            GnameVisual = gnameVisual;
+            CardinalityDelimiter = cardinalityDelimiter;
+            Cardinality = CardinalityDelimiter.m__cardinality_;
+            _delimiter_ delimiter = CardinalityDelimiter.m__delimiter_optional_.m__delimiter_;
+            if ((delimiter != null) && ((AppInfo) delimiter.m__anglr_nested_rule_.appInfo).TryGetValue (AppInfoType.Visual, out var visualObject))
+                DelimiterVisual = visualObject as AnglrDrawingVisual;
+        }
+
+        public void Draw ()
+        {
+            if (DelimiterVisual != null)
+            {
+            }
+            else
+            {
+            }
+        }
+
+        public AnglrDrawingVisual Clone ()
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { logger?.InfoLine ($"mouse down in non-terminal symbol nr. {Index} at ({point})"); }
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+    }
+
     public class AnglrContainerSymbolVisual : AnglrDrawingVisual, IAnglrVisualCloneable, IAnglrEventHandler
     {
         public AnglrDrawingVisual Clone ()
@@ -271,7 +316,14 @@ namespace AnglrLangExtension
             return visual;
         }
 
-        public static AnglrDrawingDictionary BuildCanonicalSyntaxRulesDrawings (AnglrGetParserSyntaxRulesResult syntaxRulesResult)
+        public static AnglrDrawingVisual DrawGeneralizedSymbol (AnglrDrawingVisual generalizedDrawing, _cardinality_delimiter_ cardinalityDelimiter)
+        {
+            AnglrGeneralizedNameVisual visual = new AnglrGeneralizedNameVisual (generalizedDrawing, cardinalityDelimiter);
+            visual.Draw ();
+            return visual;
+        }
+
+        public static AnglrDrawingDictionary BuildCanonicalSyntaxRulesDrawings (AnglrGetParserSyntaxRulesResult syntaxRulesResult, AnglrGetSyntaxTreeResult syntaxTreeResult, IAnglrLogger logger)
         {
             AnglrDrawingDictionary SyntaxRuleVisuals = new AnglrDrawingDictionary ();
             foreach (var syntaxRule in syntaxRulesResult.SyntaxRuleList)
@@ -317,14 +369,39 @@ namespace AnglrLangExtension
                     SyntaxRuleVisuals [production.ProductionNumber] = container;
                 }
             }
+            try
+            {
+                logger?.DebugLine ($"syntax tree = {syntaxTreeResult?.SyntaxTree}");
+                JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Objects,
+                    MaxDepth = null
+                };
+                _anglr_file_fragment_ anglrFileFragment = JsonConvert.DeserializeObject<_anglr_file_fragment_> (syntaxTreeResult?.SyntaxTree, settings);
+                if (anglrFileFragment != null)
+                {
+                    logger?.DebugLine ($"traverse anglr fragment");
+                    anglrFileFragment.reparent (null);
+                    AnglrVisualizer anglrVisualizer = new AnglrVisualizer (logger);
+                    anglrVisualizer.Traverse (anglrFileFragment);
+                }
+                else
+                    logger?.ErrorLine ($"null anglr fragment conversion");
+            }
+            catch (Exception e)
+            {
+                logger?.ErrorLine (e, $"visualizer failure");
+            }
             return SyntaxRuleVisuals;
         }
     }
 
     internal class AnglrVisualizer : SyntaxTreeWalker
     {
-        public AnglrVisualizer ()
+        public IAnglrLogger AnglrLogger { get; private set; }
+        public AnglrVisualizer (IAnglrLogger logger)
         {
+            AnglrLogger = logger;
             _parser_part__Event += AnglrVisualizer__parser_part__Event;
             _anglr_syntax_rule_list__Event += AnglrVisualizer__anglr_syntax_rule_list__Event;
             _anglr_syntax_rule__Event += AnglrVisualizer__anglr_syntax_rule__Event;
@@ -521,6 +598,40 @@ namespace AnglrLangExtension
                 case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
                     break;
                 case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+                    try
+                    {
+                        switch (kind)
+                        {
+                            case _g_name_.production_kind.g__g_name__1:
+                            {
+                                ((AppInfo) p__g_name_.m__name_.appInfo).TryGetValue (AppInfoType.Visual, out var visual);
+                                ((AppInfo) p__g_name_.appInfo) [AppInfoType.Visual] = visual;
+                            }
+                            break;
+                            case _g_name_.production_kind.g__g_name__2:
+                            {
+                                ((AppInfo) p__g_name_.m__anglr_nested_rule_.appInfo).TryGetValue (AppInfoType.Visual, out var visual);
+                                ((AppInfo) p__g_name_.appInfo) [AppInfoType.Visual] = visual;
+                            }
+                            break;
+                            case _g_name_.production_kind.g__g_name__3:
+                            {
+                                ((AppInfo) p__g_name_.m__g_name_.appInfo).TryGetValue (AppInfoType.Visual, out var gnameVisual);
+                                ((AppInfo) p__g_name_.m__cardinality_delimiter_.appInfo).TryGetValue (AppInfoType.Visual, out var cardinalityVisual);
+                                ((AppInfo) p__g_name_.appInfo) [AppInfoType.Visual] =
+                                    AnglrSyntaxRuleDrawingBuilder.DrawGeneralizedSymbol
+                                    (
+                                        gnameVisual as AnglrDrawingVisual,
+                                        p__g_name_.m__cardinality_delimiter_
+                                    );
+                            }
+                            break;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        AnglrLogger?.ErrorLine (e, $"Visualization of <g name> {p__g_name_.Emit (-1)} failed");
+                    }
                     break;
             }
             return true;
@@ -533,31 +644,57 @@ namespace AnglrLangExtension
                 case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
                     break;
                 case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                {
-                    AnglrDrawingVisual visual = null;
-                    switch (kind)
+                    try
                     {
-                        case _name_.production_kind.g__name__1:
-                            break;
-                        case _name_.production_kind.g__name__2:
-                            visual = AnglrSyntaxRuleDrawingBuilder.DrawConstantSymbol (p__name_.m__cstring_.text, -1);
-                            break;
-                        case _name_.production_kind.g__name__3:
+                        AnglrDrawingVisual visual = null;
+                        switch (kind)
                         {
-                            SymbolToken p_SymbolToken = (SymbolToken) ((AppInfo) p__name_.appInfo) [AppInfoType.SymbolToken];
-                            if (p_SymbolToken == null)
+                            case _name_.production_kind.g__name__1:
                                 break;
-                            if (p_SymbolToken.declarator != (uint) AnglrClassificationType.NonTerminalName)
-                                visual = AnglrSyntaxRuleDrawingBuilder.DrawTerminalSymbol (p__name_.m__identifier_.text, -1);
-                            else
-                                visual = AnglrSyntaxRuleDrawingBuilder.DrawNonTerminalSymbol (p__name_.m__identifier_.text, -1);
+                            case _name_.production_kind.g__name__2:
+                                AnglrLogger?.DebugLine ($"constant symbol name = {p__name_.m__cstring_.text}");
+                                visual = AnglrSyntaxRuleDrawingBuilder.DrawConstantSymbol (p__name_.m__cstring_.text, -1);
+                                break;
+                            case _name_.production_kind.g__name__3:
+                            {
+                                SyntaxTreeToken identifier = p__name_.m__identifier_;
+
+                                AnglrLogger?.DebugLine ($"visualize identifier: name = {identifier.text}, token = {identifier.token}, id = {identifier.id}, kind = {identifier.kind}, line = {identifier.lineno}, column = {identifier.column}");
+
+                                AppInfo appInfo = identifier.appInfo as AppInfo;
+                                if ((appInfo != null) && appInfo.TryGetValue (AppInfoType.SimpleSymbolToken, out var simpleSymbolToken))
+                                {
+                                    SimpleSymbolToken p_SymbolToken = simpleSymbolToken as SimpleSymbolToken;
+                                    if (p_SymbolToken != null)
+                                    {
+                                        if (p_SymbolToken.Declarator != (uint) AnglrClassificationType.NonTerminalName)
+                                        {
+                                            AnglrLogger?.DebugLine ($"terminal symbol name = {p_SymbolToken.Name}");
+                                            visual = AnglrSyntaxRuleDrawingBuilder.DrawTerminalSymbol (identifier.text, -1);
+                                        }
+                                        else
+                                        {
+                                            AnglrLogger?.DebugLine ($"non-terminal symbol name = {p_SymbolToken.Name}");
+                                            visual = AnglrSyntaxRuleDrawingBuilder.DrawNonTerminalSymbol (identifier.text, -1);
+                                        }
+                                    }
+                                    else
+                                        AnglrLogger?.WarnLine ($"symbol info for {identifier.text} is null");
+                                }
+                                else
+                                    AnglrLogger?.WarnLine ($"appInfo for {identifier.text} is null");
+                            }
+                            break;
                         }
-                        break;
+                        if (visual == null)
+                            break;
+                        ((AppInfo) p__name_.appInfo) [AppInfoType.Visual] = visual;
                     }
-                    if (visual == null)
-                        break;
-                }
-                break;
+                    catch (Exception e)
+                    {
+                        AnglrLogger?.ErrorLine (e, $"Visualization of <name> node {p__name_.Emit (-1)} failed");
+                    }
+                    break;
             }
             return true;
         }

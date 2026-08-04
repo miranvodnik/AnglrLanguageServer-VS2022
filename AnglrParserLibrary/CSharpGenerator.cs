@@ -32,10 +32,12 @@ namespace AnglrLibrary
     {
         Invalid,
         SymbolToken,
+        SimpleSymbolToken,
         Children,
         HtmlText,
         IndexValue,
-        NSCInfo
+        NSCInfo,
+        Visual
     }
 
     /// <summary>
@@ -2209,7 +2211,7 @@ namespace AnglrLibrary
         public static bool DisplayStartSetsFlag { get; set; } = false;
         public static bool DisplayEndSetsFlag { get; set; } = false;
 
-        private string m_generatedHeaderText = $"//{Environment.NewLine}//\tThis file was generated with ANGLR compiler{Environment.NewLine}//{Environment.NewLine}using System;{Environment.NewLine}";
+        private string m_generatedHeaderText = $"//{Environment.NewLine}//\tThis file was generated with ANGLR compiler{Environment.NewLine}//{Environment.NewLine}using System;{Environment.NewLine}using System.Runtime.Serialization;{Environment.NewLine}";
         private _anglr_file_ m_anglrFile = null;
 
         private rhsstateset m_stateset = new rhsstateset ();

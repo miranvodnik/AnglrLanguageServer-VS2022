@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <anglr file part>
 	//
 
+	[DataContract]
 	public class	_anglr_file_part_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <anglr file part>
@@ -145,12 +147,15 @@ namespace Anglr.Parser
 			children[0] = m__parser_part_ = p__parser_part_;
 		}
 
+		public _anglr_file_part_ () { }
+
 		// Copy constructor
 
 		public _anglr_file_part_ (_anglr_file_part_ p__anglr_file_part_) : base (p__anglr_file_part_.id, p__anglr_file_part_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__anglr_file_part_.appInfo;
 			switch ((production_kind) p__anglr_file_part_.kind)
 			{
 				case production_kind.g__anglr_file_part__1:
@@ -428,11 +433,11 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <anglr file part>
-		public _general_part_ m__general_part_ { get; private set; }
-		public _declaration_part_ m__declaration_part_ { get; private set; }
-		public _scanner_part_ m__scanner_part_ { get; private set; }
-		public _lexer_part_ m__lexer_part_ { get; private set; }
-		public _parser_part_ m__parser_part_ { get; private set; }
+		[DataMember (Name = "m__general_part_")] public _general_part_ m__general_part_ { get; private set; }
+		[DataMember (Name = "m__declaration_part_")] public _declaration_part_ m__declaration_part_ { get; private set; }
+		[DataMember (Name = "m__scanner_part_")] public _scanner_part_ m__scanner_part_ { get; private set; }
+		[DataMember (Name = "m__lexer_part_")] public _lexer_part_ m__lexer_part_ { get; private set; }
+		[DataMember (Name = "m__parser_part_")] public _parser_part_ m__parser_part_ { get; private set; }
 		#endregion
 
 	};

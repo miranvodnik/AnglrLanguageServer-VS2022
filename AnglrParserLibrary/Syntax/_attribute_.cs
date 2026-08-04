@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <attribute>
 	//
 
+	[DataContract]
 	public class	_attribute_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <attribute>
@@ -52,12 +54,15 @@ namespace Anglr.Parser
 			children[3] = m__right_square_bracket_ = p_token_2;
 		}
 
+		public _attribute_ () { }
+
 		// Copy constructor
 
 		public _attribute_ (_attribute_ p__attribute_) : base (p__attribute_.id, p__attribute_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__attribute_.appInfo;
 			switch ((production_kind) p__attribute_.kind)
 			{
 				case production_kind.g__attribute__1:
@@ -225,10 +230,10 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <attribute>
-		public SyntaxTreeToken m__left_square_bracket_ { get; private set; }
-		public SyntaxTreeToken m__identifier_ { get; private set; }
-		public _name_value_list_optional_ m__name_value_list_optional_ { get; private set; }
-		public SyntaxTreeToken m__right_square_bracket_ { get; private set; }
+		[DataMember (Name = "m__left_square_bracket_")] public SyntaxTreeToken m__left_square_bracket_ { get; private set; }
+		[DataMember (Name = "m__identifier_")] public SyntaxTreeToken m__identifier_ { get; private set; }
+		[DataMember (Name = "m__name_value_list_optional_")] public _name_value_list_optional_ m__name_value_list_optional_ { get; private set; }
+		[DataMember (Name = "m__right_square_bracket_")] public SyntaxTreeToken m__right_square_bracket_ { get; private set; }
 		#endregion
 
 	};

@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <anglr definition>
 	//
 
+	[DataContract]
 	public class	_anglr_definition_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <anglr definition>
@@ -121,12 +123,15 @@ namespace Anglr.Parser
 			children[0] = m__block_of_regex_definitions_ = p__block_of_regex_definitions_;
 		}
 
+		public _anglr_definition_ () { }
+
 		// Copy constructor
 
 		public _anglr_definition_ (_anglr_definition_ p__anglr_definition_) : base (p__anglr_definition_.id, p__anglr_definition_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__anglr_definition_.appInfo;
 			switch ((production_kind) p__anglr_definition_.kind)
 			{
 				case production_kind.g__anglr_definition__1:
@@ -369,10 +374,10 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <anglr definition>
-		public _single_terminal_definition_ m__single_terminal_definition_ { get; private set; }
-		public _single_regex_definition_ m__single_regex_definition_ { get; private set; }
-		public _block_of_terminal_definitions_ m__block_of_terminal_definitions_ { get; private set; }
-		public _block_of_regex_definitions_ m__block_of_regex_definitions_ { get; private set; }
+		[DataMember (Name = "m__single_terminal_definition_")] public _single_terminal_definition_ m__single_terminal_definition_ { get; private set; }
+		[DataMember (Name = "m__single_regex_definition_")] public _single_regex_definition_ m__single_regex_definition_ { get; private set; }
+		[DataMember (Name = "m__block_of_terminal_definitions_")] public _block_of_terminal_definitions_ m__block_of_terminal_definitions_ { get; private set; }
+		[DataMember (Name = "m__block_of_regex_definitions_")] public _block_of_regex_definitions_ m__block_of_regex_definitions_ { get; private set; }
 		#endregion
 
 	};

@@ -888,6 +888,17 @@ namespace AnglrLSPServerProcess
             return docCtx.AnglrGetParserMagicNumber (this, anglrGetParserMagicNumberParams);
         }
 
+        [JsonRpcMethod (AnglrMethods.AnglrGetSyntaxTreeName)]
+        public AnglrGetSyntaxTreeResult AnglrGetSyntaxTree (JToken arg)
+        {
+            Log (MessageType.Log, $"{AnglrMethods.AnglrGetSyntaxTreeName}, jtoken = {arg.ToString ()}");
+            AnglrGetSyntaxTreeParams anglrGetSyntaxTreeParams = arg.ToObject<AnglrGetSyntaxTreeParams> ();
+            AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetSyntaxTreeParams.TextDocument.Uri.AbsolutePath);
+            if (docCtx == null)
+                return null;
+            return docCtx.AnglrGetSyntaxTree (this, anglrGetSyntaxTreeParams);
+        }
+
         [JsonRpcMethod (AnglrMethods.AnglrGetParserSyntaxRuleName)]
         public AnglrGetParserSyntaxRuleResult AnglrGetParserSyntaxRule (JToken arg)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,30 +8,30 @@ using System.Threading.Tasks;
 
 namespace AnglrLibrary
 {
-	[Serializable]
-	public class SymbolToken
-	{
-		public SymbolToken (string name, uint declarator = 0, SymbolToken tag = null, SymbolToken context = null, bool correctName = true, int lineno = -1, int colnum = -1)
-		{
-			this.lineno = lineno;
-			this.colnum = colnum;
-			m_name = name;
-			m_declarator = declarator;
-			m_tag = tag;
-			m_id = ++g_id;
-			this.context = context;
+    [Serializable]
+    public class SymbolToken
+    {
+        public SymbolToken (string name, uint declarator = 0, SymbolToken tag = null, SymbolToken context = null, bool correctName = true, int lineno = -1, int colnum = -1)
+        {
+            this.lineno = lineno;
+            this.colnum = colnum;
+            m_name = name;
+            m_declarator = declarator;
+            m_tag = tag;
+            m_id = ++g_id;
+            this.context = context;
 
-			if (correctName)
-			{
-				foreach (char c in m_name)
-					m_correctName += (char.IsLetterOrDigit (c)) ? c : '_';
-			}
-			else
-				m_correctName = m_name;
-		}
+            if (correctName)
+            {
+                foreach (char c in m_name)
+                    m_correctName += (char.IsLetterOrDigit (c)) ? c : '_';
+            }
+            else
+                m_correctName = m_name;
+        }
 
-		public void Display (TextWriter textWriter, string message)
-		{
+        public void Display (TextWriter textWriter, string message)
+        {
             textWriter.WriteLine ($"{message}, name = {name}, declarator = {declarator}");
             textWriter.WriteLine ($"\tline = {lineno}, column = {colnum}");
             textWriter.WriteLine ($"\tline = {lineno}, column = {colnum}");
@@ -42,44 +43,44 @@ namespace AnglrLibrary
             foreach (SymbolReference symbolReference in m_reflist)
                 textWriter.Write ($" ({symbolReference.lineno}, {symbolReference.column})");
             textWriter.WriteLine ();
-			textWriter.Flush ();
+            textWriter.Flush ();
         }
 
         public void Dispose ()
-		{
-		}
+        {
+        }
 
-		public int hashCode
-		{
-			get
-			{
-				if (m_hashCode != -1)
-					return m_hashCode;
-				return m_hashCode = name.GetHashCode () + ((context != null) ? context.hashCode : 0);
-			}
-		}
-		private int m_hashCode = -1;
+        public int hashCode
+        {
+            get
+            {
+                if (m_hashCode != -1)
+                    return m_hashCode;
+                return m_hashCode = name.GetHashCode () + ((context != null) ? context.hashCode : 0);
+            }
+        }
+        private int m_hashCode = -1;
 
-		public int lineno { get; private set; } = -1;
-		public int colnum { get; private set; } = -1;
-		public bool displayed { get { return m_displayed; } set { m_displayed = value; } }
-		public string name { get { return m_name; } }
-		public string correctName { get { return m_correctName; } set { m_correctName = value; } }
-		public uint declarator { get { return m_declarator; } set { m_declarator = value; } }
-		public int id { get { return m_id; } set { if (value >= 0) m_id = value; } }
-		public int index { get { return m_index; } set { if (value >= 0) m_index = value; } }
-		public SymbolToken alias { get { return m_alias; } set { m_alias = value; } }
-		public SymbolToken tag { get { return m_tag; } set { m_tag = value; } }
-		public SymbolToken context { get; set; } = null;
-		public uint precedence { get { return m_precedence; } set { m_precedence = value; } }
-		public uint associativity { get { return m_associativity; } set { m_associativity = value; } }
-		public string code { get { return m_code; } set { m_code = value; } }
+        public int lineno { get; private set; } = -1;
+        public int colnum { get; private set; } = -1;
+        public bool displayed { get { return m_displayed; } set { m_displayed = value; } }
+        public string name { get { return m_name; } }
+        public string correctName { get { return m_correctName; } set { m_correctName = value; } }
+        public uint declarator { get { return m_declarator; } set { m_declarator = value; } }
+        public int id { get { return m_id; } set { if (value >= 0) m_id = value; } }
+        public int index { get { return m_index; } set { if (value >= 0) m_index = value; } }
+        public SymbolToken alias { get { return m_alias; } set { m_alias = value; } }
+        public SymbolToken tag { get { return m_tag; } set { m_tag = value; } }
+        public SymbolToken context { get; set; } = null;
+        public uint precedence { get { return m_precedence; } set { m_precedence = value; } }
+        public uint associativity { get { return m_associativity; } set { m_associativity = value; } }
+        public string code { get { return m_code; } set { m_code = value; } }
 
-		public bool AliasFlag
-		{
-			get => (m_flags & FlagAlias) != 0;
-			set => _ = value ? m_flags |= FlagAlias : m_flags &= ~FlagAlias;
-		}
+        public bool AliasFlag
+        {
+            get => (m_flags & FlagAlias) != 0;
+            set => _ = value ? m_flags |= FlagAlias : m_flags &= ~FlagAlias;
+        }
         public bool TokenFlag
         {
             get => (m_flags & FlagToken) != 0;
@@ -123,12 +124,12 @@ namespace AnglrLibrary
 
         public bool isDefined { get => TokenFlag || NonterminalFlag; }
 
-		public void AddDefInfo (int lineno, int column, int length) => m_deflist.Add (new SymbolReference (lineno - 1, column, length, false));
+        public void AddDefInfo (int lineno, int column, int length) => m_deflist.Add (new SymbolReference (lineno - 1, column, length, false));
 
-		public void AddRefInfo (int lineno, int column, int length) => m_reflist.Add (new SymbolReference (lineno - 1, column, length, true));
+        public void AddRefInfo (int lineno, int column, int length) => m_reflist.Add (new SymbolReference (lineno - 1, column, length, true));
 
-		public const uint FlagAlias = (1 << 0);
-		public const uint FlagToken = (1 << 1);
+        public const uint FlagAlias = (1 << 0);
+        public const uint FlagToken = (1 << 1);
         public const uint FlagNonterminal = (1 << 2);
         public const uint FlagIterator = (1 << 3);
         public const uint FlagIteratorAttribute = (1 << 4);
@@ -138,20 +139,32 @@ namespace AnglrLibrary
         public const uint FlagSymbolUsage = (1 << 8);
 
         string m_name;
-		uint m_declarator;
-		SymbolToken m_tag;
-		int m_id;
+        uint m_declarator;
+        SymbolToken m_tag;
+        int m_id;
 
-		private static int g_id = 0;
-		bool m_displayed = false;
-		string m_correctName = "";
-		uint m_flags = 0;
-		int m_index = -1;
-		SymbolToken m_alias = null;
-		uint m_precedence = 0;
-		uint m_associativity = 0;
-		string  m_code = "";
-		public reflist m_deflist { get; } = new reflist ();
-		public reflist m_reflist { get; } = new reflist();
-	}
+        private static int g_id = 0;
+        bool m_displayed = false;
+        string m_correctName = "";
+        uint m_flags = 0;
+        int m_index = -1;
+        SymbolToken m_alias = null;
+        uint m_precedence = 0;
+        uint m_associativity = 0;
+        string m_code = "";
+        public reflist m_deflist { get; } = new reflist ();
+        public reflist m_reflist { get; } = new reflist ();
+    }
+
+    [DataContract]
+    public class SimpleSymbolToken
+    {
+        [DataMember (Name = "lineno")] public int Lineno { get; set; }
+        [DataMember (Name = "column")] public int Colnum { get; set; }
+        [DataMember (Name = "name")] public string Name { get; set; }
+        [DataMember (Name = "correctName")] public string CorrectName { get; set; }
+        [DataMember (Name = "declarator")] public uint Declarator { get; set; }
+        [DataMember (Name = "id")] public int Id { get; set; }
+        [DataMember (Name = "index")] public int Index { get; set; }
+    }
 }

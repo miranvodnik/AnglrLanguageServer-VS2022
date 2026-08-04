@@ -113,6 +113,15 @@ namespace AnglrLangExtension
                     );
         }
 
+        public AnglrGetSyntaxTreeResult InvokeGetSyntaxTree (AnglrGetSyntaxTreeParams anglrGetSyntaxTreeParams)
+        {
+            return
+                    ThreadHelper.JoinableTaskFactory.Run
+                    (
+                        () => AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetSyntaxTreeResult> (AnglrMethods.AnglrGetSyntaxTreeName, anglrGetSyntaxTreeParams)
+                    );
+        }
+
         public AnglrGetParserSyntaxRuleResult InvokeGetParserSyntaxRule (AnglrGetParserSyntaxRuleParams anglrGetParserSyntaxRuleParams)
         {
             return
@@ -262,6 +271,7 @@ namespace AnglrLangExtension
         AnglrGetParserStatesInfoResult InvokeGetParserStatesInfo (AnglrGetParserStatesInfoParams request);
         AnglrGetParserStateLinkResult InvokeGetParserStateLink (AnglrGetParserStateLinkParams request);
         AnglrGetParserMagicNumberResult InvokeGetParserMagicNumber (AnglrGetParserMagicNumberParams request);
+        AnglrGetSyntaxTreeResult InvokeGetSyntaxTree (AnglrGetSyntaxTreeParams request);
         AnglrGetParserSyntaxRuleResult InvokeGetParserSyntaxRule (AnglrGetParserSyntaxRuleParams request);
         AnglrGetParserSyntaxRulesResult InvokeGetParserSyntaxRules (AnglrGetParserSyntaxRulesParams request);
         AnglrGetItemNavigationInfoResponse InvokeGetItemNavigationInfo (AnglrGetItemNavigationInfoRequest request);

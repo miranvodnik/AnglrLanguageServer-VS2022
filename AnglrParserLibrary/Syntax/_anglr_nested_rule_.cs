@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <anglr nested rule>
 	//
 
+	[DataContract]
 	public class	_anglr_nested_rule_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <anglr nested rule>
@@ -51,12 +53,15 @@ namespace Anglr.Parser
 			children[1] = m__anglr_syntax_production_list_ = p__anglr_syntax_production_list_;
 		}
 
+		public _anglr_nested_rule_ () { }
+
 		// Copy constructor
 
 		public _anglr_nested_rule_ (_anglr_nested_rule_ p__anglr_nested_rule_) : base (p__anglr_nested_rule_.id, p__anglr_nested_rule_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__anglr_nested_rule_.appInfo;
 			switch ((production_kind) p__anglr_nested_rule_.kind)
 			{
 				case production_kind.g__anglr_nested_rule__1:
@@ -204,8 +209,8 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <anglr nested rule>
-		public _anglr_syntax_production_list_name_optional_ m__anglr_syntax_production_list_name_optional_ { get; private set; }
-		public _anglr_syntax_production_list_ m__anglr_syntax_production_list_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_list_name_optional_")] public _anglr_syntax_production_list_name_optional_ m__anglr_syntax_production_list_name_optional_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_list_")] public _anglr_syntax_production_list_ m__anglr_syntax_production_list_ { get; private set; }
 		#endregion
 
 	};

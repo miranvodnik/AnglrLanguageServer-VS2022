@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <skip action>
 	//
 
+	[DataContract]
 	public class	_skip_action_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <skip action>
@@ -48,12 +50,15 @@ namespace Anglr.Parser
 			children[0] = m__skip_ = p_token;
 		}
 
+		public _skip_action_ () { }
+
 		// Copy constructor
 
 		public _skip_action_ (_skip_action_ p__skip_action_) : base (p__skip_action_.id, p__skip_action_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__skip_action_.appInfo;
 			switch ((production_kind) p__skip_action_.kind)
 			{
 				case production_kind.g__skip_action__1:
@@ -191,7 +196,7 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <skip action>
-		public SyntaxTreeToken m__skip_ { get; private set; }
+		[DataMember (Name = "m__skip_")] public SyntaxTreeToken m__skip_ { get; private set; }
 		#endregion
 
 	};

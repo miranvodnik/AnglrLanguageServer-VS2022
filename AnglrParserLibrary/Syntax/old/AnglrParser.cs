@@ -49,13 +49,13 @@ namespace Anglr.Parser
 		public string [] GetStackText (int stackNr) => stackSet.GetStackText (stackNr);
 		public stackset parserStacks => stackSet;
 
-        public bool FragmentParser { get; set; } = false;
+		public bool FragmentParser { get; set; } = false;
 		public int ProductionID { get; set; } = 0;
 		public int InitialState { get; set; } = 0;
 		public int LastToken { get; set; } = 0;
 		public string LastTokenName { get; set; } = "";
 #if ANGLR_DEBUGGER
-		public AnglrDebuggerClientBridge AnglrDebugBridgeObj { get; private set; }
+		public AnglrDebuggerServerBridge AnglrDebugBridgeObj { get; private set; }
 #endif
 
 		public AnglrParser (string fragmentName = null, IAnglrLogger anglrLogger = null) : base ()
@@ -99,7 +99,7 @@ namespace Anglr.Parser
 #if ANGLR_DEBUGGER
 		private void CreateDebuggerConnection ()
 		{
-			this.AnglrDebugBridgeObj = new AnglrDebuggerClientBridge (this);
+			this.AnglrDebugBridgeObj = new AnglrDebuggerServerBridge (this);
 		}
 		private void DisposeDebuggerConnection ()
 		{
@@ -3649,6 +3649,10 @@ namespace Anglr.Parser
 	{
 		static void Main (string [] args)
 		{
+			// global flags should be set before AnglrParser object creation
+			AnglrParser.createParseTree = true;
+			AnglrParser.loopDetection = true;
+
 			// parse every source file named in command line
 			foreach (string arg in args)
 			{
@@ -3664,14 +3668,17 @@ namespace Anglr.Parser
 
 
 				// invoke parser
-				AnglrParser.createParseTree = true;
 				if (parser.parse (lexer) != 0)
 					continue;	// errors, skip current file
 
 				// visit every node of every syntax tree generated for current source file
 				foreach (var syntaxTree in parser.parseList)
 				{
+					// establish clear parent-child relationships
+					syntaxTree.reparent (null);
+					// create walker object
 					AnglrParser_TEST testWalker = new AnglrParser_TEST ();
+					// visit all nodes of syntax tree
 					testWalker.Traverse (syntaxTree as _anglr_file_fragment_);
 				}
 			}

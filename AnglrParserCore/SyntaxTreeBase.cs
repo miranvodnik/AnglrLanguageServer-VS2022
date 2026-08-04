@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 using System.Collections.Generic;
 using Anglr.Parser.Walker;
 
@@ -22,8 +23,11 @@ namespace Anglr.Parser.SyntaxTree
         private string [] m_errorStrings;
     }
 
+    [DataContract]
     public abstract class SyntaxTreeBase : IDisposable
     {
+        public SyntaxTreeBase () { }
+
         public SyntaxTreeBase (uint id, uint kind)
         {
             ++g_created;
@@ -53,13 +57,13 @@ namespace Anglr.Parser.SyntaxTree
             return t;
         }
 
-        public uint id { get; private set; }
-        public uint kind { get; set; }
+        [DataMember (Name = "id")] public uint id { get; private set; }
+        [DataMember (Name = "kind")] public uint kind { get; set; }
         public bool locked { get; private set; }
         public uint turn { get; private set; }
         public SyntaxTreeBase parent { get; set; }
         public SyntaxTreeBase [] children { get; set; }
-        public object appInfo { get; set; }
+        [DataMember (Name = "appInfo")] public object appInfo { get; set; }
 
         public void dolock () => _ = enableLocking && (locked = true);
         public void unlock () => _ = enableLocking && (locked = false);
@@ -91,8 +95,10 @@ namespace Anglr.Parser.SyntaxTree
         protected synlist m_synlist = new synlist ();
     }
 
+    [DataContract]
     public class SyntaxTreeToken : SyntaxTreeBase
     {
+        public SyntaxTreeToken () { }
         public SyntaxTreeToken (int token, int lineno, int column, string text) : base (0, 0)
         {
             ++g_tokens;
@@ -112,15 +118,16 @@ namespace Anglr.Parser.SyntaxTree
             this.column = p_token.column;
             this.text = p_token.text;
             children = Array.Empty<SyntaxTreeBase> ();
+            appInfo = p_token.appInfo;
         }
         public new void Dispose ()
         {
             --g_counter;
         }
-        public int token { get; private set; }
-        public int lineno { get; private set; }
-        public int column { get; private set; }
-        public string text { get; set; }
+        [DataMember (Name = "token")] public int token { get; private set; }
+        [DataMember (Name = "lineno")] public int lineno { get; private set; }
+        [DataMember (Name = "column")] public int column { get; private set; }
+        [DataMember (Name = "text")] public string text { get; set; }
         public new bool checkInclusion (SyntaxTreeBase element) => element == this;
         public override string Emit (int depth) => (depth != 0) ? text : "";
         public override string EmitProductionTree (int depth) => "";

@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <single terminal definition>
 	//
 
+	[DataContract]
 	public class	_single_terminal_definition_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <single terminal definition>
@@ -50,12 +52,15 @@ namespace Anglr.Parser
 			children[1] = m__terminal_definition_ = p__terminal_definition_;
 		}
 
+		public _single_terminal_definition_ () { }
+
 		// Copy constructor
 
 		public _single_terminal_definition_ (_single_terminal_definition_ p__single_terminal_definition_) : base (p__single_terminal_definition_.id, p__single_terminal_definition_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__single_terminal_definition_.appInfo;
 			switch ((production_kind) p__single_terminal_definition_.kind)
 			{
 				case production_kind.g__single_terminal_definition__1:
@@ -203,8 +208,8 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <single terminal definition>
-		public SyntaxTreeToken m__terminal_ { get; private set; }
-		public _terminal_definition_ m__terminal_definition_ { get; private set; }
+		[DataMember (Name = "m__terminal_")] public SyntaxTreeToken m__terminal_ { get; private set; }
+		[DataMember (Name = "m__terminal_definition_")] public _terminal_definition_ m__terminal_definition_ { get; private set; }
 		#endregion
 
 	};

@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <attribute list>
 	//
 
+	[DataContract]
 	public class	_attribute_list_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <attribute list>
@@ -75,12 +77,15 @@ namespace Anglr.Parser
 			children[1] = m__attribute_ = p__attribute_;
 		}
 
+		public _attribute_list_ () { }
+
 		// Copy constructor
 
 		public _attribute_list_ (_attribute_list_ p__attribute_list_) : base (p__attribute_list_.id, p__attribute_list_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__attribute_list_.appInfo;
 			switch ((production_kind) p__attribute_list_.kind)
 			{
 				case production_kind.g__attribute_list__1:
@@ -280,8 +285,8 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <attribute list>
-		public _attribute_ m__attribute_ { get; private set; }
-		public _attribute_list_ m__attribute_list_ { get; private set; }
+		[DataMember (Name = "m__attribute_")] public _attribute_ m__attribute_ { get; private set; }
+		[DataMember (Name = "m__attribute_list_")] public _attribute_list_ m__attribute_list_ { get; private set; }
 		#endregion
 
 	};

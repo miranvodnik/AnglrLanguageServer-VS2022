@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <name value list optional>
 	//
 
+	[DataContract]
 	public class	_name_value_list_optional_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <name value list optional>
@@ -77,6 +79,7 @@ namespace Anglr.Parser
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__name_value_list_optional_.appInfo;
 			switch ((production_kind) p__name_value_list_optional_.kind)
 			{
 				case production_kind.g__name_value_list_optional__1:
@@ -241,7 +244,7 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <name value list optional>
-		public _name_value_list_ m__name_value_list_ { get; private set; }
+		[DataMember (Name = "m__name_value_list_")] public _name_value_list_ m__name_value_list_ { get; private set; }
 		#endregion
 
 	};

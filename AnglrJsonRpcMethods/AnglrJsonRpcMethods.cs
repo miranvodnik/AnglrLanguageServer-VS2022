@@ -305,6 +305,26 @@ namespace AnglrJsonRpcMethods
     }
 
     /// <summary>
+    /// AnglrGetSyntaxTree Mehod Parameters
+    /// </summary>
+    [Obfuscation (Exclude = true)]
+    [DataContract]
+    public class AnglrGetSyntaxTreeParams
+    {
+        [DataMember (Name = "textDocument")] public TextDocumentIdentifier TextDocument { get; set; }
+    }
+
+    /// <summary>
+    /// AnglrGetSyntaxTree Method Results
+    /// </summary>
+    [Obfuscation (Exclude = true)]
+    [DataContract]
+    public class AnglrGetSyntaxTreeResult
+    {
+        [DataMember (Name = "syntaxTree")] public string SyntaxTree { get; set; }
+    }
+
+    /// <summary>
     /// AnglrGetParserSyntaxRule Mehod Parameters
     /// </summary>
     [Obfuscation (Exclude = true)]
@@ -427,6 +447,7 @@ namespace AnglrJsonRpcMethods
         public const string AnglrGetParserSyntaxRuleName = "AnglrGetParserSyntaxRule";
         public const string AnglrGetParserSyntaxRulesName = "AnglrGetParserSyntaxRules";
         public const string AnglrGetParserMagicNumberName = "AnglrGetParserMagicNumber";
+        public const string AnglrGetSyntaxTreeName = "AnglrGetSyntaxTree";
         public const string AnglrGetItemNavigationInfoName = "AnglrGetItemNavigationInfo";
         public const string AnglrGetCompileFragmentName = "AnglrGetCompileFragment";
         public const string AnglrLspLogMessageName = "AnglrLspLogMessage";
@@ -447,6 +468,8 @@ namespace AnglrJsonRpcMethods
             new LspRequest<AnglrGetParserStateLinkParams, AnglrGetParserStateLinkResult> (AnglrGetParserStateLinkName);
         public static readonly LspRequest<AnglrGetParserMagicNumberParams, AnglrGetParserMagicNumberResult> AnglrGetParserMagicNumber =
             new LspRequest<AnglrGetParserMagicNumberParams, AnglrGetParserMagicNumberResult> (AnglrGetParserMagicNumberName);
+        public static readonly LspRequest<AnglrGetSyntaxTreeParams, AnglrGetSyntaxTreeResult> AnglrGetSyntaxTree =
+            new LspRequest<AnglrGetSyntaxTreeParams, AnglrGetSyntaxTreeResult> (AnglrGetSyntaxTreeName);
         public static readonly LspRequest<AnglrGetParserSyntaxRuleParams, AnglrGetParserSyntaxRuleResult> AnglrGetParserSyntaxRule =
             new LspRequest<AnglrGetParserSyntaxRuleParams, AnglrGetParserSyntaxRuleResult> (AnglrGetParserSyntaxRuleName);
         public static readonly LspRequest<AnglrGetParserSyntaxRulesParams, AnglrGetParserSyntaxRulesResult> AnglrGetParserSyntaxRules =

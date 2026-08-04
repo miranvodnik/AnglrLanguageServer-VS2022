@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <block of regex definitions>
 	//
 
+	[DataContract]
 	public class	_block_of_regex_definitions_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <block of regex definitions>
@@ -52,12 +54,15 @@ namespace Anglr.Parser
 			children[3] = m__right_curly_bracket_ = p_token_2;
 		}
 
+		public _block_of_regex_definitions_ () { }
+
 		// Copy constructor
 
 		public _block_of_regex_definitions_ (_block_of_regex_definitions_ p__block_of_regex_definitions_) : base (p__block_of_regex_definitions_.id, p__block_of_regex_definitions_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__block_of_regex_definitions_.appInfo;
 			switch ((production_kind) p__block_of_regex_definitions_.kind)
 			{
 				case production_kind.g__block_of_regex_definitions__1:
@@ -225,10 +230,10 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <block of regex definitions>
-		public SyntaxTreeToken m__regex_ { get; private set; }
-		public SyntaxTreeToken m__left_curly_bracket_ { get; private set; }
-		public _block_regex_definitions_optional_ m__block_regex_definitions_optional_ { get; private set; }
-		public SyntaxTreeToken m__right_curly_bracket_ { get; private set; }
+		[DataMember (Name = "m__regex_")] public SyntaxTreeToken m__regex_ { get; private set; }
+		[DataMember (Name = "m__left_curly_bracket_")] public SyntaxTreeToken m__left_curly_bracket_ { get; private set; }
+		[DataMember (Name = "m__block_regex_definitions_optional_")] public _block_regex_definitions_optional_ m__block_regex_definitions_optional_ { get; private set; }
+		[DataMember (Name = "m__right_curly_bracket_")] public SyntaxTreeToken m__right_curly_bracket_ { get; private set; }
 		#endregion
 
 	};

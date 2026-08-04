@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <priority assoc specification>
 	//
 
+	[DataContract]
 	public class	_priority_assoc_specification_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <priority assoc specification>
@@ -179,12 +181,15 @@ namespace Anglr.Parser
 			children[2] = m__priority_specification_ = p__priority_specification_;
 		}
 
+		public _priority_assoc_specification_ () { }
+
 		// Copy constructor
 
 		public _priority_assoc_specification_ (_priority_assoc_specification_ p__priority_assoc_specification_) : base (p__priority_assoc_specification_.id, p__priority_assoc_specification_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__priority_assoc_specification_.appInfo;
 			switch ((production_kind) p__priority_assoc_specification_.kind)
 			{
 				case production_kind.g__priority_assoc_specification__1:
@@ -521,9 +526,9 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <priority assoc specification>
-		public _priority_specification_ m__priority_specification_ { get; private set; }
-		public _associativity_specification_ m__associativity_specification_ { get; private set; }
-		public SyntaxTreeToken m__comma_ { get; private set; }
+		[DataMember (Name = "m__priority_specification_")] public _priority_specification_ m__priority_specification_ { get; private set; }
+		[DataMember (Name = "m__associativity_specification_")] public _associativity_specification_ m__associativity_specification_ { get; private set; }
+		[DataMember (Name = "m__comma_")] public SyntaxTreeToken m__comma_ { get; private set; }
 		#endregion
 
 	};

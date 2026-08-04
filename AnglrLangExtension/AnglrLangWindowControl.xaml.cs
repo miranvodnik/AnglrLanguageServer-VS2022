@@ -422,13 +422,24 @@ namespace AnglrLangExtension
                     }
                 );
 
+                AnglrGetSyntaxTreeResult anglrGetSyntaxTreeResult = anglrLangService.InvokeGetSyntaxTree
+                (
+                    new AnglrGetSyntaxTreeParams ()
+                    {
+                        TextDocument = new TextDocumentIdentifier ()
+                        {
+                            Uri = new Uri (name)
+                        }
+                    }
+                );
+
                 int _magicNr = magicNr.HasValue ? magicNr.Value : 0;
                 AnglrLangItem anglrLangItem = new AnglrLangRootItem (null, (int) ProductionID.__anglr_file__ID, name, $"{(int) ProductionID.__anglr_file__ID}-1", _magicNr);
                 AnglrStateItem anglrStateItem = new AnglrStateRootItem (null, true, name, 0, 0, new TreeViewItemSet (), _magicNr);
                 AnglrDetailViewItemWindow anglrDetailViewItemWindow = new AnglrDetailViewItemWindow ();
                 anglrDetailViewItemWindow.FileName = name;
                 anglrDetailViewItemWindow.AnglrGetParserSyntaxRuleDatas = new AnglrGetParserSyntaxRuleDataCollection (anglrGetParserSyntaxRulesResult?.SyntaxRuleList);
-                AnglrDrawingDictionary dictionary = AnglrSyntaxRuleDrawingBuilder.BuildCanonicalSyntaxRulesDrawings (anglrGetParserSyntaxRulesResult);
+                AnglrDrawingDictionary dictionary = AnglrSyntaxRuleDrawingBuilder.BuildCanonicalSyntaxRulesDrawings (anglrGetParserSyntaxRulesResult, anglrGetSyntaxTreeResult, logger);
 
                 if (magicNr.HasValue)
                     AnglrLangDictionary.AddItem (magicNr.Value, (anglrLangItem, anglrStateItem, anglrGetParserSyntaxRulesResult, dictionary));

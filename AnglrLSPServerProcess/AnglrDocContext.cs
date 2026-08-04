@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.VisualStudio.LanguageServer.Protocol;
@@ -13,14 +12,13 @@ using AnglrLibrary;
 using AnglrJsonRpcMethods;
 using Anglr.Declarations;
 using System.Data.Common;
-using Newtonsoft.Json;
 using System.Xml.Linq;
 using System.Security.Cryptography;
 using System.Net;
 using System.IO;
 using AnglrParserLibrary;
-using Newtonsoft.Json.Linq;
 using AnglrLogLibrary;
+using Newtonsoft.Json;
 
 namespace AnglrLSPServerProcess
 {
@@ -47,6 +45,57 @@ namespace AnglrLSPServerProcess
     internal class sortedHierarchyItems : SortedSet<AnglrGetGetHierarchyItemData>
     {
         public sortedHierarchyItems () : base (new CmpHierarchyItem ()) { }
+    }
+
+    internal class AnglrDocSyntaxTree : SyntaxTreeWalker
+    {
+        public IAnglrLogger Logger { get; private set; }
+        public AnglrDocSyntaxTree (IAnglrLogger logger)
+        {
+            Common_Event += AnglrDocSyntaxTree_Common_Event;
+            Logger = logger;
+        }
+
+        private bool AnglrDocSyntaxTree_Common_Event (SyntaxTreeCallbackReason reason, int kind, SyntaxTreeBase p_node)
+        {
+            if (reason != SyntaxTreeCallbackReason.TraversalPrologueCallbackReason)
+                return true;
+            SimpleSymbolToken token = null;
+            if (p_node.appInfo != null)
+            {
+                AppInfo appInfo = p_node.appInfo as AppInfo;
+                if (appInfo != null)
+                {
+                    if (appInfo.TryGetValue (AppInfoType.SymbolToken, out var symbolToken))
+                    {
+                        SymbolToken symbol = symbolToken as SymbolToken;
+                        if (symbol != null)
+                        {
+                            Logger?.DebugLine ($"simplify symbol {symbol.name}");
+                            token = new SimpleSymbolToken ()
+                            {
+                                Lineno = symbol.lineno,
+                                Colnum = symbol.colnum,
+                                Name = symbol.name,
+                                CorrectName = symbol.correctName,
+                                Declarator = symbol.declarator,
+                                Id = symbol.id,
+                                Index = symbol.index,
+                            };
+                        }
+                    }
+                }
+            }
+            p_node.appInfo = new AppInfo ();
+            if (token != null)
+                ((AppInfo) p_node.appInfo) [AppInfoType.SimpleSymbolToken] = token;
+            return true;
+        }
+
+        public void Simplify (SyntaxTreeBase tree)
+        {
+            tree.InvokeTraverseCommon (this);
+        }
     }
 
     internal class AnglrDocContext : SyntaxTreeWalker, IDisposable
@@ -149,7 +198,7 @@ namespace AnglrLSPServerProcess
             PublishDiagnosticParams publishDiagnosticParams = new PublishDiagnosticParams ();
             publishDiagnosticParams.Diagnostics = diagnostics;
             publishDiagnosticParams.Uri = uri;
-            Logger?.DebugLine ($"PublishDiagnostics: {JsonConvert.SerializeObject (publishDiagnosticParams)}");
+            //Logger?.DebugLine ($"PublishDiagnostics: {JsonConvert.SerializeObject (publishDiagnosticParams)}");
             AnglrLSPTarget.Notify (Methods.TextDocumentPublishDiagnosticsName, publishDiagnosticParams);
         }
 
@@ -751,7 +800,7 @@ namespace AnglrLSPServerProcess
                 {
 
                 }
-                Logger?.DebugLine ($"AnglrGetClassificationSpansResult = {JsonConvert.SerializeObject (anglrGetClassificationSpansResult)}");
+                //Logger?.DebugLine ($"AnglrGetClassificationSpansResult = {JsonConvert.SerializeObject (anglrGetClassificationSpansResult)}");
                 return anglrGetClassificationSpansResult;
             });
         }
@@ -782,7 +831,7 @@ namespace AnglrLSPServerProcess
                     result.Items [index++] = anglrGetGetHierarchyItemData;
                 }
                 Logger?.DebugLine ($"SYNTAX TREE NODE = {syntaxTreeNode.node.Emit (-1)}");
-                Logger?.DebugLine ($"AnglrGetGetHierarchyItemResult = {JsonConvert.SerializeObject (result)}");
+                //Logger?.DebugLine ($"AnglrGetGetHierarchyItemResult = {JsonConvert.SerializeObject (result)}");
                 return result;
             }
             catch (Exception e)
@@ -818,7 +867,7 @@ namespace AnglrLSPServerProcess
                     result.Items [index++] = anglrGetDictionaryItemData;
                 }
                 Logger?.DebugLine ($"SYNTAX TREE NODE = {syntaxTreeNode.node.Emit (-1)}");
-                Logger?.DebugLine ($"AnglrGetDictionaryItemResult = {JsonConvert.SerializeObject (result)}");
+                //Logger?.DebugLine ($"AnglrGetDictionaryItemResult = {JsonConvert.SerializeObject (result)}");
                 return result;
             }
             catch (Exception e)
@@ -874,6 +923,28 @@ namespace AnglrLSPServerProcess
             return new AnglrGetParserMagicNumberResult ()
             {
                 MagicNumber = anglrParserStatesGenerator?.magicNr
+            };
+        }
+
+        public AnglrGetSyntaxTreeResult AnglrGetSyntaxTree (AnglrLSPTarget anglrLSPTarget, AnglrGetSyntaxTreeParams anglrGetSyntaxTreeParams)
+        {
+            string syntaxTree = null;
+            foreach (var node in syntaxTrees)
+            {
+                JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Objects
+                };
+                SyntaxTreeBase tree = node.Clone ();
+                AnglrDocSyntaxTree anglrDocSyntaxTree = new AnglrDocSyntaxTree (Logger);
+                anglrDocSyntaxTree.Simplify (tree);
+                syntaxTree = JsonConvert.SerializeObject (tree, settings);
+            }
+            if (syntaxTree != null)
+                Logger.DebugLine ($"serialized node = {syntaxTree}");
+            return new AnglrGetSyntaxTreeResult ()
+            {
+                SyntaxTree = syntaxTree
             };
         }
 
@@ -1216,7 +1287,7 @@ namespace AnglrLSPServerProcess
                 }
             }
 
-            Logger?.DebugLine ($"AnglrGetParserStateItemResult = {JsonConvert.SerializeObject (result)}");
+            //Logger?.DebugLine ($"AnglrGetParserStateItemResult = {JsonConvert.SerializeObject (result)}");
             return result;
         }
 
@@ -1337,7 +1408,7 @@ namespace AnglrLSPServerProcess
         private void CheckStateConflicts (AnglrParserStatesGenerator anglrParserStatesGenerator)
         {
             AnglrGetParserSyntaxRulesResult anglrGetParserSyntaxRulesResult = CreateAnglrGetParserSyntaxRulesResult (anglrParserStatesGenerator);
-            Dictionary<int, AnglrGetParserSyntaxRuleData> keyValuePairs = anglrGetParserSyntaxRulesResult.SyntaxRuleList.ToDictionary (x=>x.SyntaxRuleName.Id);
+            Dictionary<int, AnglrGetParserSyntaxRuleData> keyValuePairs = anglrGetParserSyntaxRulesResult.SyntaxRuleList.ToDictionary (x => x.SyntaxRuleName.Id);
             this.anglrParserStatesGenerator.InvokeStatesIterator
             (
                 (state) =>

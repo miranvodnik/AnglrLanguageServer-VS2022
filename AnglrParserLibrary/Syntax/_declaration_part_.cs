@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <declaration part>
 	//
 
+	[DataContract]
 	public class	_declaration_part_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <declaration part>
@@ -55,12 +57,15 @@ namespace Anglr.Parser
 			children[5] = m__right_part_bracket_ = p_token_3;
 		}
 
+		public _declaration_part_ () { }
+
 		// Copy constructor
 
 		public _declaration_part_ (_declaration_part_ p__declaration_part_) : base (p__declaration_part_.id, p__declaration_part_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__declaration_part_.appInfo;
 			switch ((production_kind) p__declaration_part_.kind)
 			{
 				case production_kind.g__declaration_part__1:
@@ -248,12 +253,12 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <declaration part>
-		public _attribute_list_optional_ m__attribute_list_optional_ { get; private set; }
-		public SyntaxTreeToken m__declarations_ { get; private set; }
-		public SyntaxTreeToken m__identifier_ { get; private set; }
-		public SyntaxTreeToken m__left_part_bracket_ { get; private set; }
-		public _anglr_definition_list_optional_ m__anglr_definition_list_optional_ { get; private set; }
-		public SyntaxTreeToken m__right_part_bracket_ { get; private set; }
+		[DataMember (Name = "m__attribute_list_optional_")] public _attribute_list_optional_ m__attribute_list_optional_ { get; private set; }
+		[DataMember (Name = "m__declarations_")] public SyntaxTreeToken m__declarations_ { get; private set; }
+		[DataMember (Name = "m__identifier_")] public SyntaxTreeToken m__identifier_ { get; private set; }
+		[DataMember (Name = "m__left_part_bracket_")] public SyntaxTreeToken m__left_part_bracket_ { get; private set; }
+		[DataMember (Name = "m__anglr_definition_list_optional_")] public _anglr_definition_list_optional_ m__anglr_definition_list_optional_ { get; private set; }
+		[DataMember (Name = "m__right_part_bracket_")] public SyntaxTreeToken m__right_part_bracket_ { get; private set; }
 		#endregion
 
 	};

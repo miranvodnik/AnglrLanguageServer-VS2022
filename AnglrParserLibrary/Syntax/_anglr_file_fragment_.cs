@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <anglr file fragment>
 	//
 
+	[DataContract]
 	public class	_anglr_file_fragment_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <anglr file fragment>
@@ -1725,12 +1727,15 @@ namespace Anglr.Parser
 			children[1] = m__number_optional_ = p__number_optional_;
 		}
 
+		public _anglr_file_fragment_ () { }
+
 		// Copy constructor
 
 		public _anglr_file_fragment_ (_anglr_file_fragment_ p__anglr_file_fragment_) : base (p__anglr_file_fragment_.id, p__anglr_file_fragment_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__anglr_file_fragment_.appInfo;
 			switch ((production_kind) p__anglr_file_fragment_.kind)
 			{
 				case production_kind.g__anglr_file_fragment__1:
@@ -4893,142 +4898,142 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <anglr file fragment>
-		public SyntaxTreeToken m__attribute_list_terminal_ { get; private set; }
-		public _attribute_list_ m__attribute_list_ { get; private set; }
-		public SyntaxTreeToken m__attribute_terminal_ { get; private set; }
-		public _attribute_ m__attribute_ { get; private set; }
-		public SyntaxTreeToken m__name_value_list_terminal_ { get; private set; }
-		public _name_value_list_ m__name_value_list_ { get; private set; }
-		public SyntaxTreeToken m__name_value_pair_terminal_ { get; private set; }
-		public _name_value_pair_ m__name_value_pair_ { get; private set; }
-		public SyntaxTreeToken m__anglr_file_terminal_ { get; private set; }
-		public _anglr_file_ m__anglr_file_ { get; private set; }
-		public SyntaxTreeToken m__anglr_file_part_list_terminal_ { get; private set; }
-		public _anglr_file_part_list_ m__anglr_file_part_list_ { get; private set; }
-		public SyntaxTreeToken m__anglr_file_part_terminal_ { get; private set; }
-		public _anglr_file_part_ m__anglr_file_part_ { get; private set; }
-		public SyntaxTreeToken m__general_part_terminal_ { get; private set; }
-		public _general_part_ m__general_part_ { get; private set; }
-		public SyntaxTreeToken m__declaration_part_terminal_ { get; private set; }
-		public _declaration_part_ m__declaration_part_ { get; private set; }
-		public SyntaxTreeToken m__anglr_definition_list_terminal_ { get; private set; }
-		public _anglr_definition_list_ m__anglr_definition_list_ { get; private set; }
-		public SyntaxTreeToken m__anglr_definition_with_attribute_list_terminal_ { get; private set; }
-		public _anglr_definition_with_attribute_ m__anglr_definition_with_attribute_ { get; private set; }
-		public SyntaxTreeToken m__anglr_definition_terminal_ { get; private set; }
-		public _anglr_definition_ m__anglr_definition_ { get; private set; }
-		public SyntaxTreeToken m__single_terminal_definition_terminal_ { get; private set; }
-		public _single_terminal_definition_ m__single_terminal_definition_ { get; private set; }
-		public SyntaxTreeToken m__single_regex_definition_terminal_ { get; private set; }
-		public _single_regex_definition_ m__single_regex_definition_ { get; private set; }
-		public SyntaxTreeToken m__block_of_terminal_definitions_terminal_ { get; private set; }
-		public _block_of_terminal_definitions_ m__block_of_terminal_definitions_ { get; private set; }
-		public SyntaxTreeToken m__block_of_regex_definitions_terminal_ { get; private set; }
-		public _block_of_regex_definitions_ m__block_of_regex_definitions_ { get; private set; }
-		public SyntaxTreeToken m__terminal_definition_terminal_ { get; private set; }
-		public _terminal_definition_ m__terminal_definition_ { get; private set; }
-		public SyntaxTreeToken m__regex_definition_terminal_ { get; private set; }
-		public _regex_definition_ m__regex_definition_ { get; private set; }
-		public SyntaxTreeToken m__block_terminal_definitions_terminal_ { get; private set; }
-		public _block_terminal_definitions_ m__block_terminal_definitions_ { get; private set; }
-		public SyntaxTreeToken m__block_terminal_definition_terminal_ { get; private set; }
-		public _block_terminal_definition_ m__block_terminal_definition_ { get; private set; }
-		public SyntaxTreeToken m__block_regex_definitions_terminal_ { get; private set; }
-		public _block_regex_definitions_ m__block_regex_definitions_ { get; private set; }
-		public SyntaxTreeToken m__block_regex_definition_terminal_ { get; private set; }
-		public _block_regex_definition_ m__block_regex_definition_ { get; private set; }
-		public SyntaxTreeToken m__scanner_part_terminal_ { get; private set; }
-		public _scanner_part_ m__scanner_part_ { get; private set; }
-		public SyntaxTreeToken m__regular_expression_list_terminal_ { get; private set; }
-		public _regular_expression_list_ m__regular_expression_list_ { get; private set; }
-		public SyntaxTreeToken m__regular_expression_usage_terminal_ { get; private set; }
-		public _regular_expression_usage_ m__regular_expression_usage_ { get; private set; }
-		public SyntaxTreeToken m__actions_terminal_ { get; private set; }
-		public _actions_ m__actions_ { get; private set; }
-		public SyntaxTreeToken m__action_terminal_ { get; private set; }
-		public _action_ m__action_ { get; private set; }
-		public SyntaxTreeToken m__skip_action_terminal_ { get; private set; }
-		public _skip_action_ m__skip_action_ { get; private set; }
-		public SyntaxTreeToken m__terminal_action_terminal_ { get; private set; }
-		public _terminal_action_ m__terminal_action_ { get; private set; }
-		public SyntaxTreeToken m__event_action_terminal_ { get; private set; }
-		public _event_action_ m__event_action_ { get; private set; }
-		public SyntaxTreeToken m__push_action_terminal_ { get; private set; }
-		public _push_action_ m__push_action_ { get; private set; }
-		public SyntaxTreeToken m__pop_action_terminal_ { get; private set; }
-		public _pop_action_ m__pop_action_ { get; private set; }
-		public SyntaxTreeToken m__lexer_part_terminal_ { get; private set; }
-		public _lexer_part_ m__lexer_part_ { get; private set; }
-		public SyntaxTreeToken m__parser_part_terminal_ { get; private set; }
-		public _parser_part_ m__parser_part_ { get; private set; }
-		public SyntaxTreeToken m__anglr_syntax_rule_list_terminal_ { get; private set; }
-		public _anglr_syntax_rule_list_ m__anglr_syntax_rule_list_ { get; private set; }
-		public SyntaxTreeToken m__anglr_syntax_rule_terminal_ { get; private set; }
-		public _anglr_syntax_rule_ m__anglr_syntax_rule_ { get; private set; }
-		public SyntaxTreeToken m__anglr_nested_rule_terminal_ { get; private set; }
-		public _anglr_nested_rule_ m__anglr_nested_rule_ { get; private set; }
-		public SyntaxTreeToken m__anglr_syntax_production_list_name_terminal_ { get; private set; }
-		public _anglr_syntax_production_list_name_ m__anglr_syntax_production_list_name_ { get; private set; }
-		public SyntaxTreeToken m__anglr_syntax_production_list_terminal_ { get; private set; }
-		public _anglr_syntax_production_list_ m__anglr_syntax_production_list_ { get; private set; }
-		public SyntaxTreeToken m__anglr_syntax_production_terminal_ { get; private set; }
-		public _anglr_syntax_production_ m__anglr_syntax_production_ { get; private set; }
-		public SyntaxTreeToken m__priority_assoc_specification_terminal_ { get; private set; }
-		public _priority_assoc_specification_ m__priority_assoc_specification_ { get; private set; }
-		public SyntaxTreeToken m__priority_specification_terminal_ { get; private set; }
-		public _priority_specification_ m__priority_specification_ { get; private set; }
-		public SyntaxTreeToken m__associativity_specification_terminal_ { get; private set; }
-		public _associativity_specification_ m__associativity_specification_ { get; private set; }
-		public SyntaxTreeToken m__production_name_terminal_ { get; private set; }
-		public _production_name_ m__production_name_ { get; private set; }
-		public SyntaxTreeToken m__name_list_terminal_ { get; private set; }
-		public _name_list_ m__name_list_ { get; private set; }
-		public SyntaxTreeToken m__marker_list_terminal_ { get; private set; }
-		public _marker_list_ m__marker_list_ { get; private set; }
-		public SyntaxTreeToken m__marker_terminal_ { get; private set; }
-		public _marker_ m__marker_ { get; private set; }
-		public SyntaxTreeToken m__g_name_terminal_ { get; private set; }
-		public _g_name_ m__g_name_ { get; private set; }
-		public SyntaxTreeToken m__name_terminal_ { get; private set; }
-		public _name_ m__name_ { get; private set; }
-		public SyntaxTreeToken m__cardinality_delimiter_terminal_ { get; private set; }
-		public _cardinality_delimiter_ m__cardinality_delimiter_ { get; private set; }
-		public SyntaxTreeToken m__cardinality_terminal_ { get; private set; }
-		public _cardinality_ m__cardinality_ { get; private set; }
-		public SyntaxTreeToken m__delimiter_terminal_ { get; private set; }
-		public _delimiter_ m__delimiter_ { get; private set; }
-		public SyntaxTreeToken m__attribute_list_optional_terminal_ { get; private set; }
-		public _attribute_list_optional_ m__attribute_list_optional_ { get; private set; }
-		public SyntaxTreeToken m__name_value_list_optional_terminal_ { get; private set; }
-		public _name_value_list_optional_ m__name_value_list_optional_ { get; private set; }
-		public SyntaxTreeToken m__anglr_file_part_list_optional_terminal_ { get; private set; }
-		public _anglr_file_part_list_optional_ m__anglr_file_part_list_optional_ { get; private set; }
-		public SyntaxTreeToken m__anglr_definition_list_optional_terminal_ { get; private set; }
-		public _anglr_definition_list_optional_ m__anglr_definition_list_optional_ { get; private set; }
-		public SyntaxTreeToken m__block_terminal_definitions_optional_terminal_ { get; private set; }
-		public _block_terminal_definitions_optional_ m__block_terminal_definitions_optional_ { get; private set; }
-		public SyntaxTreeToken m__block_regex_definitions_optional_terminal_ { get; private set; }
-		public _block_regex_definitions_optional_ m__block_regex_definitions_optional_ { get; private set; }
-		public SyntaxTreeToken m__regular_expression_list_optional_terminal_ { get; private set; }
-		public _regular_expression_list_optional_ m__regular_expression_list_optional_ { get; private set; }
-		public SyntaxTreeToken m__actions_optional_terminal_ { get; private set; }
-		public _actions_optional_ m__actions_optional_ { get; private set; }
-		public SyntaxTreeToken m__anglr_syntax_rule_list_optional_terminal_ { get; private set; }
-		public _anglr_syntax_rule_list_optional_ m__anglr_syntax_rule_list_optional_ { get; private set; }
-		public SyntaxTreeToken m__anglr_syntax_production_list_name_optional_terminal_ { get; private set; }
-		public _anglr_syntax_production_list_name_optional_ m__anglr_syntax_production_list_name_optional_ { get; private set; }
-		public SyntaxTreeToken m__production_name_optional_terminal_ { get; private set; }
-		public _production_name_optional_ m__production_name_optional_ { get; private set; }
-		public SyntaxTreeToken m__priority_assoc_specification_optional_terminal_ { get; private set; }
-		public _priority_assoc_specification_optional_ m__priority_assoc_specification_optional_ { get; private set; }
-		public SyntaxTreeToken m__marker_list_optional_terminal_ { get; private set; }
-		public _marker_list_optional_ m__marker_list_optional_ { get; private set; }
-		public SyntaxTreeToken m__delimiter_optional_terminal_ { get; private set; }
-		public _delimiter_optional_ m__delimiter_optional_ { get; private set; }
-		public SyntaxTreeToken m__cstring_optional_terminal_ { get; private set; }
-		public _cstring_optional_ m__cstring_optional_ { get; private set; }
-		public SyntaxTreeToken m__number_optional_terminal_ { get; private set; }
-		public _number_optional_ m__number_optional_ { get; private set; }
+		[DataMember (Name = "m__attribute_list_terminal_")] public SyntaxTreeToken m__attribute_list_terminal_ { get; private set; }
+		[DataMember (Name = "m__attribute_list_")] public _attribute_list_ m__attribute_list_ { get; private set; }
+		[DataMember (Name = "m__attribute_terminal_")] public SyntaxTreeToken m__attribute_terminal_ { get; private set; }
+		[DataMember (Name = "m__attribute_")] public _attribute_ m__attribute_ { get; private set; }
+		[DataMember (Name = "m__name_value_list_terminal_")] public SyntaxTreeToken m__name_value_list_terminal_ { get; private set; }
+		[DataMember (Name = "m__name_value_list_")] public _name_value_list_ m__name_value_list_ { get; private set; }
+		[DataMember (Name = "m__name_value_pair_terminal_")] public SyntaxTreeToken m__name_value_pair_terminal_ { get; private set; }
+		[DataMember (Name = "m__name_value_pair_")] public _name_value_pair_ m__name_value_pair_ { get; private set; }
+		[DataMember (Name = "m__anglr_file_terminal_")] public SyntaxTreeToken m__anglr_file_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_file_")] public _anglr_file_ m__anglr_file_ { get; private set; }
+		[DataMember (Name = "m__anglr_file_part_list_terminal_")] public SyntaxTreeToken m__anglr_file_part_list_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_file_part_list_")] public _anglr_file_part_list_ m__anglr_file_part_list_ { get; private set; }
+		[DataMember (Name = "m__anglr_file_part_terminal_")] public SyntaxTreeToken m__anglr_file_part_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_file_part_")] public _anglr_file_part_ m__anglr_file_part_ { get; private set; }
+		[DataMember (Name = "m__general_part_terminal_")] public SyntaxTreeToken m__general_part_terminal_ { get; private set; }
+		[DataMember (Name = "m__general_part_")] public _general_part_ m__general_part_ { get; private set; }
+		[DataMember (Name = "m__declaration_part_terminal_")] public SyntaxTreeToken m__declaration_part_terminal_ { get; private set; }
+		[DataMember (Name = "m__declaration_part_")] public _declaration_part_ m__declaration_part_ { get; private set; }
+		[DataMember (Name = "m__anglr_definition_list_terminal_")] public SyntaxTreeToken m__anglr_definition_list_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_definition_list_")] public _anglr_definition_list_ m__anglr_definition_list_ { get; private set; }
+		[DataMember (Name = "m__anglr_definition_with_attribute_list_terminal_")] public SyntaxTreeToken m__anglr_definition_with_attribute_list_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_definition_with_attribute_")] public _anglr_definition_with_attribute_ m__anglr_definition_with_attribute_ { get; private set; }
+		[DataMember (Name = "m__anglr_definition_terminal_")] public SyntaxTreeToken m__anglr_definition_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_definition_")] public _anglr_definition_ m__anglr_definition_ { get; private set; }
+		[DataMember (Name = "m__single_terminal_definition_terminal_")] public SyntaxTreeToken m__single_terminal_definition_terminal_ { get; private set; }
+		[DataMember (Name = "m__single_terminal_definition_")] public _single_terminal_definition_ m__single_terminal_definition_ { get; private set; }
+		[DataMember (Name = "m__single_regex_definition_terminal_")] public SyntaxTreeToken m__single_regex_definition_terminal_ { get; private set; }
+		[DataMember (Name = "m__single_regex_definition_")] public _single_regex_definition_ m__single_regex_definition_ { get; private set; }
+		[DataMember (Name = "m__block_of_terminal_definitions_terminal_")] public SyntaxTreeToken m__block_of_terminal_definitions_terminal_ { get; private set; }
+		[DataMember (Name = "m__block_of_terminal_definitions_")] public _block_of_terminal_definitions_ m__block_of_terminal_definitions_ { get; private set; }
+		[DataMember (Name = "m__block_of_regex_definitions_terminal_")] public SyntaxTreeToken m__block_of_regex_definitions_terminal_ { get; private set; }
+		[DataMember (Name = "m__block_of_regex_definitions_")] public _block_of_regex_definitions_ m__block_of_regex_definitions_ { get; private set; }
+		[DataMember (Name = "m__terminal_definition_terminal_")] public SyntaxTreeToken m__terminal_definition_terminal_ { get; private set; }
+		[DataMember (Name = "m__terminal_definition_")] public _terminal_definition_ m__terminal_definition_ { get; private set; }
+		[DataMember (Name = "m__regex_definition_terminal_")] public SyntaxTreeToken m__regex_definition_terminal_ { get; private set; }
+		[DataMember (Name = "m__regex_definition_")] public _regex_definition_ m__regex_definition_ { get; private set; }
+		[DataMember (Name = "m__block_terminal_definitions_terminal_")] public SyntaxTreeToken m__block_terminal_definitions_terminal_ { get; private set; }
+		[DataMember (Name = "m__block_terminal_definitions_")] public _block_terminal_definitions_ m__block_terminal_definitions_ { get; private set; }
+		[DataMember (Name = "m__block_terminal_definition_terminal_")] public SyntaxTreeToken m__block_terminal_definition_terminal_ { get; private set; }
+		[DataMember (Name = "m__block_terminal_definition_")] public _block_terminal_definition_ m__block_terminal_definition_ { get; private set; }
+		[DataMember (Name = "m__block_regex_definitions_terminal_")] public SyntaxTreeToken m__block_regex_definitions_terminal_ { get; private set; }
+		[DataMember (Name = "m__block_regex_definitions_")] public _block_regex_definitions_ m__block_regex_definitions_ { get; private set; }
+		[DataMember (Name = "m__block_regex_definition_terminal_")] public SyntaxTreeToken m__block_regex_definition_terminal_ { get; private set; }
+		[DataMember (Name = "m__block_regex_definition_")] public _block_regex_definition_ m__block_regex_definition_ { get; private set; }
+		[DataMember (Name = "m__scanner_part_terminal_")] public SyntaxTreeToken m__scanner_part_terminal_ { get; private set; }
+		[DataMember (Name = "m__scanner_part_")] public _scanner_part_ m__scanner_part_ { get; private set; }
+		[DataMember (Name = "m__regular_expression_list_terminal_")] public SyntaxTreeToken m__regular_expression_list_terminal_ { get; private set; }
+		[DataMember (Name = "m__regular_expression_list_")] public _regular_expression_list_ m__regular_expression_list_ { get; private set; }
+		[DataMember (Name = "m__regular_expression_usage_terminal_")] public SyntaxTreeToken m__regular_expression_usage_terminal_ { get; private set; }
+		[DataMember (Name = "m__regular_expression_usage_")] public _regular_expression_usage_ m__regular_expression_usage_ { get; private set; }
+		[DataMember (Name = "m__actions_terminal_")] public SyntaxTreeToken m__actions_terminal_ { get; private set; }
+		[DataMember (Name = "m__actions_")] public _actions_ m__actions_ { get; private set; }
+		[DataMember (Name = "m__action_terminal_")] public SyntaxTreeToken m__action_terminal_ { get; private set; }
+		[DataMember (Name = "m__action_")] public _action_ m__action_ { get; private set; }
+		[DataMember (Name = "m__skip_action_terminal_")] public SyntaxTreeToken m__skip_action_terminal_ { get; private set; }
+		[DataMember (Name = "m__skip_action_")] public _skip_action_ m__skip_action_ { get; private set; }
+		[DataMember (Name = "m__terminal_action_terminal_")] public SyntaxTreeToken m__terminal_action_terminal_ { get; private set; }
+		[DataMember (Name = "m__terminal_action_")] public _terminal_action_ m__terminal_action_ { get; private set; }
+		[DataMember (Name = "m__event_action_terminal_")] public SyntaxTreeToken m__event_action_terminal_ { get; private set; }
+		[DataMember (Name = "m__event_action_")] public _event_action_ m__event_action_ { get; private set; }
+		[DataMember (Name = "m__push_action_terminal_")] public SyntaxTreeToken m__push_action_terminal_ { get; private set; }
+		[DataMember (Name = "m__push_action_")] public _push_action_ m__push_action_ { get; private set; }
+		[DataMember (Name = "m__pop_action_terminal_")] public SyntaxTreeToken m__pop_action_terminal_ { get; private set; }
+		[DataMember (Name = "m__pop_action_")] public _pop_action_ m__pop_action_ { get; private set; }
+		[DataMember (Name = "m__lexer_part_terminal_")] public SyntaxTreeToken m__lexer_part_terminal_ { get; private set; }
+		[DataMember (Name = "m__lexer_part_")] public _lexer_part_ m__lexer_part_ { get; private set; }
+		[DataMember (Name = "m__parser_part_terminal_")] public SyntaxTreeToken m__parser_part_terminal_ { get; private set; }
+		[DataMember (Name = "m__parser_part_")] public _parser_part_ m__parser_part_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_rule_list_terminal_")] public SyntaxTreeToken m__anglr_syntax_rule_list_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_rule_list_")] public _anglr_syntax_rule_list_ m__anglr_syntax_rule_list_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_rule_terminal_")] public SyntaxTreeToken m__anglr_syntax_rule_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_rule_")] public _anglr_syntax_rule_ m__anglr_syntax_rule_ { get; private set; }
+		[DataMember (Name = "m__anglr_nested_rule_terminal_")] public SyntaxTreeToken m__anglr_nested_rule_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_nested_rule_")] public _anglr_nested_rule_ m__anglr_nested_rule_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_list_name_terminal_")] public SyntaxTreeToken m__anglr_syntax_production_list_name_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_list_name_")] public _anglr_syntax_production_list_name_ m__anglr_syntax_production_list_name_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_list_terminal_")] public SyntaxTreeToken m__anglr_syntax_production_list_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_list_")] public _anglr_syntax_production_list_ m__anglr_syntax_production_list_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_terminal_")] public SyntaxTreeToken m__anglr_syntax_production_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_")] public _anglr_syntax_production_ m__anglr_syntax_production_ { get; private set; }
+		[DataMember (Name = "m__priority_assoc_specification_terminal_")] public SyntaxTreeToken m__priority_assoc_specification_terminal_ { get; private set; }
+		[DataMember (Name = "m__priority_assoc_specification_")] public _priority_assoc_specification_ m__priority_assoc_specification_ { get; private set; }
+		[DataMember (Name = "m__priority_specification_terminal_")] public SyntaxTreeToken m__priority_specification_terminal_ { get; private set; }
+		[DataMember (Name = "m__priority_specification_")] public _priority_specification_ m__priority_specification_ { get; private set; }
+		[DataMember (Name = "m__associativity_specification_terminal_")] public SyntaxTreeToken m__associativity_specification_terminal_ { get; private set; }
+		[DataMember (Name = "m__associativity_specification_")] public _associativity_specification_ m__associativity_specification_ { get; private set; }
+		[DataMember (Name = "m__production_name_terminal_")] public SyntaxTreeToken m__production_name_terminal_ { get; private set; }
+		[DataMember (Name = "m__production_name_")] public _production_name_ m__production_name_ { get; private set; }
+		[DataMember (Name = "m__name_list_terminal_")] public SyntaxTreeToken m__name_list_terminal_ { get; private set; }
+		[DataMember (Name = "m__name_list_")] public _name_list_ m__name_list_ { get; private set; }
+		[DataMember (Name = "m__marker_list_terminal_")] public SyntaxTreeToken m__marker_list_terminal_ { get; private set; }
+		[DataMember (Name = "m__marker_list_")] public _marker_list_ m__marker_list_ { get; private set; }
+		[DataMember (Name = "m__marker_terminal_")] public SyntaxTreeToken m__marker_terminal_ { get; private set; }
+		[DataMember (Name = "m__marker_")] public _marker_ m__marker_ { get; private set; }
+		[DataMember (Name = "m__g_name_terminal_")] public SyntaxTreeToken m__g_name_terminal_ { get; private set; }
+		[DataMember (Name = "m__g_name_")] public _g_name_ m__g_name_ { get; private set; }
+		[DataMember (Name = "m__name_terminal_")] public SyntaxTreeToken m__name_terminal_ { get; private set; }
+		[DataMember (Name = "m__name_")] public _name_ m__name_ { get; private set; }
+		[DataMember (Name = "m__cardinality_delimiter_terminal_")] public SyntaxTreeToken m__cardinality_delimiter_terminal_ { get; private set; }
+		[DataMember (Name = "m__cardinality_delimiter_")] public _cardinality_delimiter_ m__cardinality_delimiter_ { get; private set; }
+		[DataMember (Name = "m__cardinality_terminal_")] public SyntaxTreeToken m__cardinality_terminal_ { get; private set; }
+		[DataMember (Name = "m__cardinality_")] public _cardinality_ m__cardinality_ { get; private set; }
+		[DataMember (Name = "m__delimiter_terminal_")] public SyntaxTreeToken m__delimiter_terminal_ { get; private set; }
+		[DataMember (Name = "m__delimiter_")] public _delimiter_ m__delimiter_ { get; private set; }
+		[DataMember (Name = "m__attribute_list_optional_terminal_")] public SyntaxTreeToken m__attribute_list_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__attribute_list_optional_")] public _attribute_list_optional_ m__attribute_list_optional_ { get; private set; }
+		[DataMember (Name = "m__name_value_list_optional_terminal_")] public SyntaxTreeToken m__name_value_list_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__name_value_list_optional_")] public _name_value_list_optional_ m__name_value_list_optional_ { get; private set; }
+		[DataMember (Name = "m__anglr_file_part_list_optional_terminal_")] public SyntaxTreeToken m__anglr_file_part_list_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_file_part_list_optional_")] public _anglr_file_part_list_optional_ m__anglr_file_part_list_optional_ { get; private set; }
+		[DataMember (Name = "m__anglr_definition_list_optional_terminal_")] public SyntaxTreeToken m__anglr_definition_list_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_definition_list_optional_")] public _anglr_definition_list_optional_ m__anglr_definition_list_optional_ { get; private set; }
+		[DataMember (Name = "m__block_terminal_definitions_optional_terminal_")] public SyntaxTreeToken m__block_terminal_definitions_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__block_terminal_definitions_optional_")] public _block_terminal_definitions_optional_ m__block_terminal_definitions_optional_ { get; private set; }
+		[DataMember (Name = "m__block_regex_definitions_optional_terminal_")] public SyntaxTreeToken m__block_regex_definitions_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__block_regex_definitions_optional_")] public _block_regex_definitions_optional_ m__block_regex_definitions_optional_ { get; private set; }
+		[DataMember (Name = "m__regular_expression_list_optional_terminal_")] public SyntaxTreeToken m__regular_expression_list_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__regular_expression_list_optional_")] public _regular_expression_list_optional_ m__regular_expression_list_optional_ { get; private set; }
+		[DataMember (Name = "m__actions_optional_terminal_")] public SyntaxTreeToken m__actions_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__actions_optional_")] public _actions_optional_ m__actions_optional_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_rule_list_optional_terminal_")] public SyntaxTreeToken m__anglr_syntax_rule_list_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_rule_list_optional_")] public _anglr_syntax_rule_list_optional_ m__anglr_syntax_rule_list_optional_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_list_name_optional_terminal_")] public SyntaxTreeToken m__anglr_syntax_production_list_name_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_list_name_optional_")] public _anglr_syntax_production_list_name_optional_ m__anglr_syntax_production_list_name_optional_ { get; private set; }
+		[DataMember (Name = "m__production_name_optional_terminal_")] public SyntaxTreeToken m__production_name_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__production_name_optional_")] public _production_name_optional_ m__production_name_optional_ { get; private set; }
+		[DataMember (Name = "m__priority_assoc_specification_optional_terminal_")] public SyntaxTreeToken m__priority_assoc_specification_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__priority_assoc_specification_optional_")] public _priority_assoc_specification_optional_ m__priority_assoc_specification_optional_ { get; private set; }
+		[DataMember (Name = "m__marker_list_optional_terminal_")] public SyntaxTreeToken m__marker_list_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__marker_list_optional_")] public _marker_list_optional_ m__marker_list_optional_ { get; private set; }
+		[DataMember (Name = "m__delimiter_optional_terminal_")] public SyntaxTreeToken m__delimiter_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__delimiter_optional_")] public _delimiter_optional_ m__delimiter_optional_ { get; private set; }
+		[DataMember (Name = "m__cstring_optional_terminal_")] public SyntaxTreeToken m__cstring_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__cstring_optional_")] public _cstring_optional_ m__cstring_optional_ { get; private set; }
+		[DataMember (Name = "m__number_optional_terminal_")] public SyntaxTreeToken m__number_optional_terminal_ { get; private set; }
+		[DataMember (Name = "m__number_optional_")] public _number_optional_ m__number_optional_ { get; private set; }
 		#endregion
 
 	};

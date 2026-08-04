@@ -853,6 +853,7 @@ namespace AnglrLibrary
             writer.WriteLine ("\t// class associated with syntax rule " + ProductionName.name);
             writer.WriteLine ("\t//");
             writer.WriteLine ();
+            writer.WriteLine ("\t[DataContract]");
             writer.WriteLine ("\tpublic class\t" + correctName + " : SyntaxTreeBase");
             writer.WriteLine ("\t{");
         }
@@ -934,6 +935,7 @@ namespace AnglrLibrary
         {
             writer.WriteLine ();
             writer.WriteLine ($"\t\t// Constructor declaration(s) associated with production(s) of syntax rule {ProductionName.name}");
+            int emptyCounter = 0;
             foreach (KeyValuePair<RhsProduction, int> keyval in m_protoset)
             {
                 SymbolToken iteratorsymbol = null;
@@ -964,8 +966,10 @@ namespace AnglrLibrary
                 writer.Write ($"\t\tpublic {correctName} (");
                 string sep = "";
                 int tokenIndex = 0;
+                bool empty = true;
                 foreach (RhsNode p_RhsNode in p_RhsProduction.rhsNodes)
                 {
+                    empty = false;
                     SymbolToken p_SymbolToken = p_RhsNode.symbolToken;
                     if ((p_SymbolToken.IteratorFlag) && (p_SymbolToken.name == ProductionName.name))
                         iteratorsymbol = p_SymbolToken;
@@ -987,6 +991,8 @@ namespace AnglrLibrary
                     }
                     sep = ", ";
                 }
+                if (empty)
+                    ++emptyCounter;
                 if (keyval.Value > 1)
                     writer.Write ($"{sep}int kind");
                 writer.Write ($") : base (");
@@ -1087,6 +1093,11 @@ namespace AnglrLibrary
                 }
                 writer.WriteLine ($"\t\t}}");
             }
+            if (emptyCounter <= 0)
+            {
+                writer.WriteLine ();
+                writer.WriteLine ($"\t\tpublic {correctName} () {{ }}");
+            }
         }
 
         private void GenerateCSCopyConstructor (TextWriter writer, string correctName)
@@ -1098,6 +1109,7 @@ namespace AnglrLibrary
             writer.WriteLine ($"\t\t{{");
             writer.WriteLine ($"\t\t\t++g_counter;");
             writer.WriteLine ($"\t\t\t_init ();");
+            writer.WriteLine ($"\t\t\tappInfo = p_{correctName}.appInfo;");
             writer.WriteLine ($"\t\t\tswitch ((production_kind) p_{correctName}.kind)");
             writer.WriteLine ($"\t\t\t{{");
             foreach (KeyValuePair<RhsProduction, int> keyval in m_protoset)
@@ -1777,15 +1789,15 @@ namespace AnglrLibrary
                 int index = keyval.Value.second;
                 if (p_SymbolToken.declarator == (uint) AnglrClassificationType.TerminalName)
                 {
-                    writer.WriteLine ("\t\tpublic SyntaxTreeToken m_" + name + " { get; private set; }");
+                    writer.WriteLine ($"\t\t[DataMember (Name = \"m_{name}\")] public SyntaxTreeToken m_{name} {{ get; private set; }}");
                     for (int i = 0; i < index; ++i)
-                        writer.WriteLine ("\t\tpublic SyntaxTreeToken m_" + name + "_" + (i + 1) + " { get; private set; }");
+                        writer.WriteLine ($"\t\t[DataMember (Name = \"m_{name}_{i + 1}\")] public SyntaxTreeToken m_{name}_{i + 1} {{ get; private set; }}");
                 }
                 else
                 {
-                    writer.WriteLine ("\t\tpublic " + name + " m_" + name + " { get; private set; }");
+                    writer.WriteLine ($"\t\t[DataMember (Name = \"m_{name}\")] public {name} m_{name} {{ get; private set; }}");
                     for (int i = 0; i < index; ++i)
-                        writer.WriteLine ("\t\tpublic " + name + " m_" + name + "_" + (i + 1) + " { get; private set; }");
+                        writer.WriteLine ($"\t\t[DataMember (Name = \"m_{name}_{i + 1}\")] public {name} m_{name}_{i + 1} {{ get; private set; }}");
                 }
             }
             cnt = 0;
