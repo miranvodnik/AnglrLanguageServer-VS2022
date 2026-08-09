@@ -439,7 +439,20 @@ namespace AnglrLangExtension
                 AnglrDetailViewItemWindow anglrDetailViewItemWindow = new AnglrDetailViewItemWindow ();
                 anglrDetailViewItemWindow.FileName = name;
                 anglrDetailViewItemWindow.AnglrGetParserSyntaxRuleDatas = new AnglrGetParserSyntaxRuleDataCollection (anglrGetParserSyntaxRulesResult?.SyntaxRuleList);
-                AnglrDrawingDictionary dictionary = AnglrSyntaxRuleDrawingBuilder.BuildCanonicalSyntaxRulesDrawings (anglrGetParserSyntaxRulesResult, anglrGetSyntaxTreeResult, logger);
+                AnglrDrawingDictionary dictionary = AnglrSyntaxRuleDrawingBuilder.BuildCanonicalSyntaxRulesDrawings (anglrGetParserSyntaxRulesResult, logger);
+                List<AnglrRawDrawingVisual> syntaxVisuals = AnglrSyntaxRuleDrawingBuilder.BuildSyntaxRulesVisual (anglrGetSyntaxTreeResult, logger);
+                double width = 0;
+                double height = 0;
+                syntaxRuleVisual.Logger = logger;
+                syntaxRuleVisual.Clear ();
+                foreach (var syntaxVisual in syntaxVisuals)
+                {
+                    syntaxRuleVisual.AddVisual (syntaxVisual);
+                    width = Math.Max (width, syntaxVisual.Width);
+                    height += syntaxVisual.Height;
+                }
+                syntaxRuleVisual.Width = width;
+                syntaxRuleVisual.Height = height;
 
                 if (magicNr.HasValue)
                     AnglrLangDictionary.AddItem (magicNr.Value, (anglrLangItem, anglrStateItem, anglrGetParserSyntaxRulesResult, dictionary));

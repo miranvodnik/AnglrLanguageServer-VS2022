@@ -61,7 +61,7 @@ namespace AnglrLangExtension
         public static Brush TerminalSymbolBackground { get; set; } = Brushes.LightGreen;
         public static Brush ConstantSymbolBackground { get; set; } = Brushes.LightGray;
         public static Brush NonTerminalSymbolBackground { get; set; } = Brushes.LightBlue;
-        public static int Margin { get; set; } = 2;
+        public static int Margin { get; set; } = 4;
         public static int RectangleRadius { get; set; } = 6;
         public static int ConnectorRadius { get; set; } = 6;
         public static int ConnectorLength { get; set; } = 20;
@@ -416,6 +416,84 @@ namespace AnglrLangExtension
         }
     }
 
+    public class AnglrSyntaxRuleNameVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    {
+        public SyntaxTreeToken SymbolToken { get; private set; }
+        public AnglrSyntaxRuleNameVisual (SyntaxTreeToken symbolToken)
+        {
+            SymbolToken = symbolToken;
+        }
+
+        public void Draw ()
+        {
+            using (var dc = RenderOpen ())
+            {
+                FormattedText text = new FormattedText
+                (
+                    SymbolToken.text,
+                    CultureInfo,
+                    FlowDirection,
+                    new Typeface (TypefaceName),
+                    FontSize,
+                    Brush,
+                    1.0
+                );
+                double width = text.Width;
+                double height = text.Height;
+
+                dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (0, 0, Width = width + 4 * Margin, Height = height + 4 * Margin), RectangleRadius, RectangleRadius);
+                dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (Margin, Margin, width + 2 * Margin, height + 2 * Margin), RectangleRadius, RectangleRadius);
+                dc.DrawText (text, new Point (2 * Margin, 2 * Margin));
+                ConnectorOffset = Height / 2.0;
+            }
+            Drawing.Freeze ();
+        }
+
+        public AnglrRawDrawingVisual Clone ()
+        {
+            return null;
+        }
+    }
+
+    public class AnglrSyntaxGroupNameVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    {
+        public SyntaxTreeToken SymbolToken { get; private set; }
+        public AnglrSyntaxGroupNameVisual (SyntaxTreeToken symbolToken)
+        {
+            SymbolToken = symbolToken;
+        }
+
+        public void Draw ()
+        {
+            using (var dc = RenderOpen ())
+            {
+                FormattedText text = new FormattedText
+                (
+                    SymbolToken.text,
+                    CultureInfo,
+                    FlowDirection,
+                    new Typeface (TypefaceName),
+                    FontSize,
+                    Brush,
+                    1.0
+                );
+                double width = text.Width;
+                double height = text.Height;
+
+                dc.DrawRectangle (TerminalSymbolBackground, Pen, new Rect (0, 0, Width = width + 4 * Margin, Height = height + 4 * Margin));
+                dc.DrawRectangle (TerminalSymbolBackground, Pen, new Rect (Margin, Margin, width + 2 * Margin, height + 2 * Margin));
+                dc.DrawText (text, new Point (2 * Margin, 2 * Margin));
+                ConnectorOffset = Height / 2.0;
+            }
+            Drawing.Freeze ();
+        }
+
+        public AnglrRawDrawingVisual Clone ()
+        {
+            return null;
+        }
+    }
+
     public class AnglrGeneralizedNameVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
     {
         public AnglrRawDrawingVisual GnameVisual { get; private set; }
@@ -534,7 +612,7 @@ namespace AnglrLangExtension
                 double gwidth = 2 * Margin;
                 double dwidth = 2 * Margin;
                 double gheight = ConnectorOffset;
-                double dheight = ConnectorOffset + 2 * Margin + DelimiterVisual.ConnectorOffset;
+                double dheight = GnameVisual.Height + 2 * Margin + DelimiterVisual.ConnectorOffset;
 
                 if (DelimiterVisual.Width > GnameVisual.Width)
                 {
@@ -590,7 +668,7 @@ namespace AnglrLangExtension
                 double gwidth = 4 * Margin;
                 double dwidth = 4 * Margin;
                 double gheight = ConnectorOffset;
-                double dheight = ConnectorOffset + 2 * Margin + DelimiterVisual.ConnectorOffset;
+                double dheight = GnameVisual.Height + 4 * Margin + DelimiterVisual.ConnectorOffset;
 
                 if (DelimiterVisual.Width > GnameVisual.Width)
                 {
@@ -629,7 +707,7 @@ namespace AnglrLangExtension
                 double gwidth = 4 * Margin;
                 double dwidth = 4 * Margin;
                 double gheight = ConnectorOffset;
-                double dheight = ConnectorOffset + 2 * Margin;
+                double dheight = GnameVisual.Height + 4 * Margin;
 
                 Width = 8 * Margin + GnameVisual.Width;
                 Height = 4 * Margin + GnameVisual.Height;
@@ -676,36 +754,38 @@ namespace AnglrLangExtension
             NameList = nameList;
             NameList.Iterate
             (
-                null,
+                0,
                 (list, appData) =>
                 {
+                    int counter = (int) appData;
                     _g_name_ name = list.m__g_name_;
                     if ((name == null) || (name.appInfo == null) || !((AppInfo) name.appInfo).TryGetValue (AppInfoType.Visual, out var visual))
-                        return null;
+                        return counter;
                     AnglrRawDrawingVisual drawingVisual = visual as AnglrRawDrawingVisual;
                     if (drawingVisual == null)
-                        return null;
+                        return counter;
                     if (ConnectorOffset < drawingVisual.ConnectorOffset)
                         ConnectorOffset = drawingVisual.ConnectorOffset;
-                    return null;
+                    return counter + 1;
                 }
             );
             NameList.Iterate
             (
-                null,
+                0,
                 (list, appData) =>
                 {
+                    int counter = (int) appData;
                     _g_name_ name = list.m__g_name_;
                     if ((name == null) || (name.appInfo == null) || !((AppInfo) name.appInfo).TryGetValue (AppInfoType.Visual, out var visual))
-                        return null;
+                        return counter;
                     AnglrRawDrawingVisual drawingVisual = visual as AnglrRawDrawingVisual;
                     if (drawingVisual == null)
-                        return null;
+                        return counter;
                     double diff = drawingVisual.Height - drawingVisual.ConnectorOffset;
                     if (diff > Height)
                         Height = diff;
                     Width += drawingVisual.Width + 2 * Margin;
-                    return null;
+                    return counter + 1;
                 }
             );
             Height += ConnectorOffset;
@@ -714,21 +794,21 @@ namespace AnglrLangExtension
 
         public void Draw ()
         {
-            int counter = 0;
             double width = 0;
             using (var dc = RenderOpen ())
             {
                 NameList.Iterate
                 (
-                    null,
+                    0,
                     (list, appData) =>
                     {
+                        int counter = (int) appData;
                         _g_name_ name = list.m__g_name_;
                         if ((name == null) || (name.appInfo == null) || !((AppInfo) name.appInfo).TryGetValue (AppInfoType.Visual, out var visual))
-                            return null;
+                            return counter;
                         AnglrRawDrawingVisual drawingVisual = visual as AnglrRawDrawingVisual;
                         if (drawingVisual == null)
-                            return null;
+                            return counter;
                         dc.PushTransform (new TranslateTransform (width, 0));
                         if (counter > 0)
                         {
@@ -745,8 +825,7 @@ namespace AnglrLangExtension
                             dc.Pop ();
                         }
                         dc.Pop ();
-                        ++counter;
-                        return null;
+                        return counter + 1;
                     }
                 );
             }
@@ -778,7 +857,7 @@ namespace AnglrLangExtension
                         return counter;
                     if (Width < drawingVisual.Width)
                         Width = drawingVisual.Width;
-                    Height += drawingVisual.Height + 2 * Margin;
+                    Height += drawingVisual.Height;
                     if (counter == 0)
                         ConnectorOffset = drawingVisual.ConnectorOffset;
                     else
@@ -829,9 +908,13 @@ namespace AnglrLangExtension
     public class AnglrSyntaxRuleVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
     {
         public _anglr_syntax_rule_ SyntaxRule { get; private set; }
+        public AnglrRawDrawingVisual SyntaxRuleNameVisual { get; private set; }
         public AnglrSyntaxRuleVisual (_anglr_syntax_rule_ syntaxRule)
         {
             SyntaxRule = syntaxRule;
+            SyntaxTreeToken ruleName = SyntaxRule.m__identifier_;
+            if ((ruleName != null) && (ruleName.appInfo != null) && ((AppInfo) ruleName.appInfo).TryGetValue (AppInfoType.Visual, out var nameVisual))
+                SyntaxRuleNameVisual = nameVisual as AnglrRawDrawingVisual;
             SyntaxRule.m__anglr_syntax_production_list_.Iterate
             (
                 0,
@@ -846,7 +929,7 @@ namespace AnglrLangExtension
                         return counter;
                     if (Width < drawingVisual.Width)
                         Width = drawingVisual.Width;
-                    Height += drawingVisual.Height + 2 * Margin;
+                    Height += drawingVisual.Height;
                     if (counter == 0)
                         ConnectorOffset = drawingVisual.ConnectorOffset;
                     else
@@ -855,13 +938,21 @@ namespace AnglrLangExtension
                 }
             );
             Width += 4 * Margin;
+            if (SyntaxRuleNameVisual != null)
+                Height += SyntaxRuleNameVisual.Height + 4 * Margin;
         }
+
         public void Draw ()
         {
             double height = 0;
             double connectionOffset = 0;
             using (var dc = RenderOpen ())
             {
+                if (SyntaxRuleNameVisual != null)
+                {
+                    dc.DrawDrawing (SyntaxRuleNameVisual.Drawing);
+                    dc.PushTransform (new TranslateTransform (8 * Margin, SyntaxRuleNameVisual.Height + 2 * Margin));
+                }
                 SyntaxRule.m__anglr_syntax_production_list_.Iterate
                 (
                     0,
@@ -886,6 +977,8 @@ namespace AnglrLangExtension
                 );
                 dc.DrawLine (Pen, new Point (0, ConnectorOffset), new Point (0, connectionOffset));
                 dc.DrawLine (Pen, new Point (Width, ConnectorOffset), new Point (Width, connectionOffset));
+                if (SyntaxRuleNameVisual != null)
+                    dc.Pop ();
             }
         }
         public AnglrRawDrawingVisual Clone ()
@@ -897,9 +990,13 @@ namespace AnglrLangExtension
     public class AnglrSyntaxGroupVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
     {
         public _anglr_syntax_rule_ SyntaxGroup { get; private set; }
+        public AnglrRawDrawingVisual SyntaxGroupNameVisual { get; private set; }
         public AnglrSyntaxGroupVisual (_anglr_syntax_rule_ syntaxGroup)
         {
             SyntaxGroup = syntaxGroup;
+            SyntaxTreeToken groupName = SyntaxGroup.m__identifier_;
+            if ((groupName != null) && (groupName.appInfo != null) && ((AppInfo) groupName.appInfo).TryGetValue (AppInfoType.Visual, out var nameVisual))
+                SyntaxGroupNameVisual = nameVisual as AnglrRawDrawingVisual;
             if ((_anglr_syntax_rule_list_optional_.production_kind) SyntaxGroup.m__anglr_syntax_rule_list_optional_.kind == _anglr_syntax_rule_list_optional_.production_kind.g__anglr_syntax_rule_list_optional__2)
             {
                 SyntaxGroup.m__anglr_syntax_rule_list_optional_.m__anglr_syntax_rule_list_.Iterate
@@ -916,7 +1013,7 @@ namespace AnglrLangExtension
                             return counter;
                         if (Width < drawingVisual.Width)
                             Width = drawingVisual.Width;
-                        Height += drawingVisual.Height + 2 * Margin;
+                        Height += drawingVisual.Height;
                         if (counter == 0)
                             ConnectorOffset = drawingVisual.ConnectorOffset;
                         else
@@ -925,6 +1022,8 @@ namespace AnglrLangExtension
                     }
                 );
             }
+            if (SyntaxGroupNameVisual != null)
+                Height += SyntaxGroupNameVisual.Height + 8 * Margin;
         }
         public void Draw ()
         {
@@ -934,6 +1033,14 @@ namespace AnglrLangExtension
             {
                 if ((_anglr_syntax_rule_list_optional_.production_kind) SyntaxGroup.m__anglr_syntax_rule_list_optional_.kind == _anglr_syntax_rule_list_optional_.production_kind.g__anglr_syntax_rule_list_optional__2)
                 {
+                    if (SyntaxGroupNameVisual != null)
+                    {
+                        dc.DrawDrawing (SyntaxGroupNameVisual.Drawing);
+                        dc.PushTransform (new TranslateTransform (8 * Margin, SyntaxGroupNameVisual.Height + 2 * Margin));
+                    }
+                    dc.PushTransform (new TranslateTransform (0, 2 * Margin));
+                    dc.DrawLine (Pen, new Point (0, 0), new Point (Width, 0));
+                    dc.PushTransform (new TranslateTransform (0, 2 * Margin));
                     SyntaxGroup.m__anglr_syntax_rule_list_optional_.m__anglr_syntax_rule_list_.Iterate
                     (
                         0,
@@ -950,10 +1057,19 @@ namespace AnglrLangExtension
                             dc.PushTransform (new TranslateTransform (0, height));
                             dc.DrawDrawing (drawingVisual.Drawing);
                             dc.Pop ();
-                            height += drawingVisual.Height + 2 * Margin;
+                            height += drawingVisual.Height;
+                            if (counter > 0)
+                                height += 2 * Margin;
                             return counter + 1;
                         }
                     );
+                    dc.PushTransform (new TranslateTransform (0, 2 * Margin + height));
+                    dc.DrawLine (Pen, new Point (0, 0), new Point (Width, 0));
+                    dc.Pop ();
+                    dc.Pop ();
+                    dc.Pop ();
+                    if (SyntaxGroupNameVisual != null)
+                        dc.Pop ();
                 }
             }
         }
@@ -1130,9 +1246,23 @@ namespace AnglrLangExtension
             return visual;
         }
 
+        public static AnglrRawDrawingVisual DrawSyntaxRuleName (SyntaxTreeToken ruleName)
+        {
+            AnglrSyntaxRuleNameVisual visual = new AnglrSyntaxRuleNameVisual (ruleName);
+            visual.Draw ();
+            return visual;
+        }
+
         public static AnglrRawDrawingVisual DrawSyntaxRule (_anglr_syntax_rule_ syntaxRule)
         {
             AnglrSyntaxRuleVisual visual = new AnglrSyntaxRuleVisual (syntaxRule);
+            visual.Draw ();
+            return visual;
+        }
+
+        public static AnglrRawDrawingVisual DrawSyntaxGroupName (SyntaxTreeToken groupName)
+        {
+            AnglrSyntaxGroupNameVisual visual = new AnglrSyntaxGroupNameVisual (groupName);
             visual.Draw ();
             return visual;
         }
@@ -1151,7 +1281,7 @@ namespace AnglrLangExtension
             return visual;
         }
 
-        public static AnglrDrawingDictionary BuildCanonicalSyntaxRulesDrawings (AnglrGetParserSyntaxRulesResult syntaxRulesResult, AnglrGetSyntaxTreeResult syntaxTreeResult, IAnglrLogger logger)
+        public static AnglrDrawingDictionary BuildCanonicalSyntaxRulesDrawings (AnglrGetParserSyntaxRulesResult syntaxRulesResult, IAnglrLogger logger)
         {
             AnglrDrawingDictionary SyntaxRuleVisuals = new AnglrDrawingDictionary ();
             foreach (var syntaxRule in syntaxRulesResult.SyntaxRuleList)
@@ -1197,6 +1327,11 @@ namespace AnglrLangExtension
                     SyntaxRuleVisuals [production.ProductionNumber] = container;
                 }
             }
+            return SyntaxRuleVisuals;
+        }
+
+        public static List<AnglrRawDrawingVisual> BuildSyntaxRulesVisual (AnglrGetSyntaxTreeResult syntaxTreeResult, IAnglrLogger logger)
+        {
             try
             {
                 logger?.DebugLine ($"syntax tree = {syntaxTreeResult?.SyntaxTree}");
@@ -1215,12 +1350,33 @@ namespace AnglrLangExtension
                 }
                 else
                     logger?.ErrorLine ($"null anglr fragment conversion");
+                List<AnglrRawDrawingVisual> list = new List<AnglrRawDrawingVisual> ();
+                anglrFileFragment.m__anglr_file_.m__anglr_file_part_list_.Iterate
+                (
+                    0,
+                    (part, data) =>
+                    {
+                        int counter = (int) data;
+                        _anglr_file_part_ filePart = part.m__anglr_file_part_;
+                        if ((_anglr_file_part_.production_kind) filePart.kind != _anglr_file_part_.production_kind.g__anglr_file_part__5)
+                            return counter;
+                        _parser_part_ parserPart = filePart.m__parser_part_;
+                        if ((parserPart == null) || (parserPart.appInfo == null) || !((AppInfo) parserPart.appInfo).TryGetValue (AppInfoType.Visual, out var visual))
+                            return counter;
+                        AnglrRawDrawingVisual drawingVisual = visual as AnglrRawDrawingVisual;
+                        if (drawingVisual == null)
+                            return counter;
+                        list.Add (drawingVisual);
+                        return counter + 1;
+                    }
+                );
+                return list;
             }
             catch (Exception e)
             {
                 logger?.ErrorLine (e, $"visualizer failure");
+                return null;
             }
-            return SyntaxRuleVisuals;
         }
     }
 
@@ -1296,13 +1452,21 @@ namespace AnglrLangExtension
                         switch (kind)
                         {
                             case _anglr_syntax_rule_.production_kind.g__anglr_syntax_rule__1:
+                            {
+                                ((AppInfo) p__anglr_syntax_rule_.m__identifier_.appInfo) [AppInfoType.Visual] =
+                                    AnglrSyntaxRuleDrawingBuilder.DrawSyntaxRuleName (p__anglr_syntax_rule_.m__identifier_);
                                 ((AppInfo) p__anglr_syntax_rule_.appInfo) [AppInfoType.Visual] =
                                     AnglrSyntaxRuleDrawingBuilder.DrawSyntaxRule (p__anglr_syntax_rule_);
-                                break;
+                            }
+                            break;
                             case _anglr_syntax_rule_.production_kind.g__anglr_syntax_rule__2:
+                            {
+                                ((AppInfo) p__anglr_syntax_rule_.m__identifier_.appInfo) [AppInfoType.Visual] =
+                                    AnglrSyntaxRuleDrawingBuilder.DrawSyntaxGroupName (p__anglr_syntax_rule_.m__identifier_);
                                 ((AppInfo) p__anglr_syntax_rule_.appInfo) [AppInfoType.Visual] =
                                     AnglrSyntaxRuleDrawingBuilder.DrawSyntaxGroup (p__anglr_syntax_rule_);
-                                break;
+                            }
+                            break;
                         }
                     }
                     catch (Exception e)
@@ -1509,8 +1673,8 @@ namespace AnglrLangExtension
                             {
                                 if (!((AppInfo) p__g_name_.m__g_name_.appInfo).TryGetValue (AppInfoType.Visual, out var gnameVisual))
                                     break;
-                                if (!((AppInfo) p__g_name_.m__cardinality_delimiter_.appInfo).TryGetValue (AppInfoType.Visual, out var cardinalityVisual))
-                                    break;
+                                //if (!((AppInfo) p__g_name_.m__cardinality_delimiter_.appInfo).TryGetValue (AppInfoType.Visual, out var cardinalityVisual))
+                                //    break;
                                 ((AppInfo) p__g_name_.appInfo) [AppInfoType.Visual] =
                                     AnglrSyntaxRuleDrawingBuilder.DrawGeneralizedSymbol
                                     (
