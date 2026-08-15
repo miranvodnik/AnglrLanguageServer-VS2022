@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <anglr syntax production list>
 	//
 
+	[DataContract]
 	public class	_anglr_syntax_production_list_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <anglr syntax production list>
@@ -76,12 +78,15 @@ namespace Anglr.Parser
 			children[2] = m__anglr_syntax_production_ = p__anglr_syntax_production_;
 		}
 
+		public _anglr_syntax_production_list_ () { }
+
 		// Copy constructor
 
 		public _anglr_syntax_production_list_ (_anglr_syntax_production_list_ p__anglr_syntax_production_list_) : base (p__anglr_syntax_production_list_.id, p__anglr_syntax_production_list_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__anglr_syntax_production_list_.appInfo;
 			switch ((production_kind) p__anglr_syntax_production_list_.kind)
 			{
 				case production_kind.g__anglr_syntax_production_list__1:
@@ -290,9 +295,9 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <anglr syntax production list>
-		public _anglr_syntax_production_ m__anglr_syntax_production_ { get; private set; }
-		public _anglr_syntax_production_list_ m__anglr_syntax_production_list_ { get; private set; }
-		public SyntaxTreeToken m__vertical_bar_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_")] public _anglr_syntax_production_ m__anglr_syntax_production_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_list_")] public _anglr_syntax_production_list_ m__anglr_syntax_production_list_ { get; private set; }
+		[DataMember (Name = "m__vertical_bar_")] public SyntaxTreeToken m__vertical_bar_ { get; private set; }
 		#endregion
 
 	};

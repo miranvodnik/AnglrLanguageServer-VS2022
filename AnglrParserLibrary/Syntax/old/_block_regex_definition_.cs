@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <block regex definition>
 	//
 
+	[DataContract]
 	public class	_block_regex_definition_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <block regex definition>
@@ -51,12 +53,15 @@ namespace Anglr.Parser
 			children[1] = m__regex_definition_ = p__regex_definition_;
 		}
 
+		public _block_regex_definition_ () { }
+
 		// Copy constructor
 
 		public _block_regex_definition_ (_block_regex_definition_ p__block_regex_definition_) : base (p__block_regex_definition_.id, p__block_regex_definition_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__block_regex_definition_.appInfo;
 			switch ((production_kind) p__block_regex_definition_.kind)
 			{
 				case production_kind.g__block_regex_definition__1:
@@ -204,8 +209,8 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <block regex definition>
-		public _attribute_list_optional_ m__attribute_list_optional_ { get; private set; }
-		public _regex_definition_ m__regex_definition_ { get; private set; }
+		[DataMember (Name = "m__attribute_list_optional_")] public _attribute_list_optional_ m__attribute_list_optional_ { get; private set; }
+		[DataMember (Name = "m__regex_definition_")] public _regex_definition_ m__regex_definition_ { get; private set; }
 		#endregion
 
 	};

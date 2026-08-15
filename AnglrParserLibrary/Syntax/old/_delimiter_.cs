@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <delimiter>
 	//
 
+	[DataContract]
 	public class	_delimiter_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <delimiter>
@@ -51,12 +53,15 @@ namespace Anglr.Parser
 			children[2] = m__right_square_bracket_ = p_token_1;
 		}
 
+		public _delimiter_ () { }
+
 		// Copy constructor
 
 		public _delimiter_ (_delimiter_ p__delimiter_) : base (p__delimiter_.id, p__delimiter_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__delimiter_.appInfo;
 			switch ((production_kind) p__delimiter_.kind)
 			{
 				case production_kind.g__delimiter__1:
@@ -214,9 +219,9 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <delimiter>
-		public SyntaxTreeToken m__left_square_bracket_ { get; private set; }
-		public _anglr_nested_rule_ m__anglr_nested_rule_ { get; private set; }
-		public SyntaxTreeToken m__right_square_bracket_ { get; private set; }
+		[DataMember (Name = "m__left_square_bracket_")] public SyntaxTreeToken m__left_square_bracket_ { get; private set; }
+		[DataMember (Name = "m__anglr_nested_rule_")] public _anglr_nested_rule_ m__anglr_nested_rule_ { get; private set; }
+		[DataMember (Name = "m__right_square_bracket_")] public SyntaxTreeToken m__right_square_bracket_ { get; private set; }
 		#endregion
 
 	};

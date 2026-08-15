@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <anglr definition list>
 	//
 
+	[DataContract]
 	public class	_anglr_definition_list_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <anglr definition list>
@@ -75,12 +77,15 @@ namespace Anglr.Parser
 			children[1] = m__anglr_definition_with_attribute_ = p__anglr_definition_with_attribute_;
 		}
 
+		public _anglr_definition_list_ () { }
+
 		// Copy constructor
 
 		public _anglr_definition_list_ (_anglr_definition_list_ p__anglr_definition_list_) : base (p__anglr_definition_list_.id, p__anglr_definition_list_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__anglr_definition_list_.appInfo;
 			switch ((production_kind) p__anglr_definition_list_.kind)
 			{
 				case production_kind.g__anglr_definition_list__1:
@@ -280,8 +285,8 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <anglr definition list>
-		public _anglr_definition_with_attribute_ m__anglr_definition_with_attribute_ { get; private set; }
-		public _anglr_definition_list_ m__anglr_definition_list_ { get; private set; }
+		[DataMember (Name = "m__anglr_definition_with_attribute_")] public _anglr_definition_with_attribute_ m__anglr_definition_with_attribute_ { get; private set; }
+		[DataMember (Name = "m__anglr_definition_list_")] public _anglr_definition_list_ m__anglr_definition_list_ { get; private set; }
 		#endregion
 
 	};

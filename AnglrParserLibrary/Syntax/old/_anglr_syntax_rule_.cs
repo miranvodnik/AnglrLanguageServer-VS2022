@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <anglr syntax rule>
 	//
 
+	[DataContract]
 	public class	_anglr_syntax_rule_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <anglr syntax rule>
@@ -83,12 +85,15 @@ namespace Anglr.Parser
 			children[4] = m__right_curly_bracket_ = p_token_2;
 		}
 
+		public _anglr_syntax_rule_ () { }
+
 		// Copy constructor
 
 		public _anglr_syntax_rule_ (_anglr_syntax_rule_ p__anglr_syntax_rule_) : base (p__anglr_syntax_rule_.id, p__anglr_syntax_rule_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__anglr_syntax_rule_.appInfo;
 			switch ((production_kind) p__anglr_syntax_rule_.kind)
 			{
 				case production_kind.g__anglr_syntax_rule__1:
@@ -333,14 +338,14 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <anglr syntax rule>
-		public _attribute_list_optional_ m__attribute_list_optional_ { get; private set; }
-		public SyntaxTreeToken m__identifier_ { get; private set; }
-		public SyntaxTreeToken m__colon_ { get; private set; }
-		public _anglr_syntax_production_list_ m__anglr_syntax_production_list_ { get; private set; }
-		public SyntaxTreeToken m__semicolon_ { get; private set; }
-		public SyntaxTreeToken m__left_curly_bracket_ { get; private set; }
-		public _anglr_syntax_rule_list_optional_ m__anglr_syntax_rule_list_optional_ { get; private set; }
-		public SyntaxTreeToken m__right_curly_bracket_ { get; private set; }
+		[DataMember (Name = "m__attribute_list_optional_")] public _attribute_list_optional_ m__attribute_list_optional_ { get; private set; }
+		[DataMember (Name = "m__identifier_")] public SyntaxTreeToken m__identifier_ { get; private set; }
+		[DataMember (Name = "m__colon_")] public SyntaxTreeToken m__colon_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_production_list_")] public _anglr_syntax_production_list_ m__anglr_syntax_production_list_ { get; private set; }
+		[DataMember (Name = "m__semicolon_")] public SyntaxTreeToken m__semicolon_ { get; private set; }
+		[DataMember (Name = "m__left_curly_bracket_")] public SyntaxTreeToken m__left_curly_bracket_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_rule_list_optional_")] public _anglr_syntax_rule_list_optional_ m__anglr_syntax_rule_list_optional_ { get; private set; }
+		[DataMember (Name = "m__right_curly_bracket_")] public SyntaxTreeToken m__right_curly_bracket_ { get; private set; }
 		#endregion
 
 	};

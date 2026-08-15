@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <name value list>
 	//
 
+	[DataContract]
 	public class	_name_value_list_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <name value list>
@@ -75,12 +77,15 @@ namespace Anglr.Parser
 			children[1] = m__name_value_pair_ = p__name_value_pair_;
 		}
 
+		public _name_value_list_ () { }
+
 		// Copy constructor
 
 		public _name_value_list_ (_name_value_list_ p__name_value_list_) : base (p__name_value_list_.id, p__name_value_list_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__name_value_list_.appInfo;
 			switch ((production_kind) p__name_value_list_.kind)
 			{
 				case production_kind.g__name_value_list__1:
@@ -280,8 +285,8 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <name value list>
-		public _name_value_pair_ m__name_value_pair_ { get; private set; }
-		public _name_value_list_ m__name_value_list_ { get; private set; }
+		[DataMember (Name = "m__name_value_pair_")] public _name_value_pair_ m__name_value_pair_ { get; private set; }
+		[DataMember (Name = "m__name_value_list_")] public _name_value_list_ m__name_value_list_ { get; private set; }
 		#endregion
 
 	};

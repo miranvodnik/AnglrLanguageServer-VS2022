@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <regular expression list>
 	//
 
+	[DataContract]
 	public class	_regular_expression_list_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <regular expression list>
@@ -75,12 +77,15 @@ namespace Anglr.Parser
 			children[1] = m__regular_expression_usage_ = p__regular_expression_usage_;
 		}
 
+		public _regular_expression_list_ () { }
+
 		// Copy constructor
 
 		public _regular_expression_list_ (_regular_expression_list_ p__regular_expression_list_) : base (p__regular_expression_list_.id, p__regular_expression_list_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__regular_expression_list_.appInfo;
 			switch ((production_kind) p__regular_expression_list_.kind)
 			{
 				case production_kind.g__regular_expression_list__1:
@@ -280,8 +285,8 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <regular expression list>
-		public _regular_expression_usage_ m__regular_expression_usage_ { get; private set; }
-		public _regular_expression_list_ m__regular_expression_list_ { get; private set; }
+		[DataMember (Name = "m__regular_expression_usage_")] public _regular_expression_usage_ m__regular_expression_usage_ { get; private set; }
+		[DataMember (Name = "m__regular_expression_list_")] public _regular_expression_list_ m__regular_expression_list_ { get; private set; }
 		#endregion
 
 	};

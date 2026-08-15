@@ -157,14 +157,16 @@ namespace AnglrLangExtension
         {
             Logger?.DebugLine ($"render");
             dc.PushTransform (new TranslateTransform (HorizontalOffset, VerticalOffset));
+            dc.PushClip (new RectangleGeometry (new Rect (0, 0, ViewportWidth, ViewportHeight)));
             foreach (var visual in _visualCollection)
             {
                 DrawingVisual drawingVisual = visual as DrawingVisual;
                 if (drawingVisual == null)
                     continue;
                 Logger?.DebugLine ($"render visual {drawingVisual.ContentBounds}");
-                dc.DrawDrawing (drawingVisual.Drawing);
+                //dc.DrawDrawing (drawingVisual.Drawing);
             }
+            dc.Pop ();
             dc.Pop ();
         }
     }

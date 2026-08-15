@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <action>
 	//
 
+	[DataContract]
 	public class	_action_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <action>
@@ -145,12 +147,15 @@ namespace Anglr.Parser
 			children[0] = m__pop_action_ = p__pop_action_;
 		}
 
+		public _action_ () { }
+
 		// Copy constructor
 
 		public _action_ (_action_ p__action_) : base (p__action_.id, p__action_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__action_.appInfo;
 			switch ((production_kind) p__action_.kind)
 			{
 				case production_kind.g__action__1:
@@ -428,11 +433,11 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <action>
-		public _skip_action_ m__skip_action_ { get; private set; }
-		public _terminal_action_ m__terminal_action_ { get; private set; }
-		public _event_action_ m__event_action_ { get; private set; }
-		public _push_action_ m__push_action_ { get; private set; }
-		public _pop_action_ m__pop_action_ { get; private set; }
+		[DataMember (Name = "m__skip_action_")] public _skip_action_ m__skip_action_ { get; private set; }
+		[DataMember (Name = "m__terminal_action_")] public _terminal_action_ m__terminal_action_ { get; private set; }
+		[DataMember (Name = "m__event_action_")] public _event_action_ m__event_action_ { get; private set; }
+		[DataMember (Name = "m__push_action_")] public _push_action_ m__push_action_ { get; private set; }
+		[DataMember (Name = "m__pop_action_")] public _pop_action_ m__pop_action_ { get; private set; }
 		#endregion
 
 	};

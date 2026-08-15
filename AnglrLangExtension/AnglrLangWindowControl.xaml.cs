@@ -440,19 +440,12 @@ namespace AnglrLangExtension
                 anglrDetailViewItemWindow.FileName = name;
                 anglrDetailViewItemWindow.AnglrGetParserSyntaxRuleDatas = new AnglrGetParserSyntaxRuleDataCollection (anglrGetParserSyntaxRulesResult?.SyntaxRuleList);
                 AnglrDrawingDictionary dictionary = AnglrSyntaxRuleDrawingBuilder.BuildCanonicalSyntaxRulesDrawings (anglrGetParserSyntaxRulesResult, logger);
-                List<AnglrRawDrawingVisual> syntaxVisuals = AnglrSyntaxRuleDrawingBuilder.BuildSyntaxRulesVisual (anglrGetSyntaxTreeResult, logger);
-                double width = 0;
-                double height = 0;
+                AnglrRawDrawingVisual syntaxVisuals = AnglrSyntaxRuleDrawingBuilder.BuildSyntaxRulesVisual (anglrGetSyntaxTreeResult, logger);
                 syntaxRuleVisual.Logger = logger;
                 syntaxRuleVisual.Clear ();
-                foreach (var syntaxVisual in syntaxVisuals)
-                {
-                    syntaxRuleVisual.AddVisual (syntaxVisual);
-                    width = Math.Max (width, syntaxVisual.Width);
-                    height += syntaxVisual.Height;
-                }
-                syntaxRuleVisual.Width = width;
-                syntaxRuleVisual.Height = height;
+                syntaxRuleVisual.AddVisual (syntaxVisuals);
+                syntaxRuleVisual.Width = syntaxVisuals.Width;
+                syntaxRuleVisual.Height = syntaxVisuals.Height;
 
                 if (magicNr.HasValue)
                     AnglrLangDictionary.AddItem (magicNr.Value, (anglrLangItem, anglrStateItem, anglrGetParserSyntaxRulesResult, dictionary));
@@ -1404,7 +1397,6 @@ namespace AnglrLangExtension
                 new PointHitTestParameters (p)
             );
 
-            logger?.InfoLine ($"mouse down in ({p})");
             foreach (Visual visual in visuals)
             {
                 Vector offset = new Vector (p.X, p.Y);
@@ -1412,11 +1404,11 @@ namespace AnglrLangExtension
                 {
                     Rect bounds = parent.ContentBounds;
                     bounds.Union (parent.DescendantBounds);
-                    logger?.InfoLine ($"visual: offset = {parent.Offset}, bounds = {bounds}");
                     offset -= parent.Offset;
-                    logger?.InfoLine ($"offset = ({offset})");
                 }
-                (visual as IAnglrEventHandler)?.OnMouseDown (sender, e, new Point (offset.X, offset.Y), logger);
+                logger?.InfoLine ($"*** MOUSE DOWN ***, point = {(Point) offset}");
+                AnglrRawDrawingVisual drawingVisual = visual as AnglrRawDrawingVisual;
+                drawingVisual?.AnglrVisualizer?.HitTest (sender, e, drawingVisual, (Point) offset);
             }
         }
 

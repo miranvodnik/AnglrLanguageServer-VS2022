@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <regex definition>
 	//
 
+	[DataContract]
 	public class	_regex_definition_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <regex definition>
@@ -49,12 +51,15 @@ namespace Anglr.Parser
 			children[1] = m__regular_expression_ = p_token_1;
 		}
 
+		public _regex_definition_ () { }
+
 		// Copy constructor
 
 		public _regex_definition_ (_regex_definition_ p__regex_definition_) : base (p__regex_definition_.id, p__regex_definition_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__regex_definition_.appInfo;
 			switch ((production_kind) p__regex_definition_.kind)
 			{
 				case production_kind.g__regex_definition__1:
@@ -202,8 +207,8 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <regex definition>
-		public SyntaxTreeToken m__identifier_ { get; private set; }
-		public SyntaxTreeToken m__regular_expression_ { get; private set; }
+		[DataMember (Name = "m__identifier_")] public SyntaxTreeToken m__identifier_ { get; private set; }
+		[DataMember (Name = "m__regular_expression_")] public SyntaxTreeToken m__regular_expression_ { get; private set; }
 		#endregion
 
 	};

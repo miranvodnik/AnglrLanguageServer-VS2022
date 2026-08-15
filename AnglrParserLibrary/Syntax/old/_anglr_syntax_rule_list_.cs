@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <anglr syntax rule list>
 	//
 
+	[DataContract]
 	public class	_anglr_syntax_rule_list_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <anglr syntax rule list>
@@ -75,12 +77,15 @@ namespace Anglr.Parser
 			children[1] = m__anglr_syntax_rule_ = p__anglr_syntax_rule_;
 		}
 
+		public _anglr_syntax_rule_list_ () { }
+
 		// Copy constructor
 
 		public _anglr_syntax_rule_list_ (_anglr_syntax_rule_list_ p__anglr_syntax_rule_list_) : base (p__anglr_syntax_rule_list_.id, p__anglr_syntax_rule_list_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__anglr_syntax_rule_list_.appInfo;
 			switch ((production_kind) p__anglr_syntax_rule_list_.kind)
 			{
 				case production_kind.g__anglr_syntax_rule_list__1:
@@ -280,8 +285,8 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <anglr syntax rule list>
-		public _anglr_syntax_rule_ m__anglr_syntax_rule_ { get; private set; }
-		public _anglr_syntax_rule_list_ m__anglr_syntax_rule_list_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_rule_")] public _anglr_syntax_rule_ m__anglr_syntax_rule_ { get; private set; }
+		[DataMember (Name = "m__anglr_syntax_rule_list_")] public _anglr_syntax_rule_list_ m__anglr_syntax_rule_list_ { get; private set; }
 		#endregion
 
 	};

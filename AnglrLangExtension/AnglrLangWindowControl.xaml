@@ -116,7 +116,7 @@
                     <GridSplitter Width="5" BorderThickness="1" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Columns" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="#FFB4B4B4"/>
                     <Grid Grid.Row="0" Grid.Column="2" >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>

@@ -4,10 +4,12 @@ using Anglr.Parser.SyntaxTree;
 using AnglrJsonRpcMethods;
 using AnglrLibrary;
 using AnglrLogLibrary;
+using AnglrParserLibrary;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.SymbolStore;
+using System.Drawing.Drawing2D;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -16,9 +18,32 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 
 namespace AnglrLangExtension
 {
+    public class AnglrVisualPosition : Stack<Vector>
+    {
+        public Vector Position { get; private set; }
+        public AnglrVisualPosition () => Push (Position = new Vector (0, 0));
+        public Vector PushPosition (Vector vector)
+        {
+            Push (vector);
+            Position += vector;
+            return Position;
+        }
+        public Vector PushPosition (double x, double y) => PushPosition (new Vector (x, y));
+        public Vector PopPosition ()
+        {
+            if (Count <= 1)
+                return Position;
+            Vector vector = Pop ();
+            Position -= vector;
+            return Position;
+        }
+    }
+
+    public class HitList : Dictionary<int, AnglrRawDrawingVisual> { }
 
     public class AnglrDrawingVisual : DrawingVisual
     {
@@ -46,12 +71,13 @@ namespace AnglrLangExtension
         public int Index { get; protected set; }
     }
 
-    public class AnglrRawDrawingVisual : DrawingVisual
+    public abstract class AnglrRawDrawingVisual : DrawingVisual
     {
         //
         // common properties
         //
 
+        public static int IdCounter;
         public static CultureInfo CultureInfo { get; set; } = CultureInfo.InvariantCulture;
         public static FlowDirection FlowDirection { get; set; } = FlowDirection.LeftToRight;
         public static string TypefaceName { get; set; } = "Consolas";
@@ -72,19 +98,35 @@ namespace AnglrLangExtension
         // object properties
         //
 
+        public int Id { get; private set; }
+        public AnglrVisualizer AnglrVisualizer { get; set; }
         public double ConnectorOffset { get; set; }
         public double Width { get; set; }
         public double Height { get; set; }
+        public Vector Position { get; set; }
+        public Size Size => new Size (Width, Height);
+        public Rect Bounds => new Rect ((Point) Position, Size);
+        public AnglrRawDrawingVisual AnglrVisualParent
+        {
+            get => _AnglrVisualParent;
+            set => (_AnglrVisualParent = value).AnglrVisualChildren.Add (this);
+        }
+        public List<AnglrRawDrawingVisual> AnglrVisualChildren { get; } = new List<AnglrRawDrawingVisual> ();
+        private AnglrRawDrawingVisual _AnglrVisualParent = null;
+
+        public AnglrRawDrawingVisual (AnglrVisualizer anglrVisualizer)
+        {
+            Id = ++IdCounter;
+            AnglrVisualizer = anglrVisualizer;
+            Position = new Vector (0, 0);
+        }
+
+        public abstract void Display ();
     }
 
     public interface IAnglrVisualCloneable
     {
         AnglrDrawingVisual Clone ();
-    }
-
-    public interface IAnglrRawVisualCloneable
-    {
-        AnglrRawDrawingVisual Clone ();
     }
 
     public interface IAnglrEventHandler
@@ -265,14 +307,14 @@ namespace AnglrLangExtension
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
-    public class AnglrRawTerminalSymbolVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    public class AnglrRawTerminalSymbolVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public SimpleSymbolToken SymbolToken { get; private set; }
-        public AnglrRawTerminalSymbolVisual (SimpleSymbolToken symbolToken)
+        public AnglrRawTerminalSymbolVisual (AnglrVisualizer anglrVisualizer, SimpleSymbolToken symbolToken) : base (anglrVisualizer)
         {
             SymbolToken = symbolToken;
         }
-        public AnglrRawTerminalSymbolVisual (AnglrRawTerminalSymbolVisual terminalSymbol)
+        public AnglrRawTerminalSymbolVisual (AnglrRawTerminalSymbolVisual terminalSymbol) : base (terminalSymbol.AnglrVisualizer)
         {
             SymbolToken = terminalSymbol.SymbolToken;
         }
@@ -301,29 +343,65 @@ namespace AnglrLangExtension
             Drawing.Freeze ();
         }
 
-        public AnglrRawDrawingVisual Clone ()
+        public override void Display ()
         {
-            AnglrRawTerminalSymbolVisual cloned = new AnglrRawTerminalSymbolVisual (this);
-            if (Transform != null)
-                cloned.Transform = Transform.Clone ();
-            cloned.Offset = Offset;
-            using (var dc = cloned.RenderOpen ())
-            {
-                dc.DrawDrawing (Drawing.Clone ());
-            }
-            cloned.Drawing.Freeze ();
-            return cloned;
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"terminal symbol, id = {Id}, position = {Position}, size = {Size}, name = {SymbolToken.Name}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
+        }
+
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
         }
     }
 
-    public class AnglrRawConstantSymbolVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    public class AnglrRawConstantSymbolVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public SimpleSymbolToken SymbolToken { get; private set; }
-        public AnglrRawConstantSymbolVisual (SimpleSymbolToken symbolToken)
+        public AnglrRawConstantSymbolVisual (AnglrVisualizer anglrVisualizer, SimpleSymbolToken symbolToken) : base (anglrVisualizer)
         {
             SymbolToken = symbolToken;
         }
-        public AnglrRawConstantSymbolVisual (AnglrRawConstantSymbolVisual terminalSymbol)
+        public AnglrRawConstantSymbolVisual (AnglrRawConstantSymbolVisual terminalSymbol) : base (terminalSymbol.AnglrVisualizer)
         {
             SymbolToken = terminalSymbol.SymbolToken;
         }
@@ -352,29 +430,65 @@ namespace AnglrLangExtension
             Drawing.Freeze ();
         }
 
-        public AnglrRawDrawingVisual Clone ()
+        public override void Display ()
         {
-            AnglrRawConstantSymbolVisual cloned = new AnglrRawConstantSymbolVisual (this);
-            if (Transform != null)
-                cloned.Transform = Transform.Clone ();
-            cloned.Offset = Offset;
-            using (var dc = cloned.RenderOpen ())
-            {
-                dc.DrawDrawing (Drawing.Clone ());
-            }
-            cloned.Drawing.Freeze ();
-            return cloned;
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"constant symbol, id = {Id}, position = {Position}, size = {Size}, name = {SymbolToken.Name}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (constant symbol, id = {Id}, value =  {SymbolToken.Name})");
+        }
+
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
         }
     }
 
-    public class AnglrRawNonTerminalSymbolVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    public class AnglrRawNonTerminalSymbolVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public SimpleSymbolToken SymbolToken { get; private set; }
-        public AnglrRawNonTerminalSymbolVisual (SimpleSymbolToken symbolToken)
+        public AnglrRawNonTerminalSymbolVisual (AnglrVisualizer anglrVisualizer, SimpleSymbolToken symbolToken) : base (anglrVisualizer)
         {
             SymbolToken = symbolToken;
         }
-        public AnglrRawNonTerminalSymbolVisual (AnglrRawNonTerminalSymbolVisual terminalSymbol)
+        public AnglrRawNonTerminalSymbolVisual (AnglrRawNonTerminalSymbolVisual terminalSymbol) : base (terminalSymbol.AnglrVisualizer)
         {
             SymbolToken = terminalSymbol.SymbolToken;
         }
@@ -403,25 +517,61 @@ namespace AnglrLangExtension
             Drawing.Freeze ();
         }
 
-        public AnglrRawDrawingVisual Clone ()
+        public override void Display ()
         {
-            AnglrRawNonTerminalSymbolVisual cloned = new AnglrRawNonTerminalSymbolVisual (this);
-            if (Transform != null)
-                cloned.Transform = Transform.Clone ();
-            cloned.Offset = Offset;
-            using (var dc = cloned.RenderOpen ())
-            {
-                dc.DrawDrawing (Drawing.Clone ());
-            }
-            cloned.Drawing.Freeze ();
-            return cloned;
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"non-terminal symbol, id = {Id}, position = {Position}, size = {Size}, name = {SymbolToken.Name}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (non-terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
+        }
+
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
         }
     }
 
-    public class AnglrSyntaxRuleNameVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    public class AnglrSyntaxRuleNameVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public SyntaxTreeToken SymbolToken { get; private set; }
-        public AnglrSyntaxRuleNameVisual (SyntaxTreeToken symbolToken)
+        public AnglrSyntaxRuleNameVisual (AnglrVisualizer anglrVisualizer, SyntaxTreeToken symbolToken) : base (anglrVisualizer)
         {
             SymbolToken = symbolToken;
         }
@@ -451,16 +601,61 @@ namespace AnglrLangExtension
             Drawing.Freeze ();
         }
 
-        public AnglrRawDrawingVisual Clone ()
+        public override void Display ()
         {
-            return null;
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"syntax rule name, id = {Id}, position = {Position}, size = {Size}, name = {SymbolToken.text}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (syntax rule name, id = {Id}, value =  {SymbolToken.text})");
+        }
+
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
         }
     }
 
-    public class AnglrSyntaxGroupNameVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    public class AnglrSyntaxGroupNameVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public SyntaxTreeToken SymbolToken { get; private set; }
-        public AnglrSyntaxGroupNameVisual (SyntaxTreeToken symbolToken)
+        public AnglrSyntaxGroupNameVisual (AnglrVisualizer anglrVisualizer, SyntaxTreeToken symbolToken) : base (anglrVisualizer)
         {
             SymbolToken = symbolToken;
         }
@@ -490,23 +685,69 @@ namespace AnglrLangExtension
             Drawing.Freeze ();
         }
 
-        public AnglrRawDrawingVisual Clone ()
+        public override void Display ()
         {
-            return null;
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"syntax group name, id = {Id}, position = {Position}, size = {Size}, name = {SymbolToken.text}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (syntax group name, id = {Id}, value =  {SymbolToken.text})");
+        }
+
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
         }
     }
 
-    public class AnglrGeneralizedNameVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    public class AnglrGeneralizedNameVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public AnglrRawDrawingVisual GnameVisual { get; private set; }
         public _cardinality_ Cardinality { get; private set; }
         public AnglrRawDrawingVisual DelimiterVisual { get; private set; }
         public _cardinality_delimiter_ CardinalityDelimiter { get; private set; }
 
-        public AnglrGeneralizedNameVisual (AnglrRawDrawingVisual gnameVisual, _cardinality_delimiter_ cardinalityDelimiter)
+        public AnglrGeneralizedNameVisual (AnglrVisualizer anglrVisualizer, _g_name_ name) : base (anglrVisualizer)
         {
-            GnameVisual = gnameVisual;
-            CardinalityDelimiter = cardinalityDelimiter;
+            if (((AppInfo) name.m__g_name_.appInfo).TryGetValue (AppInfoType.Visual, out var gnameVisual))
+                GnameVisual = gnameVisual as AnglrRawDrawingVisual;
+            CardinalityDelimiter = name.m__cardinality_delimiter_;
             Cardinality = CardinalityDelimiter.m__cardinality_;
             _delimiter_ delimiter = CardinalityDelimiter.m__delimiter_optional_.m__delimiter_;
             if ((delimiter != null) && ((AppInfo) delimiter.m__anglr_nested_rule_.appInfo).TryGetValue (AppInfoType.Visual, out var visualObject))
@@ -589,6 +830,8 @@ namespace AnglrLangExtension
 
         private void DrawOptional ()
         {
+            AnglrVisualPosition position = new AnglrVisualPosition ();
+            double x, y;
             ConnectorOffset = 2 * Margin + GnameVisual.ConnectorOffset;
             Width = 4 * Margin + GnameVisual.Width;
             Height = 2 * Margin + GnameVisual.Height;
@@ -600,14 +843,19 @@ namespace AnglrLangExtension
                 dc.DrawLine (Pen, new Point (0, 0), new Point (Width, 0));
                 dc.DrawLine (Pen, new Point (Width, 0), new Point (Width, ConnectorOffset));
                 dc.DrawLine (Pen, new Point (Width, ConnectorOffset), new Point (Width - 2 * Margin, ConnectorOffset));
-                dc.PushTransform (new TranslateTransform (2 * Margin, 2 * Margin));
+                dc.PushTransform (new TranslateTransform (x = 2 * Margin, y = 2 * Margin));
+                GnameVisual.Position += position.PushPosition (x, y);
                 dc.DrawDrawing (GnameVisual.Drawing);
+                GnameVisual.AnglrVisualParent = this;
                 dc.Pop ();
+                position.PopPosition ();
             }
         }
 
         private void DrawRepeat ()
         {
+            AnglrVisualPosition position = new AnglrVisualPosition ();
+            double x, y;
             ConnectorOffset = GnameVisual.ConnectorOffset;
             if (DelimiterVisual != null)
             {
@@ -636,12 +884,18 @@ namespace AnglrLangExtension
                     dc.DrawLine (Pen, new Point (Width - gwidth, gheight), new Point (Width, gheight));
                     dc.DrawLine (Pen, new Point (Width, gheight), new Point (Width, dheight));
                     dc.DrawLine (Pen, new Point (Width, dheight), new Point (Width - dwidth, dheight));
-                    dc.PushTransform (new TranslateTransform (gwidth, 0));
+                    dc.PushTransform (new TranslateTransform (x = gwidth, y = 0));
+                    GnameVisual.Position += position.PushPosition (x, y);
                     dc.DrawDrawing (GnameVisual.Drawing);
+                    GnameVisual.AnglrVisualParent = this;
                     dc.Pop ();
-                    dc.PushTransform (new TranslateTransform (dwidth, GnameVisual.Height + 2 * Margin));
+                    position.PopPosition ();
+                    dc.PushTransform (new TranslateTransform (x = dwidth, y = GnameVisual.Height + 2 * Margin));
+                    DelimiterVisual.Position += position.PushPosition (x, y);
                     dc.DrawDrawing (DelimiterVisual.Drawing);
+                    DelimiterVisual.AnglrVisualParent = this;
                     dc.Pop ();
+                    position.PopPosition ();
                 }
             }
             else
@@ -655,15 +909,21 @@ namespace AnglrLangExtension
                     dc.DrawLine (Pen, new Point (0, Height), new Point (Width, Height));
                     dc.DrawLine (Pen, new Point (Width, Height), new Point (Width, ConnectorOffset));
                     dc.DrawLine (Pen, new Point (Width, ConnectorOffset), new Point (Width - 2 * Margin, ConnectorOffset));
-                    dc.PushTransform (new TranslateTransform (2 * Margin, 0));
+                    dc.PushTransform (new TranslateTransform (x = 2 * Margin, y = 0));
+                    GnameVisual.Position += position.PushPosition (x, y);
                     dc.DrawDrawing (GnameVisual.Drawing);
+                    GnameVisual.AnglrVisualParent = this;
                     dc.Pop ();
+                    position.PopPosition ();
                 }
             }
         }
 
         private void DrawOptionalRepeat ()
         {
+            AnglrVisualPosition position = new AnglrVisualPosition ();
+            double x, y;
+
             ConnectorOffset = 2 * Margin + GnameVisual.ConnectorOffset;
             if (DelimiterVisual != null)
             {
@@ -696,12 +956,18 @@ namespace AnglrLangExtension
                     dc.DrawLine (Pen, new Point (2 * Margin, dheight), new Point (dwidth, dheight));
                     dc.DrawLine (Pen, new Point (Width - 2 * Margin, gheight), new Point (Width - 2 * Margin, dheight));
                     dc.DrawLine (Pen, new Point (Width - 2 * Margin, dheight), new Point (Width - dwidth, dheight));
-                    dc.PushTransform (new TranslateTransform (gwidth, 2 * Margin));
+                    dc.PushTransform (new TranslateTransform (x = gwidth, y = 2 * Margin));
+                    GnameVisual.Position += position.PushPosition (x, y);
                     dc.DrawDrawing (GnameVisual.Drawing);
+                    GnameVisual.AnglrVisualParent = this;
                     dc.Pop ();
-                    dc.PushTransform (new TranslateTransform (dwidth, GnameVisual.Height + 4 * Margin));
+                    position.PopPosition ();
+                    dc.PushTransform (new TranslateTransform (x = dwidth, y = GnameVisual.Height + 4 * Margin));
+                    DelimiterVisual.Position += position.PushPosition (x, y);
                     dc.DrawDrawing (DelimiterVisual.Drawing);
+                    DelimiterVisual.AnglrVisualParent = this;
                     dc.Pop ();
+                    position.PopPosition ();
                 }
             }
             else
@@ -724,34 +990,86 @@ namespace AnglrLangExtension
                     dc.DrawLine (Pen, new Point (2 * Margin, ConnectorOffset), new Point (2 * Margin, Height));
                     dc.DrawLine (Pen, new Point (2 * Margin, Height), new Point (Width - 2 * Margin, Height));
                     dc.DrawLine (Pen, new Point (Width - 2 * Margin, Height), new Point (Width - 2 * Margin, ConnectorOffset));
-                    dc.PushTransform (new TranslateTransform (4 * Margin, 2 * Margin));
+                    dc.PushTransform (new TranslateTransform (x = 4 * Margin, y = 2 * Margin));
+                    GnameVisual.Position += position.PushPosition (x, y);
                     dc.DrawDrawing (GnameVisual.Drawing);
+                    GnameVisual.AnglrVisualParent = this;
                     dc.Pop ();
+                    position.PopPosition ();
                 }
             }
         }
 
         private void DrawInternal ()
         {
+            AnglrVisualPosition position = new AnglrVisualPosition ();
+            double x, y;
+
             ConnectorOffset = GnameVisual.ConnectorOffset;
             Width = GnameVisual.Width;
             Height = GnameVisual.Height;
             using (var dc = RenderOpen ())
             {
                 dc.DrawDrawing (GnameVisual.Drawing);
+                GnameVisual.AnglrVisualParent = this;
             }
         }
 
-        public AnglrRawDrawingVisual Clone ()
+        public override void Display ()
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"g-name, id = {Id}, position = {Position}, size = {Size}, value = {CardinalityDelimiter.parent.Emit (-1).Substring(0, 100)}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (g-name, id = {Id}, value =  {CardinalityDelimiter.parent.Emit (-1)})");
+        }
+
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
             throw new NotImplementedException ();
         }
     }
 
-    public class AnglrNameListVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    public class AnglrNameListVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public _name_list_ NameList { get; private set; }
-        public AnglrNameListVisual (_name_list_ nameList)
+        public AnglrNameListVisual (AnglrVisualizer anglrVisualizer, _name_list_ nameList) : base (anglrVisualizer)
         {
             NameList = nameList;
             NameList.Iterate
@@ -796,6 +1114,9 @@ namespace AnglrLangExtension
 
         public void Draw ()
         {
+            AnglrVisualPosition position = new AnglrVisualPosition ();
+            double x, y;
+
             double width = 0;
             using (var dc = RenderOpen ())
             {
@@ -811,50 +1132,100 @@ namespace AnglrLangExtension
                         AnglrRawDrawingVisual drawingVisual = visual as AnglrRawDrawingVisual;
                         if (drawingVisual == null)
                             return counter;
-                        dc.PushTransform (new TranslateTransform (width, 0));
+                        dc.PushTransform (new TranslateTransform (x = width, y = 0));
+                        position.PushPosition (x, y);
                         if (counter > 0)
                         {
                             dc.DrawLine (Pen, new Point (0, ConnectorOffset), new Point (2 * Margin, ConnectorOffset));
-                            dc.PushTransform (new TranslateTransform (2 * Margin, 0));
+                            dc.PushTransform (new TranslateTransform (x = 2 * Margin, y = 0));
+                            position.PushPosition (x, y);
                         }
-                        dc.PushTransform (new TranslateTransform (0, ConnectorOffset - drawingVisual.ConnectorOffset));
+                        dc.PushTransform (new TranslateTransform (x = 0, y = ConnectorOffset - drawingVisual.ConnectorOffset));
+                        drawingVisual.Position += position.PushPosition (x, y);
                         dc.DrawDrawing (drawingVisual.Drawing);
+                        drawingVisual.AnglrVisualParent = this;
                         dc.Pop ();
+                        position.PopPosition ();
                         width += drawingVisual.Width;
                         if (counter > 0)
                         {
                             width += 2 * Margin;
                             dc.Pop ();
+                            position.PopPosition ();
                         }
                         dc.Pop ();
+                        position.PopPosition ();
                         return counter + 1;
                     }
                 );
             }
         }
 
-        public AnglrRawDrawingVisual Clone ()
+        public override void Display ()
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"name list, id = {Id}, position = {Position}, size = {Size}, value = {NameList.Emit (-1)}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (name list, id = {Id}, value =  {NameList.Emit (-1)})");
+        }
+
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
             throw new NotImplementedException ();
         }
     }
 
-    public class AnglrNestedRuleVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    public class AnglrNestedRuleVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public _anglr_nested_rule_ NestedRule { get; private set; }
         public AnglrRawDrawingVisual SyntaxRuleNameVisual { get; private set; }
-        public AnglrNestedRuleVisual (_anglr_nested_rule_ nestedRule)
+        public AnglrNestedRuleVisual (AnglrVisualizer anglrVisualizer, _anglr_nested_rule_ nestedRule) : base (anglrVisualizer)
         {
             NestedRule = nestedRule;
             _anglr_syntax_production_list_name_optional_ list_Name_Optional_ = NestedRule.m__anglr_syntax_production_list_name_optional_;
             if ((_anglr_syntax_production_list_name_optional_.production_kind) list_Name_Optional_.kind == _anglr_syntax_production_list_name_optional_.production_kind.g__anglr_syntax_production_list_name_optional__2)
             {
-                AppInfo appInfo = list_Name_Optional_.m__anglr_syntax_production_list_name_.m__identifier_.appInfo as AppInfo;
+                AppInfo appInfo = list_Name_Optional_.m__anglr_syntax_production_list_name_.appInfo as AppInfo;
                 if ((appInfo != null) && appInfo.TryGetValue (AppInfoType.Visual, out var visual))
                     SyntaxRuleNameVisual = visual as AnglrRawDrawingVisual;
             }
-            if (SyntaxRuleNameVisual == null)
-                SyntaxRuleNameVisual = AnglrSyntaxRuleDrawingBuilder.DrawSyntaxRuleName (new SyntaxTreeToken (-1, -1, -1, "<< UNKNOWN >>"));
             NestedRule.m__anglr_syntax_production_list_.Iterate
             (
                 0,
@@ -870,21 +1241,39 @@ namespace AnglrLangExtension
                     if (Width < drawingVisual.Width)
                         Width = drawingVisual.Width;
                     Height += drawingVisual.Height;
-                    if (counter == 0)
+                    if ((counter == 0) && (SyntaxRuleNameVisual == null))
                         ConnectorOffset = drawingVisual.ConnectorOffset;
-                    else
-                        Height += 2 * Margin;
+                    Height += 2 * Margin;
                     return counter + 1;
                 }
             );
-            Width += 4 * Margin;
+            if (SyntaxRuleNameVisual != null)
+            {
+                Height += SyntaxRuleNameVisual.Height + 2 * Margin;
+                ConnectorOffset = SyntaxRuleNameVisual.Height / 2;
+                Width += 8 * Margin;
+                Width = Math.Max (Width, SyntaxRuleNameVisual.Width + 2 * Margin);
+            }
+            else
+                Width += 4 * Margin;
         }
         public void Draw ()
         {
+            AnglrVisualPosition position = new AnglrVisualPosition ();
+            double x, y;
+
             double height = 0;
             double connectionOffset = 0;
             using (var dc = RenderOpen ())
             {
+                if (SyntaxRuleNameVisual != null)
+                {
+                    dc.DrawDrawing (SyntaxRuleNameVisual.Drawing);
+                    SyntaxRuleNameVisual.AnglrVisualParent = this;
+                    dc.DrawLine (Pen, new Point (SyntaxRuleNameVisual.Width, ConnectorOffset), new Point (Width, ConnectorOffset));
+                    dc.PushTransform (new TranslateTransform (x = 8 * Margin, y = SyntaxRuleNameVisual.Height + 2 * Margin));
+                    position.PushPosition (x, y);
+                }
                 NestedRule.m__anglr_syntax_production_list_.Iterate
                 (
                     0,
@@ -899,29 +1288,88 @@ namespace AnglrLangExtension
                             return counter;
                         connectionOffset = height + drawingVisual.ConnectorOffset;
                         dc.DrawLine (Pen, new Point (0, height + drawingVisual.ConnectorOffset), new Point (2 * Margin, height + drawingVisual.ConnectorOffset));
-                        dc.PushTransform (new TranslateTransform (2 * Margin, height));
+                        dc.PushTransform (new TranslateTransform (x = 2 * Margin, y = height));
+                        drawingVisual.Position += position.PushPosition (x, y);
                         dc.DrawDrawing (drawingVisual.Drawing);
+                        drawingVisual.AnglrVisualParent = this;
                         dc.Pop ();
-                        dc.DrawLine (Pen, new Point (drawingVisual.Width + 2 * Margin, height + drawingVisual.ConnectorOffset), new Point (Width, height + drawingVisual.ConnectorOffset));
+                        position.PopPosition ();
+                        if (SyntaxRuleNameVisual == null)
+                            dc.DrawLine (Pen, new Point (drawingVisual.Width + 2 * Margin, height + drawingVisual.ConnectorOffset), new Point (Width, height + drawingVisual.ConnectorOffset));
                         height += drawingVisual.Height + 2 * Margin;
                         return counter + 1;
                     }
                 );
-                dc.DrawLine (Pen, new Point (0, ConnectorOffset), new Point (0, connectionOffset));
-                dc.DrawLine (Pen, new Point (Width, ConnectorOffset), new Point (Width, connectionOffset));
+                if (SyntaxRuleNameVisual != null)
+                {
+                    dc.DrawLine (Pen, new Point (0, -2 * Margin), new Point (0, connectionOffset));
+                    dc.Pop ();
+                    position.PopPosition ();
+                }
+                else
+                {
+                    dc.DrawLine (Pen, new Point (0, ConnectorOffset), new Point (0, connectionOffset));
+                    dc.DrawLine (Pen, new Point (Width, ConnectorOffset), new Point (Width, connectionOffset));
+                }
             }
         }
-        public AnglrRawDrawingVisual Clone ()
+
+        public override void Display ()
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"nested syntax rule, id = {Id}, position = {Position}, size = {Size}, value = {NestedRule.Emit (-1)}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (nested syntax rule, id = {Id}, value =  {NestedRule.Emit (-1)})");
+        }
+
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
             throw new NotImplementedException ();
         }
     }
 
-    public class AnglrSyntaxRuleVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    public class AnglrSyntaxRuleVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public _anglr_syntax_rule_ SyntaxRule { get; private set; }
         public AnglrRawDrawingVisual SyntaxRuleNameVisual { get; private set; }
-        public AnglrSyntaxRuleVisual (_anglr_syntax_rule_ syntaxRule)
+        public AnglrSyntaxRuleVisual (AnglrVisualizer anglrVisualizer, _anglr_syntax_rule_ syntaxRule) : base (anglrVisualizer)
         {
             SyntaxRule = syntaxRule;
             SyntaxTreeToken ruleName = SyntaxRule.m__identifier_;
@@ -957,6 +1405,9 @@ namespace AnglrLangExtension
 
         public void Draw ()
         {
+            AnglrVisualPosition position = new AnglrVisualPosition ();
+            double x, y;
+
             double height = 0;
             double connectionOffset = 0;
             using (var dc = RenderOpen ())
@@ -964,10 +1415,15 @@ namespace AnglrLangExtension
                 if (SyntaxRuleNameVisual != null)
                 {
                     dc.DrawDrawing (SyntaxRuleNameVisual.Drawing);
-                    dc.PushTransform (new TranslateTransform (8 * Margin, SyntaxRuleNameVisual.Height + 2 * Margin));
+                    SyntaxRuleNameVisual.AnglrVisualParent = this;
+                    dc.PushTransform (new TranslateTransform (x = 8 * Margin, y = SyntaxRuleNameVisual.Height + 2 * Margin));
+                    position.PushPosition (x, y);
                 }
                 else
-                    dc.PushTransform (new TranslateTransform (8 * Margin, 0));
+                {
+                    dc.PushTransform (new TranslateTransform (x = 8 * Margin, y = 0));
+                    position.PushPosition (x, y);
+                }
                 SyntaxRule.m__anglr_syntax_production_list_.Iterate
                 (
                     0,
@@ -982,9 +1438,12 @@ namespace AnglrLangExtension
                             return counter;
                         connectionOffset = height + drawingVisual.ConnectorOffset;
                         dc.DrawLine (Pen, new Point (0, height + drawingVisual.ConnectorOffset), new Point (2 * Margin, height + drawingVisual.ConnectorOffset));
-                        dc.PushTransform (new TranslateTransform (2 * Margin, height));
+                        dc.PushTransform (new TranslateTransform (x = 2 * Margin, y = height));
+                        drawingVisual.Position += position.PushPosition (x, y);
                         dc.DrawDrawing (drawingVisual.Drawing);
+                        drawingVisual.AnglrVisualParent = this;
                         dc.Pop ();
+                        position.PopPosition ();
                         height += drawingVisual.Height + 2 * Margin;
                         return counter + 1;
                     }
@@ -994,19 +1453,66 @@ namespace AnglrLangExtension
                 else
                     dc.DrawLine (Pen, new Point (0, ConnectorOffset), new Point (0, connectionOffset));
                 dc.Pop ();
+                position.PopPosition ();
             }
         }
-        public AnglrRawDrawingVisual Clone ()
+
+        public override void Display ()
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"syntax rule, id = {Id}, position = {Position}, size = {Size}, value =  {SyntaxRule.Emit (-1)}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (syntax rule, id = {Id}, value =  {SyntaxRule.Emit (-1)})");
+        }
+
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
             throw new NotImplementedException ();
         }
     }
 
-    public class AnglrSyntaxGroupVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    public class AnglrSyntaxGroupVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public _anglr_syntax_rule_ SyntaxGroup { get; private set; }
         public AnglrRawDrawingVisual SyntaxGroupNameVisual { get; private set; }
-        public AnglrSyntaxGroupVisual (_anglr_syntax_rule_ syntaxGroup)
+        public AnglrSyntaxGroupVisual (AnglrVisualizer anglrVisualizer, _anglr_syntax_rule_ syntaxGroup) : base (anglrVisualizer)
         {
             SyntaxGroup = syntaxGroup;
             SyntaxTreeToken groupName = SyntaxGroup.m__identifier_;
@@ -1043,6 +1549,9 @@ namespace AnglrLangExtension
         }
         public void Draw ()
         {
+            AnglrVisualPosition position = new AnglrVisualPosition ();
+            double x, y;
+
             double height = 0;
             double connectionOffset = 0;
             using (var dc = RenderOpen ())
@@ -1052,13 +1561,20 @@ namespace AnglrLangExtension
                     if (SyntaxGroupNameVisual != null)
                     {
                         dc.DrawDrawing (SyntaxGroupNameVisual.Drawing);
-                        dc.PushTransform (new TranslateTransform (8 * Margin, SyntaxGroupNameVisual.Height + 2 * Margin));
+                        SyntaxGroupNameVisual.AnglrVisualParent = this;
+                        dc.PushTransform (new TranslateTransform (x = 8 * Margin, y = SyntaxGroupNameVisual.Height + 2 * Margin));
+                        position.PushPosition (x, y);
                     }
                     else
-                        dc.PushTransform (new TranslateTransform (8 * Margin, 0));
-                    dc.PushTransform (new TranslateTransform (0, 2 * Margin));
+                    {
+                        dc.PushTransform (new TranslateTransform (x = 8 * Margin, y = 0));
+                        position.PushPosition (x, y);
+                    }
+                    dc.PushTransform (new TranslateTransform (x = 0, y = 2 * Margin));
+                    position.PushPosition (x, y);
                     dc.DrawLine (Pen, new Point (0, 0), new Point (Width, 0));
-                    dc.PushTransform (new TranslateTransform (0, 2 * Margin));
+                    dc.PushTransform (new TranslateTransform (x = 0, y = 2 * Margin));
+                    position.PushPosition (x, y);
                     SyntaxGroup.m__anglr_syntax_rule_list_optional_.m__anglr_syntax_rule_list_.Iterate
                     (
                         0,
@@ -1072,32 +1588,86 @@ namespace AnglrLangExtension
                             if (drawingVisual == null)
                                 return counter;
                             connectionOffset = height + drawingVisual.ConnectorOffset;
-                            dc.PushTransform (new TranslateTransform (0, height));
+                            dc.PushTransform (new TranslateTransform (x = 0, y = height));
+                            drawingVisual.Position += position.PushPosition (x, y);
                             dc.DrawDrawing (drawingVisual.Drawing);
+                            drawingVisual.AnglrVisualParent = this;
                             dc.Pop ();
+                            position.PopPosition ();
                             height += drawingVisual.Height + 2 * Margin;
                             return counter + 1;
                         }
                     );
-                    dc.PushTransform (new TranslateTransform (0, 2 * Margin + height));
+                    dc.PushTransform (new TranslateTransform (x = 0, y = 2 * Margin + height));
+                    position.PushPosition (x, y);
                     dc.DrawLine (Pen, new Point (0, 0), new Point (Width, 0));
                     dc.Pop ();
+                    position.PopPosition ();
                     dc.Pop ();
+                    position.PopPosition ();
                     dc.Pop ();
+                    position.PopPosition ();
                     dc.Pop ();
+                    position.PopPosition ();
                 }
             }
         }
-        public AnglrRawDrawingVisual Clone ()
+
+        public override void Display ()
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"syntax group, id = {Id}, position = {Position}, size = {Size}, value = {SyntaxGroup.Emit (-1)}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (syntax group, id = {Id}, value =  {SyntaxGroup.Emit (-1)})");
+        }
+
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
             throw new NotImplementedException ();
         }
     }
 
-    public class AnglrParserPartVisual : AnglrRawDrawingVisual, IAnglrRawVisualCloneable
+    public class AnglrParserPartVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public _parser_part_ ParserPart { get; private set; }
-        public AnglrParserPartVisual (_parser_part_ parserPart)
+        public AnglrParserPartVisual (AnglrVisualizer anglrVisualizer, _parser_part_ parserPart) : base (anglrVisualizer)
         {
             ParserPart = parserPart;
             if ((_anglr_syntax_rule_list_optional_.production_kind) ParserPart.m__anglr_syntax_rule_list_optional_.kind == _anglr_syntax_rule_list_optional_.production_kind.g__anglr_syntax_rule_list_optional__2)
@@ -1119,7 +1689,6 @@ namespace AnglrLangExtension
                         Height += drawingVisual.Height + 2 * Margin;
                         if (counter == 0)
                             ConnectorOffset = drawingVisual.ConnectorOffset;
-                        Height += 2 * Margin;
                         return counter + 1;
                     }
                 );
@@ -1128,6 +1697,9 @@ namespace AnglrLangExtension
 
         public void Draw ()
         {
+            AnglrVisualPosition position = new AnglrVisualPosition ();
+            double x, y;
+
             double height = 0;
             using (var dc = RenderOpen ())
             {
@@ -1145,9 +1717,12 @@ namespace AnglrLangExtension
                             AnglrRawDrawingVisual drawingVisual = visual as AnglrRawDrawingVisual;
                             if (drawingVisual == null)
                                 return counter;
-                            dc.PushTransform (new TranslateTransform (0, height));
+                            dc.PushTransform (new TranslateTransform (x = 0, y = height));
+                            drawingVisual.Position += position.PushPosition (x, y);
                             dc.DrawDrawing (drawingVisual.Drawing);
+                            drawingVisual.AnglrVisualParent = this;
                             dc.Pop ();
+                            position.PopPosition ();
                             height += drawingVisual.Height + 2 * Margin;
                             return counter + 1;
                         }
@@ -1156,9 +1731,164 @@ namespace AnglrLangExtension
             }
         }
 
-        public AnglrRawDrawingVisual Clone ()
+        public override void Display ()
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"parser part, id = {Id}, position = {Position}, size = {Size}, value =  {ParserPart.Emit (-1)}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (parser part, id = {Id}, value =  {ParserPart.Emit (-1)})");
+        }
+
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
             throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            throw new NotImplementedException ();
+        }
+    }
+
+    public class AnglrFilePartListVisual : AnglrRawDrawingVisual, IAnglrEventHandler
+    {
+        public _anglr_file_part_list_ FilePartList { get; private set; }
+        public AnglrFilePartListVisual (AnglrVisualizer anglrVisualizer, _anglr_file_part_list_ filePartList) : base (anglrVisualizer)
+        {
+            FilePartList = filePartList;
+            FilePartList.Iterate
+            (
+                0,
+                (node, data) =>
+                {
+                    int counter = (int) data;
+                    _anglr_file_part_ part = node.m__anglr_file_part_;
+                    if ((_anglr_file_part_.production_kind) part.kind != _anglr_file_part_.production_kind.g__anglr_file_part__5)
+                        return counter;
+                    _parser_part_ parserPart = part.m__parser_part_;
+                    if ((parserPart == null) || (parserPart.appInfo == null) || !((AppInfo) parserPart.appInfo).TryGetValue (AppInfoType.Visual, out var visual))
+                        return counter;
+                    AnglrRawDrawingVisual drawingVisual = visual as AnglrRawDrawingVisual;
+                    if (drawingVisual == null)
+                        return counter;
+                    if (Width < drawingVisual.Width)
+                        Width = drawingVisual.Width;
+                    Height += drawingVisual.Height + 10 * Margin;
+                    if (counter == 0)
+                        ConnectorOffset = drawingVisual.ConnectorOffset;
+                    return counter + 1;
+                }
+            );
+        }
+
+        public void Draw ()
+        {
+            AnglrVisualPosition position = new AnglrVisualPosition ();
+            double x, y;
+
+            double height = 0;
+            using (var dc = RenderOpen ())
+            {
+                FilePartList.Iterate
+                (
+                    0,
+                    (node, data) =>
+                    {
+                        int counter = (int) data;
+                        _anglr_file_part_ part = node.m__anglr_file_part_;
+                        if ((_anglr_file_part_.production_kind) part.kind != _anglr_file_part_.production_kind.g__anglr_file_part__5)
+                            return counter;
+                        _parser_part_ parserPart = part.m__parser_part_;
+                        if ((parserPart == null) || (parserPart.appInfo == null) || !((AppInfo) parserPart.appInfo).TryGetValue (AppInfoType.Visual, out var visual))
+                            return counter;
+                        AnglrRawDrawingVisual drawingVisual = visual as AnglrRawDrawingVisual;
+                        if (drawingVisual == null)
+                            return counter;
+                        dc.PushTransform (new TranslateTransform (x = 0, y = height));
+                        drawingVisual.Position += position.PushPosition (x, y);
+                        dc.DrawDrawing (drawingVisual.Drawing);
+                        drawingVisual.AnglrVisualParent = this;
+                        dc.Pop ();
+                        position.PopPosition ();
+                        height += drawingVisual.Height + 10 * Margin;
+                        return counter + 1;
+                    }
+                );
+            }
+        }
+
+        public override void Display ()
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"file part list, id = {Id}, position = {Position}, size = {Size}, value =  {FilePartList.Emit (-1)}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (file part list, id = {Id}, value =  {FilePartList.Emit (-1)})");
+        }
+
+        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+        }
+
+        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+        }
+
+        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
         }
     }
 
@@ -1216,79 +1946,86 @@ namespace AnglrLangExtension
             return visual;
         }
 
-        public static AnglrRawDrawingVisual DrawRawTerminalSymbol (SimpleSymbolToken symbolToken)
+        public static AnglrRawDrawingVisual DrawRawTerminalSymbol (AnglrVisualizer anglrVisualizer, SimpleSymbolToken symbolToken)
         {
-            AnglrRawTerminalSymbolVisual visual = new AnglrRawTerminalSymbolVisual (symbolToken);
+            AnglrRawTerminalSymbolVisual visual = new AnglrRawTerminalSymbolVisual (anglrVisualizer, symbolToken);
             visual.Draw ();
             return visual;
         }
 
-        public static AnglrRawDrawingVisual DrawRawConstantSymbol (SimpleSymbolToken symbolToken)
+        public static AnglrRawDrawingVisual DrawRawConstantSymbol (AnglrVisualizer anglrVisualizer, SimpleSymbolToken symbolToken)
         {
-            AnglrRawConstantSymbolVisual visual = new AnglrRawConstantSymbolVisual (symbolToken);
+            AnglrRawConstantSymbolVisual visual = new AnglrRawConstantSymbolVisual (anglrVisualizer, symbolToken);
             visual.Draw ();
             return visual;
         }
 
-        public static AnglrRawDrawingVisual DrawRawNonTerminalSymbol (SimpleSymbolToken symbolToken)
+        public static AnglrRawDrawingVisual DrawRawNonTerminalSymbol (AnglrVisualizer anglrVisualizer, SimpleSymbolToken symbolToken)
         {
-            AnglrRawNonTerminalSymbolVisual visual = new AnglrRawNonTerminalSymbolVisual (symbolToken);
+            AnglrRawNonTerminalSymbolVisual visual = new AnglrRawNonTerminalSymbolVisual (anglrVisualizer, symbolToken);
             visual.Draw ();
             return visual;
         }
 
-        public static AnglrRawDrawingVisual DrawGeneralizedSymbol (AnglrRawDrawingVisual generalizedDrawing, _cardinality_delimiter_ cardinalityDelimiter)
+        public static AnglrRawDrawingVisual DrawGeneralizedSymbol (AnglrVisualizer anglrVisualizer, _g_name_ name)
         {
-            AnglrGeneralizedNameVisual visual = new AnglrGeneralizedNameVisual (generalizedDrawing, cardinalityDelimiter);
+            AnglrGeneralizedNameVisual visual = new AnglrGeneralizedNameVisual (anglrVisualizer, name);
             visual.Draw ();
             return visual;
         }
 
-        public static AnglrRawDrawingVisual DrawNameList (_name_list_ nameList)
+        public static AnglrRawDrawingVisual DrawNameList (AnglrVisualizer anglrVisualizer, _name_list_ nameList)
         {
-            AnglrNameListVisual visual = new AnglrNameListVisual (nameList);
+            AnglrNameListVisual visual = new AnglrNameListVisual (anglrVisualizer, nameList);
             visual.Draw ();
             return visual;
         }
 
-        public static AnglrRawDrawingVisual DrawNestedRule (_anglr_nested_rule_ nestedRule)
+        public static AnglrRawDrawingVisual DrawNestedRule (AnglrVisualizer anglrVisualizer, _anglr_nested_rule_ nestedRule)
         {
-            AnglrNestedRuleVisual visual = new AnglrNestedRuleVisual (nestedRule);
+            AnglrNestedRuleVisual visual = new AnglrNestedRuleVisual (anglrVisualizer, nestedRule);
             visual.Draw ();
             return visual;
         }
 
-        public static AnglrRawDrawingVisual DrawSyntaxRuleName (SyntaxTreeToken ruleName)
+        public static AnglrRawDrawingVisual DrawSyntaxRuleName (AnglrVisualizer anglrVisualizer, SyntaxTreeToken ruleName)
         {
-            AnglrSyntaxRuleNameVisual visual = new AnglrSyntaxRuleNameVisual (ruleName);
+            AnglrSyntaxRuleNameVisual visual = new AnglrSyntaxRuleNameVisual (anglrVisualizer, ruleName);
             visual.Draw ();
             return visual;
         }
 
-        public static AnglrRawDrawingVisual DrawSyntaxRule (_anglr_syntax_rule_ syntaxRule)
+        public static AnglrRawDrawingVisual DrawSyntaxRule (AnglrVisualizer anglrVisualizer, _anglr_syntax_rule_ syntaxRule)
         {
-            AnglrSyntaxRuleVisual visual = new AnglrSyntaxRuleVisual (syntaxRule);
+            AnglrSyntaxRuleVisual visual = new AnglrSyntaxRuleVisual (anglrVisualizer, syntaxRule);
             visual.Draw ();
             return visual;
         }
 
-        public static AnglrRawDrawingVisual DrawSyntaxGroupName (SyntaxTreeToken groupName)
+        public static AnglrRawDrawingVisual DrawSyntaxGroupName (AnglrVisualizer anglrVisualizer, SyntaxTreeToken groupName)
         {
-            AnglrSyntaxGroupNameVisual visual = new AnglrSyntaxGroupNameVisual (groupName);
+            AnglrSyntaxGroupNameVisual visual = new AnglrSyntaxGroupNameVisual (anglrVisualizer, groupName);
             visual.Draw ();
             return visual;
         }
 
-        public static AnglrRawDrawingVisual DrawSyntaxGroup (_anglr_syntax_rule_ syntaxRule)
+        public static AnglrRawDrawingVisual DrawSyntaxGroup (AnglrVisualizer anglrVisualizer, _anglr_syntax_rule_ syntaxRule)
         {
-            AnglrSyntaxGroupVisual visual = new AnglrSyntaxGroupVisual (syntaxRule);
+            AnglrSyntaxGroupVisual visual = new AnglrSyntaxGroupVisual (anglrVisualizer, syntaxRule);
             visual.Draw ();
             return visual;
         }
 
-        public static AnglrRawDrawingVisual DrawParserPart (_parser_part_ parserPart)
+        public static AnglrRawDrawingVisual DrawParserPart (AnglrVisualizer anglrVisualizer, _parser_part_ parserPart)
         {
-            AnglrParserPartVisual visual = new AnglrParserPartVisual (parserPart);
+            AnglrParserPartVisual visual = new AnglrParserPartVisual (anglrVisualizer, parserPart);
+            visual.Draw ();
+            return visual;
+        }
+
+        public static AnglrRawDrawingVisual DrawAnglrFilePartList (AnglrVisualizer anglrVisualizer, _anglr_file_part_list_ filePartList)
+        {
+            AnglrFilePartListVisual visual = new AnglrFilePartListVisual (anglrVisualizer, filePartList);
             visual.Draw ();
             return visual;
         }
@@ -1342,7 +2079,7 @@ namespace AnglrLangExtension
             return SyntaxRuleVisuals;
         }
 
-        public static List<AnglrRawDrawingVisual> BuildSyntaxRulesVisual (AnglrGetSyntaxTreeResult syntaxTreeResult, IAnglrLogger logger)
+        public static AnglrRawDrawingVisual BuildSyntaxRulesVisual (AnglrGetSyntaxTreeResult syntaxTreeResult, IAnglrLogger logger)
         {
             try
             {
@@ -1359,30 +2096,17 @@ namespace AnglrLangExtension
                     anglrFileFragment.reparent (null);
                     AnglrVisualizer anglrVisualizer = new AnglrVisualizer (logger);
                     anglrVisualizer.Traverse (anglrFileFragment);
+                    _anglr_file_ anglrFile = anglrFileFragment.m__anglr_file_;
+                    if ((anglrFile == null) || (anglrFile.appInfo == null) || !((AppInfo) anglrFile.appInfo).TryGetValue (AppInfoType.Visual, out var visual))
+                        return null;
+                    anglrVisualizer.ComputeVisualBounds (visual as AnglrRawDrawingVisual);
+                    return visual as AnglrRawDrawingVisual;
                 }
                 else
+                {
                     logger?.ErrorLine ($"null anglr fragment conversion");
-                List<AnglrRawDrawingVisual> list = new List<AnglrRawDrawingVisual> ();
-                anglrFileFragment.m__anglr_file_.m__anglr_file_part_list_.Iterate
-                (
-                    0,
-                    (part, data) =>
-                    {
-                        int counter = (int) data;
-                        _anglr_file_part_ filePart = part.m__anglr_file_part_;
-                        if ((_anglr_file_part_.production_kind) filePart.kind != _anglr_file_part_.production_kind.g__anglr_file_part__5)
-                            return counter;
-                        _parser_part_ parserPart = filePart.m__parser_part_;
-                        if ((parserPart == null) || (parserPart.appInfo == null) || !((AppInfo) parserPart.appInfo).TryGetValue (AppInfoType.Visual, out var visual))
-                            return counter;
-                        AnglrRawDrawingVisual drawingVisual = visual as AnglrRawDrawingVisual;
-                        if (drawingVisual == null)
-                            return counter;
-                        list.Add (drawingVisual);
-                        return counter + 1;
-                    }
-                );
-                return list;
+                    return null;
+                }
             }
             catch (Exception e)
             {
@@ -1392,31 +2116,111 @@ namespace AnglrLangExtension
         }
     }
 
-    internal class AnglrVisualizer : SyntaxTreeWalker
+    public class AnglrVisualizer : SyntaxTreeWalker
     {
+        _anglr_file_fragment_ Fragment { get; set; }
         public IAnglrLogger AnglrLogger { get; private set; }
         public AnglrVisualizer (IAnglrLogger logger)
         {
             AnglrLogger = logger;
+            _anglr_file_fragment__Event += AnglrVisualizer__anglr_file_fragment__Event;
+            _anglr_file__Event += AnglrVisualizer__anglr_file__Event;
             _parser_part__Event += AnglrVisualizer__parser_part__Event;
-            _anglr_syntax_rule_list__Event += AnglrVisualizer__anglr_syntax_rule_list__Event;
             _anglr_syntax_rule__Event += AnglrVisualizer__anglr_syntax_rule__Event;
             _anglr_nested_rule__Event += AnglrVisualizer__anglr_nested_rule__Event;
             _anglr_syntax_production_list_name__Event += AnglrVisualizer__anglr_syntax_production_list_name__Event;
-            _anglr_syntax_production_list__Event += AnglrVisualizer__anglr_syntax_production_list__Event;
             _anglr_syntax_production__Event += AnglrVisualizer__anglr_syntax_production__Event;
-            _production_name__Event += AnglrVisualizer__production_name__Event;
-            _priority_assoc_specification__Event += AnglrVisualizer__priority_assoc_specification__Event;
-            _priority_specification__Event += AnglrVisualizer__priority_specification__Event;
-            _associativity_specification__Event += AnglrVisualizer__associativity_specification__Event;
-            _name_list__Event += AnglrVisualizer__name_list__Event;
-            _marker_list__Event += AnglrVisualizer__marker_list__Event;
-            _marker__Event += AnglrVisualizer__marker__Event;
             _g_name__Event += AnglrVisualizer__g_name__Event;
             _name__Event += AnglrVisualizer__name__Event;
-            _cardinality_delimiter__Event += AnglrVisualizer__cardinality_delimiter__Event;
-            _cardinality__Event += AnglrVisualizer__cardinality__Event;
-            _delimiter__Event += AnglrVisualizer__delimiter__Event;
+        }
+
+        public void ComputeVisualBounds (AnglrRawDrawingVisual drawingVisual)
+        {
+            if (drawingVisual == null)
+                return;
+            _ComputeVisualBounds (new AnglrVisualPosition (), drawingVisual);
+        }
+
+        public void _ComputeVisualBounds (AnglrVisualPosition visualPosition, AnglrRawDrawingVisual drawingVisual)
+        {
+            drawingVisual.Position = visualPosition.PushPosition (drawingVisual.Position);
+            foreach (var child in drawingVisual.AnglrVisualChildren)
+            {
+                _ComputeVisualBounds (visualPosition, child);
+            }
+            visualPosition.PopPosition ();
+        }
+
+        public HitList HitTest (object sender, MouseButtonEventArgs e, AnglrRawDrawingVisual drawingVisual, Point point)
+        {
+            if (drawingVisual == null)
+                return null;
+            try
+            {
+                HitList hitVisuals = new HitList ();
+                _HitTest (hitVisuals, drawingVisual, point);
+                foreach (var visual in hitVisuals.Values)
+                    (visual as IAnglrEventHandler)?.OnMouseDown (sender, e, point, AnglrLogger);
+                return hitVisuals;
+            }
+            catch (Exception ex)
+            {
+                AnglrLogger?.ErrorLine (ex, "Hit test failed");
+                return null;
+            }
+        }
+
+        public bool _HitTest (HitList hitVisuals, AnglrRawDrawingVisual drawingVisual, Point point)
+        {
+            if (!drawingVisual.Bounds.Contains (point))
+                return false;
+            if (!hitVisuals.TryGetValue (drawingVisual.Id, out _))
+                hitVisuals [drawingVisual.Id] = drawingVisual;
+            foreach (var child in drawingVisual.AnglrVisualChildren)
+            {
+                if (_HitTest (hitVisuals, child, point))
+                    break;
+            }
+            return true;
+        }
+
+        private bool AnglrVisualizer__anglr_file_fragment__Event (SyntaxTreeCallbackReason reason, _anglr_file_fragment_.production_kind kind, _anglr_file_fragment_ p__anglr_file_fragment_)
+        {
+            switch (reason)
+            {
+                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+                    Fragment = p__anglr_file_fragment_;
+                    break;
+                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+                    break;
+            }
+            return true;
+        }
+
+        private bool AnglrVisualizer__anglr_file__Event (SyntaxTreeCallbackReason reason, _anglr_file_.production_kind kind, _anglr_file_ p__anglr_file_)
+        {
+            switch (reason)
+            {
+                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+                {
+                    try
+                    {
+                        _anglr_file_part_list_ filePartList = p__anglr_file_.m__anglr_file_part_list_;
+                        if (filePartList == null)
+                            break;
+                        ((AppInfo) p__anglr_file_.appInfo) [AppInfoType.Visual] =
+                            AnglrSyntaxRuleDrawingBuilder.DrawAnglrFilePartList (this, filePartList);
+                    }
+                    catch (Exception e)
+                    {
+                        AnglrLogger?.ErrorLine (e, $"Visualization of <anglr file> node {p__anglr_file_.Emit (-1)} failed");
+                    }
+                }
+                break;
+            }
+            return true;
         }
 
         private bool AnglrVisualizer__parser_part__Event (SyntaxTreeCallbackReason reason, _parser_part_.production_kind kind, _parser_part_ p__parser_part_)
@@ -1428,24 +2232,13 @@ namespace AnglrLangExtension
                 case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
                     try
                     {
-                        ((AppInfo) p__parser_part_.appInfo) [AppInfoType.Visual] = AnglrSyntaxRuleDrawingBuilder.DrawParserPart (p__parser_part_);
+                        ((AppInfo) p__parser_part_.appInfo) [AppInfoType.Visual] =
+                            AnglrSyntaxRuleDrawingBuilder.DrawParserPart (this, p__parser_part_);
                     }
                     catch (Exception e)
                     {
-                        AnglrLogger?.ErrorLine (e, $"Visualization of <anglr syntax rule> node {p__parser_part_.Emit (-1).Substring (0, 100)} failed");
+                        AnglrLogger?.ErrorLine (e, $"Visualization of <anglr syntax rule> node {p__parser_part_.Emit (-1)} failed");
                     }
-                    break;
-            }
-            return true;
-        }
-
-        private bool AnglrVisualizer__anglr_syntax_rule_list__Event (SyntaxTreeCallbackReason reason, _anglr_syntax_rule_list_.production_kind kind, _anglr_syntax_rule_list_ p__anglr_syntax_rule_list_)
-        {
-            switch (reason)
-            {
-                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
-                    break;
-                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
                     break;
             }
             return true;
@@ -1466,24 +2259,24 @@ namespace AnglrLangExtension
                             case _anglr_syntax_rule_.production_kind.g__anglr_syntax_rule__1:
                             {
                                 ((AppInfo) p__anglr_syntax_rule_.m__identifier_.appInfo) [AppInfoType.Visual] =
-                                    AnglrSyntaxRuleDrawingBuilder.DrawSyntaxRuleName (p__anglr_syntax_rule_.m__identifier_);
+                                    AnglrSyntaxRuleDrawingBuilder.DrawSyntaxRuleName (this, p__anglr_syntax_rule_.m__identifier_);
                                 ((AppInfo) p__anglr_syntax_rule_.appInfo) [AppInfoType.Visual] =
-                                    AnglrSyntaxRuleDrawingBuilder.DrawSyntaxRule (p__anglr_syntax_rule_);
+                                    AnglrSyntaxRuleDrawingBuilder.DrawSyntaxRule (this, p__anglr_syntax_rule_);
                             }
                             break;
                             case _anglr_syntax_rule_.production_kind.g__anglr_syntax_rule__2:
                             {
                                 ((AppInfo) p__anglr_syntax_rule_.m__identifier_.appInfo) [AppInfoType.Visual] =
-                                    AnglrSyntaxRuleDrawingBuilder.DrawSyntaxGroupName (p__anglr_syntax_rule_.m__identifier_);
+                                    AnglrSyntaxRuleDrawingBuilder.DrawSyntaxGroupName (this, p__anglr_syntax_rule_.m__identifier_);
                                 ((AppInfo) p__anglr_syntax_rule_.appInfo) [AppInfoType.Visual] =
-                                    AnglrSyntaxRuleDrawingBuilder.DrawSyntaxGroup (p__anglr_syntax_rule_);
+                                    AnglrSyntaxRuleDrawingBuilder.DrawSyntaxGroup (this, p__anglr_syntax_rule_);
                             }
                             break;
                         }
                     }
                     catch (Exception e)
                     {
-                        AnglrLogger?.ErrorLine (e, $"Visualization of <anglr syntax rule> node {p__anglr_syntax_rule_.Emit (-1).Substring (0, 100)} failed");
+                        AnglrLogger?.ErrorLine (e, $"Visualization of <anglr syntax rule> node {p__anglr_syntax_rule_.Emit (-1)} failed");
                     }
                 }
                 break;
@@ -1501,11 +2294,11 @@ namespace AnglrLangExtension
                     try
                     {
                         ((AppInfo) p__anglr_nested_rule_.appInfo) [AppInfoType.Visual] =
-                            AnglrSyntaxRuleDrawingBuilder.DrawNestedRule (p__anglr_nested_rule_);
+                            AnglrSyntaxRuleDrawingBuilder.DrawNestedRule (this, p__anglr_nested_rule_);
                     }
                     catch (Exception e)
                     {
-                        AnglrLogger?.ErrorLine (e, $"Visualization of <anglr nested rule> node {p__anglr_nested_rule_.Emit (-1).Substring (0, 100)} failed");
+                        AnglrLogger?.ErrorLine (e, $"Visualization of <anglr nested rule> node {p__anglr_nested_rule_.Emit (-1)} failed");
                     }
                     break;
             }
@@ -1520,20 +2313,9 @@ namespace AnglrLangExtension
                     break;
                 case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
                     ((AppInfo) p__anglr_syntax_production_list_name_.appInfo) [AppInfoType.Visual] =
-                        AnglrSyntaxRuleDrawingBuilder.DrawSyntaxRuleName (p__anglr_syntax_production_list_name_.m__identifier_);
+                        AnglrSyntaxRuleDrawingBuilder.DrawSyntaxRuleName (this, p__anglr_syntax_production_list_name_.m__identifier_);
                     break;
-            }
-            return true;
-        }
 
-        private bool AnglrVisualizer__anglr_syntax_production_list__Event (SyntaxTreeCallbackReason reason, _anglr_syntax_production_list_.production_kind kind, _anglr_syntax_production_list_ p__anglr_syntax_production_list_)
-        {
-            switch (reason)
-            {
-                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
-                    break;
-                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                    break;
             }
             return true;
         }
@@ -1552,7 +2334,8 @@ namespace AnglrLangExtension
                         {
                             case _anglr_syntax_production_.production_kind.g__anglr_syntax_production__1:
                             {
-                                ((AppInfo) p__anglr_syntax_production_.appInfo) [AppInfoType.Visual] = AnglrSyntaxRuleDrawingBuilder.DrawNameList (p__anglr_syntax_production_.m__name_list_);
+                                ((AppInfo) p__anglr_syntax_production_.appInfo) [AppInfoType.Visual] =
+                                    AnglrSyntaxRuleDrawingBuilder.DrawNameList (this, p__anglr_syntax_production_.m__name_list_);
                             }
                             break;
                             case _anglr_syntax_production_.production_kind.g__anglr_syntax_production__2:
@@ -1566,94 +2349,10 @@ namespace AnglrLangExtension
                     }
                     catch (Exception e)
                     {
-                        AnglrLogger?.ErrorLine (e, $"Visualization of <anglr syntax production> node {p__anglr_syntax_production_.Emit (-1).Substring (0, 100)} failed");
+                        AnglrLogger?.ErrorLine (e, $"Visualization of <anglr syntax production> node {p__anglr_syntax_production_.Emit (-1)} failed");
                     }
                 }
                 break;
-            }
-            return true;
-        }
-
-        private bool AnglrVisualizer__production_name__Event (SyntaxTreeCallbackReason reason, _production_name_.production_kind kind, _production_name_ p__production_name_)
-        {
-            switch (reason)
-            {
-                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
-                    break;
-                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                    break;
-            }
-            return true;
-        }
-
-        private bool AnglrVisualizer__priority_assoc_specification__Event (SyntaxTreeCallbackReason reason, _priority_assoc_specification_.production_kind kind, _priority_assoc_specification_ p__priority_assoc_specification_)
-        {
-            switch (reason)
-            {
-                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
-                    break;
-                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                    break;
-            }
-            return true;
-        }
-
-        private bool AnglrVisualizer__priority_specification__Event (SyntaxTreeCallbackReason reason, _priority_specification_.production_kind kind, _priority_specification_ p__priority_specification_)
-        {
-            switch (reason)
-            {
-                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
-                    break;
-                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                    break;
-            }
-            return true;
-        }
-
-        private bool AnglrVisualizer__associativity_specification__Event (SyntaxTreeCallbackReason reason, _associativity_specification_.production_kind kind, _associativity_specification_ p__associativity_specification_)
-        {
-            switch (reason)
-            {
-                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
-                    break;
-                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                    break;
-            }
-            return true;
-        }
-
-        private bool AnglrVisualizer__name_list__Event (SyntaxTreeCallbackReason reason, _name_list_.production_kind kind, _name_list_ p__name_list_)
-        {
-            switch (reason)
-            {
-                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
-                    break;
-                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                    break;
-            }
-            return true;
-        }
-
-        private bool AnglrVisualizer__marker_list__Event (SyntaxTreeCallbackReason reason, _marker_list_.production_kind kind, _marker_list_ p__marker_list_)
-        {
-            switch (reason)
-            {
-                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
-                    break;
-                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                    break;
-            }
-            return true;
-        }
-
-        private bool AnglrVisualizer__marker__Event (SyntaxTreeCallbackReason reason, _marker_.production_kind kind, _marker_ p__marker_)
-        {
-            switch (reason)
-            {
-                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
-                    break;
-                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                    break;
             }
             return true;
         }
@@ -1687,21 +2386,15 @@ namespace AnglrLangExtension
                             {
                                 if (!((AppInfo) p__g_name_.m__g_name_.appInfo).TryGetValue (AppInfoType.Visual, out var gnameVisual))
                                     break;
-                                //if (!((AppInfo) p__g_name_.m__cardinality_delimiter_.appInfo).TryGetValue (AppInfoType.Visual, out var cardinalityVisual))
-                                //    break;
                                 ((AppInfo) p__g_name_.appInfo) [AppInfoType.Visual] =
-                                    AnglrSyntaxRuleDrawingBuilder.DrawGeneralizedSymbol
-                                    (
-                                        gnameVisual as AnglrRawDrawingVisual,
-                                        p__g_name_.m__cardinality_delimiter_
-                                    );
+                                    AnglrSyntaxRuleDrawingBuilder.DrawGeneralizedSymbol (this, p__g_name_);
                             }
                             break;
                         }
                     }
                     catch (Exception e)
                     {
-                        AnglrLogger?.ErrorLine (e, $"Visualization of <g name> {p__g_name_.Emit (-1).Substring (0, 100)} failed");
+                        AnglrLogger?.ErrorLine (e, $"Visualization of <g name> {p__g_name_.Emit (-1)} failed");
                     }
                     break;
             }
@@ -1733,7 +2426,7 @@ namespace AnglrLangExtension
                                     if (p_SymbolToken != null)
                                     {
                                         AnglrLogger?.DebugLine ($"constant symbol name = {p_SymbolToken.Name}");
-                                        visual = AnglrSyntaxRuleDrawingBuilder.DrawRawConstantSymbol (p_SymbolToken);
+                                        visual = AnglrSyntaxRuleDrawingBuilder.DrawRawConstantSymbol (this, p_SymbolToken);
                                     }
                                     else
                                         AnglrLogger?.WarnLine ($"symbol info for {token.text} is null");
@@ -1755,12 +2448,12 @@ namespace AnglrLangExtension
                                         if (p_SymbolToken.Declarator != (uint) AnglrClassificationType.NonTerminalName)
                                         {
                                             AnglrLogger?.DebugLine ($"terminal symbol name = {p_SymbolToken.Name}");
-                                            visual = AnglrSyntaxRuleDrawingBuilder.DrawRawTerminalSymbol (p_SymbolToken);
+                                            visual = AnglrSyntaxRuleDrawingBuilder.DrawRawTerminalSymbol (this, p_SymbolToken);
                                         }
                                         else
                                         {
                                             AnglrLogger?.DebugLine ($"non-terminal symbol name = {p_SymbolToken.Name}");
-                                            visual = AnglrSyntaxRuleDrawingBuilder.DrawRawNonTerminalSymbol (p_SymbolToken);
+                                            visual = AnglrSyntaxRuleDrawingBuilder.DrawRawNonTerminalSymbol (this, p_SymbolToken);
                                         }
                                     }
                                     else
@@ -1777,44 +2470,8 @@ namespace AnglrLangExtension
                     }
                     catch (Exception e)
                     {
-                        AnglrLogger?.ErrorLine (e, $"Visualization of <name> node {p__name_.Emit (-1).Substring (0, 100)} failed");
+                        AnglrLogger?.ErrorLine (e, $"Visualization of <name> node {p__name_.Emit (-1)} failed");
                     }
-                    break;
-            }
-            return true;
-        }
-
-        private bool AnglrVisualizer__cardinality_delimiter__Event (SyntaxTreeCallbackReason reason, _cardinality_delimiter_.production_kind kind, _cardinality_delimiter_ p__cardinality_delimiter_)
-        {
-            switch (reason)
-            {
-                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
-                    break;
-                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                    break;
-            }
-            return true;
-        }
-
-        private bool AnglrVisualizer__cardinality__Event (SyntaxTreeCallbackReason reason, _cardinality_.production_kind kind, _cardinality_ p__cardinality_)
-        {
-            switch (reason)
-            {
-                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
-                    break;
-                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                    break;
-            }
-            return true;
-        }
-
-        private bool AnglrVisualizer__delimiter__Event (SyntaxTreeCallbackReason reason, _delimiter_.production_kind kind, _delimiter_ p__delimiter_)
-        {
-            switch (reason)
-            {
-                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
-                    break;
-                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
                     break;
             }
             return true;

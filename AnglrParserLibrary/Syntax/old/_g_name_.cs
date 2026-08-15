@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <g name>
 	//
 
+	[DataContract]
 	public class	_g_name_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <g name>
@@ -101,12 +103,15 @@ namespace Anglr.Parser
 			children[1] = m__cardinality_delimiter_ = p__cardinality_delimiter_;
 		}
 
+		public _g_name_ () { }
+
 		// Copy constructor
 
 		public _g_name_ (_g_name_ p__g_name_) : base (p__g_name_.id, p__g_name_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__g_name_.appInfo;
 			switch ((production_kind) p__g_name_.kind)
 			{
 				case production_kind.g__g_name__1:
@@ -363,12 +368,12 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <g name>
-		public _name_ m__name_ { get; private set; }
-		public SyntaxTreeToken m__left_bracket_ { get; private set; }
-		public _anglr_nested_rule_ m__anglr_nested_rule_ { get; private set; }
-		public SyntaxTreeToken m__right_bracket_ { get; private set; }
-		public _g_name_ m__g_name_ { get; private set; }
-		public _cardinality_delimiter_ m__cardinality_delimiter_ { get; private set; }
+		[DataMember (Name = "m__name_")] public _name_ m__name_ { get; private set; }
+		[DataMember (Name = "m__left_bracket_")] public SyntaxTreeToken m__left_bracket_ { get; private set; }
+		[DataMember (Name = "m__anglr_nested_rule_")] public _anglr_nested_rule_ m__anglr_nested_rule_ { get; private set; }
+		[DataMember (Name = "m__right_bracket_")] public SyntaxTreeToken m__right_bracket_ { get; private set; }
+		[DataMember (Name = "m__g_name_")] public _g_name_ m__g_name_ { get; private set; }
+		[DataMember (Name = "m__cardinality_delimiter_")] public _cardinality_delimiter_ m__cardinality_delimiter_ { get; private set; }
 		#endregion
 
 	};

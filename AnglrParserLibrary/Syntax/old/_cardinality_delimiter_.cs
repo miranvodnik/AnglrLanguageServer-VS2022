@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <cardinality delimiter>
 	//
 
+	[DataContract]
 	public class	_cardinality_delimiter_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <cardinality delimiter>
@@ -51,12 +53,15 @@ namespace Anglr.Parser
 			children[1] = m__delimiter_optional_ = p__delimiter_optional_;
 		}
 
+		public _cardinality_delimiter_ () { }
+
 		// Copy constructor
 
 		public _cardinality_delimiter_ (_cardinality_delimiter_ p__cardinality_delimiter_) : base (p__cardinality_delimiter_.id, p__cardinality_delimiter_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__cardinality_delimiter_.appInfo;
 			switch ((production_kind) p__cardinality_delimiter_.kind)
 			{
 				case production_kind.g__cardinality_delimiter__1:
@@ -204,8 +209,8 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <cardinality delimiter>
-		public _cardinality_ m__cardinality_ { get; private set; }
-		public _delimiter_optional_ m__delimiter_optional_ { get; private set; }
+		[DataMember (Name = "m__cardinality_")] public _cardinality_ m__cardinality_ { get; private set; }
+		[DataMember (Name = "m__delimiter_optional_")] public _delimiter_optional_ m__delimiter_optional_ { get; private set; }
 		#endregion
 
 	};

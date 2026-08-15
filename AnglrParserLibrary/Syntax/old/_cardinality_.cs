@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <cardinality>
 	//
 
+	[DataContract]
 	public class	_cardinality_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <cardinality>
@@ -207,12 +209,15 @@ namespace Anglr.Parser
 			children[4] = m__right_curly_bracket_ = p_token_2;
 		}
 
+		public _cardinality_ () { }
+
 		// Copy constructor
 
 		public _cardinality_ (_cardinality_ p__cardinality_) : base (p__cardinality_.id, p__cardinality_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__cardinality_.appInfo;
 			switch ((production_kind) p__cardinality_.kind)
 			{
 				case production_kind.g__cardinality__1:
@@ -644,20 +649,20 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <cardinality>
-		public SyntaxTreeToken m__question_mark_ { get; private set; }
-		public SyntaxTreeToken m__plus_sign_ { get; private set; }
-		public SyntaxTreeToken m__minus_sign_ { get; private set; }
-		public SyntaxTreeToken m__asterisk_ { get; private set; }
-		public SyntaxTreeToken m__slash_ { get; private set; }
-		public SyntaxTreeToken m__inv_plus_sign_ { get; private set; }
-		public SyntaxTreeToken m__inv_minus_sign_ { get; private set; }
-		public SyntaxTreeToken m__inv_asterisk_ { get; private set; }
-		public SyntaxTreeToken m__inv_slash_ { get; private set; }
-		public SyntaxTreeToken m__left_curly_bracket_ { get; private set; }
-		public _number_optional_ m__number_optional_ { get; private set; }
-		public _number_optional_ m__number_optional__1 { get; private set; }
-		public SyntaxTreeToken m__comma_ { get; private set; }
-		public SyntaxTreeToken m__right_curly_bracket_ { get; private set; }
+		[DataMember (Name = "m__question_mark_")] public SyntaxTreeToken m__question_mark_ { get; private set; }
+		[DataMember (Name = "m__plus_sign_")] public SyntaxTreeToken m__plus_sign_ { get; private set; }
+		[DataMember (Name = "m__minus_sign_")] public SyntaxTreeToken m__minus_sign_ { get; private set; }
+		[DataMember (Name = "m__asterisk_")] public SyntaxTreeToken m__asterisk_ { get; private set; }
+		[DataMember (Name = "m__slash_")] public SyntaxTreeToken m__slash_ { get; private set; }
+		[DataMember (Name = "m__inv_plus_sign_")] public SyntaxTreeToken m__inv_plus_sign_ { get; private set; }
+		[DataMember (Name = "m__inv_minus_sign_")] public SyntaxTreeToken m__inv_minus_sign_ { get; private set; }
+		[DataMember (Name = "m__inv_asterisk_")] public SyntaxTreeToken m__inv_asterisk_ { get; private set; }
+		[DataMember (Name = "m__inv_slash_")] public SyntaxTreeToken m__inv_slash_ { get; private set; }
+		[DataMember (Name = "m__left_curly_bracket_")] public SyntaxTreeToken m__left_curly_bracket_ { get; private set; }
+		[DataMember (Name = "m__number_optional_")] public _number_optional_ m__number_optional_ { get; private set; }
+		[DataMember (Name = "m__number_optional__1")] public _number_optional_ m__number_optional__1 { get; private set; }
+		[DataMember (Name = "m__comma_")] public SyntaxTreeToken m__comma_ { get; private set; }
+		[DataMember (Name = "m__right_curly_bracket_")] public SyntaxTreeToken m__right_curly_bracket_ { get; private set; }
 		#endregion
 
 	};

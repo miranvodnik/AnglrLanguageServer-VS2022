@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <actions>
 	//
 
+	[DataContract]
 	public class	_actions_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <actions>
@@ -75,12 +77,15 @@ namespace Anglr.Parser
 			children[1] = m__action_ = p__action_;
 		}
 
+		public _actions_ () { }
+
 		// Copy constructor
 
 		public _actions_ (_actions_ p__actions_) : base (p__actions_.id, p__actions_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__actions_.appInfo;
 			switch ((production_kind) p__actions_.kind)
 			{
 				case production_kind.g__actions__1:
@@ -280,8 +285,8 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <actions>
-		public _action_ m__action_ { get; private set; }
-		public _actions_ m__actions_ { get; private set; }
+		[DataMember (Name = "m__action_")] public _action_ m__action_ { get; private set; }
+		[DataMember (Name = "m__actions_")] public _actions_ m__actions_ { get; private set; }
 		#endregion
 
 	};

@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <name list>
 	//
 
+	[DataContract]
 	public class	_name_list_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <name list>
@@ -77,12 +79,15 @@ namespace Anglr.Parser
 			children[2] = m__marker_list_optional_ = p__marker_list_optional_;
 		}
 
+		public _name_list_ () { }
+
 		// Copy constructor
 
 		public _name_list_ (_name_list_ p__name_list_) : base (p__name_list_.id, p__name_list_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__name_list_.appInfo;
 			switch ((production_kind) p__name_list_.kind)
 			{
 				case production_kind.g__name_list__1:
@@ -291,9 +296,9 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <name list>
-		public _marker_list_optional_ m__marker_list_optional_ { get; private set; }
-		public _name_list_ m__name_list_ { get; private set; }
-		public _g_name_ m__g_name_ { get; private set; }
+		[DataMember (Name = "m__marker_list_optional_")] public _marker_list_optional_ m__marker_list_optional_ { get; private set; }
+		[DataMember (Name = "m__name_list_")] public _name_list_ m__name_list_ { get; private set; }
+		[DataMember (Name = "m__g_name_")] public _g_name_ m__g_name_ { get; private set; }
 		#endregion
 
 	};

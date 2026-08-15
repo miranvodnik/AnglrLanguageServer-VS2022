@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <priority specification>
 	//
 
+	[DataContract]
 	public class	_priority_specification_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <priority specification>
@@ -74,12 +76,15 @@ namespace Anglr.Parser
 			children[2] = m__number_ = p_token_2;
 		}
 
+		public _priority_specification_ () { }
+
 		// Copy constructor
 
 		public _priority_specification_ (_priority_specification_ p__priority_specification_) : base (p__priority_specification_.id, p__priority_specification_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__priority_specification_.appInfo;
 			switch ((production_kind) p__priority_specification_.kind)
 			{
 				case production_kind.g__priority_specification__1:
@@ -274,9 +279,9 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <priority specification>
-		public SyntaxTreeToken m__priority_ { get; private set; }
-		public SyntaxTreeToken m__number_ { get; private set; }
-		public SyntaxTreeToken m__equals_sign_ { get; private set; }
+		[DataMember (Name = "m__priority_")] public SyntaxTreeToken m__priority_ { get; private set; }
+		[DataMember (Name = "m__number_")] public SyntaxTreeToken m__number_ { get; private set; }
+		[DataMember (Name = "m__equals_sign_")] public SyntaxTreeToken m__equals_sign_ { get; private set; }
 		#endregion
 
 	};

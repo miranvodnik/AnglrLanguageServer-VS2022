@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -12,6 +13,7 @@ namespace Anglr.Parser
 	// class associated with syntax rule <associativity specification>
 	//
 
+	[DataContract]
 	public class	_associativity_specification_ : SyntaxTreeBase
 	{
 		#region enumerated production(s) of syntax rule <associativity specification>
@@ -127,12 +129,15 @@ namespace Anglr.Parser
 			}
 		}
 
+		public _associativity_specification_ () { }
+
 		// Copy constructor
 
 		public _associativity_specification_ (_associativity_specification_ p__associativity_specification_) : base (p__associativity_specification_.id, p__associativity_specification_.kind)
 		{
 			++g_counter;
 			_init ();
+			appInfo = p__associativity_specification_.appInfo;
 			switch ((production_kind) p__associativity_specification_.kind)
 			{
 				case production_kind.g__associativity_specification__1:
@@ -413,10 +418,10 @@ namespace Anglr.Parser
 		public static int g_counter;
 
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <associativity specification>
-		public SyntaxTreeToken m__associativity_ { get; private set; }
-		public SyntaxTreeToken m__cstring_ { get; private set; }
-		public SyntaxTreeToken m__equals_sign_ { get; private set; }
-		public SyntaxTreeToken m__identifier_ { get; private set; }
+		[DataMember (Name = "m__associativity_")] public SyntaxTreeToken m__associativity_ { get; private set; }
+		[DataMember (Name = "m__cstring_")] public SyntaxTreeToken m__cstring_ { get; private set; }
+		[DataMember (Name = "m__equals_sign_")] public SyntaxTreeToken m__equals_sign_ { get; private set; }
+		[DataMember (Name = "m__identifier_")] public SyntaxTreeToken m__identifier_ { get; private set; }
 		#endregion
 
 	};
