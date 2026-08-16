@@ -120,7 +120,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="100*"/>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <StackPanel x:Name="stateViewPanel" Grid.Row="0" Grid.Column="0" Orientation="Horizontal">

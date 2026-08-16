@@ -132,14 +132,15 @@ namespace AnglrLangExtension
     public interface IAnglrEventHandler
     {
         void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger);
-        void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger);
-        void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger);
+        void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger);
+        void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger);
         void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger);
         void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger);
-        void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger);
+        void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger);
         void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger);
         void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger);
         void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger);
+        void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger);
     }
 
     public class AnglrTerminalSymbolVisual : AnglrDrawingVisual, IAnglrVisualCloneable, IAnglrEventHandler
@@ -187,14 +188,15 @@ namespace AnglrLangExtension
         }
 
         public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { logger?.InfoLine ($"mouse down in terminal symbol nr. {Index} at ({point})"); }
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrConstantSymbolVisual : AnglrDrawingVisual, IAnglrVisualCloneable, IAnglrEventHandler
@@ -242,14 +244,15 @@ namespace AnglrLangExtension
         }
 
         public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { logger?.InfoLine ($"mouse down in constant symbol nr. {Index} at ({point})"); }
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrNonTerminalSymbolVisual : AnglrDrawingVisual, IAnglrVisualCloneable, IAnglrEventHandler
@@ -297,14 +300,15 @@ namespace AnglrLangExtension
         }
 
         public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { logger?.InfoLine ($"mouse down in non-terminal symbol nr. {Index} at ({point})"); }
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrRawTerminalSymbolVisual : AnglrRawDrawingVisual, IAnglrEventHandler
@@ -353,45 +357,46 @@ namespace AnglrLangExtension
             AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrRawConstantSymbolVisual : AnglrRawDrawingVisual, IAnglrEventHandler
@@ -440,45 +445,46 @@ namespace AnglrLangExtension
             AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (constant symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (constant symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (constant symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (constant symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (constant symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (constant symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (constant symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (constant symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (constant symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrRawNonTerminalSymbolVisual : AnglrRawDrawingVisual, IAnglrEventHandler
@@ -527,45 +533,46 @@ namespace AnglrLangExtension
             AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (non-terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (non-terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (non-terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (non-terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (non-terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (non-terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (non-terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (non-terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
 
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (non-terminal symbol, id = {Id}, value =  {SymbolToken.Name})");
         }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrSyntaxRuleNameVisual : AnglrRawDrawingVisual, IAnglrEventHandler
@@ -611,45 +618,46 @@ namespace AnglrLangExtension
             AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (syntax rule name, id = {Id}, value =  {SymbolToken.text})");
         }
 
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (syntax rule name, id = {Id}, value =  {SymbolToken.text})");
         }
 
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (syntax rule name, id = {Id}, value =  {SymbolToken.text})");
         }
 
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (syntax rule name, id = {Id}, value =  {SymbolToken.text})");
         }
 
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (syntax rule name, id = {Id}, value =  {SymbolToken.text})");
         }
 
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (syntax rule name, id = {Id}, value =  {SymbolToken.text})");
         }
 
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (syntax rule name, id = {Id}, value =  {SymbolToken.text})");
         }
 
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (syntax rule name, id = {Id}, value =  {SymbolToken.text})");
         }
 
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (syntax rule name, id = {Id}, value =  {SymbolToken.text})");
         }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrSyntaxGroupNameVisual : AnglrRawDrawingVisual, IAnglrEventHandler
@@ -695,45 +703,46 @@ namespace AnglrLangExtension
             AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (syntax group name, id = {Id}, value =  {SymbolToken.text})");
         }
 
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (syntax group name, id = {Id}, value =  {SymbolToken.text})");
         }
 
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (syntax group name, id = {Id}, value =  {SymbolToken.text})");
         }
 
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (syntax group name, id = {Id}, value =  {SymbolToken.text})");
         }
 
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (syntax group name, id = {Id}, value =  {SymbolToken.text})");
         }
 
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (syntax group name, id = {Id}, value =  {SymbolToken.text})");
         }
 
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (syntax group name, id = {Id}, value =  {SymbolToken.text})");
         }
 
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (syntax group name, id = {Id}, value =  {SymbolToken.text})");
         }
 
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (syntax group name, id = {Id}, value =  {SymbolToken.text})");
         }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrGeneralizedNameVisual : AnglrRawDrawingVisual, IAnglrEventHandler
@@ -1025,45 +1034,46 @@ namespace AnglrLangExtension
             AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (g-name, id = {Id}, value =  {CardinalityDelimiter.parent.Emit (-1)})");
         }
 
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (g-name, id = {Id}, value =  {CardinalityDelimiter.parent.Emit (-1)})");
         }
 
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (g-name, id = {Id}, value =  {CardinalityDelimiter.parent.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (g-name, id = {Id}, value =  {CardinalityDelimiter.parent.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (g-name, id = {Id}, value =  {CardinalityDelimiter.parent.Emit (-1)})");
         }
 
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (g-name, id = {Id}, value =  {CardinalityDelimiter.parent.Emit (-1)})");
         }
 
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (g-name, id = {Id}, value =  {CardinalityDelimiter.parent.Emit (-1)})");
         }
 
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (g-name, id = {Id}, value =  {CardinalityDelimiter.parent.Emit (-1)})");
         }
 
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (g-name, id = {Id}, value =  {CardinalityDelimiter.parent.Emit (-1)})");
         }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrNameListVisual : AnglrRawDrawingVisual, IAnglrEventHandler
@@ -1171,45 +1181,46 @@ namespace AnglrLangExtension
             AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (name list, id = {Id}, value =  {NameList.Emit (-1)})");
         }
 
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (name list, id = {Id}, value =  {NameList.Emit (-1)})");
         }
 
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (name list, id = {Id}, value =  {NameList.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (name list, id = {Id}, value =  {NameList.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (name list, id = {Id}, value =  {NameList.Emit (-1)})");
         }
 
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (name list, id = {Id}, value =  {NameList.Emit (-1)})");
         }
 
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (name list, id = {Id}, value =  {NameList.Emit (-1)})");
         }
 
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (name list, id = {Id}, value =  {NameList.Emit (-1)})");
         }
 
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (name list, id = {Id}, value =  {NameList.Emit (-1)})");
         }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrNestedRuleVisual : AnglrRawDrawingVisual, IAnglrEventHandler
@@ -1324,45 +1335,46 @@ namespace AnglrLangExtension
             AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (nested syntax rule, id = {Id}, value =  {NestedRule.Emit (-1)})");
         }
 
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (nested syntax rule, id = {Id}, value =  {NestedRule.Emit (-1)})");
         }
 
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (nested syntax rule, id = {Id}, value =  {NestedRule.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (nested syntax rule, id = {Id}, value =  {NestedRule.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (nested syntax rule, id = {Id}, value =  {NestedRule.Emit (-1)})");
         }
 
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (nested syntax rule, id = {Id}, value =  {NestedRule.Emit (-1)})");
         }
 
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (nested syntax rule, id = {Id}, value =  {NestedRule.Emit (-1)})");
         }
 
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (nested syntax rule, id = {Id}, value =  {NestedRule.Emit (-1)})");
         }
 
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (nested syntax rule, id = {Id}, value =  {NestedRule.Emit (-1)})");
         }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrSyntaxRuleVisual : AnglrRawDrawingVisual, IAnglrEventHandler
@@ -1467,45 +1479,46 @@ namespace AnglrLangExtension
             AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (syntax rule, id = {Id}, value =  {SyntaxRule.Emit (-1)})");
         }
 
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (syntax rule, id = {Id}, value =  {SyntaxRule.Emit (-1)})");
         }
 
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (syntax rule, id = {Id}, value =  {SyntaxRule.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (syntax rule, id = {Id}, value =  {SyntaxRule.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (syntax rule, id = {Id}, value =  {SyntaxRule.Emit (-1)})");
         }
 
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (syntax rule, id = {Id}, value =  {SyntaxRule.Emit (-1)})");
         }
 
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (syntax rule, id = {Id}, value =  {SyntaxRule.Emit (-1)})");
         }
 
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (syntax rule, id = {Id}, value =  {SyntaxRule.Emit (-1)})");
         }
 
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (syntax rule, id = {Id}, value =  {SyntaxRule.Emit (-1)})");
         }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrSyntaxGroupVisual : AnglrRawDrawingVisual, IAnglrEventHandler
@@ -1623,45 +1636,46 @@ namespace AnglrLangExtension
             AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (syntax group, id = {Id}, value =  {SyntaxGroup.Emit (-1)})");
         }
 
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (syntax group, id = {Id}, value =  {SyntaxGroup.Emit (-1)})");
         }
 
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (syntax group, id = {Id}, value =  {SyntaxGroup.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (syntax group, id = {Id}, value =  {SyntaxGroup.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (syntax group, id = {Id}, value =  {SyntaxGroup.Emit (-1)})");
         }
 
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (syntax group, id = {Id}, value =  {SyntaxGroup.Emit (-1)})");
         }
 
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (syntax group, id = {Id}, value =  {SyntaxGroup.Emit (-1)})");
         }
 
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (syntax group, id = {Id}, value =  {SyntaxGroup.Emit (-1)})");
         }
 
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (syntax group, id = {Id}, value =  {SyntaxGroup.Emit (-1)})");
         }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrParserPartVisual : AnglrRawDrawingVisual, IAnglrEventHandler
@@ -1741,45 +1755,46 @@ namespace AnglrLangExtension
             AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (parser part, id = {Id}, value =  {ParserPart.Emit (-1)})");
         }
 
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (parser part, id = {Id}, value =  {ParserPart.Emit (-1)})");
         }
 
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (parser part, id = {Id}, value =  {ParserPart.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (parser part, id = {Id}, value =  {ParserPart.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (parser part, id = {Id}, value =  {ParserPart.Emit (-1)})");
         }
 
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (parser part, id = {Id}, value =  {ParserPart.Emit (-1)})");
         }
 
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (parser part, id = {Id}, value =  {ParserPart.Emit (-1)})");
         }
 
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (parser part, id = {Id}, value =  {ParserPart.Emit (-1)})");
         }
 
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
-            throw new NotImplementedException ();
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (parser part, id = {Id}, value =  {ParserPart.Emit (-1)})");
         }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrFilePartListVisual : AnglrRawDrawingVisual, IAnglrEventHandler
@@ -1859,37 +1874,46 @@ namespace AnglrLangExtension
             AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (file part list, id = {Id}, value =  {FilePartList.Emit (-1)})");
         }
 
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEner (file part list, id = {Id}, value =  {FilePartList.Emit (-1)})");
         }
 
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (file part list, id = {Id}, value =  {FilePartList.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (file part list, id = {Id}, value =  {FilePartList.Emit (-1)})");
         }
 
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (file part list, id = {Id}, value =  {FilePartList.Emit (-1)})");
         }
 
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
         {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (file part list, id = {Id}, value =  {FilePartList.Emit (-1)})");
         }
 
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (file part list, id = {Id}, value =  {FilePartList.Emit (-1)})");
         }
 
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (file part list, id = {Id}, value =  {FilePartList.Emit (-1)})");
         }
 
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
         {
+            AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (file part list, id = {Id}, value =  {FilePartList.Emit (-1)})");
         }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrContainerSymbolVisual : AnglrDrawingVisual, IAnglrVisualCloneable, IAnglrEventHandler
@@ -1911,14 +1935,15 @@ namespace AnglrLangExtension
         }
 
         public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { logger?.InfoLine ($"mouse down in container nr. {Index} at ({point})"); }
-        public void OnMouseEnter (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
-        public void OnMouseLeave (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
-        public void OnMouseMove (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
         public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger) { }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger) { }
     }
 
     public class AnglrDrawingDictionary : Dictionary<int, AnglrContainerSymbolVisual> { }
@@ -2116,6 +2141,21 @@ namespace AnglrLangExtension
         }
     }
 
+    public enum AnglrMouseEventKind
+    {
+        None = 0,
+        MouseDown,
+        MouseEnter,
+        MouseLeave,
+        MouseLeftButttonDown,
+        MouseLeftButttonUp,
+        MouseMove,
+        MouseRightButttonDown,
+        MouseRightButttonUp,
+        MouseUp,
+        MouseWheel
+    }
+
     public class AnglrVisualizer : SyntaxTreeWalker
     {
         _anglr_file_fragment_ Fragment { get; set; }
@@ -2151,7 +2191,7 @@ namespace AnglrLangExtension
             visualPosition.PopPosition ();
         }
 
-        public HitList HitTest (object sender, MouseButtonEventArgs e, AnglrRawDrawingVisual drawingVisual, Point point)
+        public HitList HitTest (object sender, MouseEventArgs e, AnglrRawDrawingVisual drawingVisual, Point point, AnglrMouseEventKind mouseEventKind)
         {
             if (drawingVisual == null)
                 return null;
@@ -2160,7 +2200,43 @@ namespace AnglrLangExtension
                 HitList hitVisuals = new HitList ();
                 _HitTest (hitVisuals, drawingVisual, point);
                 foreach (var visual in hitVisuals.Values)
-                    (visual as IAnglrEventHandler)?.OnMouseDown (sender, e, point, AnglrLogger);
+                {
+                    switch (mouseEventKind)
+                    {
+                        case AnglrMouseEventKind.None:
+                            break;
+                        case AnglrMouseEventKind.MouseDown:
+                            (visual as IAnglrEventHandler)?.OnMouseDown (sender, e as MouseButtonEventArgs, point, AnglrLogger);
+                            break;
+                        case AnglrMouseEventKind.MouseEnter:
+                            (visual as IAnglrEventHandler)?.OnMouseEnter (sender, e, point, AnglrLogger);
+                            break;
+                        case AnglrMouseEventKind.MouseLeave:
+                            (visual as IAnglrEventHandler)?.OnMouseLeave (sender, e, point, AnglrLogger);
+                            break;
+                        case AnglrMouseEventKind.MouseLeftButttonDown:
+                            (visual as IAnglrEventHandler)?.OnMouseLeftButtonDown (sender, e as MouseButtonEventArgs, point, AnglrLogger);
+                            break;
+                        case AnglrMouseEventKind.MouseLeftButttonUp:
+                            (visual as IAnglrEventHandler)?.OnMouseLeftButtonUp (sender, e as MouseButtonEventArgs, point, AnglrLogger);
+                            break;
+                        case AnglrMouseEventKind.MouseMove:
+                            (visual as IAnglrEventHandler)?.OnMouseMove (sender, e, point, AnglrLogger);
+                            break;
+                        case AnglrMouseEventKind.MouseRightButttonDown:
+                            (visual as IAnglrEventHandler)?.OnMouseRightButtonDown (sender, e as MouseButtonEventArgs, point, AnglrLogger);
+                            break;
+                        case AnglrMouseEventKind.MouseRightButttonUp:
+                            (visual as IAnglrEventHandler)?.OnMouseRightButtonUp (sender, e as MouseButtonEventArgs, point, AnglrLogger);
+                            break;
+                        case AnglrMouseEventKind.MouseUp:
+                            (visual as IAnglrEventHandler)?.OnMouseUp (sender, e as MouseButtonEventArgs, point, AnglrLogger);
+                            break;
+                        case AnglrMouseEventKind.MouseWheel:
+                            (visual as IAnglrEventHandler)?.OnMouseWheel (sender, e as MouseWheelEventArgs, point, AnglrLogger);
+                            break;
+                    }
+                }
                 return hitVisuals;
             }
             catch (Exception ex)

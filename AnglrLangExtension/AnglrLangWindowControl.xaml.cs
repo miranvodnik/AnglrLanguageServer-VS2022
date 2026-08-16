@@ -1377,11 +1377,14 @@ namespace AnglrLangExtension
 
         }
 
-        private void syntaxRuleVisual_MouseDown (object sender, MouseButtonEventArgs e)
+        private int MouseEventDispatcher (object sender, MouseEventArgs e, AnglrMouseEventKind mouseEventKind, string debugText)
         {
             var p = e.GetPosition (sender as IInputElement);
             if (p == null)
-                return;
+            {
+                logger?.InfoLine ($"*** NO ANGLR VISUAL HIT ***, kind = {mouseEventKind}");
+                return -1;
+            }
 
             List<Visual> visuals = new List<Visual> ();
             VisualTreeHelper.HitTest
@@ -1397,6 +1400,11 @@ namespace AnglrLangExtension
                 new PointHitTestParameters (p)
             );
 
+            if (visuals.Count == 0)
+            {
+                logger?.InfoLine ($"*** NO ANGLR VISUAL HIT ***, kind = {mouseEventKind}, point = {p}");
+                return 0;
+            }
             foreach (Visual visual in visuals)
             {
                 Vector offset = new Vector (p.X, p.Y);
@@ -1406,55 +1414,91 @@ namespace AnglrLangExtension
                     bounds.Union (parent.DescendantBounds);
                     offset -= parent.Offset;
                 }
-                logger?.InfoLine ($"*** MOUSE DOWN ***, point = {(Point) offset}");
+                logger?.InfoLine ($"*** {debugText} ***, point = {(Point) offset}");
                 AnglrRawDrawingVisual drawingVisual = visual as AnglrRawDrawingVisual;
-                drawingVisual?.AnglrVisualizer?.HitTest (sender, e, drawingVisual, (Point) offset);
+                drawingVisual?.AnglrVisualizer?.HitTest (sender, e, drawingVisual, (Point) offset, mouseEventKind);
+            }
+            return 1;
+        }
+
+        private void syntaxRuleVisual_MouseDown (object sender, MouseButtonEventArgs e)
+        {
+            int result;
+            if (( result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseDown, "MOUSE DOWN")) <= 0)
+            {
             }
         }
 
         private void syntaxRuleVisual_MouseEnter (object sender, MouseEventArgs e)
         {
-
+            int result;
+            if ((result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseEnter, "MOUSE ENTER")) <= 0)
+            {
+            }
         }
 
         private void syntaxRuleVisual_MouseLeave (object sender, MouseEventArgs e)
         {
-
+            int result;
+            if ((result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseLeave, "MOUSE LEAVE")) <= 0)
+            {
+            }
         }
 
         private void syntaxRuleVisual_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
         {
-
+            int result;
+            if ((result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseLeftButttonDown, "MOUSE LEFT BUTTON DOWN")) <= 0)
+            {
+            }
         }
 
         private void syntaxRuleVisual_MouseLeftButtonUp (object sender, MouseButtonEventArgs e)
         {
-
+            int result;
+            if ((result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseLeftButttonUp, "MOUSE LEFT BUTTON UP")) <= 0)
+            {
+            }
         }
 
         private void syntaxRuleVisual_MouseMove (object sender, MouseEventArgs e)
         {
-
+            int result;
+            if ((result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseMove, "MOUSE MOVE")) <= 0)
+            {
+            }
         }
 
         private void syntaxRuleVisual_MouseRightButtonDown (object sender, MouseButtonEventArgs e)
         {
-
+            int result;
+            if ((result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseRightButttonDown, "MOUSE RIGHT BUTTON DOWN")) <= 0)
+            {
+            }
         }
 
         private void syntaxRuleVisual_MouseRightButtonUp (object sender, MouseButtonEventArgs e)
         {
-
+            int result;
+            if ((result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseRightButttonUp, "MOUSE RIGHT BUTTON UP")) <= 0)
+            {
+            }
         }
 
         private void syntaxRuleVisual_MouseUp (object sender, MouseButtonEventArgs e)
         {
-
+            int result;
+            if ((result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseUp, "MOUSE UP")) <= 0)
+            {
+            }
         }
 
         private void syntaxRuleVisual_MouseWheel (object sender, MouseWheelEventArgs e)
         {
-
+            int result;
+            if ((result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseWheel, "MOUSE WHEEL")) <= 0)
+            {
+            }
         }
     }
 
