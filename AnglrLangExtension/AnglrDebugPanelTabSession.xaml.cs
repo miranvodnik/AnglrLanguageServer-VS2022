@@ -3,6 +3,7 @@ using AnglrDebuggerBridge;
 using AnglrDebuggerJsonRpcMessages;
 using AnglrJsonRpcMethods;
 using AnglrLogLibrary;
+using Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Shell;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -50,7 +51,6 @@ namespace AnglrLangExtension
         private AnglrDebuggerClientBridge anglrDebuggerServerBridge;
 
         private AnglrLRStackViewSet lRStackViewSet;
-        private (AnglrLangItem, AnglrStateItem, AnglrGetParserSyntaxRulesResult, AnglrDrawingDictionary) anglrInfo;
         private bool showDebuggerText;
 
         public AnglrDebugPanelTabSession (IAnglrLangService anglrLangService)
@@ -62,7 +62,6 @@ namespace AnglrLangExtension
 
             this.anglrLangService = anglrLangService;
             Logger = anglrLangService?.AnglrLogger ?? new VoidAnglrLogger ();
-            anglrInfo = default;
             showDebuggerText = true;
 
             Logger?.InfoLine ($"AnglrDebugPanelSession created ");
@@ -121,7 +120,6 @@ namespace AnglrLangExtension
                 }
 
                 MagicNumber = connectMessageRequest.MagicNumber.HasValue ? connectMessageRequest.MagicNumber.Value : -1;
-                anglrInfo = AnglrLangDictionary.GetItem (MagicNumber);
                 AnglrBreakPointDBChunk chunk = null;
                 if (!AnglrBreakPointDB.Get (MagicNumber, out chunk))
                     chunk = new AnglrBreakPointDBChunk ();
@@ -236,6 +234,24 @@ namespace AnglrLangExtension
                 Logger?.InfoLine ($"stack ({stack.PDAStackId})");
                 foreach (var cell in stack.PDAStackCells)
                     Logger?.InfoLine ($"\t{cell.Id} {cell.State} {cell.Name}");
+                AnalyzePDAStack (stack);
+            }
+        }
+
+        private void AnalyzePDAStack (AnglrDebuggerGetPDAStack stack)
+        {
+            foreach (var cell in stack.PDAStackCells)
+            {
+                AnglrGetParserStateItemResult anglrGetParserStateItemResult = anglrLangService?.InvokeGetParserState (new AnglrGetParserStateItemParams ()
+                {
+                    StateNr = cell.State,
+                    TextDocument = new TextDocumentIdentifier ()
+                    {
+                        Uri = new System.Uri (fileName)
+                    }
+                });
+                if (anglrGetParserStateItemResult == null)
+                    continue;
             }
         }
 

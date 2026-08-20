@@ -63,10 +63,14 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="50*"/>
                         </Grid.RowDefinitions>
                         <Label x:Name="nodeName" Grid.Row="0" Grid.Column="0" Content="label" BorderThickness="1" Margin="0,0,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Arial" FontSize="20"/>
-                        <WebBrowser x:Name="webBrowser" Grid.Row="1" Grid.Column="0" Margin="0,0,-2,0" />
+                        <TabControl Grid.Row="1" Grid.Column="0" x:Name="syntaxRuleVisualTabs" />
+                        <GridSplitter Height="5" BorderThickness="1" Grid.Row="2" Grid.Column="0" Grid.RowSpan="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#FFB4B4B4"/>
+                        <WebBrowser x:Name="webBrowser" Grid.Row="3" Grid.Column="0" Margin="0,0,-2,0" />
                     </Grid>
                 </Grid>
             </TabItem>
@@ -120,33 +124,25 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="50*"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="50*"/>
                         </Grid.RowDefinitions>
                         <StackPanel x:Name="stateViewPanel" Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
                             <Label x:Name="stateName" Content="" BorderThickness="1" Margin="0,0,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HotTrackBrushKey}}" FontFamily="Arial" FontSize="20"/>
                             <Button x:Name="openState" Click="openState_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0">Open State</Button>
                         </StackPanel>
                         <ScrollViewer Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" >
-                            <src:DrawingCanvas
-                                x:Name="syntaxRuleVisual"
+                            <src:AnglrParserPartDrawingCanvas
+                                x:Name="stateRuleVisual"
                                 Background="White"
                                 CanHorizontallyScroll="True"
                                 CanVerticallyScroll="True"
                                 Height="500"
-                                MouseDown="syntaxRuleVisual_MouseDown"
-                                MouseEnter="syntaxRuleVisual_MouseEnter"
-                                MouseLeave="syntaxRuleVisual_MouseLeave"
-                                MouseLeftButtonDown="syntaxRuleVisual_MouseLeftButtonDown"
-                                MouseLeftButtonUp="syntaxRuleVisual_MouseLeftButtonUp"
-                                MouseMove="syntaxRuleVisual_MouseMove"
-                                MouseRightButtonDown="syntaxRuleVisual_MouseRightButtonDown"
-                                MouseRightButtonUp="syntaxRuleVisual_MouseRightButtonUp"
-                                MouseUp="syntaxRuleVisual_MouseUp"
-                                MouseWheel="syntaxRuleVisual_MouseWheel"
                             />
                         </ScrollViewer>
-                        <WebBrowser x:Name="stateBrowser" Grid.Row="2" Grid.Column="0" Margin="0,0,-2,0" Navigating="stateBrowser_Navigating" />
+                        <GridSplitter Height="5" BorderThickness="1" Grid.Row="2" Grid.Column="0" Grid.RowSpan="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#FFB4B4B4"/>
+                        <WebBrowser x:Name="stateBrowser" Grid.Row="3" Grid.Column="0" Margin="0,0,-2,0" Navigating="stateBrowser_Navigating" />
                     </Grid>
                 </Grid>
             </TabItem>

@@ -11,11 +11,11 @@ using AnglrLogLibrary;
 
 namespace AnglrLangExtension
 {
-    internal class DrawingCanvas : Panel, IScrollInfo
+    internal class AnglrParserPartDrawingCanvas : Panel, IScrollInfo
     {
         public IAnglrLogger Logger { get; set; }
         private VisualCollection _visualCollection;
-        public DrawingCanvas()
+        public AnglrParserPartDrawingCanvas ()
         {
             _visualCollection = new VisualCollection (this);
         }
@@ -153,21 +153,6 @@ namespace AnglrLangExtension
             return finalSize;
         }
 
-        protected override void OnRender (DrawingContext dc)
-        {
-            Logger?.DebugLine ($"render");
-            dc.PushTransform (new TranslateTransform (HorizontalOffset, VerticalOffset));
-            dc.PushClip (new RectangleGeometry (new Rect (0, 0, ViewportWidth, ViewportHeight)));
-            foreach (var visual in _visualCollection)
-            {
-                DrawingVisual drawingVisual = visual as DrawingVisual;
-                if (drawingVisual == null)
-                    continue;
-                Logger?.DebugLine ($"render visual {drawingVisual.ContentBounds}");
-                //dc.DrawDrawing (drawingVisual.Drawing);
-            }
-            dc.Pop ();
-            dc.Pop ();
-        }
+        protected override void OnRender (DrawingContext dc) { }
     }
 }

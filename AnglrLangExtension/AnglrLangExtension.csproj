@@ -93,8 +93,11 @@
     <Compile Include="AnglrSyntaxRuleDetailsWindow.xaml.cs">
       <DependentUpon>AnglrSyntaxRuleDetailsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AnglrSyntaxRuleViewerTab.xaml.cs">
+      <DependentUpon>AnglrSyntaxRuleViewerTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AnglrVisualizer.cs" />
-    <Compile Include="DrawingCanvas.cs" />
+    <Compile Include="AnglrParserPartDrawingCanvas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AnglrLangExtensionPackage.cs" />
     <Compile Include="RhsNodeSetToStringConverter.cs" />
@@ -174,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AnglrSyntaxRuleDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnglrSyntaxRuleViewerTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
