@@ -816,7 +816,9 @@ namespace AnglrLSPServerProcess
                     result.NodeCategory = syntaxTreeNode.NodeCategory;
                     result.NodeSubCategory = syntaxTreeNode.NodeSubCategory;
                     result.NodeName = syntaxTreeNode.Name;
-                    result.HtmlText = anglrHtmlColorizer.GenerateHtmlText ((_anglr_file_fragment_) node, syntaxTreeNode.node);
+                    result.ReportText =
+                        (anglrGetGetHierarchyItemParams.ReportType == AnglrItemReportType.HtmlText) ? anglrHtmlColorizer.GenerateHtmlText ((_anglr_file_fragment_) node, syntaxTreeNode.node) :
+                        (anglrGetGetHierarchyItemParams.ReportType == AnglrItemReportType.RichText) ? anglrHtmlColorizer.GenerateRichText ((_anglr_file_fragment_) node, syntaxTreeNode.node) : "";
                 }
                 AnglrNodeChildren syntaxTreeNodes = anglrSyntaxTreeGenerator.FindChildren (anglrGetGetHierarchyItemParams.ItemId);
                 result.Items = new AnglrGetGetHierarchyItemData [syntaxTreeNodes.Count];
@@ -852,7 +854,9 @@ namespace AnglrLSPServerProcess
                     result.NodeCategory = syntaxTreeNode.NodeCategory;
                     result.NodeSubCategory = syntaxTreeNode.NodeSubCategory;
                     result.NodeName = syntaxTreeNode.Name;
-                    result.HtmlText = anglrHtmlColorizer.GenerateHtmlText ((_anglr_file_fragment_) node, syntaxTreeNode.node);
+                    result.ReportText =
+                        (anglrGetDictionaryItemParams.ReportType == AnglrItemReportType.HtmlText) ? anglrHtmlColorizer.GenerateHtmlText ((_anglr_file_fragment_) node, syntaxTreeNode.node) :
+                        (anglrGetDictionaryItemParams.ReportType == AnglrItemReportType.RichText) ? anglrHtmlColorizer.GenerateRichText ((_anglr_file_fragment_) node, syntaxTreeNode.node) : "";
                 }
                 AnglrNodeChildren syntaxTreeNodes = anglrSyntaxTreeGenerator.FindChildren (anglrGetDictionaryItemParams.ItemId);
                 result.Items = new AnglrGetDictionaryItemData [syntaxTreeNodes.Count];

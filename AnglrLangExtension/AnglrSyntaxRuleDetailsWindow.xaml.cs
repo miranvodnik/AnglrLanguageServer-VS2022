@@ -92,14 +92,15 @@ namespace AnglrLangExtension
 
             AnglrGetGetHierarchyItemParams anglrGetGetHierarchyItemParams = new AnglrGetGetHierarchyItemParams ()
             {
-                ItemId = AnglrLangItem.Id,
                 TextDocument = new TextDocumentIdentifier ()
                 {
                     Uri = new System.Uri ((string) AnglrLangItem.Root.Name)
-                }
+                },
+                ItemId = AnglrLangItem.Id,
+                ReportType = AnglrItemReportType.HtmlText
             };
             AnglrGetGetHierarchyItemResult anglrGetGetHierarchyItemResult = AnglrLangService.InvokeGetHierarchy (anglrGetGetHierarchyItemParams);
-            webBrowser.NavigateToString ($"{AnglrLangWindowControl.anglrHtmlPrologue}{anglrGetGetHierarchyItemResult.HtmlText}{AnglrLangWindowControl.anglrHtmlEpilogue}");
+            webBrowser.NavigateToString ($"{AnglrLangWindowControl.anglrHtmlPrologue}{anglrGetGetHierarchyItemResult.ReportText}{AnglrLangWindowControl.anglrHtmlEpilogue}");
 
             AnglrGetParserSyntaxRuleParams anglrGetParserSyntaxRuleParams = new AnglrGetParserSyntaxRuleParams ()
             {

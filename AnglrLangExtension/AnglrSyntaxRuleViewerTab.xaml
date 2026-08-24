@@ -15,6 +15,6 @@
                 CanVerticallyScroll="True"
                 Height="500"
             />
-        </ScrollViewer>  
+        </ScrollViewer>
     </Grid>
 </UserControl>

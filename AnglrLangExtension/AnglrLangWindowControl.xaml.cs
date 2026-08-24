@@ -555,11 +555,12 @@ namespace AnglrLangExtension
 
                 AnglrGetGetHierarchyItemParams anglrGetGetHierarchyItemParams = new AnglrGetGetHierarchyItemParams ()
                 {
-                    ItemId = itemId,
                     TextDocument = new TextDocumentIdentifier ()
                     {
                         Uri = new System.Uri ((string) treeViewItem.Name)
-                    }
+                    },
+                    ItemId = itemId,
+                    ReportType=AnglrItemReportType.HtmlText
                 };
 
                 AnglrGetGetHierarchyItemResult anglrGetGetHierarchyItemResult = anglrLangService.InvokeGetHierarchy (anglrGetGetHierarchyItemParams);
@@ -569,7 +570,7 @@ namespace AnglrLangExtension
                     [anglrGetGetHierarchyItemResult.NodeCategory - (int) ProductionID.__anglr_file_fragment__ID]
                     [anglrGetGetHierarchyItemResult.NodeSubCategory];
                 nodeName.Content = $"{nodeType}: {anglrGetGetHierarchyItemResult.NodeName}";
-                webBrowser.NavigateToString ($"{anglrHtmlPrologue}{anglrGetGetHierarchyItemResult.HtmlText}{anglrHtmlEpilogue}");
+                webBrowser.NavigateToString ($"{anglrHtmlPrologue}{anglrGetGetHierarchyItemResult.ReportText}{anglrHtmlEpilogue}");
 
                 foreach (var item in anglrGetGetHierarchyItemResult.Items)
                 {
@@ -589,9 +590,7 @@ namespace AnglrLangExtension
             }
             catch (Exception exc)
             {
-                logger?.DebugLine ($"anglrHierarchy_SelectedItemChanged throws exception:");
-                logger?.DebugLine ($"\t{exc.Message}");
-                logger?.DebugLine ($"\t{exc.StackTrace}");
+                logger?.ErrorLine (exc, $"anglrHierarchy_SelectedItemChanged throws exception:");
             }
         }
 

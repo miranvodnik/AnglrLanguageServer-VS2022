@@ -35,6 +35,7 @@ namespace AnglrLibrary
         SimpleSymbolToken,
         Children,
         HtmlText,
+        RichText,
         IndexValue,
         NSCInfo,
         Visual

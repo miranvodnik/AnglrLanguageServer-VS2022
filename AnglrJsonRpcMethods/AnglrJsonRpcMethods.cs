@@ -37,6 +37,15 @@ namespace AnglrJsonRpcMethods
         public List<(int column, int line, int classification)> ClassificationSpanInfo { get; set; }
     }
 
+    [Obfuscation (Exclude = true)]
+    [DataContract]
+    public enum AnglrItemReportType
+    {
+        None = 0,
+        HtmlText,
+        RichText
+    }
+
     /// <summary>
     /// AnglrGetGetHierarchyItem Mehod Parameters
     /// </summary>
@@ -46,6 +55,7 @@ namespace AnglrJsonRpcMethods
     {
         [DataMember (Name = "textDocument")] public TextDocumentIdentifier TextDocument { get; set; }
         [DataMember (Name = "itemId")] public string ItemId { get; set; }
+        [DataMember (Name = "reportType")] public AnglrItemReportType ReportType { get; set; }
     }
 
     /// <summary>
@@ -71,7 +81,7 @@ namespace AnglrJsonRpcMethods
         [DataMember (Name = "nodeCategory")] public int NodeCategory { get; set; }
         [DataMember (Name = "nodeSubCategory")] public int NodeSubCategory { get; set; }
         [DataMember (Name = "nodeName")] public string NodeName { get; set; }
-        [DataMember (Name = "htmlText")] public string HtmlText { get; set; }
+        [DataMember (Name = "reportText")] public string ReportText { get; set; }
         [DataMember (Name = "items")] public AnglrGetGetHierarchyItemData [] Items { get; set; }
     }
 
@@ -84,6 +94,7 @@ namespace AnglrJsonRpcMethods
     {
         [DataMember (Name = "textDocument")] public TextDocumentIdentifier TextDocument { get; set; }
         [DataMember (Name = "itemId")] public string ItemId { get; set; }
+        [DataMember (Name = "reportType ")] public AnglrItemReportType ReportType { get; set; }
     }
 
     /// <summary>
@@ -109,7 +120,7 @@ namespace AnglrJsonRpcMethods
         [DataMember (Name = "nodeCategory")] public int NodeCategory { get; set; }
         [DataMember (Name = "nodeSubCategory")] public int NodeSubCategory { get; set; }
         [DataMember (Name = "nodeName")] public string NodeName { get; set; }
-        [DataMember (Name = "htmlText")] public string HtmlText { get; set; }
+        [DataMember (Name = "reportText")] public string ReportText { get; set; }
         [DataMember (Name = "items")] public AnglrGetDictionaryItemData [] Items { get; set; }
     }
 
