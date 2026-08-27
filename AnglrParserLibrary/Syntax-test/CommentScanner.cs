@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 ﻿using System;
 using System.IO;
@@ -12,7 +13,7 @@ using Anglr.Declarations;
 
 namespace Anglr.ScannerLib
 {
-	internal class CommentScanner : Regex, RegexInterface
+	public class CommentScanner : Regex, RegexInterface
 	{
 		public CommentScanner (LexerBase scanner) : base (@"(?<g1>\*+\/)|(?<g2>\*+[^\*\/])|(?<g3>[^\*]+)", RegexOptions.ExplicitCapture)
 		{

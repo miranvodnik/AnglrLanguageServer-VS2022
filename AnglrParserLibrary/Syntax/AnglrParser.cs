@@ -1114,7 +1114,7 @@ namespace Anglr.Parser
 		public stackset stackSet { get; private set; }
 		public parselist parseList { get; private set; }
 
-		internal readonly static int g_magicNumber = 2629197;
+		internal readonly static int g_magicNumber = 3265532;
 
 		internal readonly static int g_minTerminalCode = 258;
 		internal readonly static int[] g_terminalCodes = 

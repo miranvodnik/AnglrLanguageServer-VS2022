@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 ﻿using System;
 using System.IO;
@@ -12,7 +13,7 @@ using Anglr.Declarations;
 
 namespace Anglr.ScannerLib
 {
-	internal class LineCommentScanner : Regex, RegexInterface
+	public class LineCommentScanner : Regex, RegexInterface
 	{
 		public LineCommentScanner (LexerBase scanner) : base (@"(?<g1>[^\n]*\n)", RegexOptions.ExplicitCapture)
 		{

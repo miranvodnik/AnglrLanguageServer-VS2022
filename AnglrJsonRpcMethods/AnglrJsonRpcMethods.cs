@@ -132,6 +132,7 @@ namespace AnglrJsonRpcMethods
     public class AnglrGetParserStateItemParams
     {
         [DataMember (Name = "textDocument")] public TextDocumentIdentifier TextDocument { get; set; }
+        [DataMember (Name = "magicNr")] public int MagicNr { get; set; }
         [DataMember (Name = "stateNr")] public int StateNr { get; set; }
     }
 
@@ -221,7 +222,8 @@ namespace AnglrJsonRpcMethods
         [DataMember (Name = "productionNumber")] public int ProductionNumber { get; set; }
         [DataMember (Name = "productionName")] public string ProductionName { get; set; }
         [DataMember (Name = "rhsNodeSet")] public AnglrGetParserStateSymbolTokenData [] RhsNodeSet { get; set; }
-        [DataMember (Name = "breakPoint")] public bool BreakPoint
+        [DataMember (Name = "breakPoint")]
+        public bool BreakPoint
         {
             get => _breakPoint;
             set

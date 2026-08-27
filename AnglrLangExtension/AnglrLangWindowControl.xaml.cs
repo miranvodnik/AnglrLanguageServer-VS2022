@@ -19,7 +19,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Markup;
 using System.Windows.Media.Media3D;
+using System.Windows.Documents;
 
 namespace AnglrLangExtension
 {
@@ -82,12 +84,13 @@ namespace AnglrLangExtension
         public AnglrRawDrawingVisual DrawingVisual { get; set; }
     }
 
-    public class AnglrLangDictionary : Dictionary<string, AnglrLangDictionaryItem>
+    public class AnglrLangDictionary : Dictionary<int, AnglrLangDictionaryItem>
     {
-        private static AnglrLangDictionary AnglrLangRepo = new AnglrLangDictionary ();
-        public static bool HasItem (string id) => AnglrLangRepo.TryGetValue (id, out _);
-        public static AnglrLangDictionaryItem AddItem (string id, AnglrLangDictionaryItem item) => HasItem (id) ? default : AnglrLangRepo [id] = item;
-        public static AnglrLangDictionaryItem GetItem (string id) => AnglrLangRepo.TryGetValue (id, out var item) ? item : default;
+        private static AnglrLangDictionary _AnglrLangRepo = new AnglrLangDictionary ();
+        public static AnglrLangDictionary AnglrLangRepo => _AnglrLangRepo;
+        public static bool HasItem (int id) => _AnglrLangRepo.TryGetValue (id, out _);
+        public static AnglrLangDictionaryItem AddItem (int id, AnglrLangDictionaryItem item) => HasItem (id) ? default : _AnglrLangRepo [id] = item;
+        public static AnglrLangDictionaryItem GetItem (int id) => _AnglrLangRepo.TryGetValue (id, out var item) ? item : default;
     }
 
     public partial class AnglrLangWindowControl : UserControl
@@ -221,6 +224,9 @@ namespace AnglrLangExtension
             "}\r\n" +
             "</style></head><body>";
         public static readonly string anglrHtmlEpilogue = "</body></html>";
+
+        public static readonly string anglrRichTextPrologue = "<FlowDocument xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\">";
+        public static readonly string anglrRichTextEpilogue = "</FlowDocument>";
 
         public static readonly string [] anglrLangWindowIcons =
         {
@@ -455,7 +461,7 @@ namespace AnglrLangExtension
                 if (magicNr.HasValue)
                     AnglrLangDictionary.AddItem
                     (
-                        name,
+                        _magicNr,
                         new AnglrLangDictionaryItem ()
                         {
                             LangItem = anglrLangItem,
@@ -467,7 +473,7 @@ namespace AnglrLangExtension
                     );
 
                 {
-                    AnglrSyntaxRuleViewerTab ruleViewerTab = new AnglrSyntaxRuleViewerTab (anglrLangService, name, drawingVisual);
+                    AnglrSyntaxRuleViewerTab ruleViewerTab = new AnglrSyntaxRuleViewerTab (anglrLangService, _magicNr, name, drawingVisual);
                     TabItem tabItem = new TabItem ();
                     tabItem.Content = ruleViewerTab;
                     tabItem.Header = Path.GetFileName (name);
@@ -560,7 +566,7 @@ namespace AnglrLangExtension
                         Uri = new System.Uri ((string) treeViewItem.Name)
                     },
                     ItemId = itemId,
-                    ReportType=AnglrItemReportType.HtmlText
+                    ReportType = AnglrItemReportType.HtmlText
                 };
 
                 AnglrGetGetHierarchyItemResult anglrGetGetHierarchyItemResult = anglrLangService.InvokeGetHierarchy (anglrGetGetHierarchyItemParams);
@@ -930,7 +936,8 @@ namespace AnglrLangExtension
                         TextDocument = new TextDocumentIdentifier ()
                         {
                             Uri = new System.Uri (anglrStateItem.RootItem.Name)
-                        }
+                        },
+                        MagicNr = 0
                     };
                     AnglrGetParserStateItemResult anglrGetParserStateItemResult = anglrLangService.InvokeGetParserState (anglrGetParserStateItemParams);
                     anglrStateItem.DefineText (anglrGetParserStateItemResult);
@@ -978,7 +985,7 @@ namespace AnglrLangExtension
                 AnglrStateRootItem anglrStateRootItem = selectedViewItem.RootItem as AnglrStateRootItem;
                 if (anglrStateRootItem != null)
                 {
-                    var chunk = AnglrLangDictionary.GetItem (anglrStateRootItem.Name);
+                    var chunk = AnglrLangDictionary.GetItem (anglrStateRootItem.MagicNr);
                     if ((chunk != default) && (chunk.Drawings != null))
                     {
                         AnglrDrawingDictionary dictionary = chunk.Drawings;
@@ -1180,7 +1187,8 @@ namespace AnglrLangExtension
                         TextDocument = new TextDocumentIdentifier ()
                         {
                             Uri = new System.Uri (stateItem.RootItem.Name)
-                        }
+                        },
+                        MagicNr = 0
                     };
                     AnglrGetParserStateItemResult anglrGetParserStateItemResult = anglrLangService.InvokeGetParserState (anglrGetParserStateItemParams);
 

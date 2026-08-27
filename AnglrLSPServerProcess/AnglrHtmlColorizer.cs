@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Xml.Linq;
+using System.Xml;
 
 namespace AnglrLSPServerProcess
 {
@@ -357,9 +357,9 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__attribute_.m__identifier_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"attribute-name\" id=\"{normalizeName (p__attribute_.m__identifier_.text)}\">{WebUtility.HtmlEncode (p__attribute_.m__identifier_.text)}</span>";
                     ((AppInfo) p__attribute_.m__right_square_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"attribute-brace\">{WebUtility.HtmlEncode (p__attribute_.m__right_square_bracket_.text)}</span>";
 
-                    ((AppInfo) p__attribute_.m__left_square_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateAttributeBrace (p__attribute_.m__left_square_bracket_.text);
-                    ((AppInfo) p__attribute_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateAttributeName (normalizeName (p__attribute_.m__identifier_.text));
-                    ((AppInfo) p__attribute_.m__right_square_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateAttributeBrace (p__attribute_.m__right_square_bracket_.text);
+                    ((AppInfo) p__attribute_.m__left_square_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateAttributeBrace (XmlConvert.EncodeName (p__attribute_.m__left_square_bracket_.text));
+                    ((AppInfo) p__attribute_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateAttributeName (XmlConvert.EncodeName (normalizeName (p__attribute_.m__identifier_.text)));
+                    ((AppInfo) p__attribute_.m__right_square_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateAttributeBrace (XmlConvert.EncodeName (p__attribute_.m__right_square_bracket_.text));
                 }
                 break;
             }
@@ -384,9 +384,9 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__name_value_pair_.m__equals_sign_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__name_value_pair_.m__equals_sign_.text)}</span>";
                     ((AppInfo) p__name_value_pair_.m__cstring_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"attribute-val-value\">{WebUtility.HtmlEncode (p__name_value_pair_.m__cstring_.text)}</span>";
 
-                    ((AppInfo) p__name_value_pair_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateAttributeValName (normalizeName (p__name_value_pair_.m__identifier_.text));
-                    ((AppInfo) p__name_value_pair_.m__equals_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__name_value_pair_.m__equals_sign_.text);
-                    ((AppInfo) p__name_value_pair_.m__cstring_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateAttributeValValue (p__name_value_pair_.m__cstring_.text);
+                    ((AppInfo) p__name_value_pair_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateAttributeValName (XmlConvert.EncodeName (normalizeName (p__name_value_pair_.m__identifier_.text)));
+                    ((AppInfo) p__name_value_pair_.m__equals_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__name_value_pair_.m__equals_sign_.text));
+                    ((AppInfo) p__name_value_pair_.m__cstring_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateAttributeValValue (XmlConvert.EncodeName (p__name_value_pair_.m__cstring_.text));
                 }
                 break;
             }
@@ -412,10 +412,10 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__general_part_.m__left_part_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"part-brace\">{WebUtility.HtmlEncode (p__general_part_.m__left_part_bracket_.text)}</span>";
                     ((AppInfo) p__general_part_.m__right_part_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"part-brace\">{WebUtility.HtmlEncode (p__general_part_.m__right_part_bracket_.text)}</span>";
 
-                    ((AppInfo) p__general_part_.m__general_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartToken (p__general_part_.m__general_.text);
-                    ((AppInfo) p__general_part_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartName (normalizeName (p__general_part_.m__identifier_.text));
-                    ((AppInfo) p__general_part_.m__left_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (p__general_part_.m__left_part_bracket_.text);
-                    ((AppInfo) p__general_part_.m__right_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (p__general_part_.m__right_part_bracket_.text);
+                    ((AppInfo) p__general_part_.m__general_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartToken (XmlConvert.EncodeName (p__general_part_.m__general_.text));
+                    ((AppInfo) p__general_part_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartName (XmlConvert.EncodeName (normalizeName (p__general_part_.m__identifier_.text)));
+                    ((AppInfo) p__general_part_.m__left_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (XmlConvert.EncodeName (p__general_part_.m__left_part_bracket_.text));
+                    ((AppInfo) p__general_part_.m__right_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (XmlConvert.EncodeName (p__general_part_.m__right_part_bracket_.text));
                 }
                 break;
             }
@@ -441,10 +441,10 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__declaration_part_.m__left_part_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"part-brace\">{WebUtility.HtmlEncode (p__declaration_part_.m__left_part_bracket_.text)}</span>";
                     ((AppInfo) p__declaration_part_.m__right_part_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"part-brace\">{WebUtility.HtmlEncode (p__declaration_part_.m__right_part_bracket_.text)}</span>";
 
-                    ((AppInfo) p__declaration_part_.m__declarations_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartToken (p__declaration_part_.m__declarations_.text);
-                    ((AppInfo) p__declaration_part_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartName (normalizeName (p__declaration_part_.m__identifier_.text));
-                    ((AppInfo) p__declaration_part_.m__left_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (p__declaration_part_.m__left_part_bracket_.text);
-                    ((AppInfo) p__declaration_part_.m__right_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (p__declaration_part_.m__right_part_bracket_.text);
+                    ((AppInfo) p__declaration_part_.m__declarations_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartToken (XmlConvert.EncodeName (p__declaration_part_.m__declarations_.text));
+                    ((AppInfo) p__declaration_part_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartName (XmlConvert.EncodeName (normalizeName (p__declaration_part_.m__identifier_.text)));
+                    ((AppInfo) p__declaration_part_.m__left_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (XmlConvert.EncodeName (p__declaration_part_.m__left_part_bracket_.text));
+                    ((AppInfo) p__declaration_part_.m__right_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (XmlConvert.EncodeName (p__declaration_part_.m__right_part_bracket_.text));
                 }
                 break;
             }
@@ -467,7 +467,7 @@ namespace AnglrLSPServerProcess
                         break;
                     ((AppInfo) p__single_terminal_definition_.m__terminal_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__single_terminal_definition_.m__terminal_.text)}</span>";
 
-                    ((AppInfo) p__single_terminal_definition_.m__terminal_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__single_terminal_definition_.m__terminal_.text);
+                    ((AppInfo) p__single_terminal_definition_.m__terminal_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__single_terminal_definition_.m__terminal_.text));
                 }
                 break;
             }
@@ -490,7 +490,7 @@ namespace AnglrLSPServerProcess
                         break;
                     ((AppInfo) p__single_regex_definition_.m__regex_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__single_regex_definition_.m__regex_.text)}</span>";
 
-                    ((AppInfo) p__single_regex_definition_.m__regex_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__single_regex_definition_.m__regex_.text);
+                    ((AppInfo) p__single_regex_definition_.m__regex_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__single_regex_definition_.m__regex_.text));
                 }
                 break;
             }
@@ -515,9 +515,9 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__block_of_terminal_definitions_.m__left_curly_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__block_of_terminal_definitions_.m__left_curly_bracket_.text)}</span>";
                     ((AppInfo) p__block_of_terminal_definitions_.m__right_curly_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__block_of_terminal_definitions_.m__right_curly_bracket_.text)}</span>";
 
-                    ((AppInfo) p__block_of_terminal_definitions_.m__terminal_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__block_of_terminal_definitions_.m__terminal_.text);
-                    ((AppInfo) p__block_of_terminal_definitions_.m__left_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__block_of_terminal_definitions_.m__left_curly_bracket_.text);
-                    ((AppInfo) p__block_of_terminal_definitions_.m__right_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__block_of_terminal_definitions_.m__right_curly_bracket_.text);
+                    ((AppInfo) p__block_of_terminal_definitions_.m__terminal_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__block_of_terminal_definitions_.m__terminal_.text));
+                    ((AppInfo) p__block_of_terminal_definitions_.m__left_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__block_of_terminal_definitions_.m__left_curly_bracket_.text));
+                    ((AppInfo) p__block_of_terminal_definitions_.m__right_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__block_of_terminal_definitions_.m__right_curly_bracket_.text));
                 }
                 break;
             }
@@ -542,9 +542,9 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__block_of_regex_definitions_.m__left_curly_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__block_of_regex_definitions_.m__left_curly_bracket_.text)}</span>";
                     ((AppInfo) p__block_of_regex_definitions_.m__right_curly_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__block_of_regex_definitions_.m__right_curly_bracket_.text)}</span>";
 
-                    ((AppInfo) p__block_of_regex_definitions_.m__regex_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__block_of_regex_definitions_.m__regex_.text);
-                    ((AppInfo) p__block_of_regex_definitions_.m__left_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__block_of_regex_definitions_.m__left_curly_bracket_.text);
-                    ((AppInfo) p__block_of_regex_definitions_.m__right_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__block_of_regex_definitions_.m__right_curly_bracket_.text);
+                    ((AppInfo) p__block_of_regex_definitions_.m__regex_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__block_of_regex_definitions_.m__regex_.text));
+                    ((AppInfo) p__block_of_regex_definitions_.m__left_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__block_of_regex_definitions_.m__left_curly_bracket_.text));
+                    ((AppInfo) p__block_of_regex_definitions_.m__right_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__block_of_regex_definitions_.m__right_curly_bracket_.text));
                 }
                 break;
             }
@@ -566,7 +566,7 @@ namespace AnglrLSPServerProcess
                     if (step <= 0)
                         break;
                     ((AppInfo) p__terminal_definition_.m__identifier_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"token-name\" id=\"{normalizeName (p__terminal_definition_.m__identifier_.text)}\">{WebUtility.HtmlEncode (p__terminal_definition_.m__identifier_.text)}</span>";
-                    ((AppInfo) p__terminal_definition_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateTokenName (normalizeName (p__terminal_definition_.m__identifier_.text));
+                    ((AppInfo) p__terminal_definition_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateTokenName (XmlConvert.EncodeName (normalizeName (p__terminal_definition_.m__identifier_.text)));
                     _cstring_optional_ cstring_Optional_ = p__terminal_definition_.m__cstring_optional_;
                     switch ((_cstring_optional_.production_kind) cstring_Optional_.kind)
                     {
@@ -575,7 +575,7 @@ namespace AnglrLSPServerProcess
                         case _cstring_optional_.production_kind.g__cstring_optional__2:
                         {
                             ((AppInfo) cstring_Optional_.m__cstring_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"token-value\" id=\"{normalizeName (p__terminal_definition_.m__identifier_.text)}\">{WebUtility.HtmlEncode (cstring_Optional_.m__cstring_.text)}</span>";
-                            ((AppInfo) cstring_Optional_.m__cstring_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateTokenValue (normalizeName (p__terminal_definition_.m__identifier_.text));
+                            ((AppInfo) cstring_Optional_.m__cstring_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateTokenValue (XmlConvert.EncodeName (normalizeName (p__terminal_definition_.m__identifier_.text)));
                         }
                         break;
                     }
@@ -602,8 +602,8 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__regex_definition_.m__identifier_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"regex-name\" id=\"{normalizeName (p__regex_definition_.m__identifier_.text)}\">{WebUtility.HtmlEncode (p__regex_definition_.m__identifier_.text)}</span>";
                     ((AppInfo) p__regex_definition_.m__regular_expression_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"regex-def\">{WebUtility.HtmlEncode (p__regex_definition_.m__regular_expression_.text)}</span>";
 
-                    ((AppInfo) p__regex_definition_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateRegexName (normalizeName (p__regex_definition_.m__identifier_.text));
-                    ((AppInfo) p__regex_definition_.m__regular_expression_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateRegexDef (p__regex_definition_.m__regular_expression_.text);
+                    ((AppInfo) p__regex_definition_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateRegexName (XmlConvert.EncodeName (normalizeName (p__regex_definition_.m__identifier_.text)));
+                    ((AppInfo) p__regex_definition_.m__regular_expression_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateRegexDef (XmlConvert.EncodeName (p__regex_definition_.m__regular_expression_.text));
                 }
                 break;
             }
@@ -629,10 +629,10 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__scanner_part_.m__left_part_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"part-brace\">{WebUtility.HtmlEncode (p__scanner_part_.m__left_part_bracket_.text)}</span>";
                     ((AppInfo) p__scanner_part_.m__right_part_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"part-brace\">{WebUtility.HtmlEncode (p__scanner_part_.m__right_part_bracket_.text)}</span>";
 
-                    ((AppInfo) p__scanner_part_.m__scanner_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartToken (p__scanner_part_.m__scanner_.text);
-                    ((AppInfo) p__scanner_part_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartName (normalizeName (p__scanner_part_.m__identifier_.text));
-                    ((AppInfo) p__scanner_part_.m__left_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (p__scanner_part_.m__left_part_bracket_.text);
-                    ((AppInfo) p__scanner_part_.m__right_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (p__scanner_part_.m__right_part_bracket_.text);
+                    ((AppInfo) p__scanner_part_.m__scanner_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartToken (XmlConvert.EncodeName (p__scanner_part_.m__scanner_.text));
+                    ((AppInfo) p__scanner_part_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartName (XmlConvert.EncodeName (normalizeName (p__scanner_part_.m__identifier_.text)));
+                    ((AppInfo) p__scanner_part_.m__left_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (XmlConvert.EncodeName (p__scanner_part_.m__left_part_bracket_.text));
+                    ((AppInfo) p__scanner_part_.m__right_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (XmlConvert.EncodeName (p__scanner_part_.m__right_part_bracket_.text));
                 }
                 break;
             }
@@ -655,7 +655,7 @@ namespace AnglrLSPServerProcess
                         break;
                     ((AppInfo) p__regular_expression_usage_.m__regular_expression_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"regex-ref\">{WebUtility.HtmlEncode (p__regular_expression_usage_.m__regular_expression_.text)}</span>";
 
-                    ((AppInfo) p__regular_expression_usage_.m__regular_expression_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateRegexRef (p__regular_expression_usage_.m__regular_expression_.text);
+                    ((AppInfo) p__regular_expression_usage_.m__regular_expression_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateRegexRef (XmlConvert.EncodeName (p__regular_expression_usage_.m__regular_expression_.text));
                 }
                 break;
             }
@@ -678,7 +678,7 @@ namespace AnglrLSPServerProcess
                         break;
                     ((AppInfo) p__skip_action_.m__skip_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"action-token\">{WebUtility.HtmlEncode (p__skip_action_.m__skip_.text)}</span>";
 
-                    ((AppInfo) p__skip_action_.m__skip_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateActionToken (p__skip_action_.m__skip_.text);
+                    ((AppInfo) p__skip_action_.m__skip_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateActionToken (XmlConvert.EncodeName (p__skip_action_.m__skip_.text));
                 }
                 break;
             }
@@ -702,8 +702,8 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__terminal_action_.m__ttoken_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"action-token\">{WebUtility.HtmlEncode (p__terminal_action_.m__ttoken_.text)}</span>";
                     ((AppInfo) p__terminal_action_.m__identifier_.appInfo) [AppInfoType.HtmlText] = $"<a href=\"#{normalizeName (p__terminal_action_.m__identifier_.text)}\"><span class=\"action-identifier\">{WebUtility.HtmlEncode (p__terminal_action_.m__identifier_.text)}</span></a>";
 
-                    ((AppInfo) p__terminal_action_.m__ttoken_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateActionToken (p__terminal_action_.m__ttoken_.text);
-                    ((AppInfo) p__terminal_action_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateHyperLink (normalizeName (p__terminal_action_.m__identifier_.text), FlowDocGenerator.GenerateActionIdentifier (p__terminal_action_.m__identifier_.text));
+                    ((AppInfo) p__terminal_action_.m__ttoken_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateActionToken (XmlConvert.EncodeName (p__terminal_action_.m__ttoken_.text));
+                    ((AppInfo) p__terminal_action_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateHyperLink (XmlConvert.EncodeName (normalizeName (p__terminal_action_.m__identifier_.text)), FlowDocGenerator.GenerateActionIdentifier (XmlConvert.EncodeName (p__terminal_action_.m__identifier_.text)));
                 }
                 break;
             }
@@ -727,8 +727,8 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__event_action_.m__event_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"action-token\">{WebUtility.HtmlEncode (p__event_action_.m__event_.text)}</span>";
                     ((AppInfo) p__event_action_.m__identifier_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"action-identifier\" id=\"{normalizeName (p__event_action_.m__identifier_.text)}\">{WebUtility.HtmlEncode (p__event_action_.m__identifier_.text)}</span>";
 
-                    ((AppInfo) p__event_action_.m__event_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateActionToken (p__event_action_.m__event_.text);
-                    ((AppInfo) p__event_action_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateActionIdentifier (normalizeName (p__event_action_.m__identifier_.text));
+                    ((AppInfo) p__event_action_.m__event_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateActionToken (XmlConvert.EncodeName (p__event_action_.m__event_.text));
+                    ((AppInfo) p__event_action_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateActionIdentifier (XmlConvert.EncodeName (normalizeName (p__event_action_.m__identifier_.text)));
                 }
                 break;
             }
@@ -752,8 +752,8 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__push_action_.m__push_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"action-token\">{WebUtility.HtmlEncode (p__push_action_.m__push_.text)}</span>";
                     ((AppInfo) p__push_action_.m__identifier_.appInfo) [AppInfoType.HtmlText] = $"<a href=\"#{normalizeName (p__push_action_.m__identifier_.text)}\"><span class=\"action-identifier\">{WebUtility.HtmlEncode (p__push_action_.m__identifier_.text)}</span></a>";
 
-                    ((AppInfo) p__push_action_.m__push_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateActionToken (p__push_action_.m__push_.text);
-                    ((AppInfo) p__push_action_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateHyperLink (normalizeName (p__push_action_.m__identifier_.text), FlowDocGenerator.GenerateActionIdentifier (p__push_action_.m__identifier_.text));
+                    ((AppInfo) p__push_action_.m__push_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateActionToken (XmlConvert.EncodeName (p__push_action_.m__push_.text));
+                    ((AppInfo) p__push_action_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateHyperLink (XmlConvert.EncodeName (normalizeName (p__push_action_.m__identifier_.text)), FlowDocGenerator.GenerateActionIdentifier (XmlConvert.EncodeName (p__push_action_.m__identifier_.text)));
                 }
                 break;
             }
@@ -776,7 +776,7 @@ namespace AnglrLSPServerProcess
                         break;
                     ((AppInfo) p__pop_action_.m__pop_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"action-token\">{WebUtility.HtmlEncode (p__pop_action_.m__pop_.text)}</span>";
 
-                    ((AppInfo) p__pop_action_.m__pop_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateActionToken (p__pop_action_.m__pop_.text);
+                    ((AppInfo) p__pop_action_.m__pop_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateActionToken (XmlConvert.EncodeName (p__pop_action_.m__pop_.text));
                 }
                 break;
             }
@@ -808,10 +808,10 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__lexer_part_.m__left_part_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"part-brace\">{WebUtility.HtmlEncode (p__lexer_part_.m__left_part_bracket_.text)}</span>";
                     ((AppInfo) p__lexer_part_.m__right_part_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"part-brace\">{WebUtility.HtmlEncode (p__lexer_part_.m__right_part_bracket_.text)}</span>";
 
-                    ((AppInfo) p__lexer_part_.m__lexer_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartToken (p__lexer_part_.m__lexer_.text);
-                    ((AppInfo) p__lexer_part_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartName (normalizeName (p__lexer_part_.m__identifier_.text));
-                    ((AppInfo) p__lexer_part_.m__left_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (p__lexer_part_.m__left_part_bracket_.text);
-                    ((AppInfo) p__lexer_part_.m__right_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (p__lexer_part_.m__right_part_bracket_.text);
+                    ((AppInfo) p__lexer_part_.m__lexer_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartToken (XmlConvert.EncodeName (p__lexer_part_.m__lexer_.text));
+                    ((AppInfo) p__lexer_part_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartName (XmlConvert.EncodeName (normalizeName (p__lexer_part_.m__identifier_.text)));
+                    ((AppInfo) p__lexer_part_.m__left_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (XmlConvert.EncodeName (p__lexer_part_.m__left_part_bracket_.text));
+                    ((AppInfo) p__lexer_part_.m__right_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (XmlConvert.EncodeName (p__lexer_part_.m__right_part_bracket_.text));
                 }
                 break;
             }
@@ -843,10 +843,10 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__parser_part_.m__left_part_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"part-brace\">{WebUtility.HtmlEncode (p__parser_part_.m__left_part_bracket_.text)}</span>";
                     ((AppInfo) p__parser_part_.m__right_part_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"part-brace\">{WebUtility.HtmlEncode (p__parser_part_.m__right_part_bracket_.text)}</span>";
 
-                    ((AppInfo) p__parser_part_.m__parser_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartToken (p__parser_part_.m__parser_.text);
-                    ((AppInfo) p__parser_part_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartName (normalizeName (p__parser_part_.m__identifier_.text));
-                    ((AppInfo) p__parser_part_.m__left_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (p__parser_part_.m__left_part_bracket_.text);
-                    ((AppInfo) p__parser_part_.m__right_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (p__parser_part_.m__right_part_bracket_.text);
+                    ((AppInfo) p__parser_part_.m__parser_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartToken (XmlConvert.EncodeName (p__parser_part_.m__parser_.text));
+                    ((AppInfo) p__parser_part_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartName (XmlConvert.EncodeName (normalizeName (p__parser_part_.m__identifier_.text)));
+                    ((AppInfo) p__parser_part_.m__left_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (XmlConvert.EncodeName (p__parser_part_.m__left_part_bracket_.text));
+                    ((AppInfo) p__parser_part_.m__right_part_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GeneratePartBrace (XmlConvert.EncodeName (p__parser_part_.m__right_part_bracket_.text));
                 }
                 break;
             }
@@ -917,9 +917,9 @@ namespace AnglrLSPServerProcess
                             ((AppInfo) p__anglr_syntax_rule_.m__colon_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__anglr_syntax_rule_.m__colon_.text)}</span>";
                             ((AppInfo) p__anglr_syntax_rule_.m__semicolon_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__anglr_syntax_rule_.m__semicolon_.text)}</span>";
 
-                            ((AppInfo) p__anglr_syntax_rule_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateRuleName (normalizeName (p__anglr_syntax_rule_.m__identifier_.text));
-                            ((AppInfo) p__anglr_syntax_rule_.m__colon_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__anglr_syntax_rule_.m__colon_.text);
-                            ((AppInfo) p__anglr_syntax_rule_.m__semicolon_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__anglr_syntax_rule_.m__semicolon_.text);
+                            ((AppInfo) p__anglr_syntax_rule_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateRuleName (XmlConvert.EncodeName (normalizeName (p__anglr_syntax_rule_.m__identifier_.text)));
+                            ((AppInfo) p__anglr_syntax_rule_.m__colon_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__anglr_syntax_rule_.m__colon_.text));
+                            ((AppInfo) p__anglr_syntax_rule_.m__semicolon_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__anglr_syntax_rule_.m__semicolon_.text));
                         }
                         break;
                         case _anglr_syntax_rule_.production_kind.g__anglr_syntax_rule__2:
@@ -928,9 +928,9 @@ namespace AnglrLSPServerProcess
                             ((AppInfo) p__anglr_syntax_rule_.m__left_curly_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__anglr_syntax_rule_.m__left_curly_bracket_.text)}</span>";
                             ((AppInfo) p__anglr_syntax_rule_.m__right_curly_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__anglr_syntax_rule_.m__right_curly_bracket_.text)}</span>";
 
-                            ((AppInfo) p__anglr_syntax_rule_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateGroupName (normalizeName (p__anglr_syntax_rule_.m__identifier_.text));
-                            ((AppInfo) p__anglr_syntax_rule_.m__left_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__anglr_syntax_rule_.m__left_curly_bracket_.text);
-                            ((AppInfo) p__anglr_syntax_rule_.m__right_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__anglr_syntax_rule_.m__right_curly_bracket_.text);
+                            ((AppInfo) p__anglr_syntax_rule_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateGroupName (XmlConvert.EncodeName (normalizeName (p__anglr_syntax_rule_.m__identifier_.text)));
+                            ((AppInfo) p__anglr_syntax_rule_.m__left_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__anglr_syntax_rule_.m__left_curly_bracket_.text));
+                            ((AppInfo) p__anglr_syntax_rule_.m__right_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__anglr_syntax_rule_.m__right_curly_bracket_.text));
                         }
                         break;
                     }
@@ -961,9 +961,9 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__anglr_syntax_production_list_name_.m__identifier_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"rule-name\" id=\"{normalizeName (p__anglr_syntax_production_list_name_.m__identifier_.text)}\">{WebUtility.HtmlEncode (p__anglr_syntax_production_list_name_.m__identifier_.text)}</span>";
                     ((AppInfo) p__anglr_syntax_production_list_name_.m__colon__1.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__anglr_syntax_production_list_name_.m__colon__1.text)}</span>";
 
-                    ((AppInfo) p__anglr_syntax_production_list_name_.m__colon_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__anglr_syntax_production_list_name_.m__colon_.text);
-                    ((AppInfo) p__anglr_syntax_production_list_name_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateRuleName (normalizeName (p__anglr_syntax_production_list_name_.m__identifier_.text));
-                    ((AppInfo) p__anglr_syntax_production_list_name_.m__colon__1.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__anglr_syntax_production_list_name_.m__colon__1.text);
+                    ((AppInfo) p__anglr_syntax_production_list_name_.m__colon_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__anglr_syntax_production_list_name_.m__colon_.text));
+                    ((AppInfo) p__anglr_syntax_production_list_name_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateRuleName (XmlConvert.EncodeName (normalizeName (p__anglr_syntax_production_list_name_.m__identifier_.text)));
+                    ((AppInfo) p__anglr_syntax_production_list_name_.m__colon__1.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__anglr_syntax_production_list_name_.m__colon__1.text));
                 }
                 break;
             }
@@ -991,7 +991,7 @@ namespace AnglrLSPServerProcess
                         case _anglr_syntax_production_list_.production_kind.g__anglr_syntax_production_list__2:
                         {
                             ((AppInfo) p__anglr_syntax_production_list_.m__vertical_bar_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__anglr_syntax_production_list_.m__vertical_bar_.text)}</span>";
-                            ((AppInfo) p__anglr_syntax_production_list_.m__vertical_bar_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__anglr_syntax_production_list_.m__vertical_bar_.text);
+                            ((AppInfo) p__anglr_syntax_production_list_.m__vertical_bar_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__anglr_syntax_production_list_.m__vertical_bar_.text));
                         }
                         break;
                     }
@@ -1023,7 +1023,7 @@ namespace AnglrLSPServerProcess
                         {
                             ((AppInfo) p__anglr_syntax_production_.m__empty_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__anglr_syntax_production_.m__empty_.text)}</span>";
 
-                            ((AppInfo) p__anglr_syntax_production_.m__empty_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__anglr_syntax_production_.m__empty_.text);
+                            ((AppInfo) p__anglr_syntax_production_.m__empty_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__anglr_syntax_production_.m__empty_.text));
                         }
                         break;
                     }
@@ -1040,8 +1040,8 @@ namespace AnglrLSPServerProcess
             ((AppInfo) p__priority_specification_.m__priority_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__priority_specification_.m__priority_.text)}</span>";
             ((AppInfo) p__priority_specification_.m__number_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__priority_specification_.m__number_.text)}</span>";
 
-            ((AppInfo) p__priority_specification_.m__priority_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__priority_specification_.m__priority_.text);
-            ((AppInfo) p__priority_specification_.m__number_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__priority_specification_.m__number_.text);
+            ((AppInfo) p__priority_specification_.m__priority_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__priority_specification_.m__priority_.text));
+            ((AppInfo) p__priority_specification_.m__number_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__priority_specification_.m__number_.text));
             return true;
         }
 
@@ -1050,18 +1050,18 @@ namespace AnglrLSPServerProcess
             if ((reason != SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason) || (step <= 0))
                 return true;
             ((AppInfo) p__associativity_specification_.m__associativity_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__associativity_specification_.m__associativity_.text)}</span>";
-            ((AppInfo) p__associativity_specification_.m__associativity_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__associativity_specification_.m__associativity_.text);
+            ((AppInfo) p__associativity_specification_.m__associativity_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__associativity_specification_.m__associativity_.text));
             switch (kind)
             {
                 case _associativity_specification_.production_kind.g__associativity_specification__1:
                 case _associativity_specification_.production_kind.g__associativity_specification__2:
                     ((AppInfo) p__associativity_specification_.m__cstring_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"string-name\">{WebUtility.HtmlEncode (p__associativity_specification_.m__cstring_.text)}</span>";
-                    ((AppInfo) p__associativity_specification_.m__cstring_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateStringName (p__associativity_specification_.m__cstring_.text);
+                    ((AppInfo) p__associativity_specification_.m__cstring_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateStringName (XmlConvert.EncodeName (p__associativity_specification_.m__cstring_.text));
                     break;
                 case _associativity_specification_.production_kind.g__associativity_specification__3:
                 case _associativity_specification_.production_kind.g__associativity_specification__4:
                     ((AppInfo) p__associativity_specification_.m__identifier_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"identifier-name\">{WebUtility.HtmlEncode (p__associativity_specification_.m__identifier_.text)}</span>";
-                    ((AppInfo) p__associativity_specification_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateIdentifierName (p__associativity_specification_.m__identifier_.text);
+                    ((AppInfo) p__associativity_specification_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateIdentifierName (XmlConvert.EncodeName (p__associativity_specification_.m__identifier_.text));
                     break;
             }
             return true;
@@ -1084,8 +1084,8 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__production_name_.m__double_at_sign_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"production-name\">{WebUtility.HtmlEncode (p__production_name_.m__double_at_sign_.text)}</span>";
                     ((AppInfo) p__production_name_.m__identifier_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"production-name\" id=\"{normalizeName (p__production_name_.m__identifier_.text)}\">{WebUtility.HtmlEncode (p__production_name_.m__identifier_.text)}</span>";
 
-                    ((AppInfo) p__production_name_.m__double_at_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateProductionName (p__production_name_.m__double_at_sign_.text);
-                    ((AppInfo) p__production_name_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateProductionName (normalizeName (p__production_name_.m__identifier_.text));
+                    ((AppInfo) p__production_name_.m__double_at_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateProductionName (XmlConvert.EncodeName (p__production_name_.m__double_at_sign_.text));
+                    ((AppInfo) p__production_name_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateProductionName (XmlConvert.EncodeName (normalizeName (p__production_name_.m__identifier_.text)));
                 }
                 break;
             }
@@ -1115,8 +1115,8 @@ namespace AnglrLSPServerProcess
                             ((AppInfo) p__g_name_.m__left_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__g_name_.m__left_bracket_.text)}</span>";
                             ((AppInfo) p__g_name_.m__right_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__g_name_.m__right_bracket_.text)}</span>";
 
-                            ((AppInfo) p__g_name_.m__left_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__g_name_.m__left_bracket_.text);
-                            ((AppInfo) p__g_name_.m__right_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__g_name_.m__right_bracket_.text);
+                            ((AppInfo) p__g_name_.m__left_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__g_name_.m__left_bracket_.text));
+                            ((AppInfo) p__g_name_.m__right_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__g_name_.m__right_bracket_.text));
                         }
                         break;
                         case _g_name_.production_kind.g__g_name__3:
@@ -1145,8 +1145,8 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__marker_.m__at_sign_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"marker-name\">{WebUtility.HtmlEncode (p__marker_.m__at_sign_.text)}</span>";
                     ((AppInfo) p__marker_.m__identifier_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"marker-name\" id=\"{normalizeName (p__marker_.m__identifier_.text)}\">{WebUtility.HtmlEncode (p__marker_.m__identifier_.text)}</span>";
 
-                    ((AppInfo) p__marker_.m__at_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateMarkerName (p__marker_.m__at_sign_.text);
-                    ((AppInfo) p__marker_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateMarkerName (normalizeName (p__marker_.m__identifier_.text));
+                    ((AppInfo) p__marker_.m__at_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateMarkerName (XmlConvert.EncodeName (p__marker_.m__at_sign_.text));
+                    ((AppInfo) p__marker_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateMarkerName (XmlConvert.EncodeName (normalizeName (p__marker_.m__identifier_.text)));
                 }
                 break;
             }
@@ -1177,7 +1177,7 @@ namespace AnglrLSPServerProcess
                         case _name_.production_kind.g__name__2:
                         {
                             ((AppInfo) p__name_.m__cstring_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"string-name\">{WebUtility.HtmlEncode (p__name_.m__cstring_.text)}</span>";
-                            ((AppInfo) p__name_.m__cstring_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateStringName (p__name_.m__cstring_.text);
+                            ((AppInfo) p__name_.m__cstring_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateStringName (XmlConvert.EncodeName (p__name_.m__cstring_.text));
                         }
                         break;
                         case _name_.production_kind.g__name__3:
@@ -1186,12 +1186,12 @@ namespace AnglrLSPServerProcess
                             if (anglrColorizerSymbols.Contains (symbol))
                             {
                                 ((AppInfo) p__name_.m__identifier_.appInfo) [AppInfoType.HtmlText] = $"<a href=\"#{normalizeName (p__name_.m__identifier_.text)}\"><span class=\"rule-ref\">{WebUtility.HtmlEncode (p__name_.m__identifier_.text)}</span></a>";
-                                ((AppInfo) p__name_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateHyperLink (normalizeName (p__name_.m__identifier_.text), FlowDocGenerator.GenerateRuleRef (p__name_.m__identifier_.text));
+                                ((AppInfo) p__name_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateHyperLink (XmlConvert.EncodeName (normalizeName (p__name_.m__identifier_.text)), FlowDocGenerator.GenerateRuleRef (XmlConvert.EncodeName (p__name_.m__identifier_.text)));
                             }
                             else
                             {
                                 ((AppInfo) p__name_.m__identifier_.appInfo) [AppInfoType.HtmlText] = $"<a href=\"#{normalizeName (p__name_.m__identifier_.text)}\"><span class=\"identifier-name\">{WebUtility.HtmlEncode (p__name_.m__identifier_.text)}</span></a>";
-                                ((AppInfo) p__name_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateHyperLink (normalizeName (p__name_.m__identifier_.text), FlowDocGenerator.GenerateIdentifierName (p__name_.m__identifier_.text));
+                                ((AppInfo) p__name_.m__identifier_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateHyperLink (XmlConvert.EncodeName (normalizeName (p__name_.m__identifier_.text)), FlowDocGenerator.GenerateIdentifierName (XmlConvert.EncodeName (p__name_.m__identifier_.text)));
                             }
                         }
                         break;
@@ -1221,61 +1221,61 @@ namespace AnglrLSPServerProcess
                         case _cardinality_.production_kind.g__cardinality__1:
                         {
                             ((AppInfo) p__cardinality_.m__question_mark_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__cardinality_.m__question_mark_.text)}</span>";
-                            ((AppInfo) p__cardinality_.m__question_mark_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__cardinality_.m__question_mark_.text);
+                            ((AppInfo) p__cardinality_.m__question_mark_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__cardinality_.m__question_mark_.text));
                         }
                         break;
                         case _cardinality_.production_kind.g__cardinality__2:
                         {
                             ((AppInfo) p__cardinality_.m__plus_sign_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__cardinality_.m__plus_sign_.text)}</span>";
-                            ((AppInfo) p__cardinality_.m__plus_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__cardinality_.m__plus_sign_.text);
+                            ((AppInfo) p__cardinality_.m__plus_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__cardinality_.m__plus_sign_.text));
                         }
                         break;
                         case _cardinality_.production_kind.g__cardinality__3:
                         {
                             ((AppInfo) p__cardinality_.m__minus_sign_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__cardinality_.m__minus_sign_.text)}</span>";
-                            ((AppInfo) p__cardinality_.m__minus_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__cardinality_.m__minus_sign_.text);
+                            ((AppInfo) p__cardinality_.m__minus_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__cardinality_.m__minus_sign_.text));
                         }
                         break;
                         case _cardinality_.production_kind.g__cardinality__4:
                         {
                             ((AppInfo) p__cardinality_.m__asterisk_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__cardinality_.m__asterisk_.text)}</span>";
-                            ((AppInfo) p__cardinality_.m__asterisk_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__cardinality_.m__asterisk_.text);
+                            ((AppInfo) p__cardinality_.m__asterisk_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__cardinality_.m__asterisk_.text));
                         }
                         break;
                         case _cardinality_.production_kind.g__cardinality__5:
                         {
                             ((AppInfo) p__cardinality_.m__slash_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__cardinality_.m__slash_.text)}</span>";
-                            ((AppInfo) p__cardinality_.m__slash_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__cardinality_.m__slash_.text);
+                            ((AppInfo) p__cardinality_.m__slash_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__cardinality_.m__slash_.text));
                         }
                         break;
                         case _cardinality_.production_kind.g__cardinality__6:
                         {
                             ((AppInfo) p__cardinality_.m__inv_plus_sign_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__cardinality_.m__inv_plus_sign_.text)}</span>";
-                            ((AppInfo) p__cardinality_.m__inv_plus_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__cardinality_.m__inv_plus_sign_.text);
+                            ((AppInfo) p__cardinality_.m__inv_plus_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__cardinality_.m__inv_plus_sign_.text));
                         }
                         break;
                         case _cardinality_.production_kind.g__cardinality__7:
                         {
                             ((AppInfo) p__cardinality_.m__inv_minus_sign_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__cardinality_.m__inv_minus_sign_.text)}</span>";
-                            ((AppInfo) p__cardinality_.m__inv_minus_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__cardinality_.m__inv_minus_sign_.text);
+                            ((AppInfo) p__cardinality_.m__inv_minus_sign_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__cardinality_.m__inv_minus_sign_.text));
                         }
                         break;
                         case _cardinality_.production_kind.g__cardinality__8:
                         {
                             ((AppInfo) p__cardinality_.m__inv_asterisk_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__cardinality_.m__inv_asterisk_.text)}</span>";
-                            ((AppInfo) p__cardinality_.m__inv_asterisk_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__cardinality_.m__inv_asterisk_.text);
+                            ((AppInfo) p__cardinality_.m__inv_asterisk_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__cardinality_.m__inv_asterisk_.text));
                         }
                         break;
                         case _cardinality_.production_kind.g__cardinality__9:
                         {
                             ((AppInfo) p__cardinality_.m__inv_slash_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"reserved-word\">{WebUtility.HtmlEncode (p__cardinality_.m__inv_slash_.text)}</span>";
-                            ((AppInfo) p__cardinality_.m__inv_slash_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (p__cardinality_.m__inv_slash_.text);
+                            ((AppInfo) p__cardinality_.m__inv_slash_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateReservedWord (XmlConvert.EncodeName (p__cardinality_.m__inv_slash_.text));
                         }
                         break;
                         case _cardinality_.production_kind.g__cardinality__10:
                         {
                             ((AppInfo) p__cardinality_.m__left_curly_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__cardinality_.m__left_curly_bracket_.text)}</span>";
-                            ((AppInfo) p__cardinality_.m__left_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__cardinality_.m__left_curly_bracket_.text);
+                            ((AppInfo) p__cardinality_.m__left_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__cardinality_.m__left_curly_bracket_.text));
                             {
                                 _number_optional_ _Number_ = p__cardinality_.m__number_optional_;
                                 switch ((_number_optional_.production_kind) _Number_.kind)
@@ -1285,13 +1285,13 @@ namespace AnglrLSPServerProcess
                                     case _number_optional_.production_kind.g__number_optional__2:
                                     {
                                         ((AppInfo) p__cardinality_.m__number_optional_.m__number_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"identifier-name\">{WebUtility.HtmlEncode (p__cardinality_.m__number_optional_.m__number_.text)}</span>";
-                                        ((AppInfo) p__cardinality_.m__number_optional_.m__number_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateIdentifierName (p__cardinality_.m__number_optional_.m__number_.text);
+                                        ((AppInfo) p__cardinality_.m__number_optional_.m__number_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateIdentifierName (XmlConvert.EncodeName (p__cardinality_.m__number_optional_.m__number_.text));
                                     }
                                     break;
                                 }
                             }
                             ((AppInfo) p__cardinality_.m__comma_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__cardinality_.m__comma_.text)}</span>";
-                            ((AppInfo) p__cardinality_.m__comma_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__cardinality_.m__comma_.text);
+                            ((AppInfo) p__cardinality_.m__comma_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__cardinality_.m__comma_.text));
                             {
                                 _number_optional_ _Number_ = p__cardinality_.m__number_optional__1;
                                 switch ((_number_optional_.production_kind) _Number_.kind)
@@ -1301,13 +1301,13 @@ namespace AnglrLSPServerProcess
                                     case _number_optional_.production_kind.g__number_optional__2:
                                     {
                                         ((AppInfo) p__cardinality_.m__number_optional__1.m__number_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"identifier-name\">{WebUtility.HtmlEncode (p__cardinality_.m__number_optional__1.m__number_.text)}</span>";
-                                        ((AppInfo) p__cardinality_.m__number_optional__1.m__number_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateIdentifierName (p__cardinality_.m__number_optional__1.m__number_.text);
+                                        ((AppInfo) p__cardinality_.m__number_optional__1.m__number_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateIdentifierName (XmlConvert.EncodeName (p__cardinality_.m__number_optional__1.m__number_.text));
                                     }
                                     break;
                                 }
                             }
                             ((AppInfo) p__cardinality_.m__right_curly_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__cardinality_.m__right_curly_bracket_.text)}</span>";
-                            ((AppInfo) p__cardinality_.m__right_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__cardinality_.m__right_curly_bracket_.text);
+                            ((AppInfo) p__cardinality_.m__right_curly_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__cardinality_.m__right_curly_bracket_.text));
                         }
                         break;
                     }
@@ -1334,8 +1334,8 @@ namespace AnglrLSPServerProcess
                     ((AppInfo) p__delimiter_.m__left_square_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__delimiter_.m__left_square_bracket_.text)}</span>";
                     ((AppInfo) p__delimiter_.m__right_square_bracket_.appInfo) [AppInfoType.HtmlText] = $"<span class=\"def-separator\">{WebUtility.HtmlEncode (p__delimiter_.m__right_square_bracket_.text)}</span>";
 
-                    ((AppInfo) p__delimiter_.m__left_square_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__delimiter_.m__left_square_bracket_.text);
-                    ((AppInfo) p__delimiter_.m__right_square_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (p__delimiter_.m__right_square_bracket_.text  );
+                    ((AppInfo) p__delimiter_.m__left_square_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__delimiter_.m__left_square_bracket_.text));
+                    ((AppInfo) p__delimiter_.m__right_square_bracket_.appInfo) [AppInfoType.RichText] = FlowDocGenerator.GenerateDefSeparator (XmlConvert.EncodeName (p__delimiter_.m__right_square_bracket_.text  ));
                 }
                 break;
             }

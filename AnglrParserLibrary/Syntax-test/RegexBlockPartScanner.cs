@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 ﻿using System;
 using System.IO;
@@ -12,7 +13,7 @@ using Anglr.Declarations;
 
 namespace Anglr.ScannerLib
 {
-	internal class RegexBlockPartScanner : Regex, RegexInterface
+	public class RegexBlockPartScanner : Regex, RegexInterface
 	{
 		public RegexBlockPartScanner (LexerBase scanner) : base (@"(?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>[ \t]+)|(?<g5>.+)|(?<g6>[\n\r])", RegexOptions.ExplicitCapture)
 		{

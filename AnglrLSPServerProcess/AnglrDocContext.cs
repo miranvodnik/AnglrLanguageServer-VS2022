@@ -106,14 +106,14 @@ namespace AnglrLSPServerProcess
         public Uri uri { get; private set; }
         public string [] lines { get; private set; }
 
-        private anglrCompiler anglrCompiler = null;
-        private AnglrHtmlColorizer anglrHtmlColorizer = null;
-        private AnglrSyntaxTreeGenerator anglrSyntaxTreeGenerator = null;
-        private AnglrSpanGenerator anglrSpanGenerator = null;
-        private AnglrReferencesGenerator anglrReferencesGenerator = null;
-        private AnglrParserStatesGenerator anglrParserStatesGenerator = null;
-        private AnglrProdToTextEmiter anglrProdToTextEmiter = new AnglrProdToTextEmiter ();
-        private AnglrTokenNavigatorInfo anglrTokenNavigatorInfo = new AnglrTokenNavigatorInfo ();
+        public anglrCompiler anglrCompiler { get; private set; }
+        public AnglrHtmlColorizer anglrHtmlColorizer { get; private set; }
+        public AnglrSyntaxTreeGenerator anglrSyntaxTreeGenerator { get; private set; }
+        public AnglrSpanGenerator anglrSpanGenerator { get; private set; }
+        public AnglrReferencesGenerator anglrReferencesGenerator { get; private set; }
+        public AnglrParserStatesGenerator anglrParserStatesGenerator { get; private set; }
+        public AnglrProdToTextEmiter anglrProdToTextEmiter { get; private set; } = new AnglrProdToTextEmiter ();
+        public AnglrTokenNavigatorInfo anglrTokenNavigatorInfo { get; private set; } = new AnglrTokenNavigatorInfo ();
 
         private object parserLock = null;
 
@@ -1442,33 +1442,57 @@ namespace AnglrLSPServerProcess
         }
     }
 
-    internal class AnglrDocDictionary : SortedDictionary<string, AnglrDocContext>
+    internal class AnglrDocDictionaryKey<U, V>
     {
-        public AnglrDocDictionary ()
+        public U FirstKey { get; }
+        public V LastKey { get; }
+        public AnglrDocDictionaryKey (U u, V v)
         {
-
+            FirstKey = u;
+            LastKey = v;
         }
+    }
+
+    internal class CmpAnglrDocDictionaryKey : IComparer<AnglrDocDictionaryKey<Uri, int>>
+    {
+        public int Compare (AnglrDocDictionaryKey<Uri, int> x, AnglrDocDictionaryKey<Uri, int> y)
+        {
+            if ((x.FirstKey != null) && (y.FirstKey != null))
+                return x.FirstKey.AbsoluteUri.CompareTo (y.FirstKey.AbsoluteUri);
+            return x.LastKey - y.LastKey;
+        }
+    }
+
+    internal class AnglrDocDictionary : SortedDictionary<AnglrDocDictionaryKey<Uri, int>, AnglrDocContext>
+    {
+        public AnglrDocDictionary () : base (new CmpAnglrDocDictionaryKey ()) { }
         public void Add (AnglrDocContext docCtx)
         {
             lock (lockKey)
             {
-                base [docCtx.fileName] = docCtx;
+                Uri uri = docCtx.uri;
+                int magicNr = docCtx.anglrParserStatesGenerator.magicNr;
+
+                if (uri != null)
+                    base [new AnglrDocDictionaryKey<Uri, int> (uri, magicNr)] = docCtx;
+                if (magicNr != 0)
+                    base [new AnglrDocDictionaryKey<Uri, int> (null, magicNr)] = docCtx;
             }
         }
-        public AnglrDocContext Find (string fileName)
+        public AnglrDocContext Find (AnglrDocDictionaryKey<Uri, int> key)
         {
             lock (lockKey)
             {
                 AnglrDocContext docCtx = null;
-                return base.TryGetValue (fileName, out docCtx) ? docCtx : null;
+                return base.TryGetValue (key, out docCtx) ? docCtx : null;
             }
         }
-        public int Remove (string fileName)
+        public int Remove (AnglrDocDictionaryKey<Uri, int> key)
         {
             lock (lockKey)
             {
-                base [fileName].Dispose ();
-                base.Remove (fileName);
+                base [key].Dispose ();
+                base.Remove (key);
                 return base.Count;
             }
         }

@@ -2,6 +2,7 @@
 //	This file was generated with ANGLR compiler
 //
 using System;
+using System.Runtime.Serialization;
 
 ﻿using System;
 using System.IO;
@@ -12,7 +13,7 @@ using Anglr.Declarations;
 
 namespace Anglr.ScannerLib
 {
-	internal class RegexIdScanner : Regex, RegexInterface
+	public class RegexIdScanner : Regex, RegexInterface
 	{
 		public RegexIdScanner (LexerBase scanner) : base (@"(?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g5>\{)|(?<g6>\%\})|(?<g7>[ \t]+)|(?<g8>[\n\r])", RegexOptions.ExplicitCapture)
 		{

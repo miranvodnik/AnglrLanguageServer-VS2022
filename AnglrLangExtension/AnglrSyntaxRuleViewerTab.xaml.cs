@@ -25,14 +25,14 @@ namespace AnglrLangExtension
         public IAnglrLogger Logger { get; }
         AnglrLangDictionaryItem LangDictionaryItem { get; }
         AnglrRawDrawingVisual DrawingVisual { get; }
-        public AnglrSyntaxRuleViewerTab (IAnglrLangService anglrLangService, string fileName, AnglrRawDrawingVisual drawingVisual)
+        public AnglrSyntaxRuleViewerTab (IAnglrLangService anglrLangService, int magicNr, string fileName, AnglrRawDrawingVisual drawingVisual)
         {
             InitializeComponent ();
 
             LangService = anglrLangService;
             Logger = anglrLangService?.AnglrLogger ?? new VoidAnglrLogger ();
-            if ((LangDictionaryItem = AnglrLangDictionary.GetItem (fileName)) == null)
-                Logger?.ErrorLine ($"Cannot retrieve syntax drawing for {fileName}, language service dictionary does not exist");
+            if ((LangDictionaryItem = AnglrLangDictionary.GetItem (magicNr)) == null)
+                Logger?.ErrorLine ($"Cannot retrieve syntax drawing for {fileName}, language service dictionary[{magicNr}] does not exist");
             if ((DrawingVisual = drawingVisual) == null)
                 DrawingVisual = LangDictionaryItem.DrawingVisual;
             if (DrawingVisual != null)
@@ -42,7 +42,7 @@ namespace AnglrLangExtension
                 syntaxRuleVisual.Height = DrawingVisual.Height;
             }
             else
-                Logger?.ErrorLine ($"Cannot retrieve syntax drawing for {fileName}, drawing visual does not exist");
+                Logger?.ErrorLine ($"Cannot retrieve syntax drawing for {fileName}, drawing visual[{magicNr}] does not exist");
         }
 
         private void syntaxRuleVisual_MouseDown (object sender, MouseButtonEventArgs e)

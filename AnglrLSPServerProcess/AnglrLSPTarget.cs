@@ -209,7 +209,7 @@ namespace AnglrLSPServerProcess
 			{
 				ReferenceParams param = null;
 				param = arg.ToObject<ReferenceParams> ();
-				AnglrDocContext docCtx = anglrDocDictionary.Find (param.TextDocument.Uri.AbsolutePath);
+				AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (param.TextDocument.Uri, 0));
 				if (docCtx == null)
 				{
 					Log (MessageType.Warning, $"TextDocumentReferences doc '{param.TextDocument.Uri.AbsolutePath}' not found");
@@ -222,7 +222,7 @@ namespace AnglrLSPServerProcess
 				try
 				{
 					ReferencesParamsClass referencesParamsClass = arg.ToObject<ReferencesParamsClass> ();
-					AnglrDocContext docCtx = anglrDocDictionary.Find (referencesParamsClass.textDocument.uri.AbsolutePath);
+					AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (referencesParamsClass.textDocument.uri, 0));
 					if (docCtx == null)
 					{
 						Log (MessageType.Warning, $"TextDocumentReferences doc '{referencesParamsClass.textDocument.uri.AbsolutePath}' not found");
@@ -269,7 +269,7 @@ namespace AnglrLSPServerProcess
 			else
 				Log (MessageType.Log, "TextDocumentRename");
 			RenameParams param = arg.ToObject<RenameParams> ();
-			AnglrDocContext docCtx = anglrDocDictionary.Find (param.TextDocument.Uri.AbsolutePath);
+			AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (param.TextDocument.Uri, 0));
 			if (docCtx == null)
 				return null;
 			return docCtx.TextDocumentRename (this, param);
@@ -520,14 +520,14 @@ namespace AnglrLSPServerProcess
 			else
 				Log (MessageType.Log, "TextDocumentDidClose");
 			DidCloseTextDocumentParams param = arg.ToObject<DidCloseTextDocumentParams> ();
-			AnglrDocContext docCtx = anglrDocDictionary.Find (param.TextDocument.Uri.AbsolutePath);
+			AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (param.TextDocument.Uri, 0));
 			if (docCtx == null)
 			{
 				Log (MessageType.Warning, $"TextDocumentDidClose, document not found: '{param.TextDocument.Uri.AbsolutePath}'");
 				return;
 			}
 			docCtx.TextDocumentDidClose (this, param);
-			int count = anglrDocDictionary.Remove (param.TextDocument.Uri.AbsolutePath);
+			int count = anglrDocDictionary.Remove (new AnglrDocDictionaryKey <Uri, int> (docCtx.uri, docCtx.anglrParserStatesGenerator.magicNr));
 			//Log ("number of open documents = " + count);
 		}
 
@@ -542,7 +542,7 @@ namespace AnglrLSPServerProcess
 			else
 				Log (MessageType.Log, "TextDocumentHover");
 			TextDocumentPositionParams param = arg.ToObject<TextDocumentPositionParams> ();
-			AnglrDocContext docCtx = anglrDocDictionary.Find (param.TextDocument.Uri.AbsolutePath);
+			AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (param.TextDocument.Uri, 0));
 			if (docCtx == null)
 			{
 				Log (MessageType.Warning, "TextDocumentHover, cannot find document info");
@@ -656,7 +656,7 @@ namespace AnglrLSPServerProcess
 			else
 				Log (MessageType.Log, "TextDocumentDefinition");
 			TextDocumentPositionParams param = arg.ToObject<TextDocumentPositionParams> ();
-			AnglrDocContext docCtx = anglrDocDictionary.Find (param.TextDocument.Uri.AbsolutePath);
+			AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (param.TextDocument.Uri, 0));
 			if (docCtx == null)
 				return null;
 			return docCtx.TextDocumentDefinition (this, param);
@@ -674,13 +674,13 @@ namespace AnglrLSPServerProcess
 				Log (MessageType.Log, "TextDocumentDidOpen");
 			DidOpenTextDocumentParams param = arg.ToObject<DidOpenTextDocumentParams> ();
 			AnglrDocContext docCtx = new AnglrDocContext (param, this);
-			anglrDocDictionary.Add (docCtx);
 			docCtx.TextDocumentDidOpen (this, param);
-		}
-		//
-		// Summary:
-		//     Strongly typed message object for 'textDocument/didChange'.
-		[JsonRpcMethod (Methods.TextDocumentDidChangeName)]
+            anglrDocDictionary.Add (docCtx);
+        }
+        //
+        // Summary:
+        //     Strongly typed message object for 'textDocument/didChange'.
+        [JsonRpcMethod (Methods.TextDocumentDidChangeName)]
 		public void TextDocumentDidChange (JToken arg)
 		{
 			if (detailedInfo)
@@ -688,7 +688,7 @@ namespace AnglrLSPServerProcess
 			else
 				Log (MessageType.Log, "TextDocumentDidChange");
 			DidChangeTextDocumentParams param = arg.ToObject<DidChangeTextDocumentParams> ();
-			AnglrDocContext docCtx = anglrDocDictionary.Find (param.TextDocument.Uri.AbsolutePath);
+			AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (param.TextDocument.Uri, 0));
 			if (docCtx == null)
 				return;
 			docCtx.TextDocumentDidChange (this, param);
@@ -705,7 +705,7 @@ namespace AnglrLSPServerProcess
 			else
 				Log (MessageType.Error, "TextDocumentDidSave");
 			DidSaveTextDocumentParams param = arg.ToObject<DidSaveTextDocumentParams> ();
-			AnglrDocContext docCtx = anglrDocDictionary.Find (param.TextDocument.Uri.AbsolutePath);
+			AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (param.TextDocument.Uri, 0));
 			if (docCtx == null)
 				return;
 			docCtx.TextDocumentDidSave (this, param);
@@ -721,7 +721,7 @@ namespace AnglrLSPServerProcess
 				Log (MessageType.Log, $"TextDocumentDocumentHighlight, jtoken = {arg.ToString ()}");
 			else
 				Log (MessageType.Log, "TextDocumentDocumentHighlight");
-			AnglrDocContext docCtx = anglrDocDictionary.Find (param.TextDocument.Uri.AbsolutePath);
+			AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (param.TextDocument.Uri, 0));
 			if (docCtx == null)
 				return null;
 			return docCtx.TextDocumentDocumentHighlight (this, param);
@@ -763,7 +763,7 @@ namespace AnglrLSPServerProcess
 			else
 				Log (MessageType.Error, "TextDocumentDocumentSymbol");
 			DocumentSymbolParams param = arg.ToObject<DocumentSymbolParams> ();
-			AnglrDocContext docCtx = anglrDocDictionary.Find (param.TextDocument.Uri.AbsolutePath);
+			AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (param.TextDocument.Uri, 0));
 			if (docCtx == null)
 				return null;
 			return docCtx.TextDocumentDocumentSymbol (this, param);
@@ -816,7 +816,7 @@ namespace AnglrLSPServerProcess
 			else
 				Log (MessageType.Log, $"{AnglrMethods.AnglrGetClassificationSpansName}");
 			AnglrGetClassificationSpansParams anglrGetClassificationSpansParams = arg.ToObject<AnglrGetClassificationSpansParams> ();
-			AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetClassificationSpansParams.TextDocument.Uri.AbsolutePath);
+			AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (anglrGetClassificationSpansParams.TextDocument.Uri, 0));
 			if (docCtx == null)
 				return null;
 			return await docCtx.AnglrGetClassificationSpansAsync (this, anglrGetClassificationSpansParams);
@@ -827,7 +827,7 @@ namespace AnglrLSPServerProcess
         {
             Log (MessageType.Log, $"{AnglrMethods.AnglrGetGetHierarchyItemName}, jtoken = {arg.ToString ()}");
             AnglrGetGetHierarchyItemParams anglrGetGetHierarchyItemParams = arg.ToObject<AnglrGetGetHierarchyItemParams> ();
-            AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetGetHierarchyItemParams.TextDocument.Uri.AbsolutePath);
+            AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (anglrGetGetHierarchyItemParams.TextDocument.Uri, 0));
             if (docCtx == null)
                 return null;
             return docCtx.AnglrGetGetHierarchyItem (this, anglrGetGetHierarchyItemParams);
@@ -838,7 +838,7 @@ namespace AnglrLSPServerProcess
         {
             Log (MessageType.Log, $"{AnglrMethods.AnglrGetDictionaryItemName}, jtoken = {arg.ToString ()}");
             AnglrGetDictionaryItemParams anglrGetDictionaryItemParams = arg.ToObject<AnglrGetDictionaryItemParams> ();
-            AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetDictionaryItemParams.TextDocument.Uri.AbsolutePath);
+            AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (anglrGetDictionaryItemParams.TextDocument.Uri, 0));
             if (docCtx == null)
                 return null;
             return docCtx.AnglrGetDictionaryItem (this, anglrGetDictionaryItemParams);
@@ -849,7 +849,7 @@ namespace AnglrLSPServerProcess
         {
             Log (MessageType.Log, $"{AnglrMethods.AnglrGetParserStateItemName}, jtoken = {arg.ToString ()}");
             AnglrGetParserStateItemParams anglrGetParserStateItemParams = arg.ToObject<AnglrGetParserStateItemParams> ();
-            AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetParserStateItemParams.TextDocument.Uri.AbsolutePath);
+            AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (anglrGetParserStateItemParams.TextDocument.Uri, anglrGetParserStateItemParams.MagicNr));
             if (docCtx == null)
                 return null;
             return docCtx.AnglrGetParserStateItem (this, anglrGetParserStateItemParams);
@@ -860,7 +860,7 @@ namespace AnglrLSPServerProcess
         {
             Log (MessageType.Log, $"{AnglrMethods.AnglrGetParserStatesInfoName}, jtoken = {arg.ToString ()}");
             AnglrGetParserStatesInfoParams anglrGetParserStatesInfoParams = arg.ToObject<AnglrGetParserStatesInfoParams> ();
-            AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetParserStatesInfoParams.TextDocument.Uri.AbsolutePath);
+            AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (anglrGetParserStatesInfoParams.TextDocument.Uri, 0));
             if (docCtx == null)
                 return null;
             return docCtx.AnglrGetParserStatesInfo (this, anglrGetParserStatesInfoParams);
@@ -871,7 +871,7 @@ namespace AnglrLSPServerProcess
         {
             Log (MessageType.Log, $"{AnglrMethods.AnglrGetParserStateLinkName}, jtoken = {arg.ToString ()}");
             AnglrGetParserStateLinkParams anglrGetParserStateLinkParams = arg.ToObject<AnglrGetParserStateLinkParams> ();
-            AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetParserStateLinkParams.TextDocument.Uri.AbsolutePath);
+            AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (anglrGetParserStateLinkParams.TextDocument.Uri, 0));
             if (docCtx == null)
                 return null;
             return docCtx.AnglrGetParserStateLink (this, anglrGetParserStateLinkParams);
@@ -882,7 +882,7 @@ namespace AnglrLSPServerProcess
         {
             Log (MessageType.Log, $"{AnglrMethods.AnglrGetParserMagicNumberName}, jtoken = {arg.ToString ()}");
             AnglrGetParserMagicNumberParams anglrGetParserMagicNumberParams = arg.ToObject<AnglrGetParserMagicNumberParams> ();
-            AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetParserMagicNumberParams.TextDocument.Uri.AbsolutePath);
+            AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (anglrGetParserMagicNumberParams.TextDocument.Uri, 0));
             if (docCtx == null)
                 return null;
             return docCtx.AnglrGetParserMagicNumber (this, anglrGetParserMagicNumberParams);
@@ -893,7 +893,7 @@ namespace AnglrLSPServerProcess
         {
             Log (MessageType.Log, $"{AnglrMethods.AnglrGetSyntaxTreeName}, jtoken = {arg.ToString ()}");
             AnglrGetSyntaxTreeParams anglrGetSyntaxTreeParams = arg.ToObject<AnglrGetSyntaxTreeParams> ();
-            AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetSyntaxTreeParams.TextDocument.Uri.AbsolutePath);
+            AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (anglrGetSyntaxTreeParams.TextDocument.Uri, 0));
             if (docCtx == null)
                 return null;
             return docCtx.AnglrGetSyntaxTree (this, anglrGetSyntaxTreeParams);
@@ -904,7 +904,7 @@ namespace AnglrLSPServerProcess
         {
             Log (MessageType.Log, $"{AnglrMethods.AnglrGetParserSyntaxRuleName}, jtoken = {arg.ToString ()}");
             AnglrGetParserSyntaxRuleParams anglrGetParserSyntaxRuleParams = arg.ToObject<AnglrGetParserSyntaxRuleParams> ();
-            AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetParserSyntaxRuleParams.TextDocument.Uri.AbsolutePath);
+            AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (anglrGetParserSyntaxRuleParams.TextDocument.Uri, 0));
             if (docCtx == null)
                 return null;
             return docCtx.AnglrGetParserSyntaxRule (this, anglrGetParserSyntaxRuleParams);
@@ -915,7 +915,7 @@ namespace AnglrLSPServerProcess
         {
             Log (MessageType.Log, $"{AnglrMethods.AnglrGetParserSyntaxRulesName}, jtoken = {arg.ToString ()}");
             AnglrGetParserSyntaxRulesParams anglrGetParserSyntaxRulesParams = arg.ToObject<AnglrGetParserSyntaxRulesParams> ();
-            AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetParserSyntaxRulesParams.TextDocument.Uri.AbsolutePath);
+            AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (anglrGetParserSyntaxRulesParams.TextDocument.Uri, 0));
             if (docCtx == null)
                 return null;
             return docCtx.AnglrGetParserSyntaxRules (this, anglrGetParserSyntaxRulesParams);
@@ -926,7 +926,7 @@ namespace AnglrLSPServerProcess
         {
             Log (MessageType.Log, $"{AnglrMethods.AnglrGetItemNavigationInfoName}, jtoken = {arg.ToString ()}");
             AnglrGetItemNavigationInfoRequest anglrGetItemNavigationInfoRequest = arg.ToObject<AnglrGetItemNavigationInfoRequest> ();
-            AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetItemNavigationInfoRequest.TextDocument.Uri.AbsolutePath);
+            AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (anglrGetItemNavigationInfoRequest.TextDocument.Uri, 0));
             if (docCtx == null)
                 return null;
             return docCtx.AnglrGetItemNavigationInfo (this, anglrGetItemNavigationInfoRequest);
@@ -937,7 +937,7 @@ namespace AnglrLSPServerProcess
         {
             Log (MessageType.Log, $"{AnglrMethods.AnglrGetCompileFragmentName}, jtoken = {arg.ToString ()}");
             AnglrGetCompileFragmentRequest anglrGetCompileFragmentRequest = arg.ToObject<AnglrGetCompileFragmentRequest> ();
-            AnglrDocContext docCtx = anglrDocDictionary.Find (anglrGetCompileFragmentRequest.TextDocument.Uri.AbsolutePath);
+            AnglrDocContext docCtx = anglrDocDictionary.Find (new AnglrDocDictionaryKey<Uri, int> (anglrGetCompileFragmentRequest.TextDocument.Uri, 0));
             if (docCtx == null)
                 return null;
             return docCtx.AnglrGetCompileFragment (this, anglrGetCompileFragmentRequest);

@@ -1,4 +1,5 @@
-﻿using AnglrBreakPointDBLibrary;
+﻿using Anglr.Parser.Core;
+using AnglrBreakPointDBLibrary;
 using AnglrDebuggerBridge;
 using AnglrDebuggerJsonRpcMessages;
 using AnglrJsonRpcMethods;
@@ -41,6 +42,7 @@ namespace AnglrLangExtension
     public partial class AnglrDebugPanelTabSession : UserControl, IAnglrClientSideDebugger
     {
         public int MagicNumber { get; private set; }
+        public AnglrLangDictionaryItem DictionaryItem { get; private set; }
         public JsonRpc Rpc { get; set; }
         public ObservableCollection<AnglrDebuggerStackView> LRStackViewCollection { get; set; }
 
@@ -124,12 +126,14 @@ namespace AnglrLangExtension
                 if (!AnglrBreakPointDB.Get (MagicNumber, out chunk))
                     chunk = new AnglrBreakPointDBChunk ();
                 chunk.Changed = false;
+                if ((DictionaryItem = AnglrLangDictionary.GetItem (MagicNumber)) == null)
+                    Logger?.WarnLine ($"Anglr file mismatch. Please load anglr file used to create debugged process");
                 Logger.InfoLine ($"connect request: magic nr. = {MagicNumber}, db chunk = {JsonConvert.SerializeObject (chunk)}");
 
                 return new AnglrDebuggerConnectResponse ()
                 {
                     SequenceNr = connectMessageRequest.SequenceNr,
-                    Valid = (MagicNumber != -1),
+                    Valid = (DictionaryItem != null),
                     BreakPointDB = JsonConvert.SerializeObject (chunk)
                 };
             }
@@ -206,7 +210,7 @@ namespace AnglrLangExtension
 
         public void DbgBreakPointHitMessageHandler (object sender, EventArgs e)
         {
-            AnglrDebuggerDbgBreakPointHitRequest dbgBreakPointHitRequest =e as AnglrDebuggerDbgBreakPointHitRequest;
+            AnglrDebuggerDbgBreakPointHitRequest dbgBreakPointHitRequest = e as AnglrDebuggerDbgBreakPointHitRequest;
             if (dbgBreakPointHitRequest == null)
             {
                 Logger?.InfoLine ($"break-point hit (null request)");
@@ -219,7 +223,7 @@ namespace AnglrLangExtension
                 AnglrDebuggerJsonRpcMessageNames.GetPDASnapshotMessageName,
                 new AnglrDebuggerGetPDASnapshotRequest ()
                 {
-                    SequenceNr=dbgBreakPointHitRequest.SequenceNr
+                    SequenceNr = dbgBreakPointHitRequest.SequenceNr
                 }
             ).Result;
             if (getPDASnapshotResponse == null)
@@ -240,18 +244,74 @@ namespace AnglrLangExtension
 
         private void AnalyzePDAStack (AnglrDebuggerGetPDAStack stack)
         {
-            foreach (var cell in stack.PDAStackCells)
+            int counter = 0;
+            int token = 0;
+
+            try
             {
-                AnglrGetParserStateItemResult anglrGetParserStateItemResult = anglrLangService?.InvokeGetParserState (new AnglrGetParserStateItemParams ()
+                AnglrDrawingDictionary dictionary = DictionaryItem?.Drawings;
+                if (dictionary == null)
                 {
-                    StateNr = cell.State,
-                    TextDocument = new TextDocumentIdentifier ()
+                    Logger?.ErrorLine ($"dictionary = null");
+                    return;
+                }
+
+                foreach (var cell in stack.PDAStackCells)
+                {
+                    Logger?.DebugLine ($"analyze cell {cell.State}");
+                    AnglrGetParserStateItemResult anglrGetParserStateItemResult = anglrLangService?.InvokeGetParserState (new AnglrGetParserStateItemParams ()
                     {
-                        Uri = new System.Uri (fileName)
+                        TextDocument = new TextDocumentIdentifier ()
+                        {
+                            Uri = null
+                        },
+                        MagicNr = MagicNumber,
+                        StateNr = cell.State
+                    });
+                    if (anglrGetParserStateItemResult == null)
+                        continue;
+                    foreach (var coreData in anglrGetParserStateItemResult.CoreSet)
+                    {
+                        var production = coreData.Production;
+                        var position = coreData.Position;
+                        Logger?.DebugLine ($"analyze core production {production.ProductionNumber}");
+                        if (production.RhsNodeSet.Length <= position)
+                            continue;
+                        var rhsNode = production.RhsNodeSet [position];
+                        if (rhsNode.Id != token)
+                            continue;
+                        if (!dictionary.TryGetValue (production.ProductionNumber, out var visual))
+                        {
+                            Logger?.WarnLine ($"cannot access visual representation of production nr.: {production.ProductionNumber}");
+                            continue;
+                        }
+                        ++counter;
                     }
-                });
-                if (anglrGetParserStateItemResult == null)
-                    continue;
+                    foreach (var closureData in anglrGetParserStateItemResult.ClosureSet)
+                    {
+                        foreach (var productionInfo in closureData.ProductionNode.ProductionSet)
+                        {
+                            Logger?.DebugLine ($"analyze closure production {productionInfo.ProductionNumber}");
+                            if (productionInfo.RhsNodeSet.Length <= 0)
+                                continue;
+                            var rhsNode = productionInfo.RhsNodeSet [0];
+                            if (rhsNode.Id != token)
+                                continue;
+                            if (!dictionary.TryGetValue (productionInfo.ProductionNumber, out var visual))
+                            {
+                                Logger?.WarnLine ($"cannot access visual representation of production nr.: {productionInfo.ProductionNumber}");
+                                continue;
+                            }
+                            ++counter;
+                        }
+                    }
+                    token = cell.Id;
+                }
+                Logger?.InfoLine ($"generated {counter} visuals");
+            }
+            catch (Exception e)
+            {
+                Logger?.ErrorLine (e, $"cannot analyze PDA stack");
             }
         }
 

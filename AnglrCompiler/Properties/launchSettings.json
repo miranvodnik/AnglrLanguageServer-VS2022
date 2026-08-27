@@ -2,8 +2,8 @@
   "profiles": {
     "AnglrCompiler": {
       "commandName": "Project",
-      "commandLineArgs": "-t -l -p -i -gen cs ..\\math.anglr > math-anglr.txt",
-      "workingDirectory": "D:\\Users\\Miran\\source\\repos\\math\\ConsoleApp1\\Syntax"
+      "commandLineArgs": "-t -l -p -i -gen cs ..\\anglr.anglr > anglr-anglr.txt",
+      "workingDirectory": "D:\\Users\\Miran\\source\\repos\\miranvodnik\\AnglrLanguageServer-VS2022\\AnglrParserLibrary\\Syntax-test"
     }
   }
 }

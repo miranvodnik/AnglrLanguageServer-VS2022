@@ -280,7 +280,7 @@ namespace AnglrDebuggerBridge
 
             try
             {
-                //ParserStepEvent.WaitOne ();
+                ParserStepEvent.WaitOne ();
 
                 Log (AnglrLogLevel.Info, $"<AnglrDebuggerServerBridge>: client connection request task created");
                 AnglrDebuggerConnectResponse anglrDebuggerConnectResponse = Rpc.InvokeAsync<AnglrDebuggerConnectResponse>

@@ -7,9 +7,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>$(DefineConstants);ANGLR_DEBUGGER</DefineConstants>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
 
   <ItemGroup>
     <ProjectReference Include="..\AnglrCompilerLibrary\AnglrCompilerLibrary.csproj" />

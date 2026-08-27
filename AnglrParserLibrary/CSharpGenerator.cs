@@ -78,6 +78,8 @@ namespace AnglrLibrary
 
             }
 
+            ComputeMagicNr ();
+
             Common_Event += Invoke_Common_Callback;
             _anglr_file__Event += Invoke__anglr_file__Callback;
             _terminal_definition__Event += Invoke__terminal_definition__Callback;
@@ -1011,24 +1013,6 @@ namespace AnglrLibrary
                 if (p_RhsProductionNode != null)
                     p_RhsProductionNode.defineBestGotoCounter ();
 
-            magicNr = 0;
-            foreach (RhsState rhsState in m_stateset.Values)
-            {
-                foreach (RhsConfiguration rhsConfiguration in rhsState.m_core.Values)
-                {
-                    magicNr += rhsConfiguration.rhsIterator.position;
-                    string name = rhsConfiguration.rhsProduction.symbolToken.name;
-                    foreach (char c in name)
-                        magicNr += c;
-                    foreach (RhsNode rhsNode in rhsConfiguration.rhsProduction.rhsNodes)
-                    {
-                        name = rhsNode.symbolToken.name;
-                        foreach (char c in name)
-                            magicNr += c;
-                    }
-                }
-            }
-
             //foreach (statedelta p_statedelta in m_shiftset.Values)
             //{
             //	stateset p_set = p_statedelta.first;
@@ -1072,6 +1056,12 @@ namespace AnglrLibrary
             //	p_info.m_min = minToken;
             //	p_info.m_max = maxToken;
             //}
+        }
+
+        private void ComputeMagicNr ()
+        {
+            AnglrMagicNrGenerator magicNrGenerator = new AnglrMagicNrGenerator (_anglr_file_fragment_);
+            magicNr = magicNrGenerator.ComputeMagicNr ();
         }
 
         /// <summary>
@@ -2268,6 +2258,8 @@ namespace AnglrLibrary
             }
             m_compiler = compiler;
 
+            ComputeMagicNr ();
+
             Common_Event += Invoke_Common_Callback;
             _anglr_file__Event += Invoke__anglr_file__Callback;
             _terminal_definition__Event += Invoke__terminal_definition__Callback;
@@ -3086,24 +3078,6 @@ namespace AnglrLibrary
                 if (p_RhsProductionNode != null)
                     p_RhsProductionNode.defineBestGotoCounter ();
 
-            magicNr = 0;
-            foreach (RhsState rhsState in m_stateset.Values)
-            {
-                foreach (RhsConfiguration rhsConfiguration in rhsState.m_core.Values)
-                {
-                    magicNr += rhsConfiguration.rhsIterator.position;
-                    string name = rhsConfiguration.rhsProduction.symbolToken.name;
-                    foreach (char c in name)
-                        magicNr += c;
-                    foreach (RhsNode rhsNode in rhsConfiguration.rhsProduction.rhsNodes)
-                    {
-                        name = rhsNode.symbolToken.name;
-                        foreach (char c in name)
-                            magicNr += c;
-                    }
-                }
-            }
-
             //foreach (statedelta p_statedelta in m_shiftset.Values)
             //{
             //	stateset p_set = p_statedelta.first;
@@ -3147,6 +3121,12 @@ namespace AnglrLibrary
             //	p_info.m_min = minToken;
             //	p_info.m_max = maxToken;
             //}
+        }
+
+        private void ComputeMagicNr ()
+        {
+            AnglrMagicNrGenerator magicNrGenerator = new AnglrMagicNrGenerator (_anglr_file_fragment_);
+            magicNr = magicNrGenerator.ComputeMagicNr ();
         }
 
         /// <summary>
@@ -4400,5 +4380,35 @@ namespace AnglrLibrary
         public ArrayList SourceFileList { get; private set; } = new ArrayList ();
         public ArrayList LibraryFileList { get; private set; } = new ArrayList ();
 
+    }
+
+    public class AnglrMagicNrGenerator : SyntaxTreeWalker
+    {
+        private _anglr_file_fragment_ fragment;
+        private int magicNr;
+        public AnglrMagicNrGenerator (_anglr_file_fragment_ fragment)
+        {
+            this.fragment = fragment;
+            Common_Event += AnglrMagicNrGenerator_Common_Event;
+        }
+
+        private bool AnglrMagicNrGenerator_Common_Event (SyntaxTreeCallbackReason reason, int kind, SyntaxTreeBase p_node)
+        {
+            if (reason != SyntaxTreeCallbackReason.TraversalPrologueCallbackReason)
+                return true;
+            SyntaxTreeToken token = p_node as SyntaxTreeToken;
+            if ((token == null) || (token.text == null))
+                return true;
+            foreach (var c in token.text)
+                magicNr += c;
+            return true;
+        }
+
+        public int ComputeMagicNr ()
+        {
+            magicNr = 0;
+            fragment?.InvokeTraverseCommon (this);
+            return magicNr;
+        }
     }
 }
