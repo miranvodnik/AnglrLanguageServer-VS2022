@@ -5,6 +5,7 @@ using AnglrDebuggerJsonRpcMessages;
 using AnglrLogLibrary;
 using Microsoft.VisualStudio.Threading;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using StreamJsonRpc;
 using System;
 using System.Collections;
@@ -987,8 +988,9 @@ namespace AnglrDebuggerBridge
                             AnglrDebuggerGetPDAStackCell cell = new AnglrDebuggerGetPDAStackCell ()
                             {
                                 IsTerminal = false,
-                                Id = 0,
+                                Code = 0,
                                 Name = "null",
+                                Value = "null",
                                 State = stateStack [i],
                             };
                             PdaStackCells [i] = cell;
@@ -1005,12 +1007,13 @@ namespace AnglrDebuggerBridge
                             else
                                 name = ParserInterface.nonTerminalNames () [token.token - ParserInterface.minNonTerminalCode ()];
                             AnglrDebuggerGetPDAStackCell cell = new AnglrDebuggerGetPDAStackCell ()
-                                {
-                                    IsTerminal = token.token < ParserInterface.minNonTerminalCode (),
-                                    Id = (int) token.token,
-                                    Name = name,
-                                    State = stateStack [i],
-                                };
+                            {
+                                IsTerminal = token.token < ParserInterface.minNonTerminalCode (),
+                                Code = (int) token.token,
+                                Name = name,
+                                Value = token.text,
+                                State = stateStack [i],
+                            };
                             PdaStackCells [i] = cell;
                         }
                         else
@@ -1026,8 +1029,9 @@ namespace AnglrDebuggerBridge
                             AnglrDebuggerGetPDAStackCell cell = new AnglrDebuggerGetPDAStackCell ()
                             {
                                 IsTerminal = symbol.id < ParserInterface.minNonTerminalCode (),
-                                Id = (int) symbol.id,
+                                Code = (int) symbol.id,
                                 Name = name,
+                                Value = "",
                                 State = stateStack [i],
                             };
                             PdaStackCells [i] = cell;

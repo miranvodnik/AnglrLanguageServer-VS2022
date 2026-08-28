@@ -518,7 +518,7 @@ namespace AnglrLangExtension
             try
             {
                 logger?.DebugLine ($"<RemoveParserStatesElement>: trying to remove states tree: {name}");
-                AnglrStateItem anglrStateItem = new AnglrStateItem (null, false, name, 0, 0, new TreeViewItemSet ());
+                AnglrStateItem anglrStateItem = new AnglrStateItem (null, false, name, 0, 0, 0, new TreeViewItemSet ());
                 List<AnglrStateItem> anglrLangItems = new List<AnglrStateItem> ();
                 foreach (var item in anglrParserStates.Items)
                 {
@@ -950,6 +950,7 @@ namespace AnglrLangExtension
                                     anglrStateItem,
                                     true,
                                     item.Token,
+                                    item.Code,
                                     item.State,
                                     item.Conflicts,
                                     anglrStateItem.TreeViewItemSet
@@ -963,6 +964,7 @@ namespace AnglrLangExtension
                                     anglrStateItem,
                                     false,
                                     item.Token,
+                                    item.Code,
                                     item.State,
                                     item.Conflicts,
                                     anglrStateItem.TreeViewItemSet
@@ -1210,6 +1212,7 @@ namespace AnglrLangExtension
                                     stateItem,
                                     true,
                                     item.Token,
+                                    item.Code,
                                     item.State,
                                     item.Conflicts,
                                     stateItem.TreeViewItemSet
@@ -1231,6 +1234,7 @@ namespace AnglrLangExtension
                                     stateItem,
                                     false,
                                     item.Token,
+                                    item.Code,
                                     item.State,
                                     item.Conflicts,
                                     stateItem.TreeViewItemSet
@@ -1639,6 +1643,7 @@ namespace AnglrLangExtension
         public AnglrStateItem ParentItem { get; private set; }
         public bool IsShift { get; private set; }
         public string Token { get; private set; }
+        public int Code { get; private set; }
         public int State { get; private set; }
         internal TreeViewItemSet TreeViewItemSet { get; private set; }
         public ViablePrefix StateViablePrefix { get; private set; }
@@ -1749,12 +1754,13 @@ namespace AnglrLangExtension
         private static string stateHtmlEpilogue =
             "</body></html>";
 
-        public AnglrStateItem (AnglrStateItem parentItem, bool isShift, string name, int state, uint conflicts, TreeViewItemSet treeViewItemSet)
+        public AnglrStateItem (AnglrStateItem parentItem, bool isShift, string name, int code, int state, uint conflicts, TreeViewItemSet treeViewItemSet)
         {
             Id = ++_id;
             ParentItem = parentItem;
             IsShift = isShift;
             Token = name;
+            Code = code;
             State = state;
             TreeViewItemSet = treeViewItemSet;
             StateViablePrefix = CreatePath ();
@@ -1913,11 +1919,12 @@ namespace AnglrLangExtension
                     Text += $"<br/><hr/>";
                     Text += $"<table class=\"shift-table\">";
                     Text += $"<caption class=\"shift-caption\">Shift States</caption>";
-                    Text += $"<tr><th>Symbol</th><th>State</th></tr>";
+                    Text += $"<tr><th>Symbol</th><th>Code</th><th>State</th></tr>";
                     foreach (AnglrGetParserStateTransitionData shiftData in shiftSet)
                     {
                         Text += $"<tr>";
                         Text += $"<td><span class=\"terminal-symbol\">{WebUtility.HtmlEncode (shiftData.Token)}</span></td>";
+                        Text += $"<td><span class=\"terminal-symbol\">{shiftData.Code}</span></td>";
                         Text += $"<a href=\"#state_{shiftData.State}\"><td>{shiftData.State}</td></a>";
                         Text += $"</tr>";
                     }
@@ -1929,11 +1936,12 @@ namespace AnglrLangExtension
                     Text += $"<br/><hr/>";
                     Text += $"<table class=\"goto-table\">";
                     Text += $"<caption class=\"goto-caption\">Goto States</caption>";
-                    Text += $"<tr><th>Symbol</th><th>State</th></tr>";
+                    Text += $"<tr><th>Symbol</th><th>Code</th><th>State</th></tr>";
                     foreach (AnglrGetParserStateTransitionData gotoData in gotoSet)
                     {
                         Text += $"<tr>";
                         Text += $"<td><span class=\"non-terminal-symbol\"> {WebUtility.HtmlEncode (gotoData.Token)} </span></td>";
+                        Text += $"<td><span class=\"non-terminal-symbol\"> {gotoData.Code} </span></td>";
                         Text += $"<a href=\"#state_{gotoData.State}\"><td>{gotoData.State}</td></a>";
                         Text += $"</tr>";
                     }
@@ -2097,7 +2105,7 @@ namespace AnglrLangExtension
     public class AnglrStateRootItem : AnglrStateItem
     {
         public int MagicNr { get; private set; }
-        public AnglrStateRootItem (AnglrStateItem parentItem, bool isShift, string name, int state, uint conflicts, TreeViewItemSet treeViewItemSet, int magicNr) : base (parentItem, isShift, name, state, conflicts, treeViewItemSet)
+        public AnglrStateRootItem (AnglrStateItem parentItem, bool isShift, string name, int state, uint conflicts, TreeViewItemSet treeViewItemSet, int magicNr) : base (parentItem, isShift, name, 0, state, conflicts, treeViewItemSet)
         {
             MagicNr = magicNr;
         }

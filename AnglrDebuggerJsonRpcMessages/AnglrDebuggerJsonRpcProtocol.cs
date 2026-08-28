@@ -182,9 +182,10 @@ namespace AnglrDebuggerJsonRpcMessages
     public class AnglrDebuggerGetPDAStackCell
     {
         [DataMember (Name = "isTerminal")] public bool IsTerminal { get; set; }
-        [DataMember (Name = "id")] public int Id { get; set; }
+        [DataMember (Name = "code")] public int Code { get; set; }
         [DataMember (Name = "state")] public int State { get; set; }
         [DataMember (Name = "name")] public string Name { get; set; }
+        [DataMember (Name = "value")] public string Value { get; set; }
     }
 
     [Obfuscation (Exclude = true)]

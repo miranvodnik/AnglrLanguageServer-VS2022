@@ -1230,7 +1230,8 @@ namespace AnglrLSPServerProcess
                     {
                         State = state.m_stateNumber,
                         Conflicts = state.ConflictFlags,
-                        Token = (state.m_SymbolToken.alias != null) ? state.m_SymbolToken.alias.name : state.m_SymbolToken.name
+                        Token = (state.m_SymbolToken.alias != null) ? state.m_SymbolToken.alias.name : state.m_SymbolToken.name,
+                        Code = state.m_SymbolToken.index
                     };
                 }
             }
@@ -1245,7 +1246,8 @@ namespace AnglrLSPServerProcess
                     {
                         State = state.m_stateNumber,
                         Conflicts = state.ConflictFlags,
-                        Token = state.m_SymbolToken.name
+                        Token = state.m_SymbolToken.name,
+                        Code=state.m_SymbolToken.index
                     };
                 }
             }

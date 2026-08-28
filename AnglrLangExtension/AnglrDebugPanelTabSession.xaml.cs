@@ -236,8 +236,9 @@ namespace AnglrLangExtension
             foreach (var stack in getPDASnapshotResponse.PDAStackSet)
             {
                 Logger?.InfoLine ($"stack ({stack.PDAStackId})");
+                Logger?.InfoLine ($"state\tcode\tname\t\tvalue");
                 foreach (var cell in stack.PDAStackCells)
-                    Logger?.InfoLine ($"\t{cell.Id} {cell.State} {cell.Name}");
+                    Logger?.InfoLine ($"\t{cell.State}\t{cell.Code}\t\t{cell.Name}\t\t{cell.Value}");
                 AnalyzePDAStack (stack);
             }
         }
@@ -256,7 +257,7 @@ namespace AnglrLangExtension
                     return;
                 }
 
-                foreach (var cell in stack.PDAStackCells)
+                foreach (var cell in stack.PDAStackCells.Reverse())
                 {
                     Logger?.DebugLine ($"analyze cell {cell.State}");
                     AnglrGetParserStateItemResult anglrGetParserStateItemResult = anglrLangService?.InvokeGetParserState (new AnglrGetParserStateItemParams ()
@@ -305,7 +306,7 @@ namespace AnglrLangExtension
                             ++counter;
                         }
                     }
-                    token = cell.Id;
+                    token = cell.Code;
                 }
                 Logger?.InfoLine ($"generated {counter} visuals");
             }

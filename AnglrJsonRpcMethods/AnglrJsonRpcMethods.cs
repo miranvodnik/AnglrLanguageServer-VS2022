@@ -18,10 +18,8 @@ namespace AnglrJsonRpcMethods
     [DataContract]
     public class AnglrGetClassificationSpansParams
     {
-        [DataMember (Name = "textDocument")]
-        public TextDocumentIdentifier TextDocument { get; set; }
-        [DataMember (Name = "position")]
-        public Position Position { get; set; }
+        [DataMember (Name = "textDocument")] public TextDocumentIdentifier TextDocument { get; set; }
+        [DataMember (Name = "position")] public Position Position { get; set; }
     }
 
     /// <summary>
@@ -31,10 +29,8 @@ namespace AnglrJsonRpcMethods
     [DataContract]
     public class AnglrGetClassificationSpansResult
     {
-        [DataMember (Name = "position")]
-        public Position Position { get; set; }
-        [DataMember (Name = "classifications")]
-        public List<(int column, int line, int classification)> ClassificationSpanInfo { get; set; }
+        [DataMember (Name = "position")] public Position Position { get; set; }
+        [DataMember (Name = "classifications")] public List<(int column, int line, int classification)> ClassificationSpanInfo { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
@@ -199,6 +195,7 @@ namespace AnglrJsonRpcMethods
         [DataMember (Name = "state")] public int State { get; set; }
         [DataMember (Name = "conflicts")] public uint Conflicts { get; set; }
         [DataMember (Name = "token")] public string Token { get; set; }
+        [DataMember (Name = "code")] public int Code { get; set; }
     }
 
     /// <summary>

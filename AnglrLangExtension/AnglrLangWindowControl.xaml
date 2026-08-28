@@ -108,11 +108,14 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="{Binding Path=ImagePath}"/>
                                     <Image Source="{Binding Path=LinkImagePath}"/>
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding Path=Code}"/>
+                                    <TextBlock Text=" "/>
                                     <Image Source="{Binding Path=KindImagePath}"/>
                                     <TextBlock Text=" "/>
                                     <TextBlock Text="{Binding Path=State}"/>
                                     <TextBlock Text=" - "/>
-                                    <TextBlock Text="{Binding Path=Token}"/>
+                                    <TextBlock Text="{Binding Path=Name}"/>
                                 </StackPanel>
                             </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>
