@@ -1143,7 +1143,13 @@ namespace AnglrLSPServerProcess
                     AnglrGetParserStateProductionData anglrGetParserStateProductionData = anglrGetParserStateCoreData.Production = new AnglrGetParserStateProductionData ();
                     {
                         anglrGetParserStateProductionData.ProductionNumber = rhsProduction.productionNumber;
-                        anglrGetParserStateProductionData.ProductionName = productionName.name;
+                        anglrGetParserStateProductionData.ProductionName = new AnglrGetParserStateSymbolTokenData ()
+                        {
+                            Declarator = productionName.declarator,
+                            Name = productionName.name,
+                            Synonym = (productionName.alias != null) ? productionName.alias.name : null,
+                            Id = productionName.index
+                        };
                         anglrGetParserStateProductionData.RhsNodeSet = new AnglrGetParserStateSymbolTokenData [rhsNodes.Count];
                         {
                             int rhsNodeIndex = 0;
@@ -1192,7 +1198,13 @@ namespace AnglrLSPServerProcess
                             AnglrGetParserStateProductionData anglrGetParserStateProductionData = anglrGetParserStateProductionNodeData.ProductionSet [productionIndex++] = new AnglrGetParserStateProductionData ();
                             {
                                 anglrGetParserStateProductionData.ProductionNumber = production.productionNumber;
-                                anglrGetParserStateProductionData.ProductionName = production.symbolToken.name;
+                                anglrGetParserStateProductionData.ProductionName = new AnglrGetParserStateSymbolTokenData ()
+                                {
+                                    Declarator = production.symbolToken.declarator,
+                                    Name = production.symbolToken.name,
+                                    Synonym = (production.symbolToken.alias != null) ? production.symbolToken.alias.name : null,
+                                    Id = production.symbolToken.index
+                                };
                                 anglrGetParserStateProductionData.RhsNodeSet = new AnglrGetParserStateSymbolTokenData [rhsNodes.Count];
                                 {
                                     int rhsNodeIndex = 0;
@@ -1267,7 +1279,13 @@ namespace AnglrLSPServerProcess
                     AnglrGetParserStateProductionData anglrGetParserStateProductionData = anglrGetParserStateReductionsData.Production = new AnglrGetParserStateProductionData ();
                     {
                         anglrGetParserStateProductionData.ProductionNumber = rhsProduction.productionNumber;
-                        anglrGetParserStateProductionData.ProductionName = rhsProduction.symbolToken.name;
+                        anglrGetParserStateProductionData.ProductionName = new AnglrGetParserStateSymbolTokenData ()
+                        {
+                            Declarator = rhsProduction.symbolToken.declarator,
+                            Name = rhsProduction.symbolToken.name,
+                            Synonym = (rhsProduction.symbolToken.alias != null) ? rhsProduction.symbolToken.alias.name : null,
+                            Id = rhsProduction.symbolToken.index
+                        };
                         anglrGetParserStateProductionData.RhsNodeSet = new AnglrGetParserStateSymbolTokenData [rhsNodes.Count];
                         {
                             int rhsNodeIndex = 0;
@@ -1333,7 +1351,21 @@ namespace AnglrLSPServerProcess
                     {
                         AnglrGetParserStateProductionData anglrGetParserStateProductionData = new AnglrGetParserStateProductionData ()
                         {
-                            ProductionName = (production.productionName != null) ? production.productionName.name : null,
+                            ProductionName = (production.productionName != null) ?
+                            new AnglrGetParserStateSymbolTokenData ()
+                            {
+                                Declarator = production.productionName.declarator,
+                                Name = production.productionName.name,
+                                Synonym = (production.productionName.alias != null) ? production.productionName.alias.name : null,
+                                Id = production.productionName.index
+                            } :
+                            new AnglrGetParserStateSymbolTokenData ()
+                            {
+                                Declarator = 0,
+                                Name = null,
+                                Synonym = null,
+                                Id = 0
+                            },
                             ProductionNumber = production.productionNumber,
                             RhsNodeSet = new AnglrGetParserStateSymbolTokenData [production.rhsNodes.Count]
                         };
@@ -1383,7 +1415,21 @@ namespace AnglrLSPServerProcess
                     {
                         AnglrGetParserStateProductionData anglrGetParserStateProductionData = new AnglrGetParserStateProductionData ()
                         {
-                            ProductionName = (production.productionName != null) ? production.productionName.name : null,
+                            ProductionName = (production.productionName != null) ?
+                            new AnglrGetParserStateSymbolTokenData ()
+                            {
+                                Declarator = production.productionName.declarator,
+                                Name = production.productionName.name,
+                                Synonym = (production.productionName.alias != null) ? production.productionName.alias.name : null,
+                                Id = production.productionName.index
+                            } :
+                            new AnglrGetParserStateSymbolTokenData ()
+                            {
+                                Declarator = 0,
+                                Name = null,
+                                Synonym = null,
+                                Id = 0
+                            },
                             ProductionNumber = production.productionNumber,
                             RhsNodeSet = new AnglrGetParserStateSymbolTokenData [production.rhsNodes.Count]
                         };

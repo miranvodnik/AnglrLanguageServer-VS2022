@@ -1866,7 +1866,7 @@ namespace AnglrLangExtension
                         AnglrGetParserStateProductionData productionData = coreData.Production;
                         Text += $"<tr>";
                         Text += $"<td>{productionData.ProductionNumber}</td>";
-                        Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (productionData.ProductionName)}</span></td>";
+                        Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (productionData.ProductionName.Name)}</span></td>";
                         Text += $"<td>";
                         foreach (AnglrGetParserStateSymbolTokenData symbolTokenData in productionData.RhsNodeSet)
                         {
@@ -1898,7 +1898,7 @@ namespace AnglrLangExtension
                         {
                             Text += $"<tr>";
                             Text += $"<td>{stateProductionData.ProductionNumber}</td>";
-                            Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (stateProductionData.ProductionName)}</span></td>";
+                            Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (stateProductionData.ProductionName.Name)}</span></td>";
                             Text += $"<td>&bull;";
                             foreach (AnglrGetParserStateSymbolTokenData symbolTokenData in stateProductionData.RhsNodeSet)
                             {
@@ -1959,7 +1959,7 @@ namespace AnglrLangExtension
                         AnglrGetParserStateProductionData productionData = reductionData.Production;
                         Text += $"<tr>";
                         Text += $"<td>{productionData.ProductionNumber}</td>";
-                        Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (productionData.ProductionName)}</span></td>";
+                        Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (productionData.ProductionName.Name)}</span></td>";
                         Text += $"<td>";
                         foreach (AnglrGetParserStateSymbolTokenData symbolTokenData in productionData.RhsNodeSet)
                         {
@@ -1995,7 +1995,7 @@ namespace AnglrLangExtension
                             else
                                 Text += $"<td></td>";
                             Text += $"<td>{reductionsData.Item1}</td>";
-                            Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (reductionsData.Item2.Production.ProductionName)}</span></td>";
+                            Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (reductionsData.Item2.Production.ProductionName.Name)}</span></td>";
                             Text += $"</tr>";
                         }
                     }
@@ -2023,14 +2023,14 @@ namespace AnglrLangExtension
                             }
                             else
                                 Text += $"<td></td>";
-                            if (symbolName != reductionsData.Item1.Production.ProductionName)
+                            if (symbolName != reductionsData.Item1.Production.ProductionName.Name)
                             {
-                                Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (reductionsData.Item1.Production.ProductionName)}</span></td>";
-                                symbolName = reductionsData.Item1.Production.ProductionName;
+                                Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (reductionsData.Item1.Production.ProductionName.Name)}</span></td>";
+                                symbolName = reductionsData.Item1.Production.ProductionName.Name;
                             }
                             else
                                 Text += $"<td></td>";
-                            Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (reductionsData.Item2.Production.ProductionName)}</span></td>";
+                            Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (reductionsData.Item2.Production.ProductionName.Name)}</span></td>";
                             Text += $"</tr>";
                         }
                     }

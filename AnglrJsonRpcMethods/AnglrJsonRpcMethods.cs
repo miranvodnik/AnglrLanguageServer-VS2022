@@ -217,7 +217,7 @@ namespace AnglrJsonRpcMethods
     public class AnglrGetParserStateProductionData : INotifyPropertyChanged
     {
         [DataMember (Name = "productionNumber")] public int ProductionNumber { get; set; }
-        [DataMember (Name = "productionName")] public string ProductionName { get; set; }
+        [DataMember (Name = "productionName")] public AnglrGetParserStateSymbolTokenData ProductionName { get; set; }
         [DataMember (Name = "rhsNodeSet")] public AnglrGetParserStateSymbolTokenData [] RhsNodeSet { get; set; }
         [DataMember (Name = "breakPoint")]
         public bool BreakPoint
