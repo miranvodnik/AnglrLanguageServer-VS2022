@@ -12,67 +12,6 @@ using System.Xml.Linq;
 namespace AnglrLSPServerProcess
 {
 
-    internal static class FragmentIdMapping
-    {
-        private static Dictionary<ProductionID, int> fragmentValues = new Dictionary<ProductionID, int> ()
-        {
-            { ProductionID.__anglr_file_fragment__ID, -1 },
-            { ProductionID.__attribute_list__ID, AnglrDeclarations.tokens._attribute_list_terminal_ },
-            { ProductionID.__attribute__ID, AnglrDeclarations.tokens._attribute_terminal_ },
-            { ProductionID.__name_value_list__ID, AnglrDeclarations.tokens._name_value_list_terminal_ },
-            { ProductionID.__name_value_pair__ID, AnglrDeclarations.tokens._name_value_pair_terminal_ },
-            { ProductionID.__anglr_file__ID, AnglrDeclarations.tokens._anglr_file_terminal_ },
-            { ProductionID.__anglr_file_part_list__ID, AnglrDeclarations.tokens._anglr_file_part_list_terminal_ },
-            { ProductionID.__anglr_file_part__ID, AnglrDeclarations.tokens._anglr_file_part_terminal_ },
-            { ProductionID.__general_part__ID, AnglrDeclarations.tokens._general_part_terminal_ },
-            { ProductionID.__declaration_part__ID, AnglrDeclarations.tokens._declaration_part_terminal_ },
-            { ProductionID.__anglr_definition_list__ID, AnglrDeclarations.tokens._anglr_definition_list_terminal_ },
-            { ProductionID.__anglr_definition_with_attribute__ID, AnglrDeclarations.tokens._anglr_definition_with_attribute_list_terminal_ },
-            { ProductionID.__anglr_definition__ID, AnglrDeclarations.tokens._anglr_definition_terminal_ },
-            { ProductionID.__single_terminal_definition__ID, AnglrDeclarations.tokens._single_terminal_definition_terminal_ },
-            { ProductionID.__single_regex_definition__ID, AnglrDeclarations.tokens._single_regex_definition_terminal_ },
-            { ProductionID.__block_of_terminal_definitions__ID, AnglrDeclarations.tokens._block_of_terminal_definitions_terminal_ },
-            { ProductionID.__block_of_regex_definitions__ID, AnglrDeclarations.tokens._block_of_regex_definitions_terminal_ },
-            { ProductionID.__terminal_definition__ID, AnglrDeclarations.tokens._terminal_definition_terminal_ },
-            { ProductionID.__regex_definition__ID, AnglrDeclarations.tokens._regex_definition_terminal_ },
-            { ProductionID.__block_terminal_definitions__ID, AnglrDeclarations.tokens._block_terminal_definitions_terminal_ },
-            { ProductionID.__block_terminal_definition__ID, AnglrDeclarations.tokens._block_terminal_definition_terminal_ },
-            { ProductionID.__block_regex_definitions__ID, AnglrDeclarations.tokens._block_regex_definitions_terminal_ },
-            { ProductionID.__block_regex_definition__ID, AnglrDeclarations.tokens._block_regex_definition_terminal_ },
-            { ProductionID.__scanner_part__ID, AnglrDeclarations.tokens._scanner_part_terminal_ },
-            { ProductionID.__regular_expression_list__ID, AnglrDeclarations.tokens._regular_expression_list_terminal_ },
-            { ProductionID.__regular_expression_usage__ID, AnglrDeclarations.tokens._regular_expression_usage_terminal_ },
-            { ProductionID.__actions__ID, AnglrDeclarations.tokens._actions_terminal_ },
-            { ProductionID.__action__ID, AnglrDeclarations.tokens._action_terminal_ },
-            { ProductionID.__skip_action__ID, AnglrDeclarations.tokens._skip_action_terminal_ },
-            { ProductionID.__terminal_action__ID, AnglrDeclarations.tokens._terminal_action_terminal_ },
-            { ProductionID.__event_action__ID, AnglrDeclarations.tokens._event_action_terminal_ },
-            { ProductionID.__push_action__ID, AnglrDeclarations.tokens._push_action_terminal_ },
-            { ProductionID.__pop_action__ID, AnglrDeclarations.tokens._pop_action_terminal_ },
-            { ProductionID.__lexer_part__ID, AnglrDeclarations.tokens._lexer_part_terminal_ },
-            { ProductionID.__parser_part__ID, AnglrDeclarations.tokens._parser_part_terminal_ },
-            { ProductionID.__anglr_syntax_rule_list__ID, AnglrDeclarations.tokens._anglr_syntax_rule_list_terminal_ },
-            { ProductionID.__anglr_syntax_rule__ID, AnglrDeclarations.tokens._anglr_syntax_rule_terminal_ },
-            { ProductionID.__anglr_nested_rule__ID, AnglrDeclarations.tokens._anglr_nested_rule_terminal_ },
-            { ProductionID.__anglr_syntax_production_list_name__ID, AnglrDeclarations.tokens._anglr_syntax_production_list_name_terminal_ },
-            { ProductionID.__anglr_syntax_production_list__ID, AnglrDeclarations.tokens._anglr_syntax_production_list_terminal_ },
-            { ProductionID.__anglr_syntax_production__ID, AnglrDeclarations.tokens._anglr_syntax_production_terminal_ },
-            { ProductionID.__production_name__ID, AnglrDeclarations.tokens._production_name_terminal_ },
-            { ProductionID.__priority_assoc_specification__ID, AnglrDeclarations.tokens._priority_assoc_specification_terminal_ },
-            { ProductionID.__priority_specification__ID, AnglrDeclarations.tokens._priority_specification_terminal_ },
-            { ProductionID.__associativity_specification__ID, AnglrDeclarations.tokens._associativity_specification_terminal_ },
-            { ProductionID.__name_list__ID, AnglrDeclarations.tokens._name_list_terminal_ },
-            { ProductionID.__marker_list__ID, AnglrDeclarations.tokens._marker_list_terminal_ },
-            { ProductionID.__marker__ID, AnglrDeclarations.tokens._marker_terminal_ },
-            { ProductionID.__g_name__ID, AnglrDeclarations.tokens._g_name_terminal_ },
-            { ProductionID.__name__ID, AnglrDeclarations.tokens._name_terminal_ },
-            { ProductionID.__cardinality_delimiter__ID, AnglrDeclarations.tokens._cardinality_delimiter_terminal_ },
-            { ProductionID.__cardinality__ID, AnglrDeclarations.tokens._cardinality_terminal_ },
-            { ProductionID.__delimiter__ID, AnglrDeclarations.tokens._delimiter_terminal_ },
-        };
-        public static int GetFragmentId (ProductionID id) => fragmentValues [id];
-    }
-
     internal class CmpIndex : IComparer<AnglrStackChildren>
     {
         public int Compare (AnglrStackChildren x, AnglrStackChildren y)
