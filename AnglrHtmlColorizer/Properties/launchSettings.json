@@ -2,7 +2,7 @@
   "profiles": {
     "AnglrHtmlColorizer": {
       "commandName": "Project",
-      "commandLineArgs": "-t \"<attribute list>\" ..\\attribute-list.anglr ..\\anglr.anglr",
+      "commandLineArgs": "-t attribute-list ..\\attribute-list.anglr ..\\anglr.anglr",
       "workingDirectory": "D:\\Users\\Miran\\source\\repos\\AnglrLanguageServer-VS2022\\AnglrParserLibrary\\Syntax"
     },
     "Profile 1": {

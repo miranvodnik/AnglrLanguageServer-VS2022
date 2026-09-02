@@ -84,13 +84,6 @@ namespace Anglr.Compiler
             InitParser ();
         }
 
-        public anglrCompiler (ProductionID fragmentId, IAnglrLogger logger = null) : base (fragmentId, logger)
-        {
-            this.logger = logger ?? new VoidAnglrLogger ();
-            sourceFileName = "";
-            InitParser ();
-        }
-
         private void InitParser ()
         {
             //  builder action
@@ -125,11 +118,11 @@ namespace Anglr.Compiler
             //_marker_list__Event += Invoke__marker_list__Callback;
         }
 
-        public int Parse (string fileName, int startToken, object [] info = null)
+        public int Parse (string fileName, uint startToken, object [] info = null)
         {
             try
             {
-                this.startTerminal = startToken;
+                this.startTerminal = (int) startToken;
                 sourceFileName = fileName;
                 lexer = new AnglrLexer (new StreamReader (sourceFileName), info);
 
@@ -158,11 +151,11 @@ namespace Anglr.Compiler
             }
         }
 
-        public int ParseString (string str, int startToken, object [] info = null)
+        public int ParseString (string str, uint startToken, object [] info = null)
         {
             try
             {
-                this.startTerminal = startToken;
+                this.startTerminal = (int) startToken;
                 lexer = new AnglrLexer (str, info);
                 lexer.scannerEnterEvent += Scanner_scannerEnterEvent;
                 lexer.scannerLeaveEvent += Scanner_scannerLeaveEvent;
@@ -182,11 +175,11 @@ namespace Anglr.Compiler
             }
         }
 
-        public int ParseStringList (string [] lines, int startToken, object [] info = null)
+        public int ParseStringList (string [] lines, uint startToken, object [] info = null)
         {
             try
             {
-                this.startTerminal = startToken;
+                this.startTerminal = (int) startToken;
                 lexer = new AnglrLexer (lines, info);
                 lexer.scannerEnterEvent += Scanner_scannerEnterEvent;
                 lexer.scannerLeaveEvent += Scanner_scannerLeaveEvent;

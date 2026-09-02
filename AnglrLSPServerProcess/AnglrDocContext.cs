@@ -1010,25 +1010,23 @@ namespace AnglrLSPServerProcess
                     Fragment = ""
                 };
                 AnglrSyntaxTreeNode syntaxTreeNode = anglrSyntaxTreeGenerator.FindNode (anglrGetCompileFragmentRequest.ItemId);
-                int startToken = AnglrFragments.GetFragmentInfo ((ProductionID) syntaxTreeNode.node.id).tokenId;
-                anglrCompiler compiler = new anglrCompiler ((ProductionID) syntaxTreeNode.node.id, Logger);
+                anglrCompiler compiler = new anglrCompiler (null, Logger);
                 compiler.Error_Event += (lineno, column, token, tokenString) =>
                 {
                     anglrLSPTarget.LogError ($"FRAGMENT SYNTAX ERROR: line = {lineno}, col = {column}, token = {token}, string = {tokenString}");
                     return false;
                 };
-                (string name, ProductionID id, int state, int tokenId, string tokenName) fragmentInfo = AnglrFragments.GetFragmentInfo ((ProductionID) syntaxTreeNode.node.id);
                 string text = anglrHtmlColorizer.GeneratePlainText (syntaxTreeNode.node).ToString ();
                 string [] src = text.Split (new char [] { '\n', '\r' });
-                if ((result.Result = compiler.ParseStringList (src, startToken)) < 0)
+                result.Fragment = text;
+                if ((result.Result = compiler.ParseStringList (src, (uint) FragmentIdMapping.GetFragmentId ((ProductionID) syntaxTreeNode.node.id))) < 0)
                 {
-                    anglrLSPTarget.LogError ($"Anglr Get Compile Fragment failed: PID = {syntaxTreeNode.node.id}\nFID = {fragmentInfo.tokenId}\nfragment =");
+                    anglrLSPTarget.LogError ($"Anglr Get Compile Fragment failed: PID = {syntaxTreeNode.node.id}\nFID = {FragmentIdMapping.GetFragmentId ((ProductionID) syntaxTreeNode.node.id)}\nfragment =");
                     foreach (string s in src)
                     {
                         anglrLSPTarget.LogError (s);
                     }
                 }
-                result.Fragment = $"\nFRAGMENT INFO:\n{fragmentInfo}\nFRAGMENT TEXT:\n{text}\n PARSE RESULT: {result.Result}";
                 return result;
             }
             catch (Exception e)

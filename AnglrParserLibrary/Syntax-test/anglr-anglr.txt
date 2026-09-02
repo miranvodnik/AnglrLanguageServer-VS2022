@@ -68,7 +68,7 @@
 (<cstring optional>, __cstring_optional__ID, 67, 1, _eof_token)
 (<number optional>, __number_optional__ID, 68, 1, _eof_token)
 CREATE 1
-2026-09-01 19:24:11.893 - Info - Parse grammar file '..\anglr.anglr'
+2026-08-27 19:26:03.715 - Info - Parse grammar file '..\anglr.anglr'
 STEP   1, 1
 TOKEN  '' (302)
 STEP   2, 1
@@ -14329,42 +14329,2303 @@ ACCEPT 1 '' (1) <272, 0, 2> : 234
          split =  0
          join =   0
          steps =  2967
-2026-09-01 19:24:13.589 - Warn - Unknown general attribute: Description
-2026-09-01 19:24:13.590 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-09-01 19:24:13.591 - Warn - Unknown general attribute: Description
-2026-09-01 19:24:13.591 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown general attribute: Description
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown general attribute: Description
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown general attribute: Description
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown general attribute: Description
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown general attribute: Description
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown general attribute: Description
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown general attribute: Description
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown general attribute: Description
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown general attribute: Description
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-09-01 19:24:13.592 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-09-01 19:24:13.593 - Warn - Unknown lexer attribute: Description
-2026-09-01 19:24:13.594 - Warn - Unknown name-value pair for UseScanner attribute :Hover = 'true'
-2026-09-01 19:24:13.594 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
-2026-09-01 19:24:13.595 - Warn - Unknown general attribute: Description
-2026-09-01 19:24:13.595 - Warn - Unknown name-value pair for Lexer attribute :Hover = 'true'
-2026-09-01 19:24:13.596 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
-2026-09-01 19:24:13.597 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.249 - Warn - Unknown general attribute: Description
+2026-08-27 19:26:04.250 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.251 - Warn - Unknown general attribute: Description
+2026-08-27 19:26:04.252 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown general attribute: Description
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown general attribute: Description
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown general attribute: Description
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown general attribute: Description
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown general attribute: Description
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown general attribute: Description
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown general attribute: Description
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown general attribute: Description
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown general attribute: Description
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-08-27 19:26:04.253 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.254 - Warn - Unknown lexer attribute: Description
+2026-08-27 19:26:04.255 - Warn - Unknown name-value pair for UseScanner attribute :Hover = 'true'
+2026-08-27 19:26:04.256 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-08-27 19:26:04.258 - Warn - Unknown general attribute: Description
+2026-08-27 19:26:04.258 - Warn - Unknown name-value pair for Lexer attribute :Hover = 'true'
+2026-08-27 19:26:04.259 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-08-27 19:26:04.259 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+Collect symbols
+2026-08-27 19:26:04.284 - Debug - Regular expression part vertical-bar = '\|'
+2026-08-27 19:26:04.284 - Debug - Regular expression part comma = '\,'
+2026-08-27 19:26:04.284 - Debug - Regular expression part colon = '\:'
+2026-08-27 19:26:04.284 - Debug - Regular expression part semicolon = '\;'
+2026-08-27 19:26:04.284 - Debug - Regular expression part left-curly-bracket = '\{'
+2026-08-27 19:26:04.284 - Debug - Regular expression part right-curly-bracket = '\}'
+2026-08-27 19:26:04.284 - Debug - Regular expression part left-bracket = '\('
+2026-08-27 19:26:04.284 - Debug - Regular expression part right-bracket = '\)'
+2026-08-27 19:26:04.284 - Debug - Regular expression part left-scanner-bracket = '\%\{'
+2026-08-27 19:26:04.284 - Debug - Regular expression part right-scanner-bracket = '\%\}'
+2026-08-27 19:26:04.284 - Debug - Regular expression part left-square-bracket = '\['
+2026-08-27 19:26:04.284 - Debug - Regular expression part right-square-bracket = '\]'
+2026-08-27 19:26:04.284 - Debug - Regular expression part at-sign = '\@'
+2026-08-27 19:26:04.284 - Debug - Regular expression part double-at-sign = '\@\@'
+2026-08-27 19:26:04.284 - Debug - Regular expression part equals-sign = '\='
+2026-08-27 19:26:04.284 - Debug - Regular expression part question-mark = '\?'
+2026-08-27 19:26:04.285 - Debug - Regular expression part plus-sign = '\+'
+2026-08-27 19:26:04.285 - Debug - Regular expression part minus-sign = '\-'
+2026-08-27 19:26:04.285 - Debug - Regular expression part asterisk = '\*'
+2026-08-27 19:26:04.285 - Debug - Regular expression part slash = '\/'
+2026-08-27 19:26:04.285 - Debug - Regular expression part inv-plus-sign = '\~\+'
+2026-08-27 19:26:04.285 - Debug - Regular expression part inv-minus-sign = '\~\-'
+2026-08-27 19:26:04.285 - Debug - Regular expression part inv-asterisk = '\~\*'
+2026-08-27 19:26:04.285 - Debug - Regular expression part inv-slash = '\~\/'
+2026-08-27 19:26:04.285 - Debug - Regular expression part empty = '%[ \t]*empty'
+2026-08-27 19:26:04.285 - Debug - Regular expression part terminal = '%[ \t]*terminal'
+2026-08-27 19:26:04.285 - Debug - Regular expression part general = '%[ \t]*general'
+2026-08-27 19:26:04.285 - Debug - Regular expression part declarations = '%[ \t]*declarations'
+2026-08-27 19:26:04.285 - Debug - Regular expression part rregex = '%[ \t]*regex'
+2026-08-27 19:26:04.285 - Debug - Regular expression part scanner = '%[ \t]*scanner'
+2026-08-27 19:26:04.285 - Debug - Regular expression part lexer = '%[ \t]*lexer'
+2026-08-27 19:26:04.285 - Debug - Regular expression part parser = '%[ \t]*parser'
+2026-08-27 19:26:04.285 - Debug - Regular expression part priority = '%[ \t]*prio(rity)?'
+2026-08-27 19:26:04.285 - Debug - Regular expression part associativity = '%[ \t]*assoc(iativity)?'
+2026-08-27 19:26:04.285 - Debug - Regular expression part skip = 'skip'
+2026-08-27 19:26:04.285 - Debug - Regular expression part ttoken = 'terminal'
+2026-08-27 19:26:04.285 - Debug - Regular expression part revent = 'event'
+2026-08-27 19:26:04.285 - Debug - Regular expression part push = 'push'
+2026-08-27 19:26:04.285 - Debug - Regular expression part pop = 'pop'
+2026-08-27 19:26:04.285 - Debug - Regular expression part letter = '[a-zA-Z_]'
+2026-08-27 19:26:04.285 - Debug - Regular expression part digit = '[0-9]'
+2026-08-27 19:26:04.285 - Debug - Regular expression part identifier = '{letter}({letter}|{digit}|[-\.])*|<{letter}({letter}|{digit}|[-\. ])*>'
+2026-08-27 19:26:04.285 - Debug - Regular expression part cstring = '\"([^"]|\"\")*\"|\'([^']|\'\')*\''
+2026-08-27 19:26:04.285 - Debug - Regular expression part number = '{digit}+'
+2026-08-27 19:26:04.285 - Debug - Regular expression part lexical-unit-1 = '{vertical-bar}|{comma}|{colon}|{semicolon}'
+2026-08-27 19:26:04.285 - Debug - Regular expression part lexical-unit-2 = '{left-curly-bracket}|{right-curly-bracket}|{left-scanner-bracket}|{right-scanner-bracket}|{left-square-bracket}|{right-square-bracket}'
+2026-08-27 19:26:04.285 - Debug - Regular expression part lexical-unit-3 = '{equals-sign}|{empty}|{terminal}|{declarations}|{general}|{rregex}|{scanner}|{parser}|{identifier}|{cstring}'
+2026-08-27 19:26:04.285 - Debug - Regular expression part lexical-unit = '{lexical-unit-1}|{lexical-unit-2}|{lexical-unit-3}'
+2026-08-27 19:26:04.296 - Warn - default skip action for RE: \*+\/
+Lexer regular expression = '\*+\/'
+Lexer regular expression = '\*+[^\*\/]'
+Lexer regular expression = '[^\*]+'
+comment_scanner = (?<g1>\*+\/)|(?<g2>\*+[^\*\/])|(?<g3>[^\*]+)
+Generate scanner source file 'CommentScanner.cs'
+2026-08-27 19:26:04.300 - Warn - default skip action for RE: [^\n]*\n
+Lexer regular expression = '[^\n]*\n'
+line_comment_scanner = (?<g1>[^\n]*\n)
+Generate scanner source file 'LineCommentScanner.cs'
+2026-08-27 19:26:04.301 - Warn - default skip action for RE: \]\]
+Lexer regular expression = '\]\]'
+Lexer regular expression, input = '{identifier}', output = '[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>'
+Lexer regular expression, input = '{equals-sign}', output = '\='
+Lexer regular expression, input = '{cstring}', output = '\"([^"]|\"\")*\"|\'([^']|\'\')*\''
+Lexer regular expression = '[ \t\n\r]'
+attribute_scanner = (?<g1>\]\])|(?<g2>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g3>\=)|(?<g4>\"([^"]|\"\")*\"|\'([^']|\'\')*\')|(?<g5>[ \t\n\r])
+Generate scanner source file 'AttributeScanner.cs'
+2026-08-27 19:26:04.308 - Warn - default skip action for RE: \/\*
+Lexer regular expression = '\/\*'
+2026-08-27 19:26:04.308 - Warn - default skip action for RE: \[\[
+Lexer regular expression = '\[\['
+2026-08-27 19:26:04.308 - Warn - default skip action for RE: \/\/
+Lexer regular expression = '\/\/'
+Lexer regular expression, input = '{identifier}', output = '[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>'
+Lexer regular expression = '[ \t]+'
+Lexer regular expression = '[\n\r]'
+scanner_id_scanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g5>[ \t]+)|(?<g6>[\n\r])
+Generate scanner source file 'ScannerIdScanner.cs'
+2026-08-27 19:26:04.309 - Warn - default skip action for RE: \/\*
+Lexer regular expression = '\/\*'
+2026-08-27 19:26:04.309 - Warn - default skip action for RE: \[\[
+Lexer regular expression = '\[\['
+2026-08-27 19:26:04.309 - Warn - default skip action for RE: \/\/
+Lexer regular expression = '\/\/'
+Lexer regular expression, input = '{left-scanner-bracket}', output = '\%\{'
+Lexer regular expression, input = '{right-scanner-bracket}', output = '\%\}'
+Lexer regular expression, input = '{skip}', output = 'skip'
+Lexer regular expression, input = '{ttoken}', output = 'terminal'
+Lexer regular expression, input = '{revent}', output = 'event'
+Lexer regular expression, input = '{push}', output = 'push'
+Lexer regular expression, input = '{pop}', output = 'pop'
+Lexer regular expression, input = '{identifier}', output = '[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>'
+Lexer regular expression = '[ \t]+'
+Lexer regular expression = '.+'
+Lexer regular expression = '[\n\r]'
+scanner_part_scanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>\%\{)|(?<g5>\%\})|(?<g6>skip)|(?<g7>terminal)|(?<g8>event)|(?<g9>push)|(?<g10>pop)|(?<g11>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g12>[ \t]+)|(?<g13>.+)|(?<g14>[\n\r])
+Generate scanner source file 'ScannerPartScanner.cs'
+2026-08-27 19:26:04.310 - Warn - default skip action for RE: \/\*
+Lexer regular expression = '\/\*'
+2026-08-27 19:26:04.310 - Warn - default skip action for RE: \[\[
+Lexer regular expression = '\[\['
+2026-08-27 19:26:04.310 - Warn - default skip action for RE: \/\/
+Lexer regular expression = '\/\/'
+Lexer regular expression, input = '{identifier}', output = '[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>'
+Lexer regular expression, input = '{left-curly-bracket}', output = '\{'
+Lexer regular expression, input = '{right-scanner-bracket}', output = '\%\}'
+Lexer regular expression = '[ \t]+'
+Lexer regular expression = '[\n\r]'
+regex_id_scanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g5>\{)|(?<g6>\%\})|(?<g7>[ \t]+)|(?<g8>[\n\r])
+Generate scanner source file 'RegexIdScanner.cs'
+2026-08-27 19:26:04.311 - Warn - default skip action for RE: \/\*
+Lexer regular expression = '\/\*'
+2026-08-27 19:26:04.311 - Warn - default skip action for RE: \[\[
+Lexer regular expression = '\[\['
+2026-08-27 19:26:04.311 - Warn - default skip action for RE: \/\/
+Lexer regular expression = '\/\/'
+Lexer regular expression = '[ \t]+'
+Lexer regular expression = '.+'
+Lexer regular expression = '[\n\r]'
+regex_part_scanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>[ \t]+)|(?<g5>.+)|(?<g6>[\n\r])
+Generate scanner source file 'RegexPartScanner.cs'
+2026-08-27 19:26:04.312 - Warn - default skip action for RE: \/\*
+Lexer regular expression = '\/\*'
+2026-08-27 19:26:04.312 - Warn - default skip action for RE: \[\[
+Lexer regular expression = '\[\['
+2026-08-27 19:26:04.312 - Warn - default skip action for RE: \/\/
+Lexer regular expression = '\/\/'
+Lexer regular expression = '[ \t\n]+'
+Lexer regular expression, input = '{right-curly-bracket}', output = '\}'
+Lexer regular expression, input = '{identifier}', output = '[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>'
+regex_block_scanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>[ \t\n]+)|(?<g5>\})|(?<g6>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)
+Generate scanner source file 'RegexBlockScanner.cs'
+2026-08-27 19:26:04.313 - Warn - default skip action for RE: \/\*
+Lexer regular expression = '\/\*'
+2026-08-27 19:26:04.313 - Warn - default skip action for RE: \[\[
+Lexer regular expression = '\[\['
+2026-08-27 19:26:04.313 - Warn - default skip action for RE: \/\/
+Lexer regular expression = '\/\/'
+Lexer regular expression = '[ \t]+'
+Lexer regular expression = '.+'
+Lexer regular expression = '[\n\r]'
+regex_block_part_scanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>[ \t]+)|(?<g5>.+)|(?<g6>[\n\r])
+Generate scanner source file 'RegexBlockPartScanner.cs'
+2026-08-27 19:26:04.313 - Warn - default skip action for RE: \/\*
+Lexer regular expression = '\/\*'
+2026-08-27 19:26:04.314 - Warn - default skip action for RE: \[\[
+Lexer regular expression = '\[\['
+2026-08-27 19:26:04.314 - Warn - default skip action for RE: \/\/
+Lexer regular expression = '\/\/'
+Lexer regular expression, input = '{vertical-bar}', output = '\|'
+Lexer regular expression, input = '{comma}', output = '\,'
+Lexer regular expression, input = '{colon}', output = '\:'
+Lexer regular expression, input = '{semicolon}', output = '\;'
+Lexer regular expression, input = '{left-curly-bracket}', output = '\{'
+Lexer regular expression, input = '{right-curly-bracket}', output = '\}'
+Lexer regular expression, input = '{left-bracket}', output = '\('
+Lexer regular expression, input = '{right-bracket}', output = '\)'
+Lexer regular expression, input = '{left-scanner-bracket}', output = '\%\{'
+Lexer regular expression, input = '{right-scanner-bracket}', output = '\%\}'
+Lexer regular expression, input = '{left-square-bracket}', output = '\['
+Lexer regular expression, input = '{right-square-bracket}', output = '\]'
+Lexer regular expression, input = '{equals-sign}', output = '\='
+Lexer regular expression, input = '{double-at-sign}', output = '\@\@'
+Lexer regular expression, input = '{at-sign}', output = '\@'
+Lexer regular expression, input = '{question-mark}', output = '\?'
+Lexer regular expression, input = '{plus-sign}', output = '\+'
+Lexer regular expression, input = '{minus-sign}', output = '\-'
+Lexer regular expression, input = '{asterisk}', output = '\*'
+Lexer regular expression, input = '{slash}', output = '\/'
+Lexer regular expression, input = '{inv-plus-sign}', output = '\~\+'
+Lexer regular expression, input = '{inv-minus-sign}', output = '\~\-'
+Lexer regular expression, input = '{inv-asterisk}', output = '\~\*'
+Lexer regular expression, input = '{inv-slash}', output = '\~\/'
+Lexer regular expression, input = '{empty}', output = '%[ \t]*empty'
+Lexer regular expression, input = '{terminal}', output = '%[ \t]*terminal'
+Lexer regular expression, input = '{general}', output = '%[ \t]*general'
+Lexer regular expression, input = '{declarations}', output = '%[ \t]*declarations'
+Lexer regular expression, input = '{rregex}', output = '%[ \t]*regex'
+Lexer regular expression, input = '{scanner}', output = '%[ \t]*scanner'
+Lexer regular expression, input = '{lexer}', output = '%[ \t]*lexer'
+Lexer regular expression, input = '{parser}', output = '%[ \t]*parser'
+Lexer regular expression, input = '{priority}', output = '%[ \t]*prio(rity)?'
+Lexer regular expression, input = '{associativity}', output = '%[ \t]*assoc(iativity)?'
+Lexer regular expression, input = '{identifier}', output = '[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>'
+Lexer regular expression, input = '{cstring}', output = '\"([^"]|\"\")*\"|\'([^']|\'\')*\''
+Lexer regular expression, input = '{number}', output = '[0-9]+'
+Lexer regular expression = '[ \t]+'
+Lexer regular expression = '[\n\r]'
+Lexer regular expression = '.'
+anglrScanner = (?<g1>\/\*)|(?<g2>\[\[)|(?<g3>\/\/)|(?<g4>\|)|(?<g5>\,)|(?<g6>\:)|(?<g7>\;)|(?<g8>\{)|(?<g9>\})|(?<g10>\()|(?<g11>\))|(?<g12>\%\{)|(?<g13>\%\})|(?<g14>\[)|(?<g15>\])|(?<g16>\=)|(?<g17>\@\@)|(?<g18>\@)|(?<g19>\?)|(?<g20>\+)|(?<g21>\-)|(?<g22>\*)|(?<g23>\/)|(?<g24>\~\+)|(?<g25>\~\-)|(?<g26>\~\*)|(?<g27>\~\/)|(?<g28>%[ \t]*empty)|(?<g29>%[ \t]*terminal)|(?<g30>%[ \t]*general)|(?<g31>%[ \t]*declarations)|(?<g32>%[ \t]*regex)|(?<g33>%[ \t]*scanner)|(?<g34>%[ \t]*lexer)|(?<g35>%[ \t]*parser)|(?<g36>%[ \t]*prio(rity)?)|(?<g37>%[ \t]*assoc(iativity)?)|(?<g38>[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\.])*|<[a-zA-Z_]([a-zA-Z_]|[0-9]|[-\. ])*>)|(?<g39>\"([^"]|\"\")*\"|\'([^']|\'\')*\')|(?<g40>[0-9]+)|(?<g41>[ \t]+)|(?<g42>[\n\r])|(?<g43>.)
+Generate scanner source file 'AnglrScanner.cs'
+Generate lexer source file 'AnglrLexer.cs'
+2026-08-27 19:26:04.326 - Info - Generate parser: anglrParser
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <name value list optional>:%empty|<name value list>;
+COMPILE RULE: <anglr file part list optional>:%empty|<anglr file part list>;
+COMPILE RULE: <anglr definition list optional>:%empty|<anglr definition list>;
+COMPILE RULE: <block terminal definitions optional>:%empty|<block terminal definitions>;
+COMPILE RULE: <block regex definitions optional>:%empty|<block regex definitions>;
+COMPILE RULE: <regular expression list optional>:%empty|<regular expression list>;
+COMPILE RULE: <actions optional>:%empty|<actions>;
+COMPILE RULE: <anglr syntax rule list optional>:%empty|<anglr syntax rule list>;
+COMPILE RULE: <anglr syntax production list name optional>:%empty|<anglr syntax production list name>;
+COMPILE RULE: <production name optional>:%empty|<production name>;
+COMPILE RULE: <priority assoc specification optional>:%empty|<priority assoc specification>;
+COMPILE RULE: <marker list optional>:%empty|<marker list>;
+COMPILE RULE: <delimiter optional>:%empty|<delimiter>;
+COMPILE RULE: <cstring optional>:%empty|<cstring>;
+COMPILE RULE: <number optional>:%empty|<number>;
+COMPILE RULE: <attribute list>:<attribute>|<attribute list> <attribute>;
+COMPILE RULE: <name value list optional>:%empty|<name value list>;
+COMPILE RULE: <name value list>:<name value pair>|<name value list> <name value pair>;
+COMPILE RULE: <anglr file>:%empty|<anglr file part list>;
+COMPILE RULE: <anglr file part list>:<anglr file part>|<anglr file part list> <anglr file part>;
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <anglr definition list optional>:%empty|<anglr definition list>;
+COMPILE RULE: <anglr definition list>:<anglr definition with attribute>|<anglr definition list> <anglr definition with attribute>;
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <block terminal definitions optional>:%empty|<block terminal definitions>;
+COMPILE RULE: <block regex definitions optional>:%empty|<block regex definitions>;
+COMPILE RULE: <cstring optional>:%empty|<cstring>;
+COMPILE RULE: <block terminal definitions>:<block terminal definition>|<block terminal definitions> <block terminal definition>;
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <block regex definitions>:<block regex definition>|<block regex definitions> <block regex definition>;
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <regular expression list optional>:%empty|<regular expression list>;
+COMPILE RULE: <regular expression list>:<regular expression usage>|<regular expression list> <regular expression usage>;
+COMPILE RULE: <actions optional>:%empty|<actions>;
+COMPILE RULE: <actions>:<action>|<actions> <action>;
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <anglr syntax rule list optional>:%empty|<anglr syntax rule list>;
+COMPILE RULE: <anglr syntax rule list>:<anglr syntax rule>|<anglr syntax rule list> <anglr syntax rule>;
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <attribute list optional>:%empty|<attribute list>;
+COMPILE RULE: <anglr syntax rule list optional>:%empty|<anglr syntax rule list>;
+COMPILE RULE: <anglr syntax production list name optional>:%empty|<anglr syntax production list name>;
+COMPILE RULE: <anglr syntax production list>:<anglr syntax production>|<anglr syntax production list> '|' <anglr syntax production>;
+COMPILE RULE: <production name optional>:%empty|<production name>;
+COMPILE RULE: <priority assoc specification optional>:%empty|<priority assoc specification>;
+COMPILE RULE: <marker list optional>:%empty|<marker list>;
+COMPILE RULE: <name list>:<marker list optional>|<name list> <g name> <marker list optional>;
+COMPILE RULE: <marker list>:<marker>|<marker list> <marker>;
+COMPILE RULE: <delimiter optional>:%empty|<delimiter>;
+COMPILE RULE: <number optional>:%empty|<number>;
+COMPILE RULE: <number optional>:%empty|<number>;
+Display symbol table
+Eliminate tautologies
+Check for iterator syntax rules
+Check for cascaded syntax rules
+CASCADE : <anglr syntax production> -- <anglr syntax production list>
+CASCADE : <marker list optional> -- <name list>
+CASCADES:
+	 <anglr syntax production list> <anglr syntax production>
+
+	 <name list> <marker list optional>
+
+GENERATED CASCADE RULES:
+	<anglr syntax production list>:
+		<anglr syntax production> 
+
+		<anglr syntax production list> <vertical bar> <anglr syntax production> Left
+
+	<name list>:
+		<marker list optional> 
+
+		<name list> <g name> <marker list optional> Left
+
+Display productions
+INFO: CANONICAL PRODUCTIONS
+
+<anglr file fragment>
+	:	<attribute list terminal> <attribute list> 
+	|	<attribute terminal> <attribute> 
+	|	<name value list terminal> <name value list> 
+	|	<name value pair terminal> <name value pair> 
+	|	<anglr file terminal> <anglr file> 
+	|	<anglr file part list terminal> <anglr file part list> 
+	|	<anglr file part terminal> <anglr file part> 
+	|	<general part terminal> <general part> 
+	|	<declaration part terminal> <declaration part> 
+	|	<anglr definition list terminal> <anglr definition list> 
+	|	<anglr definition with attribute list terminal> <anglr definition with attribute> 
+	|	<anglr definition terminal> <anglr definition> 
+	|	<single terminal definition terminal> <single terminal definition> 
+	|	<single regex definition terminal> <single regex definition> 
+	|	<block of terminal definitions terminal> <block of terminal definitions> 
+	|	<block of regex definitions terminal> <block of regex definitions> 
+	|	<terminal definition terminal> <terminal definition> 
+	|	<regex definition terminal> <regex definition> 
+	|	<block terminal definitions terminal> <block terminal definitions> 
+	|	<block terminal definition terminal> <block terminal definition> 
+	|	<block regex definitions terminal> <block regex definitions> 
+	|	<block regex definition terminal> <block regex definition> 
+	|	<scanner part terminal> <scanner part> 
+	|	<regular expression list terminal> <regular expression list> 
+	|	<regular expression usage terminal> <regular expression usage> 
+	|	<actions terminal> <actions> 
+	|	<action terminal> <action> 
+	|	<skip action terminal> <skip action> 
+	|	<terminal action terminal> <terminal action> 
+	|	<event action terminal> <event action> 
+	|	<push action terminal> <push action> 
+	|	<pop action terminal> <pop action> 
+	|	<lexer part terminal> <lexer part> 
+	|	<parser part terminal> <parser part> 
+	|	<anglr syntax rule list terminal> <anglr syntax rule list> 
+	|	<anglr syntax rule terminal> <anglr syntax rule> 
+	|	<anglr nested rule terminal> <anglr nested rule> 
+	|	<anglr syntax production list name terminal> <anglr syntax production list name> 
+	|	<anglr syntax production list terminal> <anglr syntax production list> 
+	|	<anglr syntax production terminal> <anglr syntax production> 
+	|	<priority assoc specification terminal> <priority assoc specification> 
+	|	<priority specification terminal> <priority specification> 
+	|	<associativity specification terminal> <associativity specification> 
+	|	<production name terminal> <production name> 
+	|	<name list terminal> <name list> 
+	|	<marker list terminal> <marker list> 
+	|	<marker terminal> <marker> 
+	|	<g name terminal> <g name> 
+	|	<name terminal> <name> 
+	|	<cardinality delimiter terminal> <cardinality delimiter> 
+	|	<cardinality terminal> <cardinality> 
+	|	<delimiter terminal> <delimiter> 
+	|	<attribute list optional terminal> <attribute list optional> 
+	|	<name value list optional terminal> <name value list optional> 
+	|	<anglr file part list optional terminal> <anglr file part list optional> 
+	|	<anglr definition list optional terminal> <anglr definition list optional> 
+	|	<block terminal definitions optional terminal> <block terminal definitions optional> 
+	|	<block regex definitions optional terminal> <block regex definitions optional> 
+	|	<regular expression list optional terminal> <regular expression list optional> 
+	|	<actions optional terminal> <actions optional> 
+	|	<anglr syntax rule list optional terminal> <anglr syntax rule list optional> 
+	|	<anglr syntax production list name optional terminal> <anglr syntax production list name optional> 
+	|	<production name optional terminal> <production name optional> 
+	|	<priority assoc specification optional terminal> <priority assoc specification optional> 
+	|	<marker list optional terminal> <marker list optional> 
+	|	<delimiter optional terminal> <delimiter optional> 
+	|	<cstring optional terminal> <cstring optional> 
+	|	<number optional terminal> <number optional> 
+	;
+
+
+<attribute list>
+	:	<attribute> 
+	|	<attribute list> <attribute> 
+	;
+
+
+<attribute>
+	:	'[' <identifier> <name value list optional> ']' 
+	;
+
+
+<name value list>
+	:	<name value pair> 
+	|	<name value list> <name value pair> 
+	;
+
+
+<name value pair>
+	:	<identifier> '=' <cstring> 
+	;
+
+
+<anglr file>
+	:	%empty
+	|	<anglr file part list> 
+	;
+
+
+<anglr file part list>
+	:	<anglr file part> 
+	|	<anglr file part list> <anglr file part> 
+	;
+
+
+<anglr file part>
+	:	<general part> 
+	|	<declaration part> 
+	|	<scanner part> 
+	|	<lexer part> 
+	|	<parser part> 
+	;
+
+
+<general part>
+	:	<attribute list optional> '%general' <identifier> '%{' <attribute list optional> '%}' 
+	;
+
+
+<declaration part>
+	:	<attribute list optional> '%declarations' <identifier> '%{' <anglr definition list optional> '%}' 
+	;
+
+
+<anglr definition list>
+	:	<anglr definition with attribute> 
+	|	<anglr definition list> <anglr definition with attribute> 
+	;
+
+
+<anglr definition with attribute>
+	:	<attribute list optional> <anglr definition> 
+	;
+
+
+<anglr definition>
+	:	<single terminal definition> 
+	|	<single regex definition> 
+	|	<block of terminal definitions> 
+	|	<block of regex definitions> 
+	;
+
+
+<single terminal definition>
+	:	'%terminal' <terminal definition> 
+	;
+
+
+<single regex definition>
+	:	'%regex' <regex definition> 
+	;
+
+
+<block of terminal definitions>
+	:	'%terminal' '{' <block terminal definitions optional> '}' 
+	;
+
+
+<block of regex definitions>
+	:	'%regex' '{' <block regex definitions optional> '}' 
+	;
+
+
+<terminal definition>
+	:	<identifier> <cstring optional> 
+	;
+
+
+<regex definition>
+	:	<identifier> <regular expression> 
+	;
+
+
+<block terminal definitions>
+	:	<block terminal definition> 
+	|	<block terminal definitions> <block terminal definition> 
+	;
+
+
+<block terminal definition>
+	:	<attribute list optional> <terminal definition> 
+	;
+
+
+<block regex definitions>
+	:	<block regex definition> 
+	|	<block regex definitions> <block regex definition> 
+	;
+
+
+<block regex definition>
+	:	<attribute list optional> <regex definition> 
+	;
+
+
+<scanner part>
+	:	<attribute list optional> '%scanner' <identifier> '%{' <regular expression list optional> '%}' 
+	;
+
+
+<regular expression list>
+	:	<regular expression usage> 
+	|	<regular expression list> <regular expression usage> 
+	;
+
+
+<regular expression usage>
+	:	<regular expression> <actions optional> 
+	;
+
+
+<actions>
+	:	<action> 
+	|	<actions> <action> 
+	;
+
+
+<action>
+	:	<skip action> 
+	|	<terminal action> 
+	|	<event action> 
+	|	<push action> 
+	|	<pop action> 
+	;
+
+
+<skip action>
+	:	'skip' 
+	;
+
+
+<terminal action>
+	:	'terminal' <identifier> 
+	;
+
+
+<event action>
+	:	'event' <identifier> 
+	;
+
+
+<push action>
+	:	'push' <identifier> 
+	;
+
+
+<pop action>
+	:	'pop' 
+	;
+
+
+<lexer part>
+	:	<attribute list optional> '%lexer' <identifier> '%{' <attribute list optional> '%}' 
+	;
+
+
+<parser part>
+	:	<attribute list optional> '%parser' <identifier> '%{' <anglr syntax rule list optional> '%}' 
+	;
+
+
+<anglr syntax rule list>
+	:	<anglr syntax rule> 
+	|	<anglr syntax rule list> <anglr syntax rule> 
+	;
+
+
+<anglr syntax rule>
+	:	<attribute list optional> <identifier> ':' <anglr syntax production list> ';' 
+	|	<attribute list optional> <identifier> '{' <anglr syntax rule list optional> '}' 
+	;
+
+
+<anglr nested rule>
+	:	<anglr syntax production list name optional> <anglr syntax production list> 
+	;
+
+
+<anglr syntax production list name>
+	:	':' <identifier> ':' 
+	;
+
+
+<anglr syntax production list>
+	:	<anglr syntax production> 
+	|	<anglr syntax production list> '|' <anglr syntax production>  Left
+	;
+
+
+<anglr syntax production>
+	:	<production name optional> <name list> <priority assoc specification optional> 
+	|	'%empty' 
+	;
+
+
+<production name>
+	:	'@@' <identifier> 
+	;
+
+
+<priority assoc specification>
+	:	<priority specification> <associativity specification> 
+	|	<associativity specification> <priority specification> 
+	|	<priority specification> 
+	|	<associativity specification> 
+	|	<priority specification> ',' <associativity specification> 
+	|	<associativity specification> ',' <priority specification> 
+	;
+
+
+<priority specification>
+	:	'%priority' <number> 
+	|	'%priority' '=' <number> 
+	;
+
+
+<associativity specification>
+	:	'%associativity' <cstring> 
+	|	'%associativity' '=' <cstring> 
+	|	'%associativity' <identifier> 
+	|	'%associativity' '=' <identifier> 
+	;
+
+
+<name list>
+	:	<marker list optional> 
+	|	<name list> <g name> <marker list optional>  Left
+	;
+
+
+<marker list>
+	:	<marker> 
+	|	<marker list> <marker> 
+	;
+
+
+<marker>
+	:	'@' <identifier> 
+	;
+
+
+<g name>
+	:	<name> 
+	|	'(' <anglr nested rule> ')' 
+	|	<g name> <cardinality delimiter> 
+	;
+
+
+<name>
+	:	<any> 
+	|	<cstring> 
+	|	<identifier> 
+	;
+
+
+<cardinality delimiter>
+	:	<cardinality> <delimiter optional> 
+	;
+
+
+<cardinality>
+	:	'?' 
+	|	'+' 
+	|	'-' 
+	|	'*' 
+	|	'/' 
+	|	'~+' 
+	|	'~-' 
+	|	'~*' 
+	|	'~/' 
+	|	'{' <number optional> ',' <number optional> '}' 
+	;
+
+
+<delimiter>
+	:	'[' <anglr nested rule> ']' 
+	;
+
+
+<attribute list optional>
+	:	%empty
+	|	<attribute list> 
+	;
+
+
+<name value list optional>
+	:	%empty
+	|	<name value list> 
+	;
+
+
+<anglr file part list optional>
+	:	%empty
+	|	<anglr file part list> 
+	;
+
+
+<anglr definition list optional>
+	:	%empty
+	|	<anglr definition list> 
+	;
+
+
+<block terminal definitions optional>
+	:	%empty
+	|	<block terminal definitions> 
+	;
+
+
+<block regex definitions optional>
+	:	%empty
+	|	<block regex definitions> 
+	;
+
+
+<regular expression list optional>
+	:	%empty
+	|	<regular expression list> 
+	;
+
+
+<actions optional>
+	:	%empty
+	|	<actions> 
+	;
+
+
+<anglr syntax rule list optional>
+	:	%empty
+	|	<anglr syntax rule list> 
+	;
+
+
+<anglr syntax production list name optional>
+	:	%empty
+	|	<anglr syntax production list name> 
+	;
+
+
+<production name optional>
+	:	%empty
+	|	<production name> 
+	;
+
+
+<priority assoc specification optional>
+	:	%empty
+	|	<priority assoc specification> 
+	;
+
+
+<marker list optional>
+	:	%empty
+	|	<marker list> 
+	;
+
+
+<delimiter optional>
+	:	%empty
+	|	<delimiter> 
+	;
+
+
+<cstring optional>
+	:	%empty
+	|	<cstring> 
+	;
+
+
+<number optional>
+	:	%empty
+	|	<number> 
+	;
+
+
+$accept
+	:	<anglr file fragment> $eof-token 
+	;
+
+
+Display hierarchical view
+INFO: HIERARCHICALY VIEW OF PRODUCTIONS
+
+<anglr file fragment>
+
+{
+
+<attribute list terminal> T
+
+	<attribute list>
+
+	{
+
+		<attribute>
+
+		{
+
+		<left square bracket> T
+
+		<identifier> T
+
+			<name value list optional>
+
+			{
+
+
+				<name value list>
+
+				{
+
+					<name value pair>
+
+					{
+
+					<identifier> T
+
+					<equals sign> T
+
+					<cstring> T
+
+
+					}
+
+
+
+				}
+
+
+			}
+
+		<right square bracket> T
+
+
+		}
+
+
+
+	}
+
+
+<attribute terminal> T
+
+<attribute> N
+
+
+<name value list terminal> T
+
+<name value list> N
+
+
+<name value pair terminal> T
+
+<name value pair> N
+
+
+<anglr file terminal> T
+
+	<anglr file>
+
+	{
+
+
+		<anglr file part list>
+
+		{
+
+			<anglr file part>
+
+			{
+
+				<general part>
+
+				{
+
+					<attribute list optional>
+
+					{
+
+
+					<attribute list> N
+
+
+					}
+
+				<general> T
+
+				<identifier> T
+
+				<left part bracket> T
+
+				<right part bracket> T
+
+
+				}
+
+
+				<declaration part>
+
+				{
+
+				<attribute list optional> N
+
+				<declarations> T
+
+				<identifier> T
+
+				<left part bracket> T
+
+					<anglr definition list optional>
+
+					{
+
+
+						<anglr definition list>
+
+						{
+
+							<anglr definition with attribute>
+
+							{
+
+							<attribute list optional> N
+
+								<anglr definition>
+
+								{
+
+									<single terminal definition>
+
+									{
+
+									<terminal> T
+
+										<terminal definition>
+
+										{
+
+										<identifier> T
+
+											<cstring optional>
+
+											{
+
+
+											<cstring> T
+
+
+											}
+
+
+										}
+
+
+									}
+
+
+									<single regex definition>
+
+									{
+
+									<regex> T
+
+										<regex definition>
+
+										{
+
+										<identifier> T
+
+										<regular expression> T
+
+
+										}
+
+
+									}
+
+
+									<block of terminal definitions>
+
+									{
+
+									<terminal> T
+
+									<left curly bracket> T
+
+										<block terminal definitions optional>
+
+										{
+
+
+											<block terminal definitions>
+
+											{
+
+												<block terminal definition>
+
+												{
+
+												<attribute list optional> N
+
+												<terminal definition> N
+
+
+												}
+
+
+
+											}
+
+
+										}
+
+									<right curly bracket> T
+
+
+									}
+
+
+									<block of regex definitions>
+
+									{
+
+									<regex> T
+
+									<left curly bracket> T
+
+										<block regex definitions optional>
+
+										{
+
+
+											<block regex definitions>
+
+											{
+
+												<block regex definition>
+
+												{
+
+												<attribute list optional> N
+
+												<regex definition> N
+
+
+												}
+
+
+
+											}
+
+
+										}
+
+									<right curly bracket> T
+
+
+									}
+
+
+								}
+
+
+							}
+
+
+
+						}
+
+
+					}
+
+				<right part bracket> T
+
+
+				}
+
+
+				<scanner part>
+
+				{
+
+				<attribute list optional> N
+
+				<scanner> T
+
+				<identifier> T
+
+				<left part bracket> T
+
+					<regular expression list optional>
+
+					{
+
+
+						<regular expression list>
+
+						{
+
+							<regular expression usage>
+
+							{
+
+							<regular expression> T
+
+								<actions optional>
+
+								{
+
+
+									<actions>
+
+									{
+
+										<action>
+
+										{
+
+											<skip action>
+
+											{
+
+											<skip> T
+
+
+											}
+
+
+											<terminal action>
+
+											{
+
+											<ttoken> T
+
+											<identifier> T
+
+
+											}
+
+
+											<event action>
+
+											{
+
+											<event> T
+
+											<identifier> T
+
+
+											}
+
+
+											<push action>
+
+											{
+
+											<push> T
+
+											<identifier> T
+
+
+											}
+
+
+											<pop action>
+
+											{
+
+											<pop> T
+
+
+											}
+
+
+										}
+
+
+
+									}
+
+
+								}
+
+
+							}
+
+
+
+						}
+
+
+					}
+
+				<right part bracket> T
+
+
+				}
+
+
+				<lexer part>
+
+				{
+
+				<attribute list optional> N
+
+				<lexer> T
+
+				<identifier> T
+
+				<left part bracket> T
+
+				<right part bracket> T
+
+
+				}
+
+
+				<parser part>
+
+				{
+
+				<attribute list optional> N
+
+				<parser> T
+
+				<identifier> T
+
+				<left part bracket> T
+
+					<anglr syntax rule list optional>
+
+					{
+
+
+						<anglr syntax rule list>
+
+						{
+
+							<anglr syntax rule>
+
+							{
+
+							<attribute list optional> N
+
+							<identifier> T
+
+							<colon> T
+
+								<anglr syntax production list>
+
+								{
+
+									<anglr syntax production>
+
+									{
+
+										<production name optional>
+
+										{
+
+
+											<production name>
+
+											{
+
+											<double at sign> T
+
+											<identifier> T
+
+
+											}
+
+
+										}
+
+										<name list>
+
+										{
+
+											<marker list optional>
+
+											{
+
+
+												<marker list>
+
+												{
+
+													<marker>
+
+													{
+
+													<at sign> T
+
+													<identifier> T
+
+
+													}
+
+
+
+												}
+
+
+											}
+
+
+											<g name>
+
+											{
+
+												<name>
+
+												{
+
+												<any> T
+
+
+												<cstring> T
+
+
+												<identifier> T
+
+
+												}
+
+
+											<left bracket> T
+
+												<anglr nested rule>
+
+												{
+
+													<anglr syntax production list name optional>
+
+													{
+
+
+														<anglr syntax production list name>
+
+														{
+
+														<colon> T
+
+														<identifier> T
+
+
+														}
+
+
+													}
+
+												<anglr syntax production list> N
+
+
+												}
+
+											<right bracket> T
+
+
+												<cardinality delimiter>
+
+												{
+
+													<cardinality>
+
+													{
+
+													<question mark> T
+
+
+													<plus sign> T
+
+
+													<minus sign> T
+
+
+													<asterisk> T
+
+
+													<slash> T
+
+
+													<inv plus sign> T
+
+
+													<inv minus sign> T
+
+
+													<inv asterisk> T
+
+
+													<inv slash> T
+
+
+													<left curly bracket> T
+
+														<number optional>
+
+														{
+
+
+														<number> T
+
+
+														}
+
+													<comma> T
+
+													<right curly bracket> T
+
+
+													}
+
+													<delimiter optional>
+
+													{
+
+
+														<delimiter>
+
+														{
+
+														<left square bracket> T
+
+														<anglr nested rule> N
+
+														<right square bracket> T
+
+
+														}
+
+
+													}
+
+
+												}
+
+
+											}
+
+
+										}
+
+										<priority assoc specification optional>
+
+										{
+
+
+											<priority assoc specification>
+
+											{
+
+												<priority specification>
+
+												{
+
+												<priority> T
+
+												<number> T
+
+
+												<equals sign> T
+
+
+												}
+
+												<associativity specification>
+
+												{
+
+												<associativity> T
+
+												<cstring> T
+
+
+												<equals sign> T
+
+
+												<identifier> T
+
+
+
+												}
+
+
+
+
+
+											<comma> T
+
+
+
+											}
+
+
+										}
+
+
+									<empty> T
+
+
+									}
+
+
+								<vertical bar> T
+
+
+								}
+
+							<semicolon> T
+
+
+							<left curly bracket> T
+
+							<anglr syntax rule list optional> N
+
+							<right curly bracket> T
+
+
+							}
+
+
+
+						}
+
+
+					}
+
+				<right part bracket> T
+
+
+				}
+
+
+			}
+
+
+
+		}
+
+
+	}
+
+
+<anglr file part list terminal> T
+
+<anglr file part list> N
+
+
+<anglr file part terminal> T
+
+<anglr file part> N
+
+
+<general part terminal> T
+
+<general part> N
+
+
+<declaration part terminal> T
+
+<declaration part> N
+
+
+<anglr definition list terminal> T
+
+<anglr definition list> N
+
+
+<anglr definition with attribute list terminal> T
+
+<anglr definition with attribute> N
+
+
+<anglr definition terminal> T
+
+<anglr definition> N
+
+
+<single terminal definition terminal> T
+
+<single terminal definition> N
+
+
+<single regex definition terminal> T
+
+<single regex definition> N
+
+
+<block of terminal definitions terminal> T
+
+<block of terminal definitions> N
+
+
+<block of regex definitions terminal> T
+
+<block of regex definitions> N
+
+
+<terminal definition terminal> T
+
+<terminal definition> N
+
+
+<regex definition terminal> T
+
+<regex definition> N
+
+
+<block terminal definitions terminal> T
+
+<block terminal definitions> N
+
+
+<block terminal definition terminal> T
+
+<block terminal definition> N
+
+
+<block regex definitions terminal> T
+
+<block regex definitions> N
+
+
+<block regex definition terminal> T
+
+<block regex definition> N
+
+
+<scanner part terminal> T
+
+<scanner part> N
+
+
+<regular expression list terminal> T
+
+<regular expression list> N
+
+
+<regular expression usage terminal> T
+
+<regular expression usage> N
+
+
+<actions terminal> T
+
+<actions> N
+
+
+<action terminal> T
+
+<action> N
+
+
+<skip action terminal> T
+
+<skip action> N
+
+
+<terminal action terminal> T
+
+<terminal action> N
+
+
+<event action terminal> T
+
+<event action> N
+
+
+<push action terminal> T
+
+<push action> N
+
+
+<pop action terminal> T
+
+<pop action> N
+
+
+<lexer part terminal> T
+
+<lexer part> N
+
+
+<parser part terminal> T
+
+<parser part> N
+
+
+<anglr syntax rule list terminal> T
+
+<anglr syntax rule list> N
+
+
+<anglr syntax rule terminal> T
+
+<anglr syntax rule> N
+
+
+<anglr nested rule terminal> T
+
+<anglr nested rule> N
+
+
+<anglr syntax production list name terminal> T
+
+<anglr syntax production list name> N
+
+
+<anglr syntax production list terminal> T
+
+<anglr syntax production list> N
+
+
+<anglr syntax production terminal> T
+
+<anglr syntax production> N
+
+
+<priority assoc specification terminal> T
+
+<priority assoc specification> N
+
+
+<priority specification terminal> T
+
+<priority specification> N
+
+
+<associativity specification terminal> T
+
+<associativity specification> N
+
+
+<production name terminal> T
+
+<production name> N
+
+
+<name list terminal> T
+
+<name list> N
+
+
+<marker list terminal> T
+
+<marker list> N
+
+
+<marker terminal> T
+
+<marker> N
+
+
+<g name terminal> T
+
+<g name> N
+
+
+<name terminal> T
+
+<name> N
+
+
+<cardinality delimiter terminal> T
+
+<cardinality delimiter> N
+
+
+<cardinality terminal> T
+
+<cardinality> N
+
+
+<delimiter terminal> T
+
+<delimiter> N
+
+
+<attribute list optional terminal> T
+
+<attribute list optional> N
+
+
+<name value list optional terminal> T
+
+<name value list optional> N
+
+
+<anglr file part list optional terminal> T
+
+	<anglr file part list optional>
+
+	{
+
+
+	<anglr file part list> N
+
+
+	}
+
+
+<anglr definition list optional terminal> T
+
+<anglr definition list optional> N
+
+
+<block terminal definitions optional terminal> T
+
+<block terminal definitions optional> N
+
+
+<block regex definitions optional terminal> T
+
+<block regex definitions optional> N
+
+
+<regular expression list optional terminal> T
+
+<regular expression list optional> N
+
+
+<actions optional terminal> T
+
+<actions optional> N
+
+
+<anglr syntax rule list optional terminal> T
+
+<anglr syntax rule list optional> N
+
+
+<anglr syntax production list name optional terminal> T
+
+<anglr syntax production list name optional> N
+
+
+<production name optional terminal> T
+
+<production name optional> N
+
+
+<priority assoc specification optional terminal> T
+
+<priority assoc specification optional> N
+
+
+<marker list optional terminal> T
+
+<marker list optional> N
+
+
+<delimiter optional terminal> T
+
+<delimiter optional> N
+
+
+<cstring optional terminal> T
+
+<cstring optional> N
+
+
+<number optional terminal> T
+
+<number optional> N
+
+
+}
+
+
+( : <anglr file fragment> :
+	<attribute list terminal> 
+	( : <attribute list> :
+		
+		( : <attribute> :
+			<left square bracket> <identifier> 
+			( : <name value list optional> :
+				%empty
+			|	
+				( : <name value list> :
+					
+					( : <name value pair> :
+						<identifier> <equals sign> <cstring> 
+					)
+
+				|	<name value list> <name value pair> 
+				)
+
+			)
+<right square bracket> 
+		)
+
+	|	<attribute list> <attribute> 
+	)
+
+|	<attribute terminal> <attribute> 
+|	<name value list terminal> <name value list> 
+|	<name value pair terminal> <name value pair> 
+|	<anglr file terminal> 
+	( : <anglr file> :
+		%empty
+	|	
+		( : <anglr file part list> :
+			
+			( : <anglr file part> :
+				
+				( : <general part> :
+					
+					( : <attribute list optional> :
+						%empty
+					|	<attribute list> 
+					)
+<general> <identifier> <left part bracket> <attribute list optional> <right part bracket> 
+				)
+
+			|	
+				( : <declaration part> :
+					<attribute list optional> <declarations> <identifier> <left part bracket> 
+					( : <anglr definition list optional> :
+						%empty
+					|	
+						( : <anglr definition list> :
+							
+							( : <anglr definition with attribute> :
+								<attribute list optional> 
+								( : <anglr definition> :
+									
+									( : <single terminal definition> :
+										<terminal> 
+										( : <terminal definition> :
+											<identifier> 
+											( : <cstring optional> :
+												%empty
+											|	<cstring> 
+											)
+
+										)
+
+									)
+
+								|	
+									( : <single regex definition> :
+										<regex> 
+										( : <regex definition> :
+											<identifier> <regular expression> 
+										)
+
+									)
+
+								|	
+									( : <block of terminal definitions> :
+										<terminal> <left curly bracket> 
+										( : <block terminal definitions optional> :
+											%empty
+										|	
+											( : <block terminal definitions> :
+												
+												( : <block terminal definition> :
+													<attribute list optional> <terminal definition> 
+												)
+
+											|	<block terminal definitions> <block terminal definition> 
+											)
+
+										)
+<right curly bracket> 
+									)
+
+								|	
+									( : <block of regex definitions> :
+										<regex> <left curly bracket> 
+										( : <block regex definitions optional> :
+											%empty
+										|	
+											( : <block regex definitions> :
+												
+												( : <block regex definition> :
+													<attribute list optional> <regex definition> 
+												)
+
+											|	<block regex definitions> <block regex definition> 
+											)
+
+										)
+<right curly bracket> 
+									)
+
+								)
+
+							)
+
+						|	<anglr definition list> <anglr definition with attribute> 
+						)
+
+					)
+<right part bracket> 
+				)
+
+			|	
+				( : <scanner part> :
+					<attribute list optional> <scanner> <identifier> <left part bracket> 
+					( : <regular expression list optional> :
+						%empty
+					|	
+						( : <regular expression list> :
+							
+							( : <regular expression usage> :
+								<regular expression> 
+								( : <actions optional> :
+									%empty
+								|	
+									( : <actions> :
+										
+										( : <action> :
+											
+											( : <skip action> :
+												<skip> 
+											)
+
+										|	
+											( : <terminal action> :
+												<ttoken> <identifier> 
+											)
+
+										|	
+											( : <event action> :
+												<event> <identifier> 
+											)
+
+										|	
+											( : <push action> :
+												<push> <identifier> 
+											)
+
+										|	
+											( : <pop action> :
+												<pop> 
+											)
+
+										)
+
+									|	<actions> <action> 
+									)
+
+								)
+
+							)
+
+						|	<regular expression list> <regular expression usage> 
+						)
+
+					)
+<right part bracket> 
+				)
+
+			|	
+				( : <lexer part> :
+					<attribute list optional> <lexer> <identifier> <left part bracket> <attribute list optional> <right part bracket> 
+				)
+
+			|	
+				( : <parser part> :
+					<attribute list optional> <parser> <identifier> <left part bracket> 
+					( : <anglr syntax rule list optional> :
+						%empty
+					|	
+						( : <anglr syntax rule list> :
+							
+							( : <anglr syntax rule> :
+								<attribute list optional> <identifier> <colon> 
+								( : <anglr syntax production list> :
+									
+									( : <anglr syntax production> :
+										
+										( : <production name optional> :
+											%empty
+										|	
+											( : <production name> :
+												<double at sign> <identifier> 
+											)
+
+										)
+
+										( : <name list> :
+											
+											( : <marker list optional> :
+												%empty
+											|	
+												( : <marker list> :
+													
+													( : <marker> :
+														<at sign> <identifier> 
+													)
+
+												|	<marker list> <marker> 
+												)
+
+											)
+
+										|	<name list> 
+											( : <g name> :
+												
+												( : <name> :
+													<any> 
+												|	<cstring> 
+												|	<identifier> 
+												)
+
+											|	<left bracket> 
+												( : <anglr nested rule> :
+													
+													( : <anglr syntax production list name optional> :
+														%empty
+													|	
+														( : <anglr syntax production list name> :
+															<colon> <identifier> <colon> 
+														)
+
+													)
+<anglr syntax production list> 
+												)
+<right bracket> 
+											|	<g name> 
+												( : <cardinality delimiter> :
+													
+													( : <cardinality> :
+														<question mark> 
+													|	<plus sign> 
+													|	<minus sign> 
+													|	<asterisk> 
+													|	<slash> 
+													|	<inv plus sign> 
+													|	<inv minus sign> 
+													|	<inv asterisk> 
+													|	<inv slash> 
+													|	<left curly bracket> 
+														( : <number optional> :
+															%empty
+														|	<number> 
+														)
+<comma> <number optional> <right curly bracket> 
+													)
+
+													( : <delimiter optional> :
+														%empty
+													|	
+														( : <delimiter> :
+															<left square bracket> <anglr nested rule> <right square bracket> 
+														)
+
+													)
+
+												)
+
+											)
+<marker list optional> 
+										)
+
+										( : <priority assoc specification optional> :
+											%empty
+										|	
+											( : <priority assoc specification> :
+												
+												( : <priority specification> :
+													<priority> <number> 
+												|	<priority> <equals sign> <number> 
+												)
+
+												( : <associativity specification> :
+													<associativity> <cstring> 
+												|	<associativity> <equals sign> <cstring> 
+												|	<associativity> <identifier> 
+												|	<associativity> <equals sign> <identifier> 
+												)
+
+											|	<associativity specification> <priority specification> 
+											|	<priority specification> 
+											|	<associativity specification> 
+											|	<priority specification> <comma> <associativity specification> 
+											|	<associativity specification> <comma> <priority specification> 
+											)
+
+										)
+
+									|	<empty> 
+									)
+
+								|	<anglr syntax production list> <vertical bar> <anglr syntax production> 
+								)
+<semicolon> 
+							|	<attribute list optional> <identifier> <left curly bracket> <anglr syntax rule list optional> <right curly bracket> 
+							)
+
+						|	<anglr syntax rule list> <anglr syntax rule> 
+						)
+
+					)
+<right part bracket> 
+				)
+
+			)
+
+		|	<anglr file part list> <anglr file part> 
+		)
+
+	)
+
+|	<anglr file part list terminal> <anglr file part list> 
+|	<anglr file part terminal> <anglr file part> 
+|	<general part terminal> <general part> 
+|	<declaration part terminal> <declaration part> 
+|	<anglr definition list terminal> <anglr definition list> 
+|	<anglr definition with attribute list terminal> <anglr definition with attribute> 
+|	<anglr definition terminal> <anglr definition> 
+|	<single terminal definition terminal> <single terminal definition> 
+|	<single regex definition terminal> <single regex definition> 
+|	<block of terminal definitions terminal> <block of terminal definitions> 
+|	<block of regex definitions terminal> <block of regex definitions> 
+|	<terminal definition terminal> <terminal definition> 
+|	<regex definition terminal> <regex definition> 
+|	<block terminal definitions terminal> <block terminal definitions> 
+|	<block terminal definition terminal> <block terminal definition> 
+|	<block regex definitions terminal> <block regex definitions> 
+|	<block regex definition terminal> <block regex definition> 
+|	<scanner part terminal> <scanner part> 
+|	<regular expression list terminal> <regular expression list> 
+|	<regular expression usage terminal> <regular expression usage> 
+|	<actions terminal> <actions> 
+|	<action terminal> <action> 
+|	<skip action terminal> <skip action> 
+|	<terminal action terminal> <terminal action> 
+|	<event action terminal> <event action> 
+|	<push action terminal> <push action> 
+|	<pop action terminal> <pop action> 
+|	<lexer part terminal> <lexer part> 
+|	<parser part terminal> <parser part> 
+|	<anglr syntax rule list terminal> <anglr syntax rule list> 
+|	<anglr syntax rule terminal> <anglr syntax rule> 
+|	<anglr nested rule terminal> <anglr nested rule> 
+|	<anglr syntax production list name terminal> <anglr syntax production list name> 
+|	<anglr syntax production list terminal> <anglr syntax production list> 
+|	<anglr syntax production terminal> <anglr syntax production> 
+|	<priority assoc specification terminal> <priority assoc specification> 
+|	<priority specification terminal> <priority specification> 
+|	<associativity specification terminal> <associativity specification> 
+|	<production name terminal> <production name> 
+|	<name list terminal> <name list> 
+|	<marker list terminal> <marker list> 
+|	<marker terminal> <marker> 
+|	<g name terminal> <g name> 
+|	<name terminal> <name> 
+|	<cardinality delimiter terminal> <cardinality delimiter> 
+|	<cardinality terminal> <cardinality> 
+|	<delimiter terminal> <delimiter> 
+|	<attribute list optional terminal> <attribute list optional> 
+|	<name value list optional terminal> <name value list optional> 
+|	<anglr file part list optional terminal> 
+	( : <anglr file part list optional> :
+		%empty
+	|	<anglr file part list> 
+	)
+
+|	<anglr definition list optional terminal> <anglr definition list optional> 
+|	<block terminal definitions optional terminal> <block terminal definitions optional> 
+|	<block regex definitions optional terminal> <block regex definitions optional> 
+|	<regular expression list optional terminal> <regular expression list optional> 
+|	<actions optional terminal> <actions optional> 
+|	<anglr syntax rule list optional terminal> <anglr syntax rule list optional> 
+|	<anglr syntax production list name optional terminal> <anglr syntax production list name optional> 
+|	<production name optional terminal> <production name optional> 
+|	<priority assoc specification optional terminal> <priority assoc specification optional> 
+|	<marker list optional terminal> <marker list optional> 
+|	<delimiter optional terminal> <delimiter optional> 
+|	<cstring optional terminal> <cstring optional> 
+|	<number optional terminal> <number optional> 
+)
+
+Check productions
+Make cannonical RHS sets
+2026-08-27 19:26:04.447 - Warn - non-terminal symbol '$accept' is not used
+Compute epsilon conditions
+Compute start sets
+Compute transition sets
+Compute follow sets
+Prepare table generator

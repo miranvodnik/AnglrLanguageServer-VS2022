@@ -62,29 +62,11 @@ namespace Anglr.Parser
 		public AnglrParser (string fragmentName = null, IAnglrLogger anglrLogger = null) : base ()
 		{
 			AnglrLogger = anglrLogger;
-			(string name, ProductionID id, int state, int token, string tokenName) fragmentInfo = AnglrFragments.GetFragmentInfo (fragmentName);
+			(int id, int state, int token, string tokenName) fragmentInfo = AnglrFragments.GetFragmentInfo (fragmentName);
 			if (fragmentInfo.id != 0)
 			{
 				FragmentParser = true;
-				ProductionID = (int) fragmentInfo.id;
-				InitialState = fragmentInfo.state;
-				LastToken = fragmentInfo.token;
-				LastTokenName = fragmentInfo.tokenName;
-			}
-			token = new ParserToken (0, 0, null);
-			stackSet = new stackset (new cmpstackid ());
-			parseList = new parselist ();
-			stackSet.Add (new ParserStack (this));
-		}
-
-		public AnglrParser (ProductionID fragmentId, IAnglrLogger anglrLogger = null) : base ()
-		{
-			AnglrLogger = anglrLogger;
-			(string name, ProductionID id, int state, int token, string tokenName) fragmentInfo = AnglrFragments.GetFragmentInfo (fragmentId);
-			if (fragmentInfo.id != 0)
-			{
-				FragmentParser = true;
-				ProductionID = (int) fragmentInfo.id;
+				ProductionID = fragmentInfo.id;
 				InitialState = fragmentInfo.state;
 				LastToken = fragmentInfo.token;
 				LastTokenName = fragmentInfo.tokenName;
@@ -275,23 +257,6 @@ namespace Anglr.Parser
 				if (!getToken)
 				{
 					if (errCondition)
-						if (FragmentParser && (LastToken == 0))
-						{
-							foreach (var set in stackSet)
-							{
-								while (set.stackDepth > 1)
-								{
-									SyntaxTreeBase node = set.valueStack.Pop ();
-									if (node == null)
-										continue;
-									++finalCount;
-									parseList.Add (node);
-									break;
-								}
-							}
-							break;
-						}
-						else
 					{
 						if (Raise_Error_Event (this.token.lineno, this.token.column - this.token.tokenText.Length, this.token.token, this.token.tokenText))
 							break;
@@ -1908,7 +1873,7 @@ namespace Anglr.Parser
 
 	public static class AnglrFragments
 	{
-		public static readonly (string name, ProductionID id, int state, int tokenId, string tokenName) [] FragmentsInfo =
+		public static readonly (string, ProductionID, int, int, string) [] FragmentsInfo =
 		{
 			("<anglr file fragment>", ProductionID.__anglr_file_fragment__ID, 0, 1, "_eof_token"),
 			("<attribute list>", ProductionID.__attribute_list__ID, 1, 266, "_left_square_bracket_"),
@@ -1981,18 +1946,12 @@ namespace Anglr.Parser
 			("<number optional>", ProductionID.__number_optional__ID, 68, 1, "_eof_token"),
 		};
 
-		public static Dictionary<string, (string name, ProductionID id, int state, int tokenId, string tokenName)> _FragmentsInfoByName = FragmentsInfo.ToDictionary (x => x.name, x => (x.name, x.id, x.state, x.tokenId, x.tokenName));
-		public static Dictionary<ProductionID, (string name, ProductionID id, int state, int tokenId, string tokenName)> _FragmentsInfoById = FragmentsInfo.ToDictionary (x => x.id, x => (x.name, x.id, x.state, x.tokenId, x.tokenName));
+		public static Dictionary<string, (int, int, int, string)> _FragmentsInfoDictionary = FragmentsInfo.ToDictionary (x => x.Item1, x => ((int) x.Item2, x.Item3, x.Item4, x.Item5));
 
-		public static (string name, ProductionID id, int state, int tokenId, string tokenName) GetFragmentInfo (string fragmentName) =>
-			_FragmentsInfoByName.TryGetValue (fragmentName ?? "", out var fragment) ?
+		public static (int, int, int, string) GetFragmentInfo (string fragmentName) =>
+			_FragmentsInfoDictionary.TryGetValue (fragmentName ?? "", out var fragment) ?
 			fragment :
-			("", ProductionID.InvalidProductionID, -1, -1, "");
-
-		public static (string name, ProductionID id, int state, int tokenId, string tokenName) GetFragmentInfo (ProductionID fragmentId) =>
-			_FragmentsInfoById.TryGetValue (fragmentId, out var fragment) ?
-			fragment :
-			("", ProductionID.InvalidProductionID, -1, -1, "");
+			(0, -1, -1, "");
 	}
 
 	public class AnglrParser_TEST : SyntaxTreeWalker
