@@ -20,6 +20,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AnglrDebuggerBridge
 {
@@ -967,6 +968,10 @@ namespace AnglrDebuggerBridge
             try
             {
                 int step = 0;
+                JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Objects
+                };
                 AnglrDebuggerGetPDASnapshotResponse getPDASnapshotResponse = new AnglrDebuggerGetPDASnapshotResponse ()
                 {
                     SequenceNr = getPDASnapshotRequest.SequenceNr,
@@ -992,49 +997,58 @@ namespace AnglrDebuggerBridge
                                 Name = "null",
                                 Value = "null",
                                 State = stateStack [i],
-                            };
-                            PdaStackCells [i] = cell;
-                        }
-                        else if (symbol is SyntaxTreeToken)
-                        {
-                            SyntaxTreeToken token = (SyntaxTreeToken) symbol;
-                            string name = "none";
-                            if (token.token < ParserInterface.minNonTerminalCode ())
-                            {
-                                if (token.token >= ParserInterface.minTerminalCode ())
-                                    name = ParserInterface.terminalNames () [token.token - ParserInterface.minTerminalCode ()];
-                            }
-                            else
-                                name = ParserInterface.nonTerminalNames () [token.token - ParserInterface.minNonTerminalCode ()];
-                            AnglrDebuggerGetPDAStackCell cell = new AnglrDebuggerGetPDAStackCell ()
-                            {
-                                IsTerminal = token.token < ParserInterface.minNonTerminalCode (),
-                                Code = (int) token.token,
-                                Name = name,
-                                Value = token.text,
-                                State = stateStack [i],
+                                Tree = ""
                             };
                             PdaStackCells [i] = cell;
                         }
                         else
                         {
-                            string name = "none";
-                            if (symbol.id < ParserInterface.minNonTerminalCode ())
+                            SyntaxTreeBase node = symbol.Clone ();
+                            node.reparent (null);
+                            string symbolJson = JsonConvert.SerializeObject (node, settings);
+                            if (symbol is SyntaxTreeToken)
                             {
-                                if (symbol.id >= ParserInterface.minTerminalCode ())
-                                    name = ParserInterface.terminalNames () [symbol.id - ParserInterface.minTerminalCode ()];
+                                SyntaxTreeToken token = (SyntaxTreeToken) symbol;
+                                string name = "none";
+                                if (token.token < ParserInterface.minNonTerminalCode ())
+                                {
+                                    if (token.token >= ParserInterface.minTerminalCode ())
+                                        name = ParserInterface.terminalNames () [token.token - ParserInterface.minTerminalCode ()];
+                                }
+                                else
+                                    name = ParserInterface.nonTerminalNames () [token.token - ParserInterface.minNonTerminalCode ()];
+                                AnglrDebuggerGetPDAStackCell cell = new AnglrDebuggerGetPDAStackCell ()
+                                {
+                                    IsTerminal = token.token < ParserInterface.minNonTerminalCode (),
+                                    Code = (int) token.token,
+                                    Name = name,
+                                    Value = token.text,
+                                    State = stateStack [i],
+                                    Tree = symbolJson
+                                };
+                                PdaStackCells [i] = cell;
                             }
                             else
-                                name = ParserInterface.nonTerminalNames () [symbol.id - ParserInterface.minNonTerminalCode ()];
-                            AnglrDebuggerGetPDAStackCell cell = new AnglrDebuggerGetPDAStackCell ()
                             {
-                                IsTerminal = symbol.id < ParserInterface.minNonTerminalCode (),
-                                Code = (int) symbol.id,
-                                Name = name,
-                                Value = "",
-                                State = stateStack [i],
-                            };
-                            PdaStackCells [i] = cell;
+                                string name = "none";
+                                if (symbol.id < ParserInterface.minNonTerminalCode ())
+                                {
+                                    if (symbol.id >= ParserInterface.minTerminalCode ())
+                                        name = ParserInterface.terminalNames () [symbol.id - ParserInterface.minTerminalCode ()];
+                                }
+                                else
+                                    name = ParserInterface.nonTerminalNames () [symbol.id - ParserInterface.minNonTerminalCode ()];
+                                AnglrDebuggerGetPDAStackCell cell = new AnglrDebuggerGetPDAStackCell ()
+                                {
+                                    IsTerminal = symbol.id < ParserInterface.minNonTerminalCode (),
+                                    Code = (int) symbol.id,
+                                    Name = name,
+                                    Value = "",
+                                    State = stateStack [i],
+                                    Tree = symbolJson
+                                };
+                                PdaStackCells [i] = cell;
+                            }
                         }
                     }
                     PDAStackSet [stackCounter++] = new AnglrDebuggerGetPDAStack ()

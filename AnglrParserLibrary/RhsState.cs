@@ -751,16 +751,14 @@ namespace AnglrLibrary
 
         public uint ConflictFlags { get; private set; } = 0;
 
-        public RhsState RhsStateTreeLink { get { return _RhsStateTreeLink; } set { if (_RhsStateTreeLink != null) return; _RhsStateTreeLink = value; } }
+        public RhsState RhsStateTreeLink { get => _RhsStateTreeLink; set => _RhsStateTreeLink = _RhsStateTreeLink ?? value; }
         private RhsState _RhsStateTreeLink = null;
-        internal bool hasGLRCondition { get { return m_glrset.Count > 0; } }
-        internal glrset getGLRSet { get { return m_glrset; } }
+        internal bool hasGLRCondition => m_glrset.Count > 0;
+        internal glrset getGLRSet => m_glrset;
 
-        internal int stateDummy { get { return m_stateDummy; } set { m_stateDummy = value; } }
+        internal int stateDummy { get => m_stateDummy; set => m_stateDummy = value; }
 
-        internal prodset reductions { get { return m_reductions; } }
-
-        internal int stateWalker (Queue<RhsState> p_queue, int stateDummy) { return 0; }
+        internal prodset reductions => m_reductions;
 
         internal static int m_created = 0;
         internal static int m_deleted = 0;

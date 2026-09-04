@@ -1,8 +1,11 @@
-﻿using Anglr.Parser.Core;
+﻿using Anglr.Parser;
+using Anglr.Parser.Core;
+using Anglr.Parser.SyntaxTree;
 using AnglrBreakPointDBLibrary;
 using AnglrDebuggerBridge;
 using AnglrDebuggerJsonRpcMessages;
 using AnglrJsonRpcMethods;
+using AnglrLibrary;
 using AnglrLogLibrary;
 using Microsoft.VisualStudio.GraphModel.CodeSchema;
 using Microsoft.VisualStudio.LanguageServer.Protocol;
@@ -37,25 +40,9 @@ using System.Windows.Shapes;
 
 namespace AnglrLangExtension
 {
-    public class AnglrPDASetElementTemplate<T, U>
+    public class AnglrPDASetElementComparer : IComparer<AnglrGetParserStateTransitionPointData>
     {
-        public T Production { get; private set; }
-        public U Position { get; private set; }
-        public AnglrPDASetElementTemplate (T ProdNumber, U Position)
-        {
-            this.Production = ProdNumber;
-            this.Position = Position;
-        }
-    }
-
-    public class AnglrPDASetElement : AnglrPDASetElementTemplate<AnglrGetParserStateProductionData, int>
-    {
-        public AnglrPDASetElement (AnglrGetParserStateProductionData ProdNumber, int Position) : base (ProdNumber, Position) { }
-    }
-
-    public class AnglrPDASetElementComparer : IComparer<AnglrPDASetElement>
-    {
-        public int Compare (AnglrPDASetElement x, AnglrPDASetElement y)
+        public int Compare (AnglrGetParserStateTransitionPointData x, AnglrGetParserStateTransitionPointData y)
         {
             if (x.Production.ProductionNumber != y.Production.ProductionNumber)
                 return x.Production.ProductionNumber - y.Production.ProductionNumber;
@@ -63,10 +50,24 @@ namespace AnglrLangExtension
         }
     }
 
-    public class AnglrPDASet : SortedSet<AnglrPDASetElement>
+    public class AnglrPDASet : SortedSet<AnglrGetParserStateTransitionPointData>
     {
         public AnglrPDASet () : base (new AnglrPDASetElementComparer ()) { }
-        public AnglrPDASet (IEnumerable<AnglrPDASetElement> anglrPDASetElements) : base (anglrPDASetElements, new AnglrPDASetElementComparer ()) { }
+        public AnglrPDASet (IEnumerable<AnglrGetParserStateTransitionPointData> anglrPDASetElements) :
+            base (anglrPDASetElements, new AnglrPDASetElementComparer ())
+        { }
+    }
+
+    public class AnglrPDAStateItemComparer : IEqualityComparer<AnglrGetParserStateItemResult>
+    {
+        public bool Equals (AnglrGetParserStateItemResult x, AnglrGetParserStateItemResult y) => x.StateNumber == y.StateNumber;
+
+        public int GetHashCode (AnglrGetParserStateItemResult obj) => obj.StateNumber;
+    }
+
+    public class AnglrPDAViableSet : Dictionary<AnglrGetParserStateItemResult, AnglrPDASet>
+    {
+        public AnglrPDAViableSet () : base (new AnglrPDAStateItemComparer ()) { }
     }
 
     public class AnglrLRStackViewSet : Dictionary<int, AnglrDebuggerStackView> { }
@@ -267,39 +268,66 @@ namespace AnglrLangExtension
                 return;
             }
 
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Objects,
+                MaxDepth = null
+            };
             Logger?.InfoLine ($"break-point hit ({dbgBreakPointHitRequest.SequenceNr})");
             foreach (var stack in getPDASnapshotResponse.PDAStackSet)
             {
                 Logger?.InfoLine ($"stack ({stack.PDAStackId})");
                 Logger?.InfoLine ($"state\tcode\tname\t\tvalue");
                 foreach (var cell in stack.PDAStackCells)
-                    Logger?.InfoLine ($"\t{cell.State}\t{cell.Code}\t\t{cell.Name}\t\t{cell.Value}");
-                AnalyzePDAStack (stack);
+                {
+                    object anglrFileFragment = JsonConvert.DeserializeObject (cell.Tree, settings);
+                    Logger?.InfoLine ($"\t{cell.State}\t{cell.Code}\t\t{cell.Name}\t\t{cell.Value}\t\t{cell.Tree}");
+                }
+                AnglrPDAViableSet pdaSetList = AnalyzePDAStack (stack);
+                foreach (var pda in pdaSetList)
+                    DisplayAnglrPDASet (pda.Key, pda.Value);
             }
         }
 
         private AnglrPDASet LoadAnglrPDASet (AnglrGetParserStateItemResult anglrGetParserStateItemResult, int token)
         {
             AnglrPDASet anglrPDASet = new AnglrPDASet ();
-            List<AnglrPDASetElement> elementList = new List<AnglrPDASetElement> ();
+            List<AnglrGetParserStateTransitionPointData> elementList = new List<AnglrGetParserStateTransitionPointData> ();
             int step = 0;
+            int changes;
             while (true)
             {
+                changes = 0;
                 foreach (var coreData in anglrGetParserStateItemResult.CoreSet)
                 {
-                    var production = coreData.Production;
-                    var position = coreData.Position;
+                    var production = coreData.TransitionPoint.Production;
+                    var position = coreData.TransitionPoint.Position;
                     Logger?.DebugLine ($"analyze core production {production.ProductionNumber}");
                     if (production.RhsNodeSet.Length <= position)
+                    {
+                        Logger?.DebugLine ($"\tlength of core production {production.ProductionNumber} <= {position}");
                         continue;
+                    }
                     var rhsNode = production.RhsNodeSet [position];
                     if (rhsNode.Id != token)
+                    {
+                        Logger?.DebugLine ($"\tnode id of core production {production.ProductionNumber} != {token}");
                         continue;
-                    AnglrPDASetElement element = new AnglrPDASetElement (production, position);
+                    }
+                    AnglrGetParserStateTransitionPointData element = new AnglrGetParserStateTransitionPointData ()
+                    {
+                        Production = production,
+                        Position = position
+                    };
                     if (anglrPDASet.Contains (element))
+                    {
+                        Logger?.DebugLine ($"\tset contains core production {production.ProductionNumber}");
                         continue;
+                    }
+                    Logger?.DebugLine ($"\tadd core production {production.ProductionNumber}");
                     anglrPDASet.Add (element);
                     elementList.Add (element);
+                    ++changes;
                 }
                 foreach (var closureData in anglrGetParserStateItemResult.ClosureSet)
                 {
@@ -307,36 +335,55 @@ namespace AnglrLangExtension
                     {
                         Logger?.DebugLine ($"analyze closure production {productionInfo.ProductionNumber}");
                         if (productionInfo.RhsNodeSet.Length <= 0)
+                        {
+                            Logger?.DebugLine ($"\tlength of closure production {productionInfo.ProductionNumber} <= {0}");
                             continue;
+                        }
                         var rhsNode = productionInfo.RhsNodeSet [0];
                         if (rhsNode.Id != token)
+                        {
+                            Logger?.DebugLine ($"\tnode id of closure production {productionInfo.ProductionNumber} != {token}");
                             continue;
-                        AnglrPDASetElement element = new AnglrPDASetElement (productionInfo, 0);
+                        }
+                        AnglrGetParserStateTransitionPointData element = new AnglrGetParserStateTransitionPointData ()
+                        {
+                            Production = productionInfo,
+                            Position = 0
+                        };
                         if (anglrPDASet.Contains (element))
+                        {
+                            Logger?.DebugLine ($"\tset contains closure production {productionInfo.ProductionNumber}");
                             continue;
+                        }
+                        Logger?.DebugLine ($"\tadd closure production {productionInfo.ProductionNumber}");
                         anglrPDASet.Add (element);
                         elementList.Add (element);
+                        ++changes;
                     }
                 }
+                if (changes == 0)
+                    break;
                 while (step < elementList.Count)
                 {
                     AnglrGetParserStateProductionData productionData = elementList [step].Production;
                     if (elementList [step++].Position > 0)
                         continue;
+                    if (productionData.ProductionName.Id == token)
+                        continue;
                     token = productionData.ProductionName.Id;
+                    Logger?.DebugLine ($"\tselect new token ({token}, {productionData.ProductionName.Name}");
                     break;
                 }
-                if (step >= elementList.Count)
-                    break;
             }
             return anglrPDASet;
         }
 
-        public void DisplayAnglrPDASet (AnglrPDASet anglrPDASet)
+        public void DisplayAnglrPDASet (AnglrGetParserStateItemResult pdaState, AnglrPDASet anglrPDASet)
         {
+            Logger?.InfoLine ($"PDA CELL STATE {pdaState.StateNumber}");
             foreach (var element in anglrPDASet)
             {
-                Logger?.InfoLine<AnglrPDASetElement>
+                Logger?.InfoLine<AnglrGetParserStateTransitionPointData>
                 (
                     (data) =>
                     {
@@ -360,24 +407,24 @@ namespace AnglrLangExtension
             }
         }
 
-        private void AnalyzePDAStack (AnglrDebuggerGetPDAStack stack)
+        private AnglrPDAViableSet AnalyzePDAStack (AnglrDebuggerGetPDAStack stack)
         {
             int counter = 0;
             int token = 0;
 
+            AnglrPDAViableSet list = new AnglrPDAViableSet ();
             try
             {
                 AnglrDrawingDictionary dictionary = DictionaryItem?.Drawings;
                 if (dictionary == null)
                 {
                     Logger?.ErrorLine ($"dictionary = null");
-                    return;
+                    return list;
                 }
 
                 foreach (var cell in stack.PDAStackCells.Reverse ())
                 {
-                    Logger?.InfoLine ($"CELL {cell.State}");
-                    AnglrGetParserStateItemResult anglrGetParserStateItemResult = anglrLangService?.InvokeGetParserState (new AnglrGetParserStateItemParams ()
+                    AnglrGetParserStateItemResult pdaStateItem = anglrLangService?.InvokeGetParserState (new AnglrGetParserStateItemParams ()
                     {
                         TextDocument = new TextDocumentIdentifier ()
                         {
@@ -386,10 +433,10 @@ namespace AnglrLangExtension
                         MagicNr = MagicNumber,
                         StateNr = cell.State
                     });
-                    if (anglrGetParserStateItemResult == null)
+                    if (pdaStateItem == null)
                         continue;
-                    AnglrPDASet anglrPDASet = LoadAnglrPDASet (anglrGetParserStateItemResult, token);
-                    DisplayAnglrPDASet (anglrPDASet);
+                    AnglrPDASet anglrPDASet = LoadAnglrPDASet (pdaStateItem, token);
+                    list [pdaStateItem] = anglrPDASet;
                     token = cell.Code;
                     counter += anglrPDASet.Count;
                 }
@@ -399,6 +446,7 @@ namespace AnglrLangExtension
             {
                 Logger?.ErrorLine (e, $"cannot analyze PDA stack");
             }
+            return list;
         }
 
         async Task InvokeRpcSessionAsync (int count, Stream pipe, CancellationToken token, object msgFormatter)

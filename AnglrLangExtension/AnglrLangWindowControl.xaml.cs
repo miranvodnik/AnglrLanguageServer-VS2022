@@ -998,8 +998,8 @@ namespace AnglrLangExtension
                             stateRuleVisual.Clear ();
                             foreach (var coreData in anglrStateItem.getParserStateItemResult.CoreSet)
                             {
-                                var production = coreData.Production;
-                                var position = coreData.Position;
+                                var production = coreData.TransitionPoint.Production;
+                                var position = coreData.TransitionPoint.Position;
                                 if (!dictionary.TryGetValue (production.ProductionNumber, out var visual))
                                 {
                                     logger?.WarnLine ($"cannot access visual representation of production nr.: {production.ProductionNumber}");
@@ -1861,9 +1861,9 @@ namespace AnglrLangExtension
                     Text += $"<tr><th>Production Nr.</th><th>Production Name</th><th>Production</th></tr>";
                     foreach (AnglrGetParserStateCoreData coreData in anglrGetParserStateCoreData)
                     {
-                        int position = coreData.Position;
+                        int position = coreData.TransitionPoint.Position;
                         int index = 0;
-                        AnglrGetParserStateProductionData productionData = coreData.Production;
+                        AnglrGetParserStateProductionData productionData = coreData.TransitionPoint.Production;
                         Text += $"<tr>";
                         Text += $"<td>{productionData.ProductionNumber}</td>";
                         Text += $"<td><span class=\"non-terminal-symbol\">{WebUtility.HtmlEncode (productionData.ProductionName.Name)}</span></td>";

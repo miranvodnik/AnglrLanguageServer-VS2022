@@ -169,9 +169,19 @@ namespace AnglrJsonRpcMethods
     [DataContract]
     public class AnglrGetParserStateCoreData
     {
+        [DataMember (Name = "transitionPoint")] public AnglrGetParserStateTransitionPointData TransitionPoint { get; set; }
+        [DataMember (Name = "followSet")] public string [] FollowSet { get; set; }
+    }
+
+    /// <summary>
+    /// AnglrGetParserStateItem Method Results
+    /// </summary>
+    [Obfuscation (Exclude = true)]
+    [DataContract]
+    public class AnglrGetParserStateTransitionPointData
+    {
         [DataMember (Name = "production")] public AnglrGetParserStateProductionData Production { get; set; }
         [DataMember (Name = "position")] public int Position { get; set; }
-        [DataMember (Name = "followSet")] public string [] FollowSet { get; set; }
     }
 
     /// <summary>

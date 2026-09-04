@@ -1140,7 +1140,8 @@ namespace AnglrLSPServerProcess
                     SymbolToken productionName = rhsProduction.symbolToken;
                     rhslist rhsNodes = rhsProduction.rhsNodes;
                     AnglrGetParserStateCoreData anglrGetParserStateCoreData = result.CoreSet [index++] = new AnglrGetParserStateCoreData ();
-                    AnglrGetParserStateProductionData anglrGetParserStateProductionData = anglrGetParserStateCoreData.Production = new AnglrGetParserStateProductionData ();
+                    AnglrGetParserStateTransitionPointData anglrGetParserStateTransitionPointData = new AnglrGetParserStateTransitionPointData ();
+                    AnglrGetParserStateProductionData anglrGetParserStateProductionData = anglrGetParserStateTransitionPointData.Production = new AnglrGetParserStateProductionData ();
                     {
                         anglrGetParserStateProductionData.ProductionNumber = rhsProduction.productionNumber;
                         anglrGetParserStateProductionData.ProductionName = new AnglrGetParserStateSymbolTokenData ()
@@ -1165,8 +1166,9 @@ namespace AnglrLSPServerProcess
                             }
                         }
                     }
-                    anglrGetParserStateCoreData.Position = rhsConfiguration.rhsIterator.position;
+                    anglrGetParserStateTransitionPointData.Position = rhsConfiguration.rhsIterator.position;
                     tokset tokenSet = rhsConfiguration.getFollowSet.m_tokset;
+                    anglrGetParserStateCoreData.TransitionPoint = anglrGetParserStateTransitionPointData;
                     anglrGetParserStateCoreData.FollowSet = new string [tokenSet.Count];
                     {
                         int folloowSetIndex = 0;
