@@ -471,6 +471,7 @@ namespace AnglrLangExtension
                             DrawingVisual = drawingVisual
                         }
                     );
+                logger?.InfoLine ($"loaded anglr file: magic nr. = {_magicNr}, path = {name}");
 
                 {
                     AnglrSyntaxRuleViewerTab ruleViewerTab = new AnglrSyntaxRuleViewerTab (anglrLangService, _magicNr, name, drawingVisual);

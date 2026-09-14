@@ -228,6 +228,7 @@ namespace AnglrLSPServerProcess
                     anglrParserStatesGenerator = new AnglrParserStatesGenerator (anglrCompiler);
                     foreach (SyntaxTreeBase node in (syntaxTrees = anglrCompiler.parseList))
                     {
+                        node.reparent (null);
                         //AnglrGenerator generator = new AnglrGenerator ((_anglr_file_fragment_) node);
                         anglrSpanGenerator.TraverseCommon ((_anglr_file_fragment_) node);
                         anglrReferencesGenerator.TraverseCommon ((_anglr_file_fragment_) node);
@@ -277,6 +278,7 @@ namespace AnglrLSPServerProcess
                     anglrParserStatesGenerator = new AnglrParserStatesGenerator (anglrCompiler);
                     foreach (SyntaxTreeBase node in (syntaxTrees = anglrCompiler.parseList))
                     {
+                        node.reparent (null);
                         anglrSpanGenerator.TraverseCommon ((_anglr_file_fragment_) node);
                         anglrReferencesGenerator.TraverseCommon ((_anglr_file_fragment_) node);
                         anglrSpanGenerator.Traverse ((_anglr_file_fragment_) node);

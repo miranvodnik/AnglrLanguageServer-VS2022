@@ -62,14 +62,32 @@ namespace Anglr.Parser
 		public AnglrParser (string fragmentName = null, IAnglrLogger anglrLogger = null) : base ()
 		{
 			AnglrLogger = anglrLogger;
-			(int id, int state, int token, string tokenName) fragmentInfo = AnglrFragments.GetFragmentInfo (fragmentName);
-			if (fragmentInfo.id != 0)
+			(string fragmentName, ProductionID productionId, int initialState, int finalTokenId, string finalTokenName) fragmentInfo = AnglrFragments.GetFragmentInfo (fragmentName);
+			if (fragmentInfo.productionId != 0)
 			{
 				FragmentParser = true;
-				ProductionID = fragmentInfo.id;
-				InitialState = fragmentInfo.state;
-				LastToken = fragmentInfo.token;
-				LastTokenName = fragmentInfo.tokenName;
+				ProductionID = (int) fragmentInfo.productionId;
+				InitialState = fragmentInfo.initialState;
+				LastToken = fragmentInfo.finalTokenId;
+				LastTokenName = fragmentInfo.finalTokenName;
+			}
+			token = new ParserToken (0, 0, null);
+			stackSet = new stackset (new cmpstackid ());
+			parseList = new parselist ();
+			stackSet.Add (new ParserStack (this));
+		}
+
+		public AnglrParser (ProductionID productionId, IAnglrLogger anglrLogger = null) : base ()
+		{
+			AnglrLogger = anglrLogger;
+			(string fragmentName, ProductionID productionId, int initialState, int finalTokenId, string finalTokenName) fragmentInfo = AnglrFragments.GetFragmentInfo (productionId);
+			if (fragmentInfo.productionId != 0)
+			{
+				FragmentParser = true;
+				ProductionID = (int) fragmentInfo.productionId;
+				InitialState = fragmentInfo.initialState;
+				LastToken = fragmentInfo.finalTokenId;
+				LastTokenName = fragmentInfo.finalTokenName;
 			}
 			token = new ParserToken (0, 0, null);
 			stackSet = new stackset (new cmpstackid ());
@@ -1114,7 +1132,7 @@ namespace Anglr.Parser
 		public stackset stackSet { get; private set; }
 		public parselist parseList { get; private set; }
 
-		internal readonly static int g_magicNumber = 2629197;
+		internal readonly static int g_magicNumber = 3265532;
 
 		internal readonly static int g_minTerminalCode = 258;
 		internal readonly static int[] g_terminalCodes = 
@@ -1873,7 +1891,7 @@ namespace Anglr.Parser
 
 	public static class AnglrFragments
 	{
-		public static readonly (string, ProductionID, int, int, string) [] FragmentsInfo =
+		public static readonly (string fragmentName, ProductionID productionId, int initialState, int finalTokenId, string finalTokenName) [] FragmentsInfo =
 		{
 			("<anglr file fragment>", ProductionID.__anglr_file_fragment__ID, 0, 1, "_eof_token"),
 			("<attribute list>", ProductionID.__attribute_list__ID, 1, 266, "_left_square_bracket_"),
@@ -1946,12 +1964,18 @@ namespace Anglr.Parser
 			("<number optional>", ProductionID.__number_optional__ID, 68, 1, "_eof_token"),
 		};
 
-		public static Dictionary<string, (int, int, int, string)> _FragmentsInfoDictionary = FragmentsInfo.ToDictionary (x => x.Item1, x => ((int) x.Item2, x.Item3, x.Item4, x.Item5));
+		public static Dictionary<string, (string fragmentName, ProductionID productionId, int initialState, int finalTokenId, string finalTokenName)> _FragmentsInfoDictionaryByName = FragmentsInfo.ToDictionary (x => x.fragmentName, x => (x.fragmentName, x.productionId, x.initialState, x.finalTokenId, x.finalTokenName));
+		public static Dictionary<ProductionID, (string fragmentName, ProductionID productionId, int initialState, int finalTokenId, string finalTokenName)> _FragmentsInfoDictionaryById = FragmentsInfo.ToDictionary (x => x.productionId, x => (x.fragmentName, x.productionId, x.initialState, x.finalTokenId, x.finalTokenName));
 
-		public static (int, int, int, string) GetFragmentInfo (string fragmentName) =>
-			_FragmentsInfoDictionary.TryGetValue (fragmentName ?? "", out var fragment) ?
+		public static (string fragmentName, ProductionID productionId, int initialState, int finalTokenId, string finalTokenName) GetFragmentInfo (string fragmentName) =>
+			_FragmentsInfoDictionaryByName.TryGetValue (fragmentName ?? "", out var fragment) ?
 			fragment :
-			(0, -1, -1, "");
+			("", 0, -1, -1, "");
+
+		public static (string fragmentName, ProductionID productionId, int initialState, int finalTokenId, string finalTokenName) GetFragmentInfo (ProductionID productionId) =>
+			_FragmentsInfoDictionaryById.TryGetValue (productionId, out var fragment) ?
+			fragment :
+			("", 0, -1, -1, "");
 	}
 
 	public class AnglrParser_TEST : SyntaxTreeWalker

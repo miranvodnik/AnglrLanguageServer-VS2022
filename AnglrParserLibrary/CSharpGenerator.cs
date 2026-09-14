@@ -14,6 +14,7 @@ using System.Diagnostics.Metrics;
 using System.Diagnostics.SymbolStore;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
@@ -4384,8 +4385,19 @@ namespace AnglrLibrary
 
     public class AnglrMagicNrGenerator : SyntaxTreeWalker
     {
+        private enum TaskEnum
+        {
+            None,
+            MagicNr,
+            Text
+        }
+        private TaskEnum taskEnum;
         private _anglr_file_fragment_ fragment;
         private int magicNr;
+        private StringBuilder stringBuilder;
+        private bool newline = false;
+        private int lineno = -1;
+        private int column = -1;
         public AnglrMagicNrGenerator (_anglr_file_fragment_ fragment)
         {
             this.fragment = fragment;
@@ -4399,16 +4411,63 @@ namespace AnglrLibrary
             SyntaxTreeToken token = p_node as SyntaxTreeToken;
             if ((token == null) || (token.text == null))
                 return true;
-            foreach (var c in token.text)
-                magicNr += c;
+            switch (taskEnum)
+            {
+                case TaskEnum.None:
+                    break;
+                case TaskEnum.MagicNr:
+                    foreach (var c in token.text)
+                        magicNr += c;
+                    break;
+                case TaskEnum.Text:
+                {
+                    if (!(p_node is SyntaxTreeToken))
+                        break;
+                    int tokenlineno = token.lineno;
+                    int tokenColumn = token.column;
+                    string tokenText = token.text;
+                    int tokenLength = tokenText.Length;
+                    while (tokenlineno > lineno)
+                    {
+                        stringBuilder.AppendLine ();
+                        ++lineno;
+                        column = 0;
+                        newline = true;
+                    }
+                    while (column < tokenColumn)
+                    {
+                        if (newline)
+                            stringBuilder.Append ("    ");
+                        else
+                            stringBuilder.Append (" ");
+                        ++column;
+                    }
+                    stringBuilder.Append (tokenText);
+                    column += tokenLength;
+                    newline = false;
+                }
+                break;
+            }
             return true;
         }
 
         public int ComputeMagicNr ()
         {
+            taskEnum = TaskEnum.MagicNr;
             magicNr = 0;
             fragment?.InvokeTraverseCommon (this);
             return magicNr;
+        }
+
+        public string CreateText ()
+        {
+            taskEnum = TaskEnum.Text;
+            stringBuilder = new StringBuilder ();
+            newline = false;
+            lineno = -1;
+            column = -1;
+            fragment?.InvokeTraverseCommon (this);
+            return stringBuilder.ToString ();
         }
     }
 }

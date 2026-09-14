@@ -88,6 +88,14 @@ namespace AnglrCompilerLibrary
                         if (node == null)
                             continue;
 
+                        if (false)
+                        {
+                            AnglrMagicNrGenerator magicNrGenerator = new AnglrMagicNrGenerator ((_anglr_file_fragment_) node);
+                            int magicNr = magicNrGenerator.ComputeMagicNr ();
+                            string text = magicNrGenerator.CreateText ();
+                            Logger.InfoLine ($"angler compiler, magic number  = {magicNr}");
+                            Logger.InfoLine ($"angler compiler, restored text = {text}");
+                        }
                         switch (genLang)
                         {
                             case "cs":

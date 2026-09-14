@@ -142,6 +142,7 @@ namespace AnglrMSBuildTasks
                 try { string code = taskItem.GetMetadata ("Code"); Code = code; } catch (Exception) { }
 
                 Logger.InfoLine ($"ANGLR file settings for: '{currentSourceFile}'");
+                Logger.InfoLine ($"\tWorking Directory = {Environment.CurrentDirectory}");
                 Logger.InfoLine ($"\tDebug = {Debug}");
                 Logger.InfoLine ($"\tGenerate Syntax Tree = {Tree}");
                 Logger.InfoLine ($"\tEnable Loop Detection = {Loop}");
@@ -149,7 +150,6 @@ namespace AnglrMSBuildTasks
                 Logger.InfoLine ($"\tCreate Precedence Grammar= {Precedence}");
                 Logger.InfoLine ($"\tOutput Directory Path = '{OutputDir}'");
                 Logger.InfoLine ($"\tTarget Language = {Code}");
-
                 try
                 {
                     AnglrParser.debug = Debug;
