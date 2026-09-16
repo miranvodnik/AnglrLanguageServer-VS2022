@@ -60,7 +60,7 @@ namespace AnglrLangExtension
             AnglrPDAState = anglrPDAState;
             Logger = logger ?? new VoidAnglrLogger ();
         }
-        public void Load ()
+        public void Load (bool full)
         {
             foreach (var coreData in AnglrPDAState.CoreSet)
             {
@@ -76,6 +76,8 @@ namespace AnglrLangExtension
                     }
                 );
             }
+            if (!full)
+                return;
             foreach (var closureData in AnglrPDAState.ClosureSet)
             {
                 foreach (var productionInfo in closureData.ProductionNode.ProductionSet)
@@ -109,6 +111,12 @@ namespace AnglrLangExtension
                         Production = transition.Production,
                         Position = transition.Position - 1
                     };
+                    //if (coreTransition.Position == 0)
+                    //{
+                    //    AnglrGetParserStateProductionData coreProduction = coreTransition.Production;
+                    //    if (coreProduction.ProductionName.Id == coreProduction.RhsNodeSet [0].Id)
+                    //        continue;
+                    //}
                     if (!reducedSet.Add (coreTransition))
                         continue;
                 }
@@ -126,7 +134,16 @@ namespace AnglrLangExtension
                         {
                             AnglrGetParserStateSymbolTokenData [] nodeSet = transition.Production.RhsNodeSet;
                             if ((nodeSet.Length > transition.Position) && (nodeSet [transition.Position].Id == id))
+                            {
+                                if (transition.Position == 0)
+                                {
+                                    AnglrGetParserStateProductionData coreProduction = transition.Production;
+                                    if (coreProduction.ProductionName.Id == coreProduction.RhsNodeSet [0].Id)
+                                        continue;
+                                }
                                 elementList.Add (transition);
+                                transition.Add (closureTransition);
+                            }
                         }
                     }
                     foreach (var transition in elementList)
@@ -150,32 +167,39 @@ namespace AnglrLangExtension
             }
             return reducedSet;
         }
+        public void Display (AnglrGetParserStateTransitionPointData transition, string indent = null) => Logger?.InfoLine<AnglrGetParserStateTransitionPointData>
+            (
+                (data) =>
+                {
+                    StringBuilder sb = new StringBuilder ();
+                    AnglrGetParserStateProductionData productionData = data.Production;
+                    int index = 0;
+                    int nodePosition = data.Position;
+                    int productionNumber = productionData.ProductionNumber;
+                    string productionName = productionData.ProductionName.Name;
+                    sb.Append ($"{indent}{productionNumber} {productionName} ({productionData.ProductionName.Id}):");
+                    foreach (var node in productionData.RhsNodeSet)
+                    {
+                        if (index++ == nodePosition)
+                            sb.Append ($" .");
+                        sb.Append ($" {node.Name} ({node.Id})");
+                    }
+                    return sb.ToString ();
+                },
+                transition
+            );
         public void Display (string comment)
         {
             Logger?.InfoLine ($"{comment} {AnglrPDAState.StateNumber}");
             foreach (var element in this)
             {
-                Logger?.InfoLine<AnglrGetParserStateTransitionPointData>
-                (
-                    (data) =>
-                    {
-                        StringBuilder sb = new StringBuilder ();
-                        AnglrGetParserStateProductionData productionData = data.Production;
-                        int index = 0;
-                        int nodePosition = data.Position;
-                        int productionNumber = productionData.ProductionNumber;
-                        string productionName = productionData.ProductionName.Name;
-                        sb.Append ($"{productionNumber} {productionName} :");
-                        foreach (var node in productionData.RhsNodeSet)
-                        {
-                            if (index++ == nodePosition)
-                                sb.Append ($" .");
-                            sb.Append ($" {node.Name}");
-                        }
-                        return sb.ToString ();
-                    },
-                    element
-                );
+                Display (element, "");
+                if (element.Children != null)
+                {
+                    Logger?.InfoLine ($"{element.Children.Count} children:");
+                    foreach (var child in element.Children)
+                        Display (child, "    ");
+                }
             }
         }
     }
@@ -414,13 +438,17 @@ namespace AnglrLangExtension
                     foreach (var cell in stack.PDAStackCells)
                     {
                         Logger?.InfoLine ($"\t{cell.State}\t{cell.Code}\t\t{cell.Name}\t\t{cell.Value}\t\t{cell.Tree}");
-                        try
+                        if (false)
                         {
-                            object anglrFileFragment = JsonConvert.DeserializeObject (cell.Tree, settings);
-                        }
-                        catch (Exception ex)
-                        {
-                            if (false) Logger?.ErrorLine (ex, $"deserialization failed:");
+                            try
+                            {
+                                object anglrFileFragment = JsonConvert.DeserializeObject (cell.Tree, settings);
+                            }
+                            catch (Exception ex)
+                            {
+                                if (false)
+                                    Logger?.ErrorLine (ex, $"deserialization failed:");
+                            }
                         }
                     }
                     AnglrPDAViableSet pdaSetList = AnalyzePDAStack (stack);
@@ -457,6 +485,7 @@ namespace AnglrLangExtension
                     return list;
                 }
 
+                bool full = false;
                 foreach (var cell in stack.PDAStackCells.Reverse ())
                 {
                     AnglrGetParserStateItemResult pdaStateItem = anglrLangService?.InvokeGetParserState (new AnglrGetParserStateItemParams ()
@@ -471,9 +500,10 @@ namespace AnglrLangExtension
                     if (pdaStateItem == null)
                         continue;
                     AnglrPDASet anglrPDASet = new AnglrPDASet (pdaStateItem, Logger);
-                    anglrPDASet.Load ();
+                    anglrPDASet.Load (full);
                     list.Add (anglrPDASet);
                     counter += anglrPDASet.Count;
+                    full = true;
                 }
                 Logger?.InfoLine ($"generated {counter} visuals");
                 list.Reverse ();

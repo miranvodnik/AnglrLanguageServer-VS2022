@@ -1005,7 +1005,7 @@ namespace AnglrDebuggerBridge
                         {
                             SyntaxTreeBase node = symbol.Clone ();
                             node.reparent (null);
-                            string symbolJson = JsonConvert.SerializeObject (node, settings);
+                            string symbolJson = null; // JsonConvert.SerializeObject (node, settings);
                             if (symbol is SyntaxTreeToken)
                             {
                                 SyntaxTreeToken token = (SyntaxTreeToken) symbol;
