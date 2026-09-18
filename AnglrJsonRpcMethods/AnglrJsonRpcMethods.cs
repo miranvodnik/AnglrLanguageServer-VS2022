@@ -182,21 +182,6 @@ namespace AnglrJsonRpcMethods
     {
         [DataMember (Name = "production")] public AnglrGetParserStateProductionData Production { get; set; }
         [DataMember (Name = "position")] public int Position { get; set; }
-        public List<AnglrGetParserStateTransitionPointData> Children { get; private set; }
-        public void Add (AnglrGetParserStateTransitionPointData child)
-        {
-            if (Children != null)
-            {
-                foreach (var element in Children)
-                {
-                    if ((element.Position == child.Position) && (element.Production.ProductionNumber == child.Production.ProductionNumber))
-                        return;
-                }
-                Children.Add (child);
-            }
-            else
-                (Children = new List<AnglrGetParserStateTransitionPointData> ()).Add (child);
-        }
     }
 
     /// <summary>

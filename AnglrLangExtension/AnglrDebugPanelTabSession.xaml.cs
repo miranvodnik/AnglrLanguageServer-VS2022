@@ -41,9 +41,40 @@ using System.Windows.Shapes;
 
 namespace AnglrLangExtension
 {
-    public class AnglrPDASetElementComparer : IComparer<AnglrGetParserStateTransitionPointData>
+    public class AnglrPDAStateTransitionInfo : AnglrGetParserStateTransitionPointData
     {
-        public int Compare (AnglrGetParserStateTransitionPointData x, AnglrGetParserStateTransitionPointData y)
+        public List<AnglrPDAStateTransitionInfo> Children { get; private set; }
+        public AnglrPDAStateTransitionInfo Parent { get; set; }
+        public List<AnglrGetParserStateItemResult> PDAStates { get; private set; }
+        public AnglrPDAStateTransitionInfo ()
+        {
+            Children = new List<AnglrPDAStateTransitionInfo> ();
+            PDAStates = new List<AnglrGetParserStateItemResult> ();
+        }
+        public void Add (AnglrPDAStateTransitionInfo child)
+        {
+            foreach (var element in Children)
+            {
+                if ((element.Position == child.Position) && (element.Production.ProductionNumber == child.Production.ProductionNumber))
+                    return;
+            }
+            Children.Add (child);
+        }
+        public void Traverse (Action<AnglrPDAStateTransitionInfo, object> f, object appData)
+        {
+            f (this, appData);
+            foreach (var element in Children)
+                element.Traverse (f, appData);
+            //if (element.Parent == this)
+            //        element.Traverse (f, appData);
+            //    else
+            //        f (element, " -> ");
+        }
+    }
+
+    public class AnglrPDASetElementComparer : IComparer<AnglrPDAStateTransitionInfo>
+    {
+        public int Compare (AnglrPDAStateTransitionInfo x, AnglrPDAStateTransitionInfo y)
         {
             if (x.Production.ProductionNumber != y.Production.ProductionNumber)
                 return x.Production.ProductionNumber - y.Production.ProductionNumber;
@@ -51,7 +82,7 @@ namespace AnglrLangExtension
         }
     }
 
-    public class AnglrPDASet : SortedSet<AnglrGetParserStateTransitionPointData>
+    public class AnglrPDASet : SortedSet<AnglrPDAStateTransitionInfo>
     {
         public IAnglrLogger Logger { get; }
         public AnglrGetParserStateItemResult AnglrPDAState { get; }
@@ -69,7 +100,7 @@ namespace AnglrLangExtension
                 Logger?.DebugLine ($"\tadd core production {production.ProductionNumber}");
                 Add
                 (
-                    new AnglrGetParserStateTransitionPointData ()
+                    new AnglrPDAStateTransitionInfo ()
                     {
                         Production = production,
                         Position = position
@@ -85,7 +116,7 @@ namespace AnglrLangExtension
                     Logger?.DebugLine ($"\tadd closure production {productionInfo.ProductionNumber}");
                     Add
                     (
-                        new AnglrGetParserStateTransitionPointData ()
+                        new AnglrPDAStateTransitionInfo ()
                         {
                             Production = productionInfo,
                             Position = 0
@@ -98,7 +129,11 @@ namespace AnglrLangExtension
         public AnglrPDASet Reduce (AnglrPDASet ctrlCell)
         {
             if (ctrlCell == null)
+            {
+                foreach (var transition in this)
+                    transition.PDAStates.Add (AnglrPDAState);
                 return null;
+            }
             AnglrPDASet reducedSet = new AnglrPDASet (AnglrPDAState, Logger);
             try
             {
@@ -106,17 +141,11 @@ namespace AnglrLangExtension
                 {
                     if (transition.Position <= 0)
                         continue;
-                    AnglrGetParserStateTransitionPointData coreTransition = new AnglrGetParserStateTransitionPointData ()
+                    AnglrPDAStateTransitionInfo coreTransition = new AnglrPDAStateTransitionInfo ()
                     {
                         Production = transition.Production,
                         Position = transition.Position - 1
                     };
-                    //if (coreTransition.Position == 0)
-                    //{
-                    //    AnglrGetParserStateProductionData coreProduction = coreTransition.Production;
-                    //    if (coreProduction.ProductionName.Id == coreProduction.RhsNodeSet [0].Id)
-                    //        continue;
-                    //}
                     if (!reducedSet.Add (coreTransition))
                         continue;
                 }
@@ -124,7 +153,7 @@ namespace AnglrLangExtension
                 while (true)
                 {
                     changes = 0;
-                    List<AnglrGetParserStateTransitionPointData> elementList = new List<AnglrGetParserStateTransitionPointData> ();
+                    List<AnglrPDAStateTransitionInfo> elementList = new List<AnglrPDAStateTransitionInfo> ();
                     foreach (var closureTransition in reducedSet)
                     {
                         if (closureTransition.Position > 0)
@@ -152,6 +181,8 @@ namespace AnglrLangExtension
                     if (changes <= 0)
                         break;
                 }
+                foreach (var transition in reducedSet)
+                    transition.PDAStates.Add (AnglrPDAState);
             }
             catch (Exception ex)
             {
@@ -167,10 +198,15 @@ namespace AnglrLangExtension
             }
             return reducedSet;
         }
-        public void Display (AnglrGetParserStateTransitionPointData transition, string indent = null) => Logger?.InfoLine<AnglrGetParserStateTransitionPointData>
+        public void DisplayTransition (AnglrPDAStateTransitionInfo transition, object appData) => Logger?.InfoLine<AnglrPDAStateTransitionInfo>
             (
                 (data) =>
                 {
+                    string indent = appData as string ?? "";
+                    //if (appData == null)
+                    //    for (var element = transition; element.Parent != null; element = element.Parent)
+                    //        indent += "    ";
+
                     StringBuilder sb = new StringBuilder ();
                     AnglrGetParserStateProductionData productionData = data.Production;
                     int index = 0;
@@ -180,26 +216,30 @@ namespace AnglrLangExtension
                     sb.Append ($"{indent}{productionNumber} {productionName} ({productionData.ProductionName.Id}):");
                     foreach (var node in productionData.RhsNodeSet)
                     {
-                        if (index++ == nodePosition)
+                        if (index++ <= nodePosition)
                             sb.Append ($" .");
                         sb.Append ($" {node.Name} ({node.Id})");
                     }
+                    sb.AppendLine ();
+                    sb.Append ($"{indent}    states:");
+                    foreach (var state in transition.PDAStates)
+                        sb.Append ($" {state.StateNumber}");
                     return sb.ToString ();
                 },
                 transition
             );
         public void Display (string comment)
         {
-            Logger?.InfoLine ($"{comment} {AnglrPDAState.StateNumber}");
-            foreach (var element in this)
+            try
             {
-                Display (element, "");
-                if (element.Children != null)
-                {
-                    Logger?.InfoLine ($"{element.Children.Count} children:");
-                    foreach (var child in element.Children)
-                        Display (child, "    ");
-                }
+                Logger?.InfoLine ($"{comment} {AnglrPDAState.StateNumber}");
+                foreach (var element in this)
+                    if (element.Parent == null)
+                        element.Traverse (DisplayTransition, null);
+            }
+            catch (Exception ex)
+            {
+                Logger?.ErrorLine (ex, $"*** DISPLAY ERROR ***");
             }
         }
     }
@@ -218,7 +258,42 @@ namespace AnglrLangExtension
             foreach (var cell in ToArray ().Reverse ())
             {
                 AnglrPDASet anglrPdaSet = cell.Reduce (ctrlCell);
-                viableSet.Add (ctrlCell = (anglrPdaSet != null) ? anglrPdaSet : cell);
+                viableSet.Add (ctrlCell = anglrPdaSet ?? cell);
+            }
+            foreach (var pdaSet in viableSet.ToArray ().Reverse ())
+                foreach (var element in pdaSet)
+                    foreach (var child in element.Children)
+                        child.Parent = child.Parent ?? element;
+            ctrlCell = null;
+            foreach (var cell in viableSet)
+            {
+                if (ctrlCell != null)
+                {
+                    foreach (var element in ctrlCell)
+                    {
+                        if (element.Parent != null)
+                            continue;
+                        int position = element.Position;
+                        if (position <= 0)
+                            continue;
+                        int productionNumber = element.Production.ProductionNumber;
+                        foreach (var cellElt in cell)
+                        {
+                            if (cellElt.Position + 1 != position)
+                                continue;
+                            if (cellElt.Production.ProductionNumber != productionNumber)
+                                continue;
+                            foreach (var child in element.Children)
+                            {
+                                child.Parent = cellElt;
+                                cellElt.Children.Add (child);
+                            }
+                            foreach (var state in element.PDAStates)
+                                cellElt.PDAStates.Add (state);
+                        }
+                    }
+                }
+                ctrlCell = cell;
             }
             viableSet.Reverse ();
             return viableSet;
@@ -461,7 +536,10 @@ namespace AnglrLangExtension
                     if (true)
                     {
                         foreach (var pda in pdaReducedList)
+                        {
                             pda?.Display ("PDA CELL STATE");
+                            break;
+                        }
                     }
                 }
             }

@@ -2370,11 +2370,14 @@ namespace AnglrLangExtension
                 {
                     logger?.DebugLine ($"traverse anglr fragment");
                     anglrFileFragment.reparent (null);
-                    AnglrMagicNrGenerator magicNrGenerator = new AnglrMagicNrGenerator (anglrFileFragment);
-                    int magicNr = magicNrGenerator.ComputeMagicNr ();
-                    string fragmentText = magicNrGenerator.CreateText ();
-                    logger?.InfoLine ($"anglr visualizer: magic nr = {magicNr}");
-                    logger?.InfoLine ($"anglr visualizer: text = {fragmentText}");
+                    if (false)
+                    {
+                        AnglrMagicNrGenerator magicNrGenerator = new AnglrMagicNrGenerator (anglrFileFragment);
+                        int magicNr = magicNrGenerator.ComputeMagicNr ();
+                        string fragmentText = magicNrGenerator.CreateText ();
+                        logger?.InfoLine ($"anglr visualizer: magic nr = {magicNr}");
+                        logger?.InfoLine ($"anglr visualizer: text = {fragmentText}");
+                    }
                     AnglrVisualizer anglrVisualizer = new AnglrVisualizer (logger);
                     anglrVisualizer.Traverse (anglrFileFragment);
                     _anglr_file_ anglrFile = anglrFileFragment.m__anglr_file_;
