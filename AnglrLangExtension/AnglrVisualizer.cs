@@ -52,7 +52,7 @@ namespace AnglrLangExtension
         // common properties
         //
 
-        public static bool Debug { get; set; } = false; 
+        public static bool Debug { get; set; } = false;
         public static CultureInfo CultureInfo { get; set; } = CultureInfo.InvariantCulture;
         public static FlowDirection FlowDirection { get; set; } = FlowDirection.LeftToRight;
         public static string TypefaceName { get; set; } = "Consolas";
@@ -124,6 +124,7 @@ namespace AnglrLangExtension
             Position = new Vector (0, 0);
         }
 
+        public abstract void Draw ();
         public abstract void Display ();
     }
 
@@ -427,7 +428,7 @@ namespace AnglrLangExtension
             SymbolToken = terminalSymbol.SymbolToken;
         }
 
-        public void Draw ()
+        public override void Draw ()
         {
             using (var dc = RenderOpen ())
             {
@@ -529,7 +530,7 @@ namespace AnglrLangExtension
             SymbolToken = terminalSymbol.SymbolToken;
         }
 
-        public void Draw ()
+        public override void Draw ()
         {
             using (var dc = RenderOpen ())
             {
@@ -631,7 +632,7 @@ namespace AnglrLangExtension
             SymbolToken = terminalSymbol.SymbolToken;
         }
 
-        public void Draw ()
+        public override void Draw ()
         {
             using (var dc = RenderOpen ())
             {
@@ -729,7 +730,7 @@ namespace AnglrLangExtension
             SymbolToken = symbolToken;
         }
 
-        public void Draw ()
+        public override void Draw ()
         {
             using (var dc = RenderOpen ())
             {
@@ -828,7 +829,7 @@ namespace AnglrLangExtension
             SymbolToken = symbolToken;
         }
 
-        public void Draw ()
+        public override void Draw ()
         {
             using (var dc = RenderOpen ())
             {
@@ -937,7 +938,7 @@ namespace AnglrLangExtension
                 DelimiterVisual = visualObject as AnglrRawDrawingVisual;
         }
 
-        public void Draw ()
+        public override void Draw ()
         {
             switch ((_cardinality_.production_kind) Cardinality.kind)
             {
@@ -1201,7 +1202,7 @@ namespace AnglrLangExtension
         public override void Display ()
         {
             if (Debug)
-                AnglrVisualizer?.AnglrLogger?.InfoLine ($"g-name, id = {Id}, position = {Position}, size = {Size}, value = {CardinalityDelimiter.parent.Emit (-1).Substring(0, 100)}");
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"g-name, id = {Id}, position = {Position}, size = {Size}, value = {CardinalityDelimiter.parent.Emit (-1).Substring (0, 100)}");
         }
 
         public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
@@ -1264,6 +1265,130 @@ namespace AnglrLangExtension
         }
     }
 
+    public class AnglrStateNrVisual : AnglrRawDrawingVisual, IAnglrEventHandler
+    {
+        public int StateNr { get; private set; }
+        public AnglrStateNrVisual (AnglrVisualizer anglrVisualizer, int stateNr) : base (anglrVisualizer)
+        {
+            StateNr = stateNr;
+        }
+
+        public override void Draw ()
+        {
+            using (var dc = RenderOpen ())
+            {
+                FormattedText text = new FormattedText
+                (
+                    StateNr.ToString (),
+                    CultureInfo,
+                    FlowDirection,
+                    new Typeface (TypefaceName),
+                    FontSize,
+                    Brush,
+                    1.0
+                );
+                double width = text.Width;
+                double height = text.Height;
+
+                Width = width + 2 * Margin;
+                Height = height + 2 * Margin;
+
+                dc.DrawGeometry
+                (
+                    Brush,
+                    Pen,
+                    new PathGeometry
+                    (
+                        new List<PathFigure> ()
+                        {
+                            new PathFigure
+                            (
+                                new Point (0, Height / 2.0),
+                                new List<LineSegment> ()
+                                {
+                                    new LineSegment() { Point = new Point (Margin, 0) },
+                                    new LineSegment() { Point = new Point (Margin + width, 0) },
+                                    new LineSegment() { Point = new Point (Width, Height / 2.0) },
+                                    new LineSegment() { Point = new Point (Margin + width, Height) },
+                                    new LineSegment() { Point = new Point (Margin, Height) },
+                                    new LineSegment() { Point = new Point (0, Height / 2.0) },
+                                },
+                                true
+                            )
+                        }
+                    )
+                );
+                dc.DrawText (text, new Point (Margin, Margin));
+                ConnectorOffset = Height / 2.0;
+            }
+            Drawing.Freeze ();
+        }
+        public override void Display ()
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"state number, id = {Id}, position = {Position}, size = {Size}, value = {StateNr}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (state number, id = {Id}, value =  {StateNr})");
+        }
+
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (state number, id = {Id}, value =  {StateNr})");
+        }
+
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (state number, id = {Id}, value =  {StateNr})");
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (state number, id = {Id}, value =  {StateNr})");
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (state number, id = {Id}, value =  {StateNr})");
+        }
+
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (state number, id = {Id}, value =  {StateNr})");
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (state number, id = {Id}, value =  {StateNr})");
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (state number, id = {Id}, value =  {StateNr})");
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (state number, id = {Id}, value =  {StateNr})");
+        }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseWheel (state number, id = {Id}, value =  {StateNr})");
+        }
+    }
+
     public class AnglrNameListVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public _name_list_ NameList { get; private set; }
@@ -1310,7 +1435,7 @@ namespace AnglrLangExtension
             Width -= 2 * Margin;
         }
 
-        public void Draw ()
+        public override void Draw ()
         {
             AnglrVisualPosition position = new AnglrVisualPosition ();
             double x, y;
@@ -1425,6 +1550,85 @@ namespace AnglrLangExtension
         }
     }
 
+    public class AnglrPDAStateTransitionInfoVisual : AnglrRawDrawingVisual, IAnglrEventHandler
+    {
+        public AnglrPDAStateTransitionInfo TransitionInfo {  get; private set; }
+        public AnglrPDAStateTransitionInfoVisual (AnglrVisualizer anglrVisualizer, AnglrPDAStateTransitionInfo transitionInfo) : base (anglrVisualizer)
+        {
+            TransitionInfo = transitionInfo;
+        }
+
+        public override void Draw ()
+        {
+            throw new NotImplementedException ();
+        }
+
+        public override void Display ()
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"PDA transition, id = {Id}, position = {Position}, size = {Size}, value = {TransitionInfo.Display()}");
+        }
+
+        public void OnMouseDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseDown (PDA syntax rule: {TransitionInfo.Production.ProductionName.Name})");
+        }
+
+        public void OnMouseEnter (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseEnter (PDA syntax rule: {TransitionInfo.Production.ProductionName.Name})");
+        }
+
+        public void OnMouseLeave (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeave (PDA syntax rule: {TransitionInfo.Production.ProductionName.Name})");
+        }
+
+        public void OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonDown (PDA syntax rule: {TransitionInfo.Production.ProductionName.Name})");
+        }
+
+        public void OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseLeftButtonUp (PDA syntax rule: {TransitionInfo.Production.ProductionName.Name})");
+        }
+
+        public void OnMouseMove (object sender, MouseEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseMove (PDA syntax rule: {TransitionInfo.Production.ProductionName.Name})");
+        }
+
+        public void OnMouseRightButtonDown (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonDown (PDA syntax rule: {TransitionInfo.Production.ProductionName.Name})");
+        }
+
+        public void OnMouseRightButtonUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseRightButtonUp (PDA syntax rule: {TransitionInfo.Production.ProductionName.Name})");
+        }
+
+        public void OnMouseUp (object sender, MouseButtonEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseUp (PDA syntax rule: {TransitionInfo.Production.ProductionName.Name})");
+        }
+        public void OnMouseWheel (object sender, MouseWheelEventArgs e, Point point, IAnglrLogger logger)
+        {
+            if (Debug)
+                AnglrVisualizer?.AnglrLogger?.InfoLine ($"OnMouseWheel (PDA syntax rule: {TransitionInfo.Production.ProductionName.Name})");
+        }
+    }
+
     public class AnglrNestedRuleVisual : AnglrRawDrawingVisual, IAnglrEventHandler
     {
         public _anglr_nested_rule_ NestedRule { get; private set; }
@@ -1470,7 +1674,7 @@ namespace AnglrLangExtension
             else
                 Width += 4 * Margin;
         }
-        public void Draw ()
+        public override void Draw ()
         {
             AnglrVisualPosition position = new AnglrVisualPosition ();
             double x, y;
@@ -1631,7 +1835,7 @@ namespace AnglrLangExtension
             Width += 10 * Margin;
         }
 
-        public void Draw ()
+        public override void Draw ()
         {
             AnglrVisualPosition position = new AnglrVisualPosition ();
             double x, y;
@@ -1790,7 +1994,7 @@ namespace AnglrLangExtension
                 );
             }
         }
-        public void Draw ()
+        public override void Draw ()
         {
             AnglrVisualPosition position = new AnglrVisualPosition ();
             double x, y;
@@ -1953,7 +2157,7 @@ namespace AnglrLangExtension
             }
         }
 
-        public void Draw ()
+        public override void Draw ()
         {
             AnglrVisualPosition position = new AnglrVisualPosition ();
             double x, y;
@@ -2086,7 +2290,7 @@ namespace AnglrLangExtension
             );
         }
 
-        public void Draw ()
+        public override void Draw ()
         {
             AnglrVisualPosition position = new AnglrVisualPosition ();
             double x, y;

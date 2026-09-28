@@ -78,6 +78,9 @@
       <DependentUpon>AnglrLangWindowControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="AnglrLspClientAccessPoint.cs" />
+    <Compile Include="AnglrPDASnapshotViewerTab.xaml.cs">
+      <DependentUpon>AnglrPDASnapshotViewerTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AnglrSelectionEvents.cs" />
     <Compile Include="AnglrStatesWindow.cs" />
     <Compile Include="AnglrStatesWindowCommand.cs" />
@@ -161,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AnglrLangWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AnglrPDASnapshotViewerTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

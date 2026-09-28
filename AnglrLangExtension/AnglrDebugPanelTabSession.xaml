@@ -10,7 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <!--<RowDefinition Height="*"/>-->
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -21,5 +21,14 @@
             <Button x:Name="continueButton" Content="Continue" Margin="5, 0, 5, 0" Click="continueButton_Click"/>
             <Button x:Name="singleStepButton" Content="Single Step" Margin="5, 0, 5, 0" Click="singleStepButton_Click"/>
         </StackPanel>
+        <ScrollViewer Grid.Row="2" Grid.Column="0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" >
+            <local:AnglrParserPartDrawingCanvas
+                x:Name="pdaStateViewer"
+                Background="White"
+                CanHorizontallyScroll="True"
+                CanVerticallyScroll="True"
+                Height="500"
+            />
+        </ScrollViewer>
     </Grid>
 </UserControl>

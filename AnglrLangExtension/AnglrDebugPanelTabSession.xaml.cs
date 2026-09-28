@@ -22,6 +22,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.Metrics;
+using System.Globalization;
 using System.IO;
 using System.IO.Pipelines;
 using System.Linq;
@@ -36,20 +37,42 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Windows.Forms.AxHost;
 
 namespace AnglrLangExtension
 {
+    public class AnglrStateItemResultList : List<AnglrGetParserStateItemResult> { }
+    public class AnglrStateItemResultListComparer : IComparer<AnglrStateItemResultList>
+    {
+        public int Compare (AnglrStateItemResultList x, AnglrStateItemResultList y)
+        {
+            if (x.Count != y.Count)
+                return x.Count - y.Count;
+            AnglrStateItemResultList.Enumerator xenum = x.GetEnumerator ();
+            AnglrStateItemResultList.Enumerator yenum = y.GetEnumerator ();
+            while (xenum.MoveNext () && yenum.MoveNext ())
+            {
+                int diff = xenum.Current.StateNumber - yenum.Current.StateNumber;
+                if (diff != 0)
+                    return diff;
+            }
+            return 0;
+        }
+    }
     public class AnglrPDAStateTransitionInfo : AnglrGetParserStateTransitionPointData
     {
+        IAnglrLogger Logger { get; set; }
         public List<AnglrPDAStateTransitionInfo> Children { get; private set; }
         public AnglrPDAStateTransitionInfo Parent { get; set; }
-        public List<AnglrGetParserStateItemResult> PDAStates { get; private set; }
-        public AnglrPDAStateTransitionInfo ()
+        public AnglrStateItemResultList PDAStates { get; private set; }
+        public AnglrPDAStateTransitionInfo (IAnglrLogger logger)
         {
+            Logger = logger ?? new VoidAnglrLogger ();
             Children = new List<AnglrPDAStateTransitionInfo> ();
-            PDAStates = new List<AnglrGetParserStateItemResult> ();
+            PDAStates = new AnglrStateItemResultList ();
         }
         public void Add (AnglrPDAStateTransitionInfo child)
         {
@@ -65,16 +88,27 @@ namespace AnglrLangExtension
             f (this, appData);
             foreach (var element in Children)
                 element.Traverse (f, appData);
-            //if (element.Parent == this)
-            //        element.Traverse (f, appData);
-            //    else
-            //        f (element, " -> ");
+        }
+        public string Display ()
+        {
+            StringBuilder sb = new StringBuilder ();
+            int index = 0;
+            int productionNumber = Production.ProductionNumber;
+            AnglrGetParserStateSymbolTokenData productionName = Production.ProductionName;
+            sb.Append ($"{productionNumber} {productionName.Name} ({productionName.Id}):");
+            foreach (var node in Production.RhsNodeSet)
+            {
+                if (index++ <= Position)
+                    sb.Append ($" .");
+                sb.Append ($" {node.Name} ({node.Id})");
+            }
+            return sb.ToString ();
         }
     }
 
-    public class AnglrPDASetElementComparer : IComparer<AnglrPDAStateTransitionInfo>
+    public class AnglrPDASetElementComparer : IComparer<AnglrGetParserStateTransitionPointData>
     {
-        public int Compare (AnglrPDAStateTransitionInfo x, AnglrPDAStateTransitionInfo y)
+        public int Compare (AnglrGetParserStateTransitionPointData x, AnglrGetParserStateTransitionPointData y)
         {
             if (x.Production.ProductionNumber != y.Production.ProductionNumber)
                 return x.Production.ProductionNumber - y.Production.ProductionNumber;
@@ -100,7 +134,7 @@ namespace AnglrLangExtension
                 Logger?.DebugLine ($"\tadd core production {production.ProductionNumber}");
                 Add
                 (
-                    new AnglrPDAStateTransitionInfo ()
+                    new AnglrPDAStateTransitionInfo (Logger)
                     {
                         Production = production,
                         Position = position
@@ -116,7 +150,7 @@ namespace AnglrLangExtension
                     Logger?.DebugLine ($"\tadd closure production {productionInfo.ProductionNumber}");
                     Add
                     (
-                        new AnglrPDAStateTransitionInfo ()
+                        new AnglrPDAStateTransitionInfo (Logger)
                         {
                             Production = productionInfo,
                             Position = 0
@@ -141,7 +175,7 @@ namespace AnglrLangExtension
                 {
                     if (transition.Position <= 0)
                         continue;
-                    AnglrPDAStateTransitionInfo coreTransition = new AnglrPDAStateTransitionInfo ()
+                    AnglrPDAStateTransitionInfo coreTransition = new AnglrPDAStateTransitionInfo (Logger)
                     {
                         Production = transition.Production,
                         Position = transition.Position - 1
@@ -203,9 +237,9 @@ namespace AnglrLangExtension
                 (data) =>
                 {
                     string indent = appData as string ?? "";
-                    //if (appData == null)
-                    //    for (var element = transition; element.Parent != null; element = element.Parent)
-                    //        indent += "    ";
+                    if (appData == null)
+                        for (var element = transition; element.Parent != null; element = element.Parent)
+                            indent += "    ";
 
                     StringBuilder sb = new StringBuilder ();
                     AnglrGetParserStateProductionData productionData = data.Production;
@@ -224,6 +258,11 @@ namespace AnglrLangExtension
                     sb.Append ($"{indent}    states:");
                     foreach (var state in transition.PDAStates)
                         sb.Append ($" {state.StateNumber}");
+                    if (transition.Children.Count > 1)
+                    {
+                        sb.AppendLine ();
+                        sb.Append ($"{indent}    {transition.Children.Count} conflicts");
+                    }
                     return sb.ToString ();
                 },
                 transition
@@ -301,6 +340,460 @@ namespace AnglrLangExtension
     }
 
     public class AnglrLRStackViewSet : Dictionary<int, AnglrDebuggerStackView> { }
+
+    public enum AnglrPDADrawingType
+    {
+        None,
+        SyntaxRuleName,
+        ConstantSymbol,
+        TerminalSymbol,
+        NonTerminalSymbol,
+        PDATransition,
+        PDAState,
+        PDASet
+    }
+
+    public abstract class AnglrPDABaseDrawing : DrawingVisual
+    {
+        //
+        // common properties
+        //
+
+        public static bool Debug { get; set; } = true;
+        public static int IdCounter;
+        public static CultureInfo CultureInfo { get; set; } = CultureInfo.InvariantCulture;
+        public static FlowDirection FlowDirection { get; set; } = FlowDirection.LeftToRight;
+        public static string TypefaceName { get; set; } = "Consolas";
+        public static int FontSize { get; set; } = 14;
+        public static Brush Brush { get; set; } = Brushes.Black;
+        public static Pen Pen { get; set; } = new Pen (Brush, 0.5);
+        public static Brush TerminalSymbolBackground { get; set; } = Brushes.LightGreen;
+        public static Brush ConstantSymbolBackground { get; set; } = Brushes.LightGray;
+        public static Brush NonTerminalSymbolBackground { get; set; } = Brushes.LightBlue;
+        public static Brush SyntaxRuleBackground { get; set; } = Brushes.Blue;
+        public static Brush SyntaxGroupBackground { get; set; } = Brushes.Orange;
+        public static int Margin { get; set; } = 4;
+        public static int RectangleRadius { get; set; } = 6;
+        public static int ConnectorRadius { get; set; } = 6;
+        public static int ConnectorLength { get; set; } = 20;
+
+        //
+        // object properties
+        //
+
+        public Point ConnectorPoint { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public Vector Position { get; set; }
+        public Size Size => new Size (Width, Height);
+        public Rect Bounds => new Rect ((Point) Position, Size);
+        public AnglrPDADrawingType DrawingType { get; }
+        public AnglrPDAStateTransitionInfo TransitionInfo { get; }
+        public double Opacity { get; protected set; }
+        public AnglrPDABaseDrawing (AnglrPDAStateTransitionInfo transitionInfo, AnglrPDADrawingType drawingType)
+        {
+            TransitionInfo = transitionInfo;
+            DrawingType = drawingType;
+            Opacity = 1.0;
+        }
+        public abstract void Draw ();
+        public abstract void Display ();
+
+    }
+
+    public class AnglrPDASyntaxRuleNameDrawing : AnglrPDABaseDrawing
+    {
+        public string Name { get; }
+        public int SyntaxRuleNr { get; }
+        public int ProductionNr { get; }
+        public int StateNr { get; }
+        public AnglrPDASyntaxRuleNameDrawing (AnglrPDAStateTransitionInfo transitionInfo) : base (transitionInfo, AnglrPDADrawingType.SyntaxRuleName)
+        {
+            AnglrGetParserStateProductionData productionData = transitionInfo.Production;
+            AnglrGetParserStateSymbolTokenData ruleName = productionData.ProductionName;
+            Name = ruleName.Name;
+            SyntaxRuleNr = ruleName.Id;
+            ProductionNr = productionData.ProductionNumber;
+            AnglrGetParserStateItemResult stateInfo = transitionInfo.PDAStates [0];
+            StateNr = (stateInfo != null) ? stateInfo.StateNumber : -1;
+        }
+        public override void Draw ()
+        {
+            using (var dc = RenderOpen ())
+            {
+                FormattedText text = new FormattedText
+                (
+                    Name,
+                    CultureInfo,
+                    FlowDirection,
+                    new Typeface (TypefaceName),
+                    FontSize,
+                    Brush,
+                    0.5
+                );
+                double width = text.Width;
+                double height = text.Height;
+
+                dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (0, 0, Width = width + 4 * Margin, Height = height + 4 * Margin), 2 * Margin, 2 * Margin);
+                dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (Margin, Margin, width + 2 * Margin, height + 2 * Margin), Margin, Margin);
+                dc.DrawText (text, new Point (2 * Margin, 2 * Margin));
+                ConnectorPoint = new Point (0, Height / 2.0);
+            }
+            Drawing.Freeze ();
+        }
+        public override void Display ()
+        {
+            throw new NotImplementedException ();
+        }
+
+    }
+
+    public class AnglrPDATerminalSymbolDrawing : AnglrPDABaseDrawing
+    {
+        public AnglrGetParserStateItemResult StateInfo { get; }
+        public AnglrGetParserStateSymbolTokenData SymbolName { get; }
+        public string Name { get; }
+        public int TokenCode { get; }
+        public int StateNr { get; }
+        public AnglrPDATerminalSymbolDrawing
+        (
+            AnglrPDAStateTransitionInfo transitionInfo,
+            AnglrGetParserStateItemResult stateInfo,
+            AnglrGetParserStateSymbolTokenData symbolName
+        ) : base (transitionInfo, AnglrPDADrawingType.TerminalSymbol)
+        {
+            StateInfo = stateInfo;
+            SymbolName = symbolName;
+            Name = symbolName.Name;
+            TokenCode = symbolName.Id;
+            if ((StateNr = (StateInfo != null) ? StateInfo.StateNumber : -1) < 0)
+                Opacity = 0.5;
+        }
+
+        public override void Draw ()
+        {
+            string info =
+                (StateNr >= 0) ?
+                $"{StateNr} : {Name}" :
+                $"{Name}";
+            using (var dc = RenderOpen ())
+            {
+                FormattedText text = new FormattedText
+                (
+                    info,
+                    CultureInfo,
+                    FlowDirection,
+                    new Typeface (TypefaceName),
+                    FontSize,
+                    Brush,
+                    0.5
+                );
+                double width = text.Width;
+                double height = text.Height;
+
+                dc.DrawRectangle ((StateNr >= 0) ? TerminalSymbolBackground : Brushes.Transparent, Pen, new Rect (0, 0, Width = width + 2 * Margin, Height = height + 2 * Margin));
+                dc.DrawText (text, new Point (Margin, Margin));
+                ConnectorPoint = new Point (0, Height / 2.0);
+            }
+            Drawing.Freeze ();
+        }
+        public override void Display ()
+        {
+            throw new NotImplementedException ();
+        }
+
+    }
+
+    public class AnglrPDAConstantSymbolDrawing : AnglrPDABaseDrawing
+    {
+        public AnglrGetParserStateItemResult StateInfo { get; }
+        public AnglrGetParserStateSymbolTokenData SymbolName { get; }
+        public string Name { get; }
+        public int TokenCode { get; }
+        public int StateNr { get; }
+        public AnglrPDAConstantSymbolDrawing
+        (
+            AnglrPDAStateTransitionInfo transitionInfo,
+            AnglrGetParserStateItemResult stateInfo,
+            AnglrGetParserStateSymbolTokenData symbolName
+        ) : base (transitionInfo, AnglrPDADrawingType.ConstantSymbol)
+        {
+            StateInfo = stateInfo;
+            SymbolName = symbolName;
+            Name = symbolName.Synonym;
+            TokenCode = symbolName.Id;
+            if ((StateNr = (StateInfo != null) ? StateInfo.StateNumber : -1) < 0)
+                Opacity = 0.5;
+        }
+
+        public override void Draw ()
+        {
+            string info =
+                (StateNr >= 0) ?
+                $"{StateNr} : {Name}" :
+                $"{Name}";
+            using (var dc = RenderOpen ())
+            {
+                FormattedText text = new FormattedText
+                (
+                    info,
+                    CultureInfo,
+                    FlowDirection,
+                    new Typeface (TypefaceName),
+                    FontSize,
+                    Brush,
+                    0.5
+                );
+                double width = text.Width;
+                double height = text.Height;
+
+                dc.DrawRectangle ((StateNr >= 0) ? ConstantSymbolBackground : Brushes.Transparent, Pen, new Rect (0, 0, Width = width + 2 * Margin, Height = height + 2 * Margin));
+                dc.DrawText (text, new Point (Margin, Margin));
+                ConnectorPoint = new Point (0, Height / 2.0);
+            }
+            Drawing.Freeze ();
+        }
+        public override void Display ()
+        {
+            throw new NotImplementedException ();
+        }
+
+    }
+
+    public class AnglrPDANonTerminalSymbolDrawing : AnglrPDABaseDrawing
+    {
+        public AnglrGetParserStateItemResult StateInfo { get; }
+        public AnglrGetParserStateSymbolTokenData SymbolName { get; }
+        public string Name { get; }
+        public int SyntaxRuleNr { get; }
+        public int StateNr { get; }
+        public AnglrPDANonTerminalSymbolDrawing
+        (
+            AnglrPDAStateTransitionInfo transitionInfo,
+            AnglrGetParserStateItemResult stateInfo,
+            AnglrGetParserStateSymbolTokenData symbolName
+        ) : base (transitionInfo, AnglrPDADrawingType.NonTerminalSymbol)
+        {
+            StateInfo = stateInfo;
+            SymbolName = symbolName;
+            Name = symbolName.Name;
+            SyntaxRuleNr = symbolName.Id;
+            if ((StateNr = (StateInfo != null) ? StateInfo.StateNumber : -1) < 0)
+                Opacity = 0.5;
+        }
+
+        public override void Draw ()
+        {
+            using (var dc = RenderOpen ())
+            {
+                string info =
+                    (StateNr >= 0) ?
+                    $"{StateNr} : {Name}" :
+                    $"{Name}";
+                FormattedText text = new FormattedText
+                (
+                    info,
+                    CultureInfo,
+                    FlowDirection,
+                    new Typeface (TypefaceName),
+                    FontSize,
+                    Brush,
+                    0.5
+                );
+                double width = text.Width;
+                double height = text.Height;
+
+                dc.DrawRoundedRectangle ((StateNr >= 0) ? NonTerminalSymbolBackground : Brushes.Transparent, Pen, new Rect (0, 0, Width = width + 2 * Margin, Height = height + 2 * Margin), Margin, Margin);
+                dc.DrawText (text, new Point (Margin, Margin));
+                ConnectorPoint = new Point (0, Height / 2.0);
+            }
+            Drawing.Freeze ();
+        }
+        public override void Display ()
+        {
+            throw new NotImplementedException ();
+        }
+
+    }
+
+    public class AnglrPDATransitionInfoDrawing : AnglrPDABaseDrawing
+    {
+        public AnglrPDASyntaxRuleNameDrawing RuleName { get; }
+        public List<AnglrPDABaseDrawing> ProductionParts { get; }
+        public AnglrPDATransitionInfoDrawing (AnglrPDAStateTransitionInfo transitionInfo) : base (transitionInfo, AnglrPDADrawingType.PDATransition)
+        {
+            ProductionParts = new List<AnglrPDABaseDrawing> ();
+            RuleName = new AnglrPDASyntaxRuleNameDrawing (transitionInfo);
+            AnglrPDABaseDrawing drawing = null;
+            int index = 0;
+            int count = transitionInfo.PDAStates.Count;
+            foreach (var rhsNode in transitionInfo.Production.RhsNodeSet)
+            {
+                AnglrGetParserStateItemResult stateInfo = (index < count) ? transitionInfo.PDAStates [index++] : null;
+                if (rhsNode.Declarator == 18)
+                {
+                    if ((rhsNode.Synonym != null) && (rhsNode.Synonym.Length > 0))
+                        drawing = new AnglrPDAConstantSymbolDrawing (transitionInfo, stateInfo, rhsNode);
+                    else
+                        drawing = new AnglrPDATerminalSymbolDrawing (transitionInfo, stateInfo, rhsNode);
+                }
+                else
+                    drawing = new AnglrPDANonTerminalSymbolDrawing (transitionInfo, stateInfo, rhsNode);
+                ProductionParts.Add (drawing);
+            }
+        }
+
+        public override void Draw ()
+        {
+            RuleName.Draw ();
+            double drawingHeight = 0;
+            foreach (var drawing in ProductionParts)
+            {
+                drawing.Draw ();
+                drawingHeight = Math.Max (drawingHeight, drawing.Height);
+            }
+            double height = RuleName.Height + drawingHeight + 4 * Margin;
+            double width = 4 * Margin;
+            using (var dc = RenderOpen ())
+            {
+                dc.PushTransform (new TranslateTransform (0, 2 * Margin));
+                dc.DrawDrawing (RuleName.Drawing);
+                dc.PushTransform (new TranslateTransform (0, RuleName.Height + 2 * Margin));
+                foreach (var drawing in ProductionParts)
+                {
+                    dc.PushTransform (new TranslateTransform (width, (drawingHeight - drawing.Height) / 2));
+                    dc.PushOpacity (Opacity);
+                    dc.DrawDrawing (drawing.Drawing);
+                    dc.Pop ();
+                    dc.Pop ();
+                    width += drawing.Width + 4 * Margin;
+                }
+                dc.Pop ();
+                dc.Pop ();
+            }
+            Drawing.Freeze ();
+
+            Width = Math.Max (RuleName.Width + 2 * Margin, width);
+            Height = height;
+        }
+        public override void Display ()
+        {
+            throw new NotImplementedException ();
+        }
+
+    }
+
+    public class AnglrPDAStateDrawing : AnglrPDABaseDrawing
+    {
+        public AnglrStateItemResultList StateItemResults { get; }
+        public List<AnglrPDATransitionInfoDrawing> TransitionInfoDrawings { get; }
+
+        public AnglrPDAStateDrawing (AnglrStateItemResultList stateItemResults) : base (null, AnglrPDADrawingType.PDAState)
+        {
+            StateItemResults = stateItemResults;
+            TransitionInfoDrawings = new List<AnglrPDATransitionInfoDrawing> ();
+        }
+        public void Add (AnglrPDATransitionInfoDrawing transitionInfoDrawing) => TransitionInfoDrawings.Add (transitionInfoDrawing);
+        public override void Draw ()
+        {
+            string states = (StateItemResults.Count > 1) ? "states" : "state";
+            foreach (var stateItem in StateItemResults)
+                states += $" {stateItem.StateNumber}";
+            FormattedText text = new FormattedText
+            (
+                states,
+                CultureInfo,
+                FlowDirection,
+                new Typeface (TypefaceName),
+                FontSize,
+                Brush,
+                0.5
+            );
+            double width = text.Width;
+            double height = text.Height;
+            foreach (var transition in TransitionInfoDrawings)
+                transition.Draw ();
+            using (var dc = RenderOpen ())
+            {
+                dc.DrawText (text, new Point (Margin, Margin));
+                width += Margin;
+                height += 2 * Margin;
+                foreach (var transition in TransitionInfoDrawings)
+                {
+                    dc.PushTransform (new TranslateTransform (0, height));
+                    dc.DrawDrawing (transition.Drawing);
+                    dc.Pop ();
+                    height += transition.Height + 2 * Margin;
+                    width=Math.Max (width, transition.Width);
+                }
+                dc.PushTransform (new TranslateTransform (0, Margin));
+                dc.DrawRoundedRectangle (Brushes.Transparent, Pen, new Rect (0, 0, width, height - Margin), 2 * Margin, 2 * Margin);
+                dc.Pop ();
+            }
+            Width = width;
+            Height= height;
+        }
+        public override void Display ()
+        {
+            throw new NotImplementedException ();
+        }
+
+    }
+
+    public class AnglrPDASetDrawing : AnglrPDABaseDrawing
+    {
+        public List<AnglrPDAStateDrawing> PDAStatesDrawings { get; }
+        public AnglrPDASetDrawing (AnglrPDASet pdaSet) : base (null, AnglrPDADrawingType.PDASet)
+        {
+            List<AnglrPDATransitionInfoDrawing> PDASet = new List<AnglrPDATransitionInfoDrawing> ();
+            foreach (var element in pdaSet)
+                if (element.Parent == null)
+                    element.Traverse
+                    (
+                        (info, data) => PDASet.Add (new AnglrPDATransitionInfoDrawing (info)),
+                        null
+                    );
+            PDAStatesDrawings = new List<AnglrPDAStateDrawing> ();
+            AnglrStateItemResultList stateItemResults = new AnglrStateItemResultList ();
+            AnglrStateItemResultListComparer comparer = new AnglrStateItemResultListComparer ();
+            AnglrPDAStateDrawing stateSet = null;
+            foreach (var drawing in PDASet)
+            {
+                if (comparer.Compare (drawing.TransitionInfo.PDAStates, stateItemResults) != 0)
+                    PDAStatesDrawings.Add (stateSet = new AnglrPDAStateDrawing (stateItemResults = drawing.TransitionInfo.PDAStates));
+                stateSet.Add (drawing);
+            }
+        }
+
+        public override void Draw ()
+        {
+            foreach (var drawing in PDAStatesDrawings)
+                drawing.Draw ();
+
+            double height = 0;
+            double width = 0;
+            using (var dc = RenderOpen ())
+            {
+                foreach (var drawing in PDAStatesDrawings)
+                {
+                    dc.PushTransform (new TranslateTransform (0, height));
+                    dc.DrawDrawing (drawing.Drawing);
+                    dc.Pop ();
+                    width = Math.Max (width, drawing.Width);
+                    height += drawing.Height + 2 * Margin;
+                }
+            }
+            Drawing.Freeze ();
+
+            Width = width;
+            Height = height;
+        }
+        public override void Display ()
+        {
+            throw new NotImplementedException ();
+        }
+
+    }
 
     /// <summary>
     /// Interaction logic for AnglrDebugPanelTabSession.xaml
@@ -533,14 +1026,27 @@ namespace AnglrLangExtension
                             pda?.Display ("PDA ORIGINAL CELL STATE");
                     }
                     AnglrPDAViableSet pdaReducedList = pdaSetList.ReducePDASnapshot ();
+                    AnglrPDASet pdaSet = null;
                     if (true)
                     {
                         foreach (var pda in pdaReducedList)
                         {
                             pda?.Display ("PDA CELL STATE");
+                            pdaSet = pda;
                             break;
                         }
                     }
+                    if (pdaSet != null)
+                        Dispatcher.Invoke (() =>
+                        {
+                            pdaStateViewer.Clear ();
+                            AnglrPDASetDrawing setDrawing = new AnglrPDASetDrawing (pdaSet);
+                            setDrawing.Draw ();
+                            pdaStateViewer.AddVisual (setDrawing);
+                            pdaStateViewer.Width = setDrawing.Width;
+                            pdaStateViewer.Height = setDrawing.Height;
+                            Logger?.InfoLine ($"PDA STATE VIEWER: (W = {setDrawing.Width}, H = {setDrawing.Height})");
+                        });
                 }
             }
             catch (Exception ex)
