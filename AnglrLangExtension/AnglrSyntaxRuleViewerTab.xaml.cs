@@ -37,62 +37,13 @@ namespace AnglrLangExtension
                 DrawingVisual = LangDictionaryItem.DrawingVisual;
             if (DrawingVisual != null)
             {
+                syntaxRuleVisual.Logger = Logger;
                 syntaxRuleVisual.AddVisual (DrawingVisual);
                 syntaxRuleVisual.Width = DrawingVisual.Width;
                 syntaxRuleVisual.Height = DrawingVisual.Height;
             }
             else
                 Logger?.ErrorLine ($"Cannot retrieve syntax drawing for {fileName}, drawing visual[{magicNr}] does not exist");
-        }
-
-        private void syntaxRuleVisual_MouseDown (object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void syntaxRuleVisual_MouseEnter (object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void syntaxRuleVisual_MouseLeave (object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void syntaxRuleVisual_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void syntaxRuleVisual_MouseLeftButtonUp (object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void syntaxRuleVisual_MouseMove (object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void syntaxRuleVisual_MouseRightButtonDown (object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void syntaxRuleVisual_MouseRightButtonUp (object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void syntaxRuleVisual_MouseUp (object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void syntaxRuleVisual_MouseWheel (object sender, MouseWheelEventArgs e)
-        {
-
         }
     }
 }

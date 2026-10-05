@@ -139,9 +139,10 @@
                             <src:AnglrParserPartDrawingCanvas
                                 x:Name="stateRuleVisual"
                                 Background="White"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
                                 CanHorizontallyScroll="True"
                                 CanVerticallyScroll="True"
-                                Height="500"
                             />
                         </ScrollViewer>
                         <GridSplitter Height="5" BorderThickness="1" Grid.Row="2" Grid.Column="0" Grid.RowSpan="1" ResizeBehavior="PreviousAndNext" ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="#FFB4B4B4"/>

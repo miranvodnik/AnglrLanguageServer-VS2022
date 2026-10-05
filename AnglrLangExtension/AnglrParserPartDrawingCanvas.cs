@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using AnglrLogLibrary;
 
@@ -18,7 +19,149 @@ namespace AnglrLangExtension
         public AnglrParserPartDrawingCanvas ()
         {
             _visualCollection = new VisualCollection (this);
+            MouseDown += AnglrParserPartDrawingCanvas_OnMouseDown;
+            MouseUp += AnglrParserPartDrawingCanvas_OnMouseUp;
+            MouseEnter += AnglrParserPartDrawingCanvas_OnMouseEnter;
+            MouseLeave += AnglrParserPartDrawingCanvas_OnMouseLeave;
+            MouseLeftButtonDown += AnglrParserPartDrawingCanvas_OnMouseLeftButtonDown;
+            MouseLeftButtonUp += AnglrParserPartDrawingCanvas_OnMouseLeftButtonUp;
+            MouseRightButtonDown += AnglrParserPartDrawingCanvas_OnMouseRightButtonDown;
+            MouseRightButtonUp += AnglrParserPartDrawingCanvas_OnMouseRightButtonUp;
+            MouseMove += AnglrParserPartDrawingCanvas_OnMouseMove;
         }
+
+        private void AnglrParserPartDrawingCanvas_OnMouseDown (object sender, MouseButtonEventArgs e)
+        {
+            int result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseDown, $"mouse down");
+            if (result < 0)
+            {
+
+            }
+        }
+
+        private void AnglrParserPartDrawingCanvas_OnMouseUp (object sender, MouseButtonEventArgs e)
+        {
+            int result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseUp, $"mouse up");
+            if (result < 0)
+            {
+
+            }
+        }
+
+        private void AnglrParserPartDrawingCanvas_OnMouseEnter (object sender, MouseEventArgs e)
+        {
+            int result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseEnter, $"mouse enter");
+            if (result < 0)
+            {
+
+            }
+        }
+
+        private void AnglrParserPartDrawingCanvas_OnMouseLeave (object sender, MouseEventArgs e)
+        {
+            int result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseLeave, $"mouse leave");
+            if (result < 0)
+            {
+
+            }
+        }
+
+        private void AnglrParserPartDrawingCanvas_OnMouseLeftButtonDown (object sender, MouseButtonEventArgs e)
+        {
+            int result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseLeftButttonDown, $"mouse left button down");
+            if (result < 0)
+            {
+
+            }
+        }
+
+        private void AnglrParserPartDrawingCanvas_OnMouseLeftButtonUp (object sender, MouseButtonEventArgs e)
+        {
+            int result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseLeftButttonUp, $"mouse left button up");
+            if (result < 0)
+            {
+
+            }
+        }
+
+        private void AnglrParserPartDrawingCanvas_OnMouseRightButtonDown (object sender, MouseButtonEventArgs e)
+        {
+            int result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseRightButttonDown, $"mouse right button down");
+            if (result < 0)
+            {
+
+            }
+        }
+
+        private void AnglrParserPartDrawingCanvas_OnMouseRightButtonUp (object sender, MouseButtonEventArgs e)
+        {
+            int result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseRightButttonUp, $"mouse right button up");
+            if (result < 0)
+            {
+
+            }
+        }
+
+        private void AnglrParserPartDrawingCanvas_OnMouseMove (object sender, MouseEventArgs e)
+        {
+            int result = MouseEventDispatcher (sender, e, AnglrMouseEventKind.MouseMove, $"mouse move");
+            if (result < 0)
+            {
+
+            }
+        }
+
+        private int MouseEventDispatcher (object sender, MouseEventArgs e, AnglrMouseEventKind mouseEventKind, string debugText)
+        {
+            switch (mouseEventKind)
+            {
+                case AnglrMouseEventKind.MouseEnter:
+                case AnglrMouseEventKind.MouseLeave:
+                case AnglrMouseEventKind.MouseMove:
+                case AnglrMouseEventKind.MouseWheel:
+                    return -1;
+            }
+            var p = e.GetPosition (sender as IInputElement);
+            if (p == null)
+            {
+                Logger?.InfoLine ($"*** NO ANGLR VISUAL HIT ***, kind = {mouseEventKind}");
+                return -1;
+            }
+
+            List<Visual> visuals = new List<Visual> ();
+            VisualTreeHelper.HitTest
+            (
+                sender as Visual,
+                null,
+                (result) =>
+                {
+                    if (result.VisualHit is Visual visual)
+                        visuals.Add (visual);
+                    return HitTestResultBehavior.Continue;
+                },
+                new PointHitTestParameters (p)
+            );
+
+            if (visuals.Count == 0)
+            {
+                Logger?.InfoLine ($"*** NO ANGLR VISUAL HIT ***, kind = {mouseEventKind}, point = {p}");
+                return 0;
+            }
+            foreach (Visual visual in visuals)
+            {
+                Vector offset = new Vector (p.X, p.Y);
+                for (DrawingVisual parent = visual as DrawingVisual; parent != null; parent = parent.Parent as DrawingVisual)
+                {
+                    Rect bounds = parent.ContentBounds;
+                    bounds.Union (parent.DescendantBounds);
+                    offset -= parent.Offset;
+                }
+                Logger?.InfoLine ($"*** {debugText} ***, is raw = {visual is AnglrRawDrawingVisual}, point = {(Point) offset}");
+                (visual as AnglrRawDrawingVisual)?.HitTest (sender, e, (Point) offset, mouseEventKind);
+            }
+            return 1;
+        }
+
         protected override int VisualChildrenCount
         {
             get => _visualCollection.Count;

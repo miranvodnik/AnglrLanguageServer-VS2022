@@ -31,9 +31,10 @@
             <local:AnglrParserPartDrawingCanvas
                 x:Name="pdaSnapshotVisual"
                 Background="White"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
                 CanHorizontallyScroll="True"
                 CanVerticallyScroll="True"
-                Height="500"
             />
         </ScrollViewer>
     </Grid>

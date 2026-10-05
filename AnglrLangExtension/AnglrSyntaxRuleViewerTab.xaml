@@ -11,9 +11,10 @@
             <local:AnglrParserPartDrawingCanvas
                 x:Name="syntaxRuleVisual"
                 Background="White"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
                 CanHorizontallyScroll="True"
                 CanVerticallyScroll="True"
-                Height="500"
             />
         </ScrollViewer>
     </Grid>

@@ -9,25 +9,24 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="debuggerList" Grid.Row="0" Grid.Column="0"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
             <Button x:Name="breakButton" Content="Break" Margin="5, 0, 5, 0" Click="breakButton_Click"/>
             <Button x:Name="continueButton" Content="Continue" Margin="5, 0, 5, 0" Click="continueButton_Click"/>
             <Button x:Name="singleStepButton" Content="Single Step" Margin="5, 0, 5, 0" Click="singleStepButton_Click"/>
         </StackPanel>
-        <ScrollViewer Grid.Row="2" Grid.Column="0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" >
+        <ScrollViewer Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" >
             <local:AnglrParserPartDrawingCanvas
                 x:Name="pdaStateViewer"
                 Background="White"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
                 CanHorizontallyScroll="True"
                 CanVerticallyScroll="True"
-                Height="500"
             />
         </ScrollViewer>
     </Grid>
