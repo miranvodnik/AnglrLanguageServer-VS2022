@@ -253,7 +253,7 @@ namespace AnglrLangExtension
                 double width = text.Width;
                 double height = text.Height;
 
-                dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (0, 0, width + 4 * Margin, height + 4 * Margin), RectangleRadius, RectangleRadius);
+                dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (0, 0, width + 4 * Margin, height + 4 * Margin), RectangleRadius + Margin, RectangleRadius + Margin);
                 dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (Margin, Margin, width + 2 * Margin, height + 2 * Margin), RectangleRadius, RectangleRadius);
                 dc.DrawText (text, new Point (2 * Margin, 2 * Margin));
             }
@@ -816,7 +816,7 @@ namespace AnglrLangExtension
                 double width = text.Width;
                 double height = text.Height;
 
-                dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (0, 0, Width = width + 4 * Margin, Height = height + 4 * Margin), RectangleRadius, RectangleRadius);
+                dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (0, 0, Width = width + 4 * Margin, Height = height + 4 * Margin), RectangleRadius + Margin, RectangleRadius + Margin);
                 dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (Margin, Margin, width + 2 * Margin, height + 2 * Margin), RectangleRadius, RectangleRadius);
                 dc.DrawText (text, new Point (2 * Margin, 2 * Margin));
                 ConnectorOffset = Height / 2.0;
@@ -2618,6 +2618,7 @@ namespace AnglrLangExtension
         public List<AnglrPDAStateTransitionInfo> Children { get; private set; }
         public AnglrPDAStateTransitionInfo Parent { get; set; }
         public AnglrStateItemResultList PDAStates { get; private set; }
+        public int Indent { get; private set; }
         public AnglrPDAStateTransitionInfo (IAnglrLogger logger)
         {
             Logger = logger ?? new VoidAnglrLogger ();
@@ -2638,6 +2639,13 @@ namespace AnglrLangExtension
             f (this, appData);
             foreach (var element in Children)
                 element.Traverse (f, appData);
+        }
+        public void ComputeIndent (int indent)
+        {
+            Indent = indent;
+            int newIndent = indent + ((Children.Count > 1) ? 1 : 0);
+            foreach (var element in Children)
+                element.ComputeIndent (newIndent);
         }
         public string Display ()
         {
@@ -2961,8 +2969,8 @@ namespace AnglrLangExtension
                 double height = text.Height;
 
                 dc.PushOpacity (OpacityValue);
-                dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (0, 0, Width = width + 4 * Margin, Height = height + 4 * Margin), 2 * Margin, 2 * Margin);
-                dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (Margin, Margin, width + 2 * Margin, height + 2 * Margin), Margin, Margin);
+                dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (0, 0, Width = width + 4 * Margin, Height = height + 4 * Margin), RectangleRadius + Margin, RectangleRadius + Margin);
+                dc.DrawRoundedRectangle (NonTerminalSymbolBackground, Pen, new Rect (Margin, Margin, width + 2 * Margin, height + 2 * Margin), RectangleRadius, RectangleRadius);
                 dc.Pop ();
                 dc.DrawText (text, new Point (2 * Margin, 2 * Margin));
                 ConnectorPoint = new Point (0, Height / 2.0);
@@ -3313,7 +3321,7 @@ namespace AnglrLangExtension
                 double height = text.Height;
 
                 dc.PushOpacity (OpacityValue);
-                dc.DrawRoundedRectangle ((StateNr >= 0) ? NonTerminalSymbolBackground : Brushes.Transparent, Pen, new Rect (0, 0, Width = width + 2 * Margin, Height = height + 2 * Margin), Margin, Margin);
+                dc.DrawRoundedRectangle ((StateNr >= 0) ? NonTerminalSymbolBackground : Brushes.Transparent, Pen, new Rect (0, 0, Width = width + 2 * Margin, Height = height + 2 * Margin), RectangleRadius, RectangleRadius);
                 dc.Pop ();
                 dc.DrawText (text, new Point (Margin, Margin));
                 ConnectorPoint = new Point (0, Height / 2.0);
@@ -3390,6 +3398,7 @@ namespace AnglrLangExtension
     {
         public AnglrPDASyntaxRuleNameDrawing RuleName { get; }
         public List<AnglrPDABaseDrawing> ProductionParts { get; }
+        public AnglrPDABaseDrawing ExtendedDrawing { get; private set; }
         public AnglrPDATransitionInfoDrawing (IAnglrLogger logger, AnglrPDAStateTransitionInfo transitionInfo) : base (logger, transitionInfo, AnglrPDADrawingType.PDATransition)
         {
             ProductionParts = new List<AnglrPDABaseDrawing> ();
@@ -3410,6 +3419,8 @@ namespace AnglrLangExtension
                 else
                     drawing = new AnglrPDANonTerminalSymbolDrawing (logger, transitionInfo, stateInfo, rhsNode);
                 ProductionParts.Add (drawing);
+                if (stateInfo != null)
+                    ExtendedDrawing = drawing;
             }
         }
 
@@ -3525,13 +3536,19 @@ namespace AnglrLangExtension
     {
         public AnglrStateItemResultList StateItemResults { get; }
         public List<AnglrPDATransitionInfoDrawing> TransitionInfoDrawings { get; }
+        public AnglrPDATransitionInfoDrawing FirstTransitionInfoDrawing { get; private set; }
+        public AnglrPDATransitionInfoDrawing LastTransitionInfoDrawing { get; private set; }
 
         public AnglrPDAStateDrawing (IAnglrLogger logger, AnglrStateItemResultList stateItemResults) : base (logger, null, AnglrPDADrawingType.PDAState)
         {
             StateItemResults = stateItemResults;
             TransitionInfoDrawings = new List<AnglrPDATransitionInfoDrawing> ();
         }
-        public void Add (AnglrPDATransitionInfoDrawing transitionInfoDrawing) => TransitionInfoDrawings.Add (transitionInfoDrawing);
+        public void Add (AnglrPDATransitionInfoDrawing transitionInfoDrawing)
+        {
+            FirstTransitionInfoDrawing = FirstTransitionInfoDrawing ?? transitionInfoDrawing;
+            TransitionInfoDrawings.Add (LastTransitionInfoDrawing = transitionInfoDrawing);
+        }
         public override void Draw ()
         {
             AnglrVisualPosition position = new AnglrVisualPosition ();
@@ -3564,10 +3581,8 @@ namespace AnglrLangExtension
             {
                 dc.PushTransform (new TranslateTransform (0, Margin));
                 dc.PushOpacity (OpacityValue);
-                dc.DrawRoundedRectangle (PDAStateHeadBackground, Pen, new Rect (0, 0, width, text.Height + 4 * Margin), 2 * Margin, 2 * Margin);
-                dc.PushOpacity (OpacityValue);
-                dc.DrawRoundedRectangle (PDAStateBodyBackground, Pen, new Rect (0, text.Height + 2 * Margin, width, height - text.Height - 3 * Margin), 2 * Margin, 2 * Margin);
-                dc.Pop ();
+                dc.DrawRoundedRectangle (PDAStateHeadBackground, Pen, new Rect (0, 0, width, text.Height + 4 * Margin), RectangleRadius + Margin, RectangleRadius + Margin);
+                dc.DrawRoundedRectangle (PDAStateBodyBackground, Pen, new Rect (0, text.Height + 2 * Margin, width, height - text.Height - 3 * Margin), RectangleRadius, RectangleRadius);
                 dc.Pop ();
                 dc.DrawText (text, new Point (Margin, Margin));
                 dc.Pop ();
@@ -3584,9 +3599,6 @@ namespace AnglrLangExtension
                     position.PopPosition ();
                     height += transition.Height + 2 * Margin;
                     width = Math.Max (width, transition.Width);
-                }
-                if (false)
-                {
                 }
             }
             Drawing.Freeze ();
@@ -3667,11 +3679,14 @@ namespace AnglrLangExtension
             List<AnglrPDATransitionInfoDrawing> PDASet = new List<AnglrPDATransitionInfoDrawing> ();
             foreach (var element in pdaSet)
                 if (element.Parent == null)
+                {
                     element.Traverse
                     (
                         (info, data) => PDASet.Add (new AnglrPDATransitionInfoDrawing (logger, info)),
                         null
                     );
+                    element.ComputeIndent (0);
+                }
             PDAStatesDrawings = new List<AnglrPDAStateDrawing> ();
             AnglrStateItemResultList stateItemResults = new AnglrStateItemResultList ();
             AnglrStateItemResultListComparer comparer = new AnglrStateItemResultListComparer ();
@@ -3696,9 +3711,11 @@ namespace AnglrLangExtension
             double width = 0;
             using (var dc = RenderOpen ())
             {
+                dc.PushTransform (new TranslateTransform (x = 2 * Margin, y = 2 * Margin));
+                position.PushPosition (x, y);
                 foreach (var drawing in PDAStatesDrawings)
                 {
-                    dc.PushTransform (new TranslateTransform (x = 0, y = height));
+                    dc.PushTransform (new TranslateTransform (x = drawing.FirstTransitionInfoDrawing.TransitionInfo.Indent * 20 * Margin, y = height));
                     drawing.Position += position.PushPosition (x, y);
                     dc.DrawDrawing (drawing.Drawing);
                     dc.Pop ();
@@ -3707,6 +3724,8 @@ namespace AnglrLangExtension
                     width = Math.Max (width, drawing.Width);
                     height += drawing.Height + 2 * Margin;
                 }
+                dc.Pop ();
+                position.PopPosition ();
             }
             Drawing.Freeze ();
 

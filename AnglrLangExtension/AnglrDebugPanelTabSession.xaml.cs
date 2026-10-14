@@ -12,6 +12,7 @@ using Microsoft.VisualStudio.GraphModel.CodeSchema;
 using Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Shell;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Converters;
 using StreamJsonRpc;
 using StreamJsonRpc.Protocol;
@@ -44,7 +45,7 @@ using static System.Windows.Forms.AxHost;
 
 namespace AnglrLangExtension
 {
-
+    public class TabItemsSet : Dictionary<int, TabItem> { }
     /// <summary>
     /// Interaction logic for AnglrDebugPanelTabSession.xaml
     /// </summary>
@@ -53,27 +54,23 @@ namespace AnglrLangExtension
         public int MagicNumber { get; private set; }
         public AnglrLangDictionaryItem DictionaryItem { get; private set; }
         public JsonRpc Rpc { get; set; }
-        public ObservableCollection<AnglrDebuggerStackView> LRStackViewCollection { get; set; }
 
         public IAnglrLogger Logger { get; private set; }
 
         private IAnglrLangService anglrLangService;
-        private string fileName;
-        private AnglrDebuggerClientBridge anglrDebuggerServerBridge;
 
-        private AnglrLRStackViewSet lRStackViewSet;
-        private bool showDebuggerText;
+        private TabItemsSet tabItems;
+        private AnglrSelections anglrSelections;
 
         public AnglrDebugPanelTabSession (IAnglrLangService anglrLangService)
         {
             InitializeComponent ();
 
-            LRStackViewCollection = new ObservableCollection<AnglrDebuggerStackView> ();
-            lRStackViewSet = new AnglrLRStackViewSet ();
+            tabItems = new TabItemsSet ();
+            anglrSelections = new AnglrSelections ();
 
             this.anglrLangService = anglrLangService;
             Logger = anglrLangService?.AnglrLogger ?? new VoidAnglrLogger ();
-            showDebuggerText = true;
 
             Logger?.InfoLine ($"AnglrDebugPanelSession created ");
         }
@@ -249,39 +246,27 @@ namespace AnglrLangExtension
             try
             {
                 Logger?.InfoLine ($"break-point hit ({dbgBreakPointHitRequest.SequenceNr})");
+                Logger?.InfoLine ($"*** START OF DELTA SOURCE TEXT ***\n");
+                Logger?.InfoRawLine ($"{getPDASnapshotResponse.DeltaSourceText}");
+                Logger?.InfoLine ($"\n*** END   OF DELTA SOURCE TEXT ***");
+                TabItemsSet newTabItems = new TabItemsSet ();
                 foreach (var stack in getPDASnapshotResponse.PDAStackSet)
                 {
                     Logger?.InfoLine ($"stack ({stack.PDAStackId})");
                     Logger?.InfoLine ($"state\tcode\tname\t\tvalue");
                     foreach (var cell in stack.PDAStackCells)
                     {
-                        Logger?.InfoLine ($"\t{cell.State}\t{cell.Code}\t\t{cell.Name}\t\t{cell.Value}\t\t{cell.Tree}");
-                        if (false)
-                        {
-                            try
-                            {
-                                object anglrFileFragment = JsonConvert.DeserializeObject (cell.Tree, settings);
-                            }
-                            catch (Exception ex)
-                            {
-                                if (false)
-                                    Logger?.ErrorLine (ex, $"deserialization failed:");
-                            }
-                        }
+                        Logger?.InfoLine ($"\t{cell.State}\t{cell.Code}\t\t{cell.Name}\t\t{cell.Value}");
+                        Logger?.InfoLine ($"\t\t{new AnglrSelection (cell.StartSpan, cell.EndSpan)}");
                     }
                     AnglrPDAViableSet pdaSetList = AnalyzePDAStack (stack);
-                    if (false)
-                    {
-                        foreach (var pda in pdaSetList)
-                            pda?.Display ("PDA ORIGINAL CELL STATE");
-                    }
                     AnglrPDAViableSet pdaReducedList = pdaSetList.ReducePDASnapshot ();
                     AnglrPDASet pdaSet = null;
                     if (true)
                     {
                         foreach (var pda in pdaReducedList)
                         {
-                            pda?.Display ("PDA CELL STATE");
+                            //pda?.Display ("PDA CELL STATE");
                             pdaSet = pda;
                             break;
                         }
@@ -289,19 +274,57 @@ namespace AnglrLangExtension
                     if (pdaSet != null)
                         Dispatcher.Invoke (() =>
                         {
+                            AnglrPDASnapshotViewerTab viewerTab = null;
+                            if (!tabItems.TryGetValue (stack.PDAStackId, out var tabItem))
+                            {
+                                tabItem = new TabItem ();
+                                viewerTab = new AnglrPDASnapshotViewerTab (Logger, stack);
+                                tabItem.Content = viewerTab;
+                                tabItem.Tag = stack.PDAStackId;
+                                tabItem.Header = $"PDA {stack.PDAStackId}";
+                                pdaSnapshotTabs.Items.Add (tabItem);
+                            }
+                            else
+                                viewerTab = tabItem.Content as AnglrPDASnapshotViewerTab;
+                            newTabItems [stack.PDAStackId] = tabItem;
+
                             AnglrPDASnapshotDrawing pdaShapshotDrawing = new AnglrPDASnapshotDrawing (Logger, pdaSet);
                             pdaShapshotDrawing.Draw ();
                             pdaShapshotDrawing.Offset = new Vector (0, 0);
                             pdaShapshotDrawing.ComputeVisualBounds ();
 
-                            pdaStateViewer.Logger = Logger;
-                            pdaStateViewer.Clear ();
-                            pdaStateViewer.AddVisual (pdaShapshotDrawing);
-                            pdaStateViewer.Width = pdaShapshotDrawing.Width;
-                            pdaStateViewer.Height = pdaShapshotDrawing.Height;
-                            pdaStateViewer.InvalidateVisual ();
+                            AnglrParserPartDrawingCanvas drawingCanvas = viewerTab.pdaSnapshotVisual;
+                            drawingCanvas.Logger = Logger;
+                            drawingCanvas.Clear ();
+                            drawingCanvas.AddVisual (pdaShapshotDrawing);
+                            drawingCanvas.Width = pdaShapshotDrawing.Width;
+                            drawingCanvas.Height = pdaShapshotDrawing.Height;
+                            drawingCanvas.InvalidateVisual ();
                         });
                 }
+
+                Dispatcher.Invoke (() =>
+                {
+                    foreach (var key in tabItems.Keys)
+                        if (!newTabItems.TryGetValue (key, out var item))
+                        {
+                            Logger?.InfoLine ($"remove tab item {key}");
+                            pdaSnapshotTabs.Items.Remove (tabItems [key]);
+                        }
+                });
+
+                tabItems = newTabItems;
+                Logger?.InfoLine<TabItemsSet>
+                (
+                    (data) =>
+                    {
+                        string message = $"tab items:";
+                        foreach (var item in data)
+                            message += $" {item.Key}";
+                        return message;
+                    },
+                    tabItems
+                );
             }
             catch (Exception ex)
             {

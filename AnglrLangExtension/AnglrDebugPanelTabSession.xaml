@@ -9,25 +9,22 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="50*"/>
+            <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
             <Button x:Name="breakButton" Content="Break" Margin="5, 0, 5, 0" Click="breakButton_Click"/>
             <Button x:Name="continueButton" Content="Continue" Margin="5, 0, 5, 0" Click="continueButton_Click"/>
             <Button x:Name="singleStepButton" Content="Single Step" Margin="5, 0, 5, 0" Click="singleStepButton_Click"/>
         </StackPanel>
-        <ScrollViewer Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" >
-            <local:AnglrParserPartDrawingCanvas
-                x:Name="pdaStateViewer"
-                Background="White"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                CanHorizontallyScroll="True"
-                CanVerticallyScroll="True"
+        <TabControl
+            Grid.Row="1" Grid.Column="0"
+            x:Name="pdaSnapshotTabs"
+            Background="White"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
             />
-        </ScrollViewer>
     </Grid>
 </UserControl>

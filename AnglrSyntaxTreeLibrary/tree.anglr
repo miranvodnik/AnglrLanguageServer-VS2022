@@ -1,0 +1,106 @@
+﻿
+/*****************************************************/
+/*                                                   */
+/*	Anglr specifications simple syntax tree analyzer */
+/*                                                   */
+/*****************************************************/
+
+[ Description Text='General settings' Hover='true' ]
+[ CompilationInfo NameSpace='Tree' CodeDir='.' Hover='true' ]
+%general treeSettings
+%{
+%}
+
+[ Description Text='Declarations' Hover='true' ]
+[ CompilationInfo ClassName='TreeDeclarations' NameSpace='Tree.Declarations' Access='public' Hover='true' ]
+%declarations treeDecls
+%{
+	%regex
+	{
+		colon                  \:
+		coma                   \,
+		left-curly-bracket     \{
+		right-curly-bracket    \}
+	}
+
+	%regex
+	{
+		digit         [0-9]
+		cstring       \"([^"]|\"\")*\"|\'([^']|\'\')*\'
+		number        {digit}+
+		rx-null          null
+	}
+
+	%terminal
+	{
+		<left curly bracket> '{'
+		<right curly bracket> '}'
+		<colon> ':'
+		<coma> ','
+		<cstring>
+		<number>
+		<null>
+	}
+%}
+
+[ Description Text='Scanner for simple syntax tree' Hover='true' ]
+[ Declarations Id='treeDecls' Hover='true' ]
+[ CompilationInfo ClassName='TreeScanner' NameSpace='Tree.ScannerLib' Access='public' Hover='true' ]
+%scanner treeScanner
+%{
+{left-curly-bracket}
+	terminal <left curly bracket>
+{right-curly-bracket}
+	terminal <right curly bracket>
+{colon}
+	terminal <colon>
+{coma}
+	terminal <coma>
+{cstring}
+	terminal <cstring>
+{number}
+	terminal <number>
+{rx-null}
+	terminal <null>
+[ \t\n\r]
+		skip
+%}
+
+[ Description Text='Lexer for simple syntax tree' Hover='true' ]
+[
+	UseScanner
+		InitialScanner='treeScanner'
+		Hover='true'
+]
+[ CompilationInfo ClassName='TreeLexer' NameSpace='Tree.Lexer' Access='public' Hover='true' ]
+%lexer treeLexer
+%{
+%}
+
+[ Description Text='Parser for simple syntax tree' Hover='true' ]
+[ Lexer Id='treeLexer' Hover='true' ]
+[ Declarations Id='treeDecls' Hover='true' ]
+[ CompilationInfo ClassName='TreeParser' NameSpace='Tree.Parser' Access='public' Hover='true' ]
+%parser treeParser
+%{
+[ Start ]
+tree
+	:	'{' tree-element + [ ',' ] '}'
+	;
+
+tree-element
+	:	element-name ':' element-value
+	;
+
+element-name
+	:	<cstring>
+	;
+
+element-value
+	:	<cstring>
+	|	<number>
+	|	<null>
+	|	tree
+	;
+
+%}

@@ -1,0 +1,1607 @@
+(<anglr file fragment>, __anglr_file_fragment__ID, 0, 1, _eof_token)
+(<attribute list>, __attribute_list__ID, 1, 266, _left_square_bracket_)
+(<attribute>, __attribute__ID, 2, 1, _eof_token)
+(<name value list>, __name_value_list__ID, 3, 285, _identifier_)
+(<name value pair>, __name_value_pair__ID, 4, 1, _eof_token)
+(<anglr file>, __anglr_file__ID, 5, 1, _eof_token)
+(<anglr file part list>, __anglr_file_part_list__ID, 6, 287, _general_)
+(<anglr file part>, __anglr_file_part__ID, 7, 1, _eof_token)
+(<general part>, __general_part__ID, 8, 1, _eof_token)
+(<declaration part>, __declaration_part__ID, 9, 1, _eof_token)
+(<scanner part>, __scanner_part__ID, 23, 1, _eof_token)
+(<lexer part>, __lexer_part__ID, 33, 1, _eof_token)
+(<parser part>, __parser_part__ID, 34, 1, _eof_token)
+(<attribute list optional>, __attribute_list_optional__ID, 53, 1, _eof_token)
+(<anglr definition list>, __anglr_definition_list__ID, 10, 266, _left_square_bracket_)
+(<anglr definition with attribute>, __anglr_definition_with_attribute__ID, 11, 1, _eof_token)
+(<anglr definition>, __anglr_definition__ID, 12, 1, _eof_token)
+(<single terminal definition>, __single_terminal_definition__ID, 13, 1, _eof_token)
+(<single regex definition>, __single_regex_definition__ID, 14, 1, _eof_token)
+(<block of terminal definitions>, __block_of_terminal_definitions__ID, 15, 1, _eof_token)
+(<block of regex definitions>, __block_of_regex_definitions__ID, 16, 1, _eof_token)
+(<terminal definition>, __terminal_definition__ID, 17, 1, _eof_token)
+(<regex definition>, __regex_definition__ID, 18, 1, _eof_token)
+(<block terminal definitions>, __block_terminal_definitions__ID, 19, 285, _identifier_)
+(<block terminal definition>, __block_terminal_definition__ID, 20, 1, _eof_token)
+(<block regex definitions>, __block_regex_definitions__ID, 21, 285, _identifier_)
+(<block regex definition>, __block_regex_definition__ID, 22, 1, _eof_token)
+(<regular expression list>, __regular_expression_list__ID, 24, 295, _regular_expression_)
+(<regular expression usage>, __regular_expression_usage__ID, 25, 1, _eof_token)
+(<actions>, __actions__ID, 26, 297, _skip_)
+(<action>, __action__ID, 27, 1, _eof_token)
+(<skip action>, __skip_action__ID, 28, 1, _eof_token)
+(<terminal action>, __terminal_action__ID, 29, 1, _eof_token)
+(<event action>, __event_action__ID, 30, 1, _eof_token)
+(<push action>, __push_action__ID, 31, 1, _eof_token)
+(<pop action>, __pop_action__ID, 32, 1, _eof_token)
+(<anglr syntax rule list>, __anglr_syntax_rule_list__ID, 35, 285, _identifier_)
+(<anglr syntax rule>, __anglr_syntax_rule__ID, 36, 1, _eof_token)
+(<anglr nested rule>, __anglr_nested_rule__ID, 37, 1, _eof_token)
+(<anglr syntax production list name optional>, __anglr_syntax_production_list_name_optional__ID, 62, 1, _eof_token)
+(<anglr syntax production list name>, __anglr_syntax_production_list_name__ID, 38, 1, _eof_token)
+(<anglr syntax production list>, __anglr_syntax_production_list__ID, 39, 258, _vertical_bar_)
+(<anglr syntax production>, __anglr_syntax_production__ID, 40, 1, _eof_token)
+(<production name optional>, __production_name_optional__ID, 63, 1, _eof_token)
+(<production name>, __production_name__ID, 44, 1, _eof_token)
+(<priority assoc specification>, __priority_assoc_specification__ID, 41, 1, _eof_token)
+(<priority specification>, __priority_specification__ID, 42, 1, _eof_token)
+(<associativity specification>, __associativity_specification__ID, 43, 1, _eof_token)
+(<name list>, __name_list__ID, 45, 262, _left_bracket_)
+(<marker list optional>, __marker_list_optional__ID, 65, 1, _eof_token)
+(<marker list>, __marker_list__ID, 46, 269, _at_sign_)
+(<marker>, __marker__ID, 47, 1, _eof_token)
+(<g name>, __g_name__ID, 48, 273, _question_mark_)
+(<name>, __name__ID, 49, 1, _eof_token)
+(<cardinality delimiter>, __cardinality_delimiter__ID, 50, 1, _eof_token)
+(<cardinality>, __cardinality__ID, 51, 1, _eof_token)
+(<delimiter>, __delimiter__ID, 52, 1, _eof_token)
+(<name value list optional>, __name_value_list_optional__ID, 54, 1, _eof_token)
+(<anglr file part list optional>, __anglr_file_part_list_optional__ID, 55, 1, _eof_token)
+(<anglr definition list optional>, __anglr_definition_list_optional__ID, 56, 1, _eof_token)
+(<block terminal definitions optional>, __block_terminal_definitions_optional__ID, 57, 1, _eof_token)
+(<block regex definitions optional>, __block_regex_definitions_optional__ID, 58, 1, _eof_token)
+(<regular expression list optional>, __regular_expression_list_optional__ID, 59, 1, _eof_token)
+(<actions optional>, __actions_optional__ID, 60, 1, _eof_token)
+(<anglr syntax rule list optional>, __anglr_syntax_rule_list_optional__ID, 61, 1, _eof_token)
+(<priority assoc specification optional>, __priority_assoc_specification_optional__ID, 64, 1, _eof_token)
+(<delimiter optional>, __delimiter_optional__ID, 66, 1, _eof_token)
+(<cstring optional>, __cstring_optional__ID, 67, 1, _eof_token)
+(<number optional>, __number_optional__ID, 68, 1, _eof_token)
+CREATE 1
+2026-10-08 21:51:55.804 - Info - Parse grammar file '..\tree.anglr'
+STEP   1, 1
+TOKEN  '' (302)
+STEP   2, 1
+SHIFT  1 '' (302) : 0 --> 5
+TOKEN  '[' (266)
+STEP   3, 1
+SHIFT  1 '[' (266) : 5 --> 70
+TOKEN  'Description' (285)
+STEP   4, 1
+SHIFT  1 'Description' (285) : 70 --> 235
+TOKEN  'Text' (285)
+STEP   5, 1
+SHIFT  1 'Text' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   6, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''General settings'' (283)
+STEP   7, 1
+SHIFT  1 ''General settings'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   8, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'Hover' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   9, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   10, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   11, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '[' (266)
+STEP   12, 1
+REDUCE 1 '[' (266) <70, 372, 4> : 310 --> 5 --> 72
+REDUCE 1 '[' (266) <190, 371, 1> : 72 --> 5 --> 87
+SHIFT  1 '[' (266) : 87 --> 70
+TOKEN  'CompilationInfo' (285)
+STEP   13, 1
+SHIFT  1 'CompilationInfo' (285) : 70 --> 235
+TOKEN  'NameSpace' (285)
+STEP   14, 1
+SHIFT  1 'NameSpace' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   15, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''Tree'' (283)
+STEP   16, 1
+SHIFT  1 ''Tree'' (283) : 237 --> 288
+TOKEN  'CodeDir' (285)
+STEP   17, 1
+REDUCE 1 'CodeDir' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'CodeDir' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'CodeDir' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   18, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''.'' (283)
+STEP   19, 1
+SHIFT  1 ''.'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   20, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 'Hover' (285) <195, 373, 2> : 238 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   21, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   22, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   23, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '%general' (287)
+STEP   24, 1
+REDUCE 1 '%general' (287) <70, 372, 4> : 310 --> 87 --> 236
+REDUCE 1 '%general' (287) <191, 371, 2> : 236 --> 5 --> 87
+REDUCE 1 '%general' (287) <159, 423, 1> : 87 --> 5 --> 86
+SHIFT  1 '%general' (287) : 86 --> 240
+TOKEN  'treeSettings' (285)
+STEP   25, 1
+SHIFT  1 'treeSettings' (285) : 240 --> 289
+TOKEN  '%{' (264)
+STEP   26, 1
+SHIFT  1 '%{' (264) : 289 --> 311
+TOKEN  '%}' (265)
+STEP   27, 1
+REDUCE 1 '%}' (265) <158, 423, 0> : 311 --> 311 --> 321
+SHIFT  1 '%}' (265) : 321 --> 329
+TOKEN  '[' (266)
+STEP   28, 1
+REDUCE 1 '[' (266) <80, 378, 6> : 329 --> 5 --> 81
+REDUCE 1 '[' (266) <75, 377, 1> : 81 --> 5 --> 80
+REDUCE 1 '[' (266) <198, 376, 1> : 80 --> 5 --> 79
+SHIFT  1 '[' (266) : 79 --> 70
+TOKEN  'Description' (285)
+STEP   29, 1
+SHIFT  1 'Description' (285) : 70 --> 235
+TOKEN  'Text' (285)
+STEP   30, 1
+SHIFT  1 'Text' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   31, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''Declarations'' (283)
+STEP   32, 1
+SHIFT  1 ''Declarations'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   33, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'Hover' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   34, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   35, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   36, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '[' (266)
+STEP   37, 1
+REDUCE 1 '[' (266) <70, 372, 4> : 310 --> 79 --> 72
+REDUCE 1 '[' (266) <190, 371, 1> : 72 --> 79 --> 87
+SHIFT  1 '[' (266) : 87 --> 70
+TOKEN  'CompilationInfo' (285)
+STEP   38, 1
+SHIFT  1 'CompilationInfo' (285) : 70 --> 235
+TOKEN  'ClassName' (285)
+STEP   39, 1
+SHIFT  1 'ClassName' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   40, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''TreeDeclarations'' (283)
+STEP   41, 1
+SHIFT  1 ''TreeDeclarations'' (283) : 237 --> 288
+TOKEN  'NameSpace' (285)
+STEP   42, 1
+REDUCE 1 'NameSpace' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'NameSpace' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'NameSpace' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   43, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''Tree.Declarations'' (283)
+STEP   44, 1
+SHIFT  1 ''Tree.Declarations'' (283) : 237 --> 288
+TOKEN  'Access' (285)
+STEP   45, 1
+REDUCE 1 'Access' (285) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 'Access' (285) <195, 373, 2> : 238 --> 235 --> 208
+SHIFT  1 'Access' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   46, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''public'' (283)
+STEP   47, 1
+SHIFT  1 ''public'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   48, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 'Hover' (285) <195, 373, 2> : 238 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   49, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   50, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   51, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '%declarations' (288)
+STEP   52, 1
+REDUCE 1 '%declarations' (288) <70, 372, 4> : 310 --> 87 --> 236
+REDUCE 1 '%declarations' (288) <191, 371, 2> : 236 --> 79 --> 87
+REDUCE 1 '%declarations' (288) <159, 423, 1> : 87 --> 79 --> 86
+SHIFT  1 '%declarations' (288) : 86 --> 241
+TOKEN  'treeDecls' (285)
+STEP   53, 1
+SHIFT  1 'treeDecls' (285) : 241 --> 290
+TOKEN  '%{' (264)
+STEP   54, 1
+SHIFT  1 '%{' (264) : 290 --> 312
+TOKEN  '%regex' (289)
+STEP   55, 1
+REDUCE 1 '%regex' (289) <158, 423, 0> : 312 --> 312 --> 96
+SHIFT  1 '%regex' (289) : 96 --> 99
+TOKEN  '{' (260)
+STEP   56, 1
+SHIFT  1 '{' (260) : 99 --> 249
+TOKEN  'colon' (285)
+STEP   57, 1
+REDUCE 1 'colon' (285) <158, 423, 0> : 249 --> 249 --> 123
+SHIFT  1 'colon' (285) : 123 --> 115
+TOKEN  '\:' (295)
+STEP   58, 1
+SHIFT  1 '\:' (295) : 115 --> 252
+TOKEN  'coma' (285)
+STEP   59, 1
+REDUCE 1 'coma' (285) <93, 388, 2> : 252 --> 123 --> 256
+REDUCE 1 'coma' (285) <97, 392, 2> : 256 --> 249 --> 122
+REDUCE 1 'coma' (285) <222, 391, 1> : 122 --> 249 --> 216
+REDUCE 1 'coma' (285) <158, 423, 0> : 216 --> 216 --> 123
+SHIFT  1 'coma' (285) : 123 --> 115
+TOKEN  '\,' (295)
+STEP   60, 1
+SHIFT  1 '\,' (295) : 115 --> 252
+TOKEN  'left-curly-bracket' (285)
+STEP   61, 1
+REDUCE 1 'left-curly-bracket' (285) <93, 388, 2> : 252 --> 123 --> 256
+REDUCE 1 'left-curly-bracket' (285) <97, 392, 2> : 256 --> 216 --> 255
+REDUCE 1 'left-curly-bracket' (285) <223, 391, 2> : 255 --> 249 --> 216
+REDUCE 1 'left-curly-bracket' (285) <158, 423, 0> : 216 --> 216 --> 123
+SHIFT  1 'left-curly-bracket' (285) : 123 --> 115
+TOKEN  '\{' (295)
+STEP   62, 1
+SHIFT  1 '\{' (295) : 115 --> 252
+TOKEN  'right-curly-bracket' (285)
+STEP   63, 1
+REDUCE 1 'right-curly-bracket' (285) <93, 388, 2> : 252 --> 123 --> 256
+REDUCE 1 'right-curly-bracket' (285) <97, 392, 2> : 256 --> 216 --> 255
+REDUCE 1 'right-curly-bracket' (285) <223, 391, 2> : 255 --> 249 --> 216
+REDUCE 1 'right-curly-bracket' (285) <158, 423, 0> : 216 --> 216 --> 123
+SHIFT  1 'right-curly-bracket' (285) : 123 --> 115
+TOKEN  '\}' (295)
+STEP   64, 1
+SHIFT  1 '\}' (295) : 115 --> 252
+TOKEN  '}' (261)
+STEP   65, 1
+REDUCE 1 '}' (261) <93, 388, 2> : 252 --> 123 --> 256
+REDUCE 1 '}' (261) <97, 392, 2> : 256 --> 216 --> 255
+REDUCE 1 '}' (261) <223, 391, 2> : 255 --> 249 --> 216
+REDUCE 1 '}' (261) <169, 428, 1> : 216 --> 249 --> 295
+SHIFT  1 '}' (261) : 295 --> 317
+TOKEN  '%regex' (289)
+STEP   66, 1
+REDUCE 1 '%regex' (289) <91, 386, 4> : 317 --> 96 --> 104
+REDUCE 1 '%regex' (289) <87, 382, 1> : 104 --> 96 --> 246
+REDUCE 1 '%regex' (289) <83, 381, 2> : 246 --> 312 --> 95
+REDUCE 1 '%regex' (289) <208, 380, 1> : 95 --> 312 --> 212
+REDUCE 1 '%regex' (289) <158, 423, 0> : 212 --> 212 --> 96
+SHIFT  1 '%regex' (289) : 96 --> 99
+TOKEN  '{' (260)
+STEP   67, 1
+SHIFT  1 '{' (260) : 99 --> 249
+TOKEN  'digit' (285)
+STEP   68, 1
+REDUCE 1 'digit' (285) <158, 423, 0> : 249 --> 249 --> 123
+SHIFT  1 'digit' (285) : 123 --> 115
+TOKEN  '[0-9]' (295)
+STEP   69, 1
+SHIFT  1 '[0-9]' (295) : 115 --> 252
+TOKEN  'cstring' (285)
+STEP   70, 1
+REDUCE 1 'cstring' (285) <93, 388, 2> : 252 --> 123 --> 256
+REDUCE 1 'cstring' (285) <97, 392, 2> : 256 --> 249 --> 122
+REDUCE 1 'cstring' (285) <222, 391, 1> : 122 --> 249 --> 216
+REDUCE 1 'cstring' (285) <158, 423, 0> : 216 --> 216 --> 123
+SHIFT  1 'cstring' (285) : 123 --> 115
+TOKEN  '\"([^"]|\"\")*\"|\'([^']|\'\')*\'' (295)
+STEP   71, 1
+SHIFT  1 '\"([^"]|\"\")*\"|\'([^']|\'\')*\'' (295) : 115 --> 252
+TOKEN  'number' (285)
+STEP   72, 1
+REDUCE 1 'number' (285) <93, 388, 2> : 252 --> 123 --> 256
+REDUCE 1 'number' (285) <97, 392, 2> : 256 --> 216 --> 255
+REDUCE 1 'number' (285) <223, 391, 2> : 255 --> 249 --> 216
+REDUCE 1 'number' (285) <158, 423, 0> : 216 --> 216 --> 123
+SHIFT  1 'number' (285) : 123 --> 115
+TOKEN  '{digit}+' (295)
+STEP   73, 1
+SHIFT  1 '{digit}+' (295) : 115 --> 252
+TOKEN  'rx-null' (285)
+STEP   74, 1
+REDUCE 1 'rx-null' (285) <93, 388, 2> : 252 --> 123 --> 256
+REDUCE 1 'rx-null' (285) <97, 392, 2> : 256 --> 216 --> 255
+REDUCE 1 'rx-null' (285) <223, 391, 2> : 255 --> 249 --> 216
+REDUCE 1 'rx-null' (285) <158, 423, 0> : 216 --> 216 --> 123
+SHIFT  1 'rx-null' (285) : 123 --> 115
+TOKEN  'null' (295)
+STEP   75, 1
+SHIFT  1 'null' (295) : 115 --> 252
+TOKEN  '}' (261)
+STEP   76, 1
+REDUCE 1 '}' (261) <93, 388, 2> : 252 --> 123 --> 256
+REDUCE 1 '}' (261) <97, 392, 2> : 256 --> 216 --> 255
+REDUCE 1 '}' (261) <223, 391, 2> : 255 --> 249 --> 216
+REDUCE 1 '}' (261) <169, 428, 1> : 216 --> 249 --> 295
+SHIFT  1 '}' (261) : 295 --> 317
+TOKEN  '%terminal' (286)
+STEP   77, 1
+REDUCE 1 '%terminal' (286) <91, 386, 4> : 317 --> 96 --> 104
+REDUCE 1 '%terminal' (286) <87, 382, 1> : 104 --> 96 --> 246
+REDUCE 1 '%terminal' (286) <83, 381, 2> : 246 --> 212 --> 245
+REDUCE 1 '%terminal' (286) <209, 380, 2> : 245 --> 312 --> 212
+REDUCE 1 '%terminal' (286) <158, 423, 0> : 212 --> 212 --> 96
+SHIFT  1 '%terminal' (286) : 96 --> 98
+TOKEN  '{' (260)
+STEP   78, 1
+SHIFT  1 '{' (260) : 98 --> 247
+TOKEN  '<left curly bracket>' (285)
+STEP   79, 1
+REDUCE 1 '<left curly bracket>' (285) <158, 423, 0> : 247 --> 247 --> 119
+SHIFT  1 '<left curly bracket>' (285) : 119 --> 113
+TOKEN  ''{'' (283)
+STEP   80, 1
+SHIFT  1 ''{'' (283) : 113 --> 230
+TOKEN  '<right curly bracket>' (285)
+STEP   81, 1
+REDUCE 1 '<right curly bracket>' (285) <187, 437, 1> : 230 --> 113 --> 251
+REDUCE 1 '<right curly bracket>' (285) <92, 387, 2> : 251 --> 119 --> 254
+REDUCE 1 '<right curly bracket>' (285) <95, 390, 2> : 254 --> 247 --> 118
+REDUCE 1 '<right curly bracket>' (285) <218, 389, 1> : 118 --> 247 --> 214
+REDUCE 1 '<right curly bracket>' (285) <158, 423, 0> : 214 --> 214 --> 119
+SHIFT  1 '<right curly bracket>' (285) : 119 --> 113
+TOKEN  ''}'' (283)
+STEP   82, 1
+SHIFT  1 ''}'' (283) : 113 --> 230
+TOKEN  '<colon>' (285)
+STEP   83, 1
+REDUCE 1 '<colon>' (285) <187, 437, 1> : 230 --> 113 --> 251
+REDUCE 1 '<colon>' (285) <92, 387, 2> : 251 --> 119 --> 254
+REDUCE 1 '<colon>' (285) <95, 390, 2> : 254 --> 214 --> 253
+REDUCE 1 '<colon>' (285) <219, 389, 2> : 253 --> 247 --> 214
+REDUCE 1 '<colon>' (285) <158, 423, 0> : 214 --> 214 --> 119
+SHIFT  1 '<colon>' (285) : 119 --> 113
+TOKEN  '':'' (283)
+STEP   84, 1
+SHIFT  1 '':'' (283) : 113 --> 230
+TOKEN  '<coma>' (285)
+STEP   85, 1
+REDUCE 1 '<coma>' (285) <187, 437, 1> : 230 --> 113 --> 251
+REDUCE 1 '<coma>' (285) <92, 387, 2> : 251 --> 119 --> 254
+REDUCE 1 '<coma>' (285) <95, 390, 2> : 254 --> 214 --> 253
+REDUCE 1 '<coma>' (285) <219, 389, 2> : 253 --> 247 --> 214
+REDUCE 1 '<coma>' (285) <158, 423, 0> : 214 --> 214 --> 119
+SHIFT  1 '<coma>' (285) : 119 --> 113
+TOKEN  '','' (283)
+STEP   86, 1
+SHIFT  1 '','' (283) : 113 --> 230
+TOKEN  '<cstring>' (285)
+STEP   87, 1
+REDUCE 1 '<cstring>' (285) <187, 437, 1> : 230 --> 113 --> 251
+REDUCE 1 '<cstring>' (285) <92, 387, 2> : 251 --> 119 --> 254
+REDUCE 1 '<cstring>' (285) <95, 390, 2> : 254 --> 214 --> 253
+REDUCE 1 '<cstring>' (285) <219, 389, 2> : 253 --> 247 --> 214
+REDUCE 1 '<cstring>' (285) <158, 423, 0> : 214 --> 214 --> 119
+SHIFT  1 '<cstring>' (285) : 119 --> 113
+TOKEN  '<number>' (285)
+STEP   88, 1
+REDUCE 1 '<number>' (285) <186, 437, 0> : 113 --> 113 --> 251
+REDUCE 1 '<number>' (285) <92, 387, 2> : 251 --> 119 --> 254
+REDUCE 1 '<number>' (285) <95, 390, 2> : 254 --> 214 --> 253
+REDUCE 1 '<number>' (285) <219, 389, 2> : 253 --> 247 --> 214
+REDUCE 1 '<number>' (285) <158, 423, 0> : 214 --> 214 --> 119
+SHIFT  1 '<number>' (285) : 119 --> 113
+TOKEN  '<null>' (285)
+STEP   89, 1
+REDUCE 1 '<null>' (285) <186, 437, 0> : 113 --> 113 --> 251
+REDUCE 1 '<null>' (285) <92, 387, 2> : 251 --> 119 --> 254
+REDUCE 1 '<null>' (285) <95, 390, 2> : 254 --> 214 --> 253
+REDUCE 1 '<null>' (285) <219, 389, 2> : 253 --> 247 --> 214
+REDUCE 1 '<null>' (285) <158, 423, 0> : 214 --> 214 --> 119
+SHIFT  1 '<null>' (285) : 119 --> 113
+TOKEN  '}' (261)
+STEP   90, 1
+REDUCE 1 '}' (261) <186, 437, 0> : 113 --> 113 --> 251
+REDUCE 1 '}' (261) <92, 387, 2> : 251 --> 119 --> 254
+REDUCE 1 '}' (261) <95, 390, 2> : 254 --> 214 --> 253
+REDUCE 1 '}' (261) <219, 389, 2> : 253 --> 247 --> 214
+REDUCE 1 '}' (261) <167, 427, 1> : 214 --> 247 --> 294
+SHIFT  1 '}' (261) : 294 --> 316
+TOKEN  '%}' (265)
+STEP   91, 1
+REDUCE 1 '%}' (265) <90, 385, 4> : 316 --> 96 --> 103
+REDUCE 1 '%}' (265) <86, 382, 1> : 103 --> 96 --> 246
+REDUCE 1 '%}' (265) <83, 381, 2> : 246 --> 212 --> 245
+REDUCE 1 '%}' (265) <209, 380, 2> : 245 --> 312 --> 212
+REDUCE 1 '%}' (265) <165, 426, 1> : 212 --> 312 --> 322
+SHIFT  1 '%}' (265) : 322 --> 330
+TOKEN  '[' (266)
+STEP   92, 1
+REDUCE 1 '[' (266) <81, 379, 6> : 330 --> 79 --> 82
+REDUCE 1 '[' (266) <76, 377, 1> : 82 --> 79 --> 239
+REDUCE 1 '[' (266) <199, 376, 2> : 239 --> 5 --> 79
+SHIFT  1 '[' (266) : 79 --> 70
+TOKEN  'Description' (285)
+STEP   93, 1
+SHIFT  1 'Description' (285) : 70 --> 235
+TOKEN  'Text' (285)
+STEP   94, 1
+SHIFT  1 'Text' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   95, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''Scanner for simple syntax tree'' (283)
+STEP   96, 1
+SHIFT  1 ''Scanner for simple syntax tree'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   97, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'Hover' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   98, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   99, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   100, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '[' (266)
+STEP   101, 1
+REDUCE 1 '[' (266) <70, 372, 4> : 310 --> 79 --> 72
+REDUCE 1 '[' (266) <190, 371, 1> : 72 --> 79 --> 87
+SHIFT  1 '[' (266) : 87 --> 70
+TOKEN  'Declarations' (285)
+STEP   102, 1
+SHIFT  1 'Declarations' (285) : 70 --> 235
+TOKEN  'Id' (285)
+STEP   103, 1
+SHIFT  1 'Id' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   104, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''treeDecls'' (283)
+STEP   105, 1
+SHIFT  1 ''treeDecls'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   106, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'Hover' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   107, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   108, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   109, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '[' (266)
+STEP   110, 1
+REDUCE 1 '[' (266) <70, 372, 4> : 310 --> 87 --> 236
+REDUCE 1 '[' (266) <191, 371, 2> : 236 --> 79 --> 87
+SHIFT  1 '[' (266) : 87 --> 70
+TOKEN  'CompilationInfo' (285)
+STEP   111, 1
+SHIFT  1 'CompilationInfo' (285) : 70 --> 235
+TOKEN  'ClassName' (285)
+STEP   112, 1
+SHIFT  1 'ClassName' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   113, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''TreeScanner'' (283)
+STEP   114, 1
+SHIFT  1 ''TreeScanner'' (283) : 237 --> 288
+TOKEN  'NameSpace' (285)
+STEP   115, 1
+REDUCE 1 'NameSpace' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'NameSpace' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'NameSpace' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   116, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''Tree.ScannerLib'' (283)
+STEP   117, 1
+SHIFT  1 ''Tree.ScannerLib'' (283) : 237 --> 288
+TOKEN  'Access' (285)
+STEP   118, 1
+REDUCE 1 'Access' (285) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 'Access' (285) <195, 373, 2> : 238 --> 235 --> 208
+SHIFT  1 'Access' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   119, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''public'' (283)
+STEP   120, 1
+SHIFT  1 ''public'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   121, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 'Hover' (285) <195, 373, 2> : 238 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   122, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   123, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   124, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '%scanner' (290)
+STEP   125, 1
+REDUCE 1 '%scanner' (290) <70, 372, 4> : 310 --> 87 --> 236
+REDUCE 1 '%scanner' (290) <191, 371, 2> : 236 --> 79 --> 87
+REDUCE 1 '%scanner' (290) <159, 423, 1> : 87 --> 79 --> 86
+SHIFT  1 '%scanner' (290) : 86 --> 242
+TOKEN  'treeScanner' (285)
+STEP   126, 1
+SHIFT  1 'treeScanner' (285) : 242 --> 291
+TOKEN  '%{' (264)
+STEP   127, 1
+SHIFT  1 '%{' (264) : 291 --> 313
+TOKEN  '{left-curly-bracket}' (295)
+STEP   128, 1
+SHIFT  1 '{left-curly-bracket}' (295) : 313 --> 127
+TOKEN  'terminal' (298)
+STEP   129, 1
+SHIFT  1 'terminal' (298) : 127 --> 132
+TOKEN  '<left curly bracket>' (285)
+STEP   130, 1
+SHIFT  1 '<left curly bracket>' (285) : 132 --> 259
+TOKEN  '{right-curly-bracket}' (295)
+STEP   131, 1
+REDUCE 1 '{right-curly-bracket}' (295) <108, 399, 2> : 259 --> 127 --> 139
+REDUCE 1 '{right-curly-bracket}' (295) <103, 397, 1> : 139 --> 127 --> 137
+REDUCE 1 '{right-curly-bracket}' (295) <234, 396, 1> : 137 --> 127 --> 220
+REDUCE 1 '{right-curly-bracket}' (295) <173, 430, 1> : 220 --> 127 --> 257
+REDUCE 1 '{right-curly-bracket}' (295) <100, 395, 2> : 257 --> 313 --> 129
+REDUCE 1 '{right-curly-bracket}' (295) <230, 394, 1> : 129 --> 313 --> 218
+SHIFT  1 '{right-curly-bracket}' (295) : 218 --> 127
+TOKEN  'terminal' (298)
+STEP   132, 1
+SHIFT  1 'terminal' (298) : 127 --> 132
+TOKEN  '<right curly bracket>' (285)
+STEP   133, 1
+SHIFT  1 '<right curly bracket>' (285) : 132 --> 259
+TOKEN  '{colon}' (295)
+STEP   134, 1
+REDUCE 1 '{colon}' (295) <108, 399, 2> : 259 --> 127 --> 139
+REDUCE 1 '{colon}' (295) <103, 397, 1> : 139 --> 127 --> 137
+REDUCE 1 '{colon}' (295) <234, 396, 1> : 137 --> 127 --> 220
+REDUCE 1 '{colon}' (295) <173, 430, 1> : 220 --> 127 --> 257
+REDUCE 1 '{colon}' (295) <100, 395, 2> : 257 --> 218 --> 258
+REDUCE 1 '{colon}' (295) <231, 394, 2> : 258 --> 313 --> 218
+SHIFT  1 '{colon}' (295) : 218 --> 127
+TOKEN  'terminal' (298)
+STEP   135, 1
+SHIFT  1 'terminal' (298) : 127 --> 132
+TOKEN  '<colon>' (285)
+STEP   136, 1
+SHIFT  1 '<colon>' (285) : 132 --> 259
+TOKEN  '{coma}' (295)
+STEP   137, 1
+REDUCE 1 '{coma}' (295) <108, 399, 2> : 259 --> 127 --> 139
+REDUCE 1 '{coma}' (295) <103, 397, 1> : 139 --> 127 --> 137
+REDUCE 1 '{coma}' (295) <234, 396, 1> : 137 --> 127 --> 220
+REDUCE 1 '{coma}' (295) <173, 430, 1> : 220 --> 127 --> 257
+REDUCE 1 '{coma}' (295) <100, 395, 2> : 257 --> 218 --> 258
+REDUCE 1 '{coma}' (295) <231, 394, 2> : 258 --> 313 --> 218
+SHIFT  1 '{coma}' (295) : 218 --> 127
+TOKEN  'terminal' (298)
+STEP   138, 1
+SHIFT  1 'terminal' (298) : 127 --> 132
+TOKEN  '<coma>' (285)
+STEP   139, 1
+SHIFT  1 '<coma>' (285) : 132 --> 259
+TOKEN  '{cstring}' (295)
+STEP   140, 1
+REDUCE 1 '{cstring}' (295) <108, 399, 2> : 259 --> 127 --> 139
+REDUCE 1 '{cstring}' (295) <103, 397, 1> : 139 --> 127 --> 137
+REDUCE 1 '{cstring}' (295) <234, 396, 1> : 137 --> 127 --> 220
+REDUCE 1 '{cstring}' (295) <173, 430, 1> : 220 --> 127 --> 257
+REDUCE 1 '{cstring}' (295) <100, 395, 2> : 257 --> 218 --> 258
+REDUCE 1 '{cstring}' (295) <231, 394, 2> : 258 --> 313 --> 218
+SHIFT  1 '{cstring}' (295) : 218 --> 127
+TOKEN  'terminal' (298)
+STEP   141, 1
+SHIFT  1 'terminal' (298) : 127 --> 132
+TOKEN  '<cstring>' (285)
+STEP   142, 1
+SHIFT  1 '<cstring>' (285) : 132 --> 259
+TOKEN  '{number}' (295)
+STEP   143, 1
+REDUCE 1 '{number}' (295) <108, 399, 2> : 259 --> 127 --> 139
+REDUCE 1 '{number}' (295) <103, 397, 1> : 139 --> 127 --> 137
+REDUCE 1 '{number}' (295) <234, 396, 1> : 137 --> 127 --> 220
+REDUCE 1 '{number}' (295) <173, 430, 1> : 220 --> 127 --> 257
+REDUCE 1 '{number}' (295) <100, 395, 2> : 257 --> 218 --> 258
+REDUCE 1 '{number}' (295) <231, 394, 2> : 258 --> 313 --> 218
+SHIFT  1 '{number}' (295) : 218 --> 127
+TOKEN  'terminal' (298)
+STEP   144, 1
+SHIFT  1 'terminal' (298) : 127 --> 132
+TOKEN  '<number>' (285)
+STEP   145, 1
+SHIFT  1 '<number>' (285) : 132 --> 259
+TOKEN  '{rx-null}' (295)
+STEP   146, 1
+REDUCE 1 '{rx-null}' (295) <108, 399, 2> : 259 --> 127 --> 139
+REDUCE 1 '{rx-null}' (295) <103, 397, 1> : 139 --> 127 --> 137
+REDUCE 1 '{rx-null}' (295) <234, 396, 1> : 137 --> 127 --> 220
+REDUCE 1 '{rx-null}' (295) <173, 430, 1> : 220 --> 127 --> 257
+REDUCE 1 '{rx-null}' (295) <100, 395, 2> : 257 --> 218 --> 258
+REDUCE 1 '{rx-null}' (295) <231, 394, 2> : 258 --> 313 --> 218
+SHIFT  1 '{rx-null}' (295) : 218 --> 127
+TOKEN  'terminal' (298)
+STEP   147, 1
+SHIFT  1 'terminal' (298) : 127 --> 132
+TOKEN  '<null>' (285)
+STEP   148, 1
+SHIFT  1 '<null>' (285) : 132 --> 259
+TOKEN  '[ \t\n\r]' (295)
+STEP   149, 1
+REDUCE 1 '[ \t\n\r]' (295) <108, 399, 2> : 259 --> 127 --> 139
+REDUCE 1 '[ \t\n\r]' (295) <103, 397, 1> : 139 --> 127 --> 137
+REDUCE 1 '[ \t\n\r]' (295) <234, 396, 1> : 137 --> 127 --> 220
+REDUCE 1 '[ \t\n\r]' (295) <173, 430, 1> : 220 --> 127 --> 257
+REDUCE 1 '[ \t\n\r]' (295) <100, 395, 2> : 257 --> 218 --> 258
+REDUCE 1 '[ \t\n\r]' (295) <231, 394, 2> : 258 --> 313 --> 218
+SHIFT  1 '[ \t\n\r]' (295) : 218 --> 127
+TOKEN  'skip' (297)
+STEP   150, 1
+SHIFT  1 'skip' (297) : 127 --> 131
+TOKEN  '%}' (265)
+STEP   151, 1
+REDUCE 1 '%}' (265) <107, 398, 1> : 131 --> 127 --> 138
+REDUCE 1 '%}' (265) <102, 397, 1> : 138 --> 127 --> 137
+REDUCE 1 '%}' (265) <234, 396, 1> : 137 --> 127 --> 220
+REDUCE 1 '%}' (265) <173, 430, 1> : 220 --> 127 --> 257
+REDUCE 1 '%}' (265) <100, 395, 2> : 257 --> 218 --> 258
+REDUCE 1 '%}' (265) <231, 394, 2> : 258 --> 313 --> 218
+REDUCE 1 '%}' (265) <171, 429, 1> : 218 --> 313 --> 323
+SHIFT  1 '%}' (265) : 323 --> 331
+TOKEN  '[' (266)
+STEP   152, 1
+REDUCE 1 '[' (266) <98, 393, 6> : 331 --> 79 --> 83
+REDUCE 1 '[' (266) <77, 377, 1> : 83 --> 79 --> 239
+REDUCE 1 '[' (266) <199, 376, 2> : 239 --> 5 --> 79
+SHIFT  1 '[' (266) : 79 --> 70
+TOKEN  'Description' (285)
+STEP   153, 1
+SHIFT  1 'Description' (285) : 70 --> 235
+TOKEN  'Text' (285)
+STEP   154, 1
+SHIFT  1 'Text' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   155, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''Lexer for simple syntax tree'' (283)
+STEP   156, 1
+SHIFT  1 ''Lexer for simple syntax tree'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   157, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'Hover' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   158, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   159, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   160, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '[' (266)
+STEP   161, 1
+REDUCE 1 '[' (266) <70, 372, 4> : 310 --> 79 --> 72
+REDUCE 1 '[' (266) <190, 371, 1> : 72 --> 79 --> 87
+SHIFT  1 '[' (266) : 87 --> 70
+TOKEN  'UseScanner' (285)
+STEP   162, 1
+SHIFT  1 'UseScanner' (285) : 70 --> 235
+TOKEN  'InitialScanner' (285)
+STEP   163, 1
+SHIFT  1 'InitialScanner' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   164, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''treeScanner'' (283)
+STEP   165, 1
+SHIFT  1 ''treeScanner'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   166, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'Hover' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   167, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   168, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   169, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '[' (266)
+STEP   170, 1
+REDUCE 1 '[' (266) <70, 372, 4> : 310 --> 87 --> 236
+REDUCE 1 '[' (266) <191, 371, 2> : 236 --> 79 --> 87
+SHIFT  1 '[' (266) : 87 --> 70
+TOKEN  'CompilationInfo' (285)
+STEP   171, 1
+SHIFT  1 'CompilationInfo' (285) : 70 --> 235
+TOKEN  'ClassName' (285)
+STEP   172, 1
+SHIFT  1 'ClassName' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   173, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''TreeLexer'' (283)
+STEP   174, 1
+SHIFT  1 ''TreeLexer'' (283) : 237 --> 288
+TOKEN  'NameSpace' (285)
+STEP   175, 1
+REDUCE 1 'NameSpace' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'NameSpace' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'NameSpace' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   176, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''Tree.Lexer'' (283)
+STEP   177, 1
+SHIFT  1 ''Tree.Lexer'' (283) : 237 --> 288
+TOKEN  'Access' (285)
+STEP   178, 1
+REDUCE 1 'Access' (285) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 'Access' (285) <195, 373, 2> : 238 --> 235 --> 208
+SHIFT  1 'Access' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   179, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''public'' (283)
+STEP   180, 1
+SHIFT  1 ''public'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   181, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 'Hover' (285) <195, 373, 2> : 238 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   182, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   183, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   184, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '%lexer' (291)
+STEP   185, 1
+REDUCE 1 '%lexer' (291) <70, 372, 4> : 310 --> 87 --> 236
+REDUCE 1 '%lexer' (291) <191, 371, 2> : 236 --> 79 --> 87
+REDUCE 1 '%lexer' (291) <159, 423, 1> : 87 --> 79 --> 86
+SHIFT  1 '%lexer' (291) : 86 --> 243
+TOKEN  'treeLexer' (285)
+STEP   186, 1
+SHIFT  1 'treeLexer' (285) : 243 --> 292
+TOKEN  '%{' (264)
+STEP   187, 1
+SHIFT  1 '%{' (264) : 292 --> 314
+TOKEN  '%}' (265)
+STEP   188, 1
+REDUCE 1 '%}' (265) <158, 423, 0> : 314 --> 314 --> 324
+SHIFT  1 '%}' (265) : 324 --> 332
+TOKEN  '[' (266)
+STEP   189, 1
+REDUCE 1 '[' (266) <112, 403, 6> : 332 --> 79 --> 84
+REDUCE 1 '[' (266) <78, 377, 1> : 84 --> 79 --> 239
+REDUCE 1 '[' (266) <199, 376, 2> : 239 --> 5 --> 79
+SHIFT  1 '[' (266) : 79 --> 70
+TOKEN  'Description' (285)
+STEP   190, 1
+SHIFT  1 'Description' (285) : 70 --> 235
+TOKEN  'Text' (285)
+STEP   191, 1
+SHIFT  1 'Text' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   192, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''Parser for simple syntax tree'' (283)
+STEP   193, 1
+SHIFT  1 ''Parser for simple syntax tree'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   194, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'Hover' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   195, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   196, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   197, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '[' (266)
+STEP   198, 1
+REDUCE 1 '[' (266) <70, 372, 4> : 310 --> 79 --> 72
+REDUCE 1 '[' (266) <190, 371, 1> : 72 --> 79 --> 87
+SHIFT  1 '[' (266) : 87 --> 70
+TOKEN  'Lexer' (285)
+STEP   199, 1
+SHIFT  1 'Lexer' (285) : 70 --> 235
+TOKEN  'Id' (285)
+STEP   200, 1
+SHIFT  1 'Id' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   201, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''treeLexer'' (283)
+STEP   202, 1
+SHIFT  1 ''treeLexer'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   203, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'Hover' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   204, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   205, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   206, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '[' (266)
+STEP   207, 1
+REDUCE 1 '[' (266) <70, 372, 4> : 310 --> 87 --> 236
+REDUCE 1 '[' (266) <191, 371, 2> : 236 --> 79 --> 87
+SHIFT  1 '[' (266) : 87 --> 70
+TOKEN  'Declarations' (285)
+STEP   208, 1
+SHIFT  1 'Declarations' (285) : 70 --> 235
+TOKEN  'Id' (285)
+STEP   209, 1
+SHIFT  1 'Id' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   210, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''treeDecls'' (283)
+STEP   211, 1
+SHIFT  1 ''treeDecls'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   212, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'Hover' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   213, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   214, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   215, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '[' (266)
+STEP   216, 1
+REDUCE 1 '[' (266) <70, 372, 4> : 310 --> 87 --> 236
+REDUCE 1 '[' (266) <191, 371, 2> : 236 --> 79 --> 87
+SHIFT  1 '[' (266) : 87 --> 70
+TOKEN  'CompilationInfo' (285)
+STEP   217, 1
+SHIFT  1 'CompilationInfo' (285) : 70 --> 235
+TOKEN  'ClassName' (285)
+STEP   218, 1
+SHIFT  1 'ClassName' (285) : 235 --> 74
+TOKEN  '=' (270)
+STEP   219, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''TreeParser'' (283)
+STEP   220, 1
+SHIFT  1 ''TreeParser'' (283) : 237 --> 288
+TOKEN  'NameSpace' (285)
+STEP   221, 1
+REDUCE 1 'NameSpace' (285) <72, 374, 3> : 288 --> 235 --> 76
+REDUCE 1 'NameSpace' (285) <194, 373, 1> : 76 --> 235 --> 208
+SHIFT  1 'NameSpace' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   222, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''Tree.Parser'' (283)
+STEP   223, 1
+SHIFT  1 ''Tree.Parser'' (283) : 237 --> 288
+TOKEN  'Access' (285)
+STEP   224, 1
+REDUCE 1 'Access' (285) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 'Access' (285) <195, 373, 2> : 238 --> 235 --> 208
+SHIFT  1 'Access' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   225, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''public'' (283)
+STEP   226, 1
+SHIFT  1 ''public'' (283) : 237 --> 288
+TOKEN  'Hover' (285)
+STEP   227, 1
+REDUCE 1 'Hover' (285) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 'Hover' (285) <195, 373, 2> : 238 --> 235 --> 208
+SHIFT  1 'Hover' (285) : 208 --> 74
+TOKEN  '=' (270)
+STEP   228, 1
+SHIFT  1 '=' (270) : 74 --> 237
+TOKEN  ''true'' (283)
+STEP   229, 1
+SHIFT  1 ''true'' (283) : 237 --> 288
+TOKEN  ']' (267)
+STEP   230, 1
+REDUCE 1 ']' (267) <72, 374, 3> : 288 --> 208 --> 238
+REDUCE 1 ']' (267) <195, 373, 2> : 238 --> 235 --> 208
+REDUCE 1 ']' (267) <161, 424, 1> : 208 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  '%parser' (292)
+STEP   231, 1
+REDUCE 1 '%parser' (292) <70, 372, 4> : 310 --> 87 --> 236
+REDUCE 1 '%parser' (292) <191, 371, 2> : 236 --> 79 --> 87
+REDUCE 1 '%parser' (292) <159, 423, 1> : 87 --> 79 --> 86
+SHIFT  1 '%parser' (292) : 86 --> 244
+TOKEN  'treeParser' (285)
+STEP   232, 1
+SHIFT  1 'treeParser' (285) : 244 --> 293
+TOKEN  '%{' (264)
+STEP   233, 1
+SHIFT  1 '%{' (264) : 293 --> 315
+TOKEN  '[' (266)
+STEP   234, 1
+SHIFT  1 '[' (266) : 315 --> 70
+TOKEN  'Start' (285)
+STEP   235, 1
+SHIFT  1 'Start' (285) : 70 --> 235
+TOKEN  ']' (267)
+STEP   236, 1
+REDUCE 1 ']' (267) <160, 424, 0> : 235 --> 235 --> 287
+SHIFT  1 ']' (267) : 287 --> 310
+TOKEN  'tree' (285)
+STEP   237, 1
+REDUCE 1 'tree' (285) <70, 372, 4> : 310 --> 315 --> 72
+REDUCE 1 'tree' (285) <190, 371, 1> : 72 --> 315 --> 87
+REDUCE 1 'tree' (285) <159, 423, 1> : 87 --> 315 --> 155
+SHIFT  1 'tree' (285) : 155 --> 264
+TOKEN  ':' (271)
+STEP   238, 1
+SHIFT  1 ':' (271) : 264 --> 296
+TOKEN  ''{'' (283)
+STEP   239, 1
+REDUCE 1 ''{'' (283) <178, 433, 0> : 296 --> 296 --> 166
+REDUCE 1 ''{'' (283) <182, 435, 0> : 166 --> 166 --> 179
+REDUCE 1 ''{'' (283) <262, 415, 1> : 179 --> 166 --> 269
+SHIFT  1 ''{'' (283) : 269 --> 186
+TOKEN  'tree-element' (285)
+STEP   240, 1
+REDUCE 1 'tree-element' (285) <144, 419, 1> : 186 --> 269 --> 189
+REDUCE 1 'tree-element' (285) <140, 418, 1> : 189 --> 269 --> 280
+REDUCE 1 'tree-element' (285) <182, 435, 0> : 280 --> 280 --> 306
+REDUCE 1 'tree-element' (285) <263, 415, 3> : 306 --> 166 --> 269
+SHIFT  1 'tree-element' (285) : 269 --> 187
+TOKEN  '+' (274)
+STEP   241, 1
+REDUCE 1 '+' (274) <145, 419, 1> : 187 --> 269 --> 189
+REDUCE 1 '+' (274) <140, 418, 1> : 189 --> 269 --> 280
+SHIFT  1 '+' (274) : 280 --> 192
+TOKEN  '[' (266)
+STEP   242, 1
+REDUCE 1 '[' (266) <148, 421, 1> : 192 --> 280 --> 202
+SHIFT  1 '[' (266) : 202 --> 204
+TOKEN  '','' (283)
+STEP   243, 1
+REDUCE 1 '','' (283) <176, 432, 0> : 204 --> 204 --> 159
+REDUCE 1 '','' (283) <178, 433, 0> : 159 --> 159 --> 166
+REDUCE 1 '','' (283) <182, 435, 0> : 166 --> 166 --> 179
+REDUCE 1 '','' (283) <262, 415, 1> : 179 --> 166 --> 269
+SHIFT  1 '','' (283) : 269 --> 186
+TOKEN  ']' (267)
+STEP   244, 1
+REDUCE 1 ']' (267) <144, 419, 1> : 186 --> 269 --> 189
+REDUCE 1 ']' (267) <140, 418, 1> : 189 --> 269 --> 280
+REDUCE 1 ']' (267) <182, 435, 0> : 280 --> 280 --> 306
+REDUCE 1 ']' (267) <263, 415, 3> : 306 --> 166 --> 269
+REDUCE 1 ']' (267) <180, 434, 0> : 269 --> 269 --> 300
+REDUCE 1 ']' (267) <121, 410, 3> : 300 --> 159 --> 165
+REDUCE 1 ']' (267) <254, 409, 1> : 165 --> 159 --> 266
+REDUCE 1 ']' (267) <117, 407, 2> : 266 --> 204 --> 286
+SHIFT  1 ']' (267) : 286 --> 309
+TOKEN  ''}'' (283)
+STEP   245, 1
+REDUCE 1 ''}'' (283) <157, 422, 3> : 309 --> 202 --> 229
+REDUCE 1 ''}'' (283) <185, 436, 1> : 229 --> 202 --> 285
+REDUCE 1 ''}'' (283) <146, 420, 2> : 285 --> 280 --> 283
+REDUCE 1 ''}'' (283) <142, 418, 2> : 283 --> 269 --> 280
+REDUCE 1 ''}'' (283) <182, 435, 0> : 280 --> 280 --> 306
+REDUCE 1 ''}'' (283) <263, 415, 3> : 306 --> 166 --> 269
+SHIFT  1 ''}'' (283) : 269 --> 186
+TOKEN  ';' (272)
+STEP   246, 1
+REDUCE 1 ';' (272) <144, 419, 1> : 186 --> 269 --> 189
+REDUCE 1 ';' (272) <140, 418, 1> : 189 --> 269 --> 280
+REDUCE 1 ';' (272) <182, 435, 0> : 280 --> 280 --> 306
+REDUCE 1 ';' (272) <263, 415, 3> : 306 --> 166 --> 269
+REDUCE 1 ';' (272) <180, 434, 0> : 269 --> 269 --> 300
+REDUCE 1 ';' (272) <121, 410, 3> : 300 --> 296 --> 165
+REDUCE 1 ';' (272) <254, 409, 1> : 165 --> 296 --> 318
+SHIFT  1 ';' (272) : 318 --> 326
+TOKEN  'tree-element' (285)
+STEP   247, 1
+REDUCE 1 'tree-element' (285) <115, 406, 5> : 326 --> 315 --> 154
+REDUCE 1 'tree-element' (285) <244, 405, 1> : 154 --> 315 --> 222
+REDUCE 1 'tree-element' (285) <158, 423, 0> : 222 --> 222 --> 155
+SHIFT  1 'tree-element' (285) : 155 --> 264
+TOKEN  ':' (271)
+STEP   248, 1
+SHIFT  1 ':' (271) : 264 --> 296
+TOKEN  'element-name' (285)
+STEP   249, 1
+REDUCE 1 'element-name' (285) <178, 433, 0> : 296 --> 296 --> 166
+REDUCE 1 'element-name' (285) <182, 435, 0> : 166 --> 166 --> 179
+REDUCE 1 'element-name' (285) <262, 415, 1> : 179 --> 166 --> 269
+SHIFT  1 'element-name' (285) : 269 --> 187
+TOKEN  '':'' (283)
+STEP   250, 1
+REDUCE 1 '':'' (283) <145, 419, 1> : 187 --> 269 --> 189
+REDUCE 1 '':'' (283) <140, 418, 1> : 189 --> 269 --> 280
+REDUCE 1 '':'' (283) <182, 435, 0> : 280 --> 280 --> 306
+REDUCE 1 '':'' (283) <263, 415, 3> : 306 --> 166 --> 269
+SHIFT  1 '':'' (283) : 269 --> 186
+TOKEN  'element-value' (285)
+STEP   251, 1
+REDUCE 1 'element-value' (285) <144, 419, 1> : 186 --> 269 --> 189
+REDUCE 1 'element-value' (285) <140, 418, 1> : 189 --> 269 --> 280
+REDUCE 1 'element-value' (285) <182, 435, 0> : 280 --> 280 --> 306
+REDUCE 1 'element-value' (285) <263, 415, 3> : 306 --> 166 --> 269
+SHIFT  1 'element-value' (285) : 269 --> 187
+TOKEN  ';' (272)
+STEP   252, 1
+REDUCE 1 ';' (272) <145, 419, 1> : 187 --> 269 --> 189
+REDUCE 1 ';' (272) <140, 418, 1> : 189 --> 269 --> 280
+REDUCE 1 ';' (272) <182, 435, 0> : 280 --> 280 --> 306
+REDUCE 1 ';' (272) <263, 415, 3> : 306 --> 166 --> 269
+REDUCE 1 ';' (272) <180, 434, 0> : 269 --> 269 --> 300
+REDUCE 1 ';' (272) <121, 410, 3> : 300 --> 296 --> 165
+REDUCE 1 ';' (272) <254, 409, 1> : 165 --> 296 --> 318
+SHIFT  1 ';' (272) : 318 --> 326
+TOKEN  'element-name' (285)
+STEP   253, 1
+REDUCE 1 'element-name' (285) <115, 406, 5> : 326 --> 222 --> 263
+REDUCE 1 'element-name' (285) <245, 405, 2> : 263 --> 315 --> 222
+REDUCE 1 'element-name' (285) <158, 423, 0> : 222 --> 222 --> 155
+SHIFT  1 'element-name' (285) : 155 --> 264
+TOKEN  ':' (271)
+STEP   254, 1
+SHIFT  1 ':' (271) : 264 --> 296
+TOKEN  '<cstring>' (285)
+STEP   255, 1
+REDUCE 1 '<cstring>' (285) <178, 433, 0> : 296 --> 296 --> 166
+REDUCE 1 '<cstring>' (285) <182, 435, 0> : 166 --> 166 --> 179
+REDUCE 1 '<cstring>' (285) <262, 415, 1> : 179 --> 166 --> 269
+SHIFT  1 '<cstring>' (285) : 269 --> 187
+TOKEN  ';' (272)
+STEP   256, 1
+REDUCE 1 ';' (272) <145, 419, 1> : 187 --> 269 --> 189
+REDUCE 1 ';' (272) <140, 418, 1> : 189 --> 269 --> 280
+REDUCE 1 ';' (272) <182, 435, 0> : 280 --> 280 --> 306
+REDUCE 1 ';' (272) <263, 415, 3> : 306 --> 166 --> 269
+REDUCE 1 ';' (272) <180, 434, 0> : 269 --> 269 --> 300
+REDUCE 1 ';' (272) <121, 410, 3> : 300 --> 296 --> 165
+REDUCE 1 ';' (272) <254, 409, 1> : 165 --> 296 --> 318
+SHIFT  1 ';' (272) : 318 --> 326
+TOKEN  'element-value' (285)
+STEP   257, 1
+REDUCE 1 'element-value' (285) <115, 406, 5> : 326 --> 222 --> 263
+REDUCE 1 'element-value' (285) <245, 405, 2> : 263 --> 315 --> 222
+REDUCE 1 'element-value' (285) <158, 423, 0> : 222 --> 222 --> 155
+SHIFT  1 'element-value' (285) : 155 --> 264
+TOKEN  ':' (271)
+STEP   258, 1
+SHIFT  1 ':' (271) : 264 --> 296
+TOKEN  '<cstring>' (285)
+STEP   259, 1
+REDUCE 1 '<cstring>' (285) <178, 433, 0> : 296 --> 296 --> 166
+REDUCE 1 '<cstring>' (285) <182, 435, 0> : 166 --> 166 --> 179
+REDUCE 1 '<cstring>' (285) <262, 415, 1> : 179 --> 166 --> 269
+SHIFT  1 '<cstring>' (285) : 269 --> 187
+TOKEN  '|' (258)
+STEP   260, 1
+REDUCE 1 '|' (258) <145, 419, 1> : 187 --> 269 --> 189
+REDUCE 1 '|' (258) <140, 418, 1> : 189 --> 269 --> 280
+REDUCE 1 '|' (258) <182, 435, 0> : 280 --> 280 --> 306
+REDUCE 1 '|' (258) <263, 415, 3> : 306 --> 166 --> 269
+REDUCE 1 '|' (258) <180, 434, 0> : 269 --> 269 --> 300
+REDUCE 1 '|' (258) <121, 410, 3> : 300 --> 296 --> 165
+REDUCE 1 '|' (258) <254, 409, 1> : 165 --> 296 --> 318
+SHIFT  1 '|' (258) : 318 --> 268
+TOKEN  '<number>' (285)
+STEP   261, 1
+REDUCE 1 '<number>' (285) <178, 433, 0> : 268 --> 268 --> 166
+REDUCE 1 '<number>' (285) <182, 435, 0> : 166 --> 166 --> 179
+REDUCE 1 '<number>' (285) <262, 415, 1> : 179 --> 166 --> 269
+SHIFT  1 '<number>' (285) : 269 --> 187
+TOKEN  '|' (258)
+STEP   262, 1
+REDUCE 1 '|' (258) <145, 419, 1> : 187 --> 269 --> 189
+REDUCE 1 '|' (258) <140, 418, 1> : 189 --> 269 --> 280
+REDUCE 1 '|' (258) <182, 435, 0> : 280 --> 280 --> 306
+REDUCE 1 '|' (258) <263, 415, 3> : 306 --> 166 --> 269
+REDUCE 1 '|' (258) <180, 434, 0> : 269 --> 269 --> 300
+REDUCE 1 '|' (258) <121, 410, 3> : 300 --> 268 --> 299
+REDUCE 1 '|' (258) <255, 409, 3> : 299 --> 296 --> 318
+SHIFT  1 '|' (258) : 318 --> 268
+TOKEN  '<null>' (285)
+STEP   263, 1
+REDUCE 1 '<null>' (285) <178, 433, 0> : 268 --> 268 --> 166
+REDUCE 1 '<null>' (285) <182, 435, 0> : 166 --> 166 --> 179
+REDUCE 1 '<null>' (285) <262, 415, 1> : 179 --> 166 --> 269
+SHIFT  1 '<null>' (285) : 269 --> 187
+TOKEN  '|' (258)
+STEP   264, 1
+REDUCE 1 '|' (258) <145, 419, 1> : 187 --> 269 --> 189
+REDUCE 1 '|' (258) <140, 418, 1> : 189 --> 269 --> 280
+REDUCE 1 '|' (258) <182, 435, 0> : 280 --> 280 --> 306
+REDUCE 1 '|' (258) <263, 415, 3> : 306 --> 166 --> 269
+REDUCE 1 '|' (258) <180, 434, 0> : 269 --> 269 --> 300
+REDUCE 1 '|' (258) <121, 410, 3> : 300 --> 268 --> 299
+REDUCE 1 '|' (258) <255, 409, 3> : 299 --> 296 --> 318
+SHIFT  1 '|' (258) : 318 --> 268
+TOKEN  'tree' (285)
+STEP   265, 1
+REDUCE 1 'tree' (285) <178, 433, 0> : 268 --> 268 --> 166
+REDUCE 1 'tree' (285) <182, 435, 0> : 166 --> 166 --> 179
+REDUCE 1 'tree' (285) <262, 415, 1> : 179 --> 166 --> 269
+SHIFT  1 'tree' (285) : 269 --> 187
+TOKEN  ';' (272)
+STEP   266, 1
+REDUCE 1 ';' (272) <145, 419, 1> : 187 --> 269 --> 189
+REDUCE 1 ';' (272) <140, 418, 1> : 189 --> 269 --> 280
+REDUCE 1 ';' (272) <182, 435, 0> : 280 --> 280 --> 306
+REDUCE 1 ';' (272) <263, 415, 3> : 306 --> 166 --> 269
+REDUCE 1 ';' (272) <180, 434, 0> : 269 --> 269 --> 300
+REDUCE 1 ';' (272) <121, 410, 3> : 300 --> 268 --> 299
+REDUCE 1 ';' (272) <255, 409, 3> : 299 --> 296 --> 318
+SHIFT  1 ';' (272) : 318 --> 326
+TOKEN  '%}' (265)
+STEP   267, 1
+REDUCE 1 '%}' (265) <115, 406, 5> : 326 --> 222 --> 263
+REDUCE 1 '%}' (265) <245, 405, 2> : 263 --> 315 --> 222
+REDUCE 1 '%}' (265) <175, 431, 1> : 222 --> 315 --> 325
+SHIFT  1 '%}' (265) : 325 --> 333
+TOKEN  '
+' (-1)
+STEP   268, 1
+REDUCE 1 '
+' (1) <113, 404, 6> : 333 --> 79 --> 85
+REDUCE 1 '
+' (1) <79, 377, 1> : 85 --> 79 --> 239
+REDUCE 1 '
+' (1) <199, 376, 2> : 239 --> 5 --> 79
+REDUCE 1 '
+' (1) <197, 375, 1> : 79 --> 5 --> 78
+REDUCE 1 '
+' (1) <5, 370, 2> : 78 --> 0 --> 69
+SHIFT  1 '
+' (1) : 69 --> 234
+TOKEN  '' (-1)
+STEP   269, 1
+ACCEPT 1 '' (1) <272, 0, 2> : 234
+       OK
+         final =  1
+         syntax = 0
+         token =  1
+         shift =  267
+         reduce = 394
+         split =  0
+         join =   0
+         steps =  269
+2026-10-08 21:51:55.912 - Warn - Unknown general attribute: Description
+2026-10-08 21:51:55.913 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-10-08 21:51:55.913 - Warn - Unknown general attribute: Description
+2026-10-08 21:51:55.914 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-10-08 21:51:55.914 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-10-08 21:51:55.914 - Warn - Unknown lexer attribute: Description
+2026-10-08 21:51:55.915 - Warn - Unknown name-value pair for UseScanner attribute :Hover = 'true'
+2026-10-08 21:51:55.915 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+2026-10-08 21:51:55.916 - Warn - Unknown general attribute: Description
+2026-10-08 21:51:55.916 - Warn - Unknown name-value pair for Lexer attribute :Hover = 'true'
+2026-10-08 21:51:55.916 - Warn - Unknown name-value pair for Declarations attribute :Hover = 'true'
+2026-10-08 21:51:55.916 - Warn - Unknown name-value pair for CompilationInfo attribute :Hover = 'true'
+Collect symbols
+2026-10-08 21:51:55.926 - Debug - Regular expression part colon = '\:'
+2026-10-08 21:51:55.926 - Debug - Regular expression part coma = '\,'
+2026-10-08 21:51:55.926 - Debug - Regular expression part left-curly-bracket = '\{'
+2026-10-08 21:51:55.926 - Debug - Regular expression part right-curly-bracket = '\}'
+2026-10-08 21:51:55.926 - Debug - Regular expression part digit = '[0-9]'
+2026-10-08 21:51:55.926 - Debug - Regular expression part cstring = '\"([^"]|\"\")*\"|\'([^']|\'\')*\''
+2026-10-08 21:51:55.926 - Debug - Regular expression part number = '{digit}+'
+2026-10-08 21:51:55.926 - Debug - Regular expression part rx-null = 'null'
+Lexer regular expression, input = '{left-curly-bracket}', output = '\{'
+Lexer regular expression, input = '{right-curly-bracket}', output = '\}'
+Lexer regular expression, input = '{colon}', output = '\:'
+Lexer regular expression, input = '{coma}', output = '\,'
+Lexer regular expression, input = '{cstring}', output = '\"([^"]|\"\")*\"|\'([^']|\'\')*\''
+Lexer regular expression, input = '{number}', output = '[0-9]+'
+Lexer regular expression, input = '{rx-null}', output = 'null'
+Lexer regular expression = '[ \t\n\r]'
+treeScanner = (?<g1>\{)|(?<g2>\})|(?<g3>\:)|(?<g4>\,)|(?<g5>\"([^"]|\"\")*\"|\'([^']|\'\')*\')|(?<g6>[0-9]+)|(?<g7>null)|(?<g8>[ \t\n\r])
+Generate scanner source file 'TreeScanner.cs'
+Generate lexer source file 'TreeLexer.cs'
+2026-10-08 21:51:55.944 - Info - Generate parser: treeParser
+COMPILE RULE: tree-element-set:tree-element|tree-element-set ',' tree-element;
+Display symbol table
+Eliminate tautologies
+Check for iterator syntax rules
+Check for cascaded syntax rules
+CASCADE : tree-element -- tree-element-set
+CASCADES:
+	 tree-element-set tree-element
+
+GENERATED CASCADE RULES:
+	tree-element-set:
+		tree-element 
+
+		tree-element-set <coma> tree-element Left
+
+Display productions
+INFO: CANONICAL PRODUCTIONS
+
+tree
+	:	'{' tree-element-set '}' 
+	;
+
+
+tree-element
+	:	element-name ':' element-value 
+	;
+
+
+element-name
+	:	<cstring> 
+	;
+
+
+element-value
+	:	<cstring> 
+	|	<number> 
+	|	<null> 
+	|	tree 
+	;
+
+
+tree-element-set
+	:	tree-element 
+	|	tree-element-set ',' tree-element  Left
+	;
+
+
+$accept
+	:	tree $eof-token 
+	;
+
+
+Display hierarchical view
+INFO: HIERARCHICALY VIEW OF PRODUCTIONS
+
+tree
+
+{
+
+<left curly bracket> T
+
+	tree-element-set
+
+	{
+
+		tree-element
+
+		{
+
+			element-name
+
+			{
+
+			<cstring> T
+
+
+			}
+
+		<colon> T
+
+			element-value
+
+			{
+
+			<cstring> T
+
+
+			<number> T
+
+
+			<null> T
+
+
+			tree N
+
+
+			}
+
+
+		}
+
+
+	<coma> T
+
+
+	}
+
+<right curly bracket> T
+
+
+}
+
+
+( : tree :
+	<left curly bracket> 
+	( : tree-element-set :
+		
+		( : tree-element :
+			
+			( : element-name :
+				<cstring> 
+			)
+<colon> 
+			( : element-value :
+				<cstring> 
+			|	<number> 
+			|	<null> 
+			|	tree 
+			)
+
+		)
+
+	|	tree-element-set <coma> tree-element 
+	)
+<right curly bracket> 
+)
+
+Check productions
+Make cannonical RHS sets
+2026-10-08 21:51:55.970 - Warn - non-terminal symbol '$accept' is not used
+Compute epsilon conditions
+Compute start sets
+Compute transition sets
+Compute follow sets
+Prepare table generator
+Generate parser source file 'TreeParser.cs'
+2026-10-08 21:51:55.987 - Warn - default goto 265 > 12
+2026-10-08 21:51:55.987 - Warn - default goto 266 > 12
+2026-10-08 21:51:55.987 - Warn - default goto 267 > 12
+2026-10-08 21:51:55.987 - Warn - default goto 268 > 12
+2026-10-08 21:51:55.987 - Warn - default goto 269 > 12
+Generate source file 'tree.cs'
+Generate source file 'tree_element.cs'
+Generate source file 'element_name.cs'
+Generate source file 'element_value.cs'
+Generate source file 'tree_element_set.cs'
+Output state descriptions
+INFO: STATES
+
+State 0
+	11	$accept : . tree $eof-token        FS = {}
+
+
+	2	tree : . '{' tree-element-set '}'        FS = {$eof-token}
+
+
+	'{' shift 1
+
+	tree goto 2
+
+State 1
+	2	tree : '{' . tree-element-set '}'        FS = {$eof-token, '}', ','}
+
+
+	9	tree-element-set : . tree-element        FS = {'}', ','}
+	10	                 | . tree-element-set ',' tree-element
+	3	tree-element : . element-name ':' element-value        FS = {'}', ','}
+	4	element-name : . <cstring>        FS = {':'}
+
+
+	<cstring> shift 3
+
+	tree-element-set goto 4
+	tree-element goto 5
+	element-name goto 6
+
+State 2
+	11	$accept : tree . $eof-token        FS = {}
+
+
+	$eof-token shift 7
+
+State 3
+	4	element-name : <cstring> .        FS = {':'}
+
+
+
+State 4
+	2	tree : '{' tree-element-set . '}'        FS = {$eof-token, '}', ','}
+	10	tree-element-set : tree-element-set . ',' tree-element        FS = {'}', ','}
+
+
+	'}' shift 8
+	',' shift 9
+
+State 5
+	9	tree-element-set : tree-element .        FS = {'}', ','}
+
+
+
+State 6
+	3	tree-element : element-name . ':' element-value        FS = {'}', ','}
+
+
+	':' shift 10
+
+State 7
+	11	$accept : tree $eof-token .        FS = {}
+
+
+
+State 8
+	2	tree : '{' tree-element-set '}' .        FS = {$eof-token, '}', ','}
+
+
+
+State 9
+	10	tree-element-set : tree-element-set ',' . tree-element        FS = {'}', ','}
+
+
+	3	tree-element : . element-name ':' element-value        FS = {'}', ','}
+	4	element-name : . <cstring>        FS = {':'}
+
+
+	<cstring> shift 3
+
+	tree-element goto 11
+	element-name goto 6
+
+State 10
+	3	tree-element : element-name ':' . element-value        FS = {'}', ','}
+
+
+	5	element-value : . <cstring>        FS = {'}', ','}
+	6	              | . <number>
+	7	              | . <null>
+	8	              | . tree
+	2	tree : . '{' tree-element-set '}'        FS = {'}', ','}
+
+
+	<cstring> shift 12
+	<number> shift 13
+	<null> shift 14
+	'{' shift 1
+
+	element-value goto 15
+	tree goto 16
+
+State 11
+	10	tree-element-set : tree-element-set ',' tree-element .        FS = {'}', ','}
+
+
+
+State 12
+	5	element-value : <cstring> .        FS = {'}', ','}
+
+
+
+State 13
+	6	element-value : <number> .        FS = {'}', ','}
+
+
+
+State 14
+	7	element-value : <null> .        FS = {'}', ','}
+
+
+
+State 15
+	3	tree-element : element-name ':' element-value .        FS = {'}', ','}
+
+
+
+State 16
+	8	element-value : tree .        FS = {'}', ','}
+
+
+

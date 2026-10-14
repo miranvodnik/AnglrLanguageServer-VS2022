@@ -57,6 +57,7 @@ namespace Anglr.Parser.SyntaxTree
             return t;
         }
 
+        public object Traverse (Func<bool, SyntaxTreeBase, object, object> f) => Traverse<object> (f, null);
         [DataMember (Name = "id")] public uint id { get; private set; }
         [DataMember (Name = "kind")] public uint kind { get; set; }
         public bool locked { get; private set; }

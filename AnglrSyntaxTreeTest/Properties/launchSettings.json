@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "AnglrSyntaxTreeTest": {
+      "commandName": "Project",
+      "commandLineArgs": "test.txt",
+      "workingDirectory": "D:\\Users\\Miran\\source\\repos\\miranvodnik\\AnglrLanguageServer-VS2022\\AnglrSyntaxTreeTest"
+    }
+  }
+}

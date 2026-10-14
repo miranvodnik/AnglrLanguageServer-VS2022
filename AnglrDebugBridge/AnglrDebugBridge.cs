@@ -24,27 +24,79 @@ using System.Xml.Linq;
 
 namespace AnglrDebuggerBridge
 {
+    public class AnglrTuple
+    {
+        public (int lineno, int column) Tuple { get; }
+        public AnglrTuple (int lineno, int column) => Tuple = (lineno, column);
+        public static explicit operator AnglrTuple ((int lineno, int column) x) => new AnglrTuple (x.lineno, x.column);
+        public static bool operator < (AnglrTuple x, AnglrTuple y) => (x.Tuple.lineno < y.Tuple.lineno) || (x.Tuple.lineno == y.Tuple.lineno) && (x.Tuple.column < y.Tuple.column);
+        public static bool operator > (AnglrTuple x, AnglrTuple y) => y < x;
+        public static bool operator == (AnglrTuple x, AnglrTuple y) => (x.Tuple.lineno == y.Tuple.lineno) && (x.Tuple.column == y.Tuple.column);
+        public static bool operator != (AnglrTuple x, AnglrTuple y) => !(x == y);
+        public static bool operator <= (AnglrTuple x, AnglrTuple y) => (x.Tuple.lineno < y.Tuple.lineno) || (x.Tuple.lineno == y.Tuple.lineno) && (x.Tuple.column <= y.Tuple.column);
+        public static bool operator >= (AnglrTuple x, AnglrTuple y) => y <= x;
+        public static AnglrTuple min (AnglrTuple x, AnglrTuple y) => (x < y) ? x : y;
+        public static AnglrTuple max (AnglrTuple x, AnglrTuple y) => (x > y) ? x : y;
+        public override string ToString () => $"({Tuple.lineno}, {Tuple.column})";
+    }
+    public class AnglrSelection
+    {
+        public AnglrTuple SelectionStart { get; }
+        public AnglrTuple SelectionEnd { get; }
+        public AnglrSelection ((int lineno, int column) start, (int lineno, int column) end)
+        {
+            SelectionStart = (AnglrTuple) start;
+            SelectionEnd = (AnglrTuple) end;
+            if (SelectionEnd < SelectionStart)
+                throw new InvalidOperationException ($"end position {end} < then start position {start}");
+        }
+        public AnglrSelection (AnglrTuple x, AnglrTuple y) => new AnglrSelection (x.Tuple, y.Tuple);
+        public static bool operator < (AnglrSelection x, AnglrSelection y) => x.SelectionEnd <= y.SelectionStart;
+        public static bool operator > (AnglrSelection x, AnglrSelection y) => y < x;
+        public static bool operator == (AnglrSelection x, AnglrSelection y) => (x.SelectionStart == y.SelectionStart) && (x.SelectionEnd == y.SelectionEnd);
+        public static bool operator != (AnglrSelection x, AnglrSelection y) => !(x == y);
+        public static bool operator ^ (AnglrSelection x, AnglrSelection y) => !((x < y) || (x > y));
+        public static AnglrSelection operator * (AnglrSelection x, AnglrSelection y) =>
+            (x ^ y) ?
+            new AnglrSelection (AnglrTuple.max (x.SelectionStart, y.SelectionStart), AnglrTuple.min (x.SelectionEnd, y.SelectionEnd)) :
+            null;
+        public static AnglrSelection operator + (AnglrSelection x, AnglrSelection y) =>
+            (x ^ y) ?
+            new AnglrSelection (AnglrTuple.min (x.SelectionStart, y.SelectionStart), AnglrTuple.max (x.SelectionEnd, y.SelectionEnd)) :
+            null;
+        public bool IsEmpty () => SelectionStart == SelectionEnd;
+        public override string ToString () => $"start: {SelectionStart}, stop: {SelectionEnd}";
+    }
+    public class AnglrSelectionComparer : IComparer<AnglrSelection>
+    {
+        public int Compare (AnglrSelection x, AnglrSelection y) => (x == y) ? 0 : (x < y) ? -1 : (x > y) ? 1 : 0;
+    }
+    public class AnglrSelections : SortedSet<AnglrSelection>
+    {
+        public AnglrSelections () : base (new AnglrSelectionComparer ()) { }
+    }
     public class AnglrDebuggerServerBridge : IAnglrServerSideDebugger
     {
-        public AnglrLogLevel LogLevel { get; private set; }
-        public ParserInterface ParserInterface { get; private set; }
-        public NamedPipeClientStream AnglrDebuggerClientStream { get; private set; }
+        public AnglrLogLevel LogLevel { get; }
+        public ParserInterface ParserInterface { get; }
+        public NamedPipeClientStream AnglrDebuggerClientStream { get; }
         public JsonRpc Rpc { get; set; }
-        public AnglrServerSideDebuggerJsonRpcMessagesHandler AnglrDebugger { get; private set; }
-        private AutoResetEvent ParserStepEvent { get; set; }
-        public AnglrBreakPointDBChunk AnglrBreakPointDBChunk { get; private set; }
-        public AnglrBitField AnglrProdBitField { get; private set; }
-        public AnglrBitField AnglrShiftBitField { get; private set; }
-        public AnglrBitField AnglrGotoBitField { get; private set; }
-        private object LockingObject { get; set; }
-        private bool DetailedNotifications { get; set; }
+        public AnglrServerSideDebuggerJsonRpcMessagesHandler AnglrDebugger { get; }
+        private AutoResetEvent ParserStepEvent { get; }
+        public AnglrBreakPointDBChunk AnglrBreakPointDBChunk { get; }
+        public AnglrBitField AnglrProdBitField { get; }
+        public AnglrBitField AnglrShiftBitField { get; }
+        public AnglrBitField AnglrGotoBitField { get; }
+        private object LockingObject { get; }
+        private bool DetailedNotifications { get; }
         private bool SingleStepBreakPoint { get; set; }
         private bool BreakBreakPoint { get; set; }
         private int SequenceCount;
+        private (int lineno, int column) lastSpan;
 #if !ANGLR_DBG_SYNC_RPC
-        private int MessageCount { get; set; }
-        private ManualResetEventSlim MessageCountEvent { get; set; }
-        private bool MessageCountFlag { get; set; }
+        private int MessageCount { get; }
+        private ManualResetEventSlim MessageCountEvent { get; }
+        private bool MessageCountFlag { get; }
 #endif
         public AnglrDebuggerServerBridge (ParserInterface parserInterface)
         {
@@ -58,6 +110,7 @@ namespace AnglrDebuggerBridge
             DetailedNotifications = false;
             SingleStepBreakPoint = false;
             BreakBreakPoint = false;
+            lastSpan = (0, 0);
 
             AnglrBreakPointDBChunk = new AnglrBreakPointDBChunk ();
             AnglrBreakPointDBChunk.AnglrShiftBPEvent += AnglrBreakPointDBChunk_AnglrShiftBPEvent;
@@ -975,7 +1028,8 @@ namespace AnglrDebuggerBridge
                 AnglrDebuggerGetPDASnapshotResponse getPDASnapshotResponse = new AnglrDebuggerGetPDASnapshotResponse ()
                 {
                     SequenceNr = getPDASnapshotRequest.SequenceNr,
-                    PDAStackSet = new AnglrDebuggerGetPDAStack [ParserInterface.parserStacks.Count]
+                    PDAStackSet = new AnglrDebuggerGetPDAStack [ParserInterface.parserStacks.Count],
+                    DeltaSourceText = null
                 };
                 AnglrDebuggerGetPDAStack [] PDAStackSet = getPDASnapshotResponse.PDAStackSet;
                 int stackCounter = 0;
@@ -985,6 +1039,12 @@ namespace AnglrDebuggerBridge
                     SyntaxTreeBase [] valueStack = stack.valueStack.ToArray ();
                     int depth = stack.stateStack.stackDepth;
                     AnglrDebuggerGetPDAStackCell [] PdaStackCells = new AnglrDebuggerGetPDAStackCell [depth];
+                    (int lineno, int column) startSpan = (0, 0);
+                    (int lineno, int column) endSpan = (0, 0);
+
+                    if (stackCounter == 0)
+                        getPDASnapshotResponse.DeltaSourceText = GenerateSourceText (valueStack);
+
                     for (int i = 0; i < depth; i++)
                     {
                         SyntaxTreeBase symbol = valueStack [i];
@@ -997,15 +1057,20 @@ namespace AnglrDebuggerBridge
                                 Name = "null",
                                 Value = "null",
                                 State = stateStack [i],
-                                Tree = ""
+                                Tree = "",
+                                StartSpan = startSpan,
+                                EndSpan = endSpan
                             };
                             PdaStackCells [i] = cell;
                         }
                         else
                         {
-                            SyntaxTreeBase node = symbol.Clone ();
-                            node.reparent (null);
-                            string symbolJson = null; // JsonConvert.SerializeObject (node, settings);
+                            AnglrSelection nodeSpan = FindSourceSpan (symbol);
+                            if (!ReferenceEquals (nodeSpan, null))
+                            {
+                                startSpan = nodeSpan.SelectionStart.Tuple;
+                                endSpan = nodeSpan.SelectionEnd.Tuple;
+                            }
                             if (symbol is SyntaxTreeToken)
                             {
                                 SyntaxTreeToken token = (SyntaxTreeToken) symbol;
@@ -1024,7 +1089,9 @@ namespace AnglrDebuggerBridge
                                     Name = name,
                                     Value = token.text,
                                     State = stateStack [i],
-                                    Tree = symbolJson
+                                    Tree = null,
+                                    StartSpan = startSpan,
+                                    EndSpan = endSpan
                                 };
                                 PdaStackCells [i] = cell;
                             }
@@ -1045,10 +1112,13 @@ namespace AnglrDebuggerBridge
                                     Name = name,
                                     Value = "",
                                     State = stateStack [i],
-                                    Tree = symbolJson
+                                    Tree = null,
+                                    StartSpan = startSpan,
+                                    EndSpan = endSpan
                                 };
                                 PdaStackCells [i] = cell;
                             }
+                            startSpan = endSpan;
                         }
                     }
                     PDAStackSet [stackCounter++] = new AnglrDebuggerGetPDAStack ()
@@ -1064,6 +1134,74 @@ namespace AnglrDebuggerBridge
                 Log (AnglrLogLevel.Error, ex.ToString ());
                 return null;
             }
+        }
+
+        private string GenerateSourceText (SyntaxTreeBase [] nodes)
+        {
+            StringBuilder stringBuilder = new StringBuilder ();
+            foreach (var node in nodes)
+            {
+                node?.Traverse<StringBuilder>
+                (
+                    (start, token, sb) =>
+                    {
+                        if (!start)
+                            return sb;
+                        if (!(token is SyntaxTreeToken))
+                            return sb;
+                        SyntaxTreeToken tokenNode = token as SyntaxTreeToken;
+                        int lineno = tokenNode.lineno;
+                        int column = tokenNode.column;
+                        if ((AnglrTuple) (lineno, column + tokenNode.text.Length) < (AnglrTuple) lastSpan)
+                            return sb;
+                        while (lastSpan.lineno < lineno)
+                        {
+                            ++lastSpan.lineno;
+                            lastSpan.column = 0;
+                            sb.AppendLine ();
+                        }
+                        while (lastSpan.column < column)
+                        {
+                            ++lastSpan.column;
+                            sb.Append (' ');
+                        }
+                        lastSpan.column += tokenNode.text.Length;
+                        sb.Append (tokenNode.text);
+                        return sb;
+                    },
+                    stringBuilder
+                );
+            }
+            return stringBuilder.ToString ();
+        }
+
+        private AnglrSelection FindSourceSpan (SyntaxTreeBase node)
+        {
+            bool empty = true;
+            (int lineno, int column) sPoint = (0, 0);
+            SyntaxTreeToken tokenNode = null;
+
+            node.Traverse
+            (
+                (start, token, appData) =>
+                {
+                    if (!start)
+                        return appData;
+                    if (!(token is SyntaxTreeToken))
+                        return appData;
+                    tokenNode = token as SyntaxTreeToken;
+                    if (empty)
+                    {
+                        sPoint = (tokenNode.lineno, tokenNode.column);
+                        empty = false;
+                    }
+                    return appData;
+                }
+            );
+
+            if (empty)
+                return null;
+            return new AnglrSelection (sPoint, (tokenNode.lineno, tokenNode.column + tokenNode.text.Length));
         }
     }
 
