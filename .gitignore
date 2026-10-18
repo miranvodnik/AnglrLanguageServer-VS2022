@@ -363,3 +363,14 @@ MigrationBackup/
 FodyWeavers.xsd
 /AnglrParserLibrary/Syntax/anglr-anglr.txt
 /TextFile1.json
+/AnglrSyntaxTreeLibrary/Syntax/tree-anglr.txt
+/AnglrParserLibrary/Syntax/old/AnglrScanner.cs
+/AnglrParserLibrary/Syntax/old/AttributeScanner.cs
+/AnglrParserLibrary/Syntax/old/CommentScanner.cs
+/AnglrParserLibrary/Syntax/old/LineCommentScanner.cs
+/AnglrParserLibrary/Syntax/old/RegexBlockPartScanner.cs
+/AnglrParserLibrary/Syntax/old/RegexBlockScanner.cs
+/AnglrParserLibrary/Syntax/old/RegexIdScanner.cs
+/AnglrParserLibrary/Syntax/old/RegexPartScanner.cs
+/AnglrParserLibrary/Syntax/old/ScannerIdScanner.cs
+/AnglrParserLibrary/Syntax/old/ScannerPartScanner.cs
