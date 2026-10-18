@@ -1,5 +1,6 @@
 ﻿using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
+using Anglr.Parser.Walker;
 using AnglrBreakPointDBLibrary;
 using AnglrDebuggerJsonRpcMessages;
 using AnglrLogLibrary;
@@ -11,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Diagnostics.SymbolStore;
 using System.IO;
@@ -55,7 +57,8 @@ namespace AnglrDebuggerBridge
         public static bool operator > (AnglrSelection x, AnglrSelection y) => y < x;
         public static bool operator == (AnglrSelection x, AnglrSelection y) => (x.SelectionStart == y.SelectionStart) && (x.SelectionEnd == y.SelectionEnd);
         public static bool operator != (AnglrSelection x, AnglrSelection y) => !(x == y);
-        public static bool operator ^ (AnglrSelection x, AnglrSelection y) => !((x < y) || (x > y));
+        public static bool operator ^ (AnglrSelection x, AnglrSelection y) => !((x < y) || (x > y));    // since AnglrSelection objects are not linearly ordered
+                                                                                                        // x^y is not equivalent to x==y. x==y is subset of x^y
         public static AnglrSelection operator * (AnglrSelection x, AnglrSelection y) =>
             (x ^ y) ?
             new AnglrSelection (AnglrTuple.max (x.SelectionStart, y.SelectionStart), AnglrTuple.min (x.SelectionEnd, y.SelectionEnd)) :
@@ -67,13 +70,84 @@ namespace AnglrDebuggerBridge
         public bool IsEmpty () => SelectionStart == SelectionEnd;
         public override string ToString () => $"start: {SelectionStart}, stop: {SelectionEnd}";
     }
-    public class AnglrSelectionComparer : IComparer<AnglrSelection>
+    public class AnglrSyntaxTreeHelper
     {
-        public int Compare (AnglrSelection x, AnglrSelection y) => (x == y) ? 0 : (x < y) ? -1 : (x > y) ? 1 : 0;
-    }
-    public class AnglrSelections : SortedSet<AnglrSelection>
-    {
-        public AnglrSelections () : base (new AnglrSelectionComparer ()) { }
+        public AnglrSyntaxTreeHelper ()
+        {
+            lastSpan = (0, 0);
+        }
+
+        private StringBuilder stringBuilder;
+        private (int lineno, int column) lastSpan;
+        public string GenerateSourceText (SyntaxTreeBase [] nodes)
+        {
+            stringBuilder = new StringBuilder ();
+
+            foreach (var node in nodes)
+            {
+                node?.Visit
+                (
+                    (reason, kind, nodeRef, appData) =>
+                    {
+                        if (!(nodeRef is SyntaxTreeToken))
+                            return true;
+                        SyntaxTreeToken tokenNode = nodeRef as SyntaxTreeToken;
+                        int lineno = tokenNode.lineno;
+                        int column = tokenNode.column;
+                        if ((AnglrTuple) (lineno, column + tokenNode.text.Length) <= (AnglrTuple) lastSpan)
+                            return true;
+                        while (lastSpan.lineno < lineno)
+                        {
+                            ++lastSpan.lineno;
+                            lastSpan.column = 0;
+                            stringBuilder.AppendLine ();
+                        }
+                        while (lastSpan.column < column)
+                        {
+                            ++lastSpan.column;
+                            stringBuilder.Append (' ');
+                        }
+                        lastSpan.column += tokenNode.text.Length;
+                        stringBuilder.Append (tokenNode.text);
+                        return true;
+                    }, 
+                    stringBuilder
+                );
+            }
+
+            return stringBuilder.ToString ();
+        }
+
+        private bool empty;
+        private (int lineno, int column) sPoint;
+        private SyntaxTreeToken tokenNode;
+        public AnglrSelection FindSourceSpan (SyntaxTreeBase node)
+        {
+            empty = true;
+            sPoint = (0, 0);
+            tokenNode = null;
+
+            node?.Visit
+            (
+                (reason, kind, nodeRef, appData) =>
+                {
+                    if (!(nodeRef is SyntaxTreeToken))
+                        return true;
+                    tokenNode = nodeRef as SyntaxTreeToken;
+                    if (empty)
+                    {
+                        sPoint = (tokenNode.lineno, tokenNode.column);
+                        empty = false;
+                    }
+                    return true;
+                },
+                null
+            );
+
+            if (empty)
+                return null;
+            return new AnglrSelection (sPoint, (tokenNode.lineno, tokenNode.column + tokenNode.text.Length));
+        }
     }
     public class AnglrDebuggerServerBridge : IAnglrServerSideDebugger
     {
@@ -92,7 +166,9 @@ namespace AnglrDebuggerBridge
         private bool SingleStepBreakPoint { get; set; }
         private bool BreakBreakPoint { get; set; }
         private int SequenceCount;
-        private (int lineno, int column) lastSpan;
+        private AnglrSyntaxTreeHelper AnglrSyntaxTreeHelper;
+        private StreamWriter outWriter;
+        private bool outAll;
 #if !ANGLR_DBG_SYNC_RPC
         private int MessageCount { get; }
         private ManualResetEventSlim MessageCountEvent { get; }
@@ -110,7 +186,7 @@ namespace AnglrDebuggerBridge
             DetailedNotifications = false;
             SingleStepBreakPoint = false;
             BreakBreakPoint = false;
-            lastSpan = (0, 0);
+            AnglrSyntaxTreeHelper = new AnglrSyntaxTreeHelper ();
 
             AnglrBreakPointDBChunk = new AnglrBreakPointDBChunk ();
             AnglrBreakPointDBChunk.AnglrShiftBPEvent += AnglrBreakPointDBChunk_AnglrShiftBPEvent;
@@ -277,7 +353,7 @@ namespace AnglrDebuggerBridge
 
         private bool CheckBreakPoint ()
         {
-            bool check;
+            bool check = false;
             lock (LockingObject)
             {
                 check = SingleStepBreakPoint || BreakBreakPoint;
@@ -285,15 +361,21 @@ namespace AnglrDebuggerBridge
             }
             if (check)
             {
-                _ = Rpc.NotifyAsync
-                (
-                    AnglrDebuggerJsonRpcMessageNames.DbgBreakPointHitMessageName,
-                    new AnglrDebuggerDbgBreakPointHitRequest ()
-                    {
-                        SequenceNr = ++SequenceCount
-                    }
-                );
+                Log (AnglrLogLevel.Info, $"parser step event: notify");
+                if (true)
+                {
+                    _ = Rpc.NotifyAsync
+                    (
+                        AnglrDebuggerJsonRpcMessageNames.DbgBreakPointHitMessageName,
+                        new AnglrDebuggerDbgBreakPointHitRequest ()
+                        {
+                            SequenceNr = ++SequenceCount
+                        }
+                    );
+                }
+                Log (AnglrLogLevel.Info, $"parser step event: wait");
                 ParserStepEvent.WaitOne ();
+                Log (AnglrLogLevel.Info, $"parser step event: continue");
             }
             return check;
         }
@@ -333,8 +415,36 @@ namespace AnglrDebuggerBridge
             if (!AnglrDebuggerClientStream.IsConnected)
                 return;
 
+            bool outind = false;
+            foreach (object obj in info)
+            {
+                if ((obj == null) || !(obj is string))
+                    continue;
+                if ((string) obj == "out")
+                {
+                    outind = true;
+                    continue;
+                }
+                if (outind)
+                {
+                    Log (AnglrLogLevel.Info, $"<AnglrDebuggerServerBridge>: trace file name = '{(string) obj}'");
+                    outind = false;
+                    try
+                    {
+                        outWriter = File.CreateText ((string) obj);
+                        outWriter.AutoFlush = true;
+                        outAll = true;
+                    }
+                    catch (Exception)
+                    {
+                        outWriter = null;
+                    }
+                }
+            }
+
             try
             {
+                outWriter?.WriteLine ($"start parser");
                 ParserStepEvent.WaitOne ();
 
                 Log (AnglrLogLevel.Info, $"<AnglrDebuggerServerBridge>: client connection request task created");
@@ -369,6 +479,8 @@ namespace AnglrDebuggerBridge
 
         private void ParserInterface_SyntaxErrorEvent_Async (int stackNr, int state)
         {
+            if (outAll)
+                outWriter?.WriteLine ($"syntax error: {stackNr}, {state}");
             if (!AnglrDebuggerClientStream.IsConnected)
                 return;
 
@@ -388,8 +500,8 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client syntax error response received");
+                    CheckBreakPoint ();
                 }
-                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -399,6 +511,8 @@ namespace AnglrDebuggerBridge
 
         private void ParserInterface_ShiftStepEvent_Async (int stackNr, int state, int tokenValue, string tokenName, string tokenText, bool conflict)
         {
+            if (outAll)
+                outWriter?.WriteLine ($"shift: {stackNr}, {state}, {tokenValue}, {tokenName}, {tokenText}");
             if (!AnglrDebuggerClientStream.IsConnected)
                 return;
 
@@ -422,8 +536,8 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client shift step response received");
+                    CheckBreakPoint ();
                 }
-                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -433,6 +547,8 @@ namespace AnglrDebuggerBridge
 
         private void ParserInterface_ReduceStepEvent_Async (int stackNr, int prodNr, int ruleNr, string ruleName, int prodLen, int fallingState, int bottomState, int risingState, Anglr.Parser.SyntaxTree.SyntaxTreeBase currentValue, bool conflict)
         {
+            if (outAll)
+                outWriter?.WriteLine ($"reduce: {stackNr}, {prodNr}, {ruleNr}, {ruleName}, {prodLen}, {fallingState}, {bottomState}, {risingState}");
             if (!AnglrDebuggerClientStream.IsConnected)
                 return;
 
@@ -460,7 +576,6 @@ namespace AnglrDebuggerBridge
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client reduce step response received");
                 }
-                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -468,17 +583,23 @@ namespace AnglrDebuggerBridge
             }
             if (AnglrProdBitField.Check ((uint) prodNr) == 0)
                 return;
+            Log
+            (
+                AnglrLogLevel.Info,
+                $"syntax rule break-point {stackNr}\n" +
+                $"\tsyntax rule name:  {ruleName}\n" +
+                $"\tproduction number: {prodNr}\n" +
+                $"\tsyntax rule nr.:   {ruleNr}\n" +
+                $"\tstate transitions: {fallingState} --> {bottomState} --> {risingState}"
+            );
             BreakBreakPoint = true;
-            Log (AnglrLogLevel.Info, $"syntax rule break-point {stackNr}");
-            Log (AnglrLogLevel.Info, $"\tsyntax rule name:  {ruleName}");
-            Log (AnglrLogLevel.Info, $"\tproduction number: {prodNr}");
-            Log (AnglrLogLevel.Info, $"\tsyntax rule nr.:   {ruleNr}");
-            Log (AnglrLogLevel.Info, $"\tstate transitions: {fallingState} --> {bottomState} --> {risingState}");
-            //Log (AnglrLogLevel.Info, $"\tsyntax rule text:  {currentValue.Emit (-1)}");
+            CheckBreakPoint ();
         }
 
         private void ParserInterface_SplitStepEvent_Async (int oldStackNr, int newStackNr, bool begin)
         {
+            if (outAll)
+                outWriter?.WriteLine ($"split: {oldStackNr}, {newStackNr}");
             if (!AnglrDebuggerClientStream.IsConnected)
                 return;
 
@@ -499,8 +620,8 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client split step response received");
+                    CheckBreakPoint ();
                 }
-                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -510,6 +631,8 @@ namespace AnglrDebuggerBridge
 
         private void ParserInterface_LoopStepEvent_Async (int stackNr, int state)
         {
+            if (outAll)
+                outWriter?.WriteLine ($"loop: {stackNr}, {state}");
             if (!AnglrDebuggerClientStream.IsConnected)
                 return;
 
@@ -529,8 +652,8 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client loop step response received");
+                    CheckBreakPoint ();
                 }
-                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -540,6 +663,8 @@ namespace AnglrDebuggerBridge
 
         private void ParserInterface_JoinEvent_Async (int stackNr, int joinNr)
         {
+            if (outAll)
+                outWriter?.WriteLine ($"join: {stackNr}, {joinNr}");
             if (!AnglrDebuggerClientStream.IsConnected)
                 return;
 
@@ -559,8 +684,8 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client join response received");
+                    CheckBreakPoint ();
                 }
-                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -570,6 +695,7 @@ namespace AnglrDebuggerBridge
 
         private void ParserInterface_FinalStepEvent_Async (int stackNr)
         {
+            outWriter?.WriteLine ($"final: {stackNr}");
             if (!AnglrDebuggerClientStream.IsConnected)
                 return;
 
@@ -588,8 +714,9 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client final step response received");
+                    CheckBreakPoint ();
                 }
-                CheckBreakPoint ();
+                ParserStepEvent.WaitOne ();
             }
             catch (Exception e)
             {
@@ -599,6 +726,9 @@ namespace AnglrDebuggerBridge
 
         private void ParserInterface_StopParserEvent_Async ()
         {
+            outWriter?.WriteLine ($"stop parser");
+            outWriter?.Close ();
+            outWriter = null;
             if (!AnglrDebuggerClientStream.IsConnected)
                 return;
 
@@ -616,8 +746,8 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client stop parser response received");
+                    CheckBreakPoint ();
                 }
-                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -1042,8 +1172,8 @@ namespace AnglrDebuggerBridge
                     (int lineno, int column) startSpan = (0, 0);
                     (int lineno, int column) endSpan = (0, 0);
 
-                    if (stackCounter == 0)
-                        getPDASnapshotResponse.DeltaSourceText = GenerateSourceText (valueStack);
+                    if (true && (stackCounter == 0))
+                        getPDASnapshotResponse.DeltaSourceText = AnglrSyntaxTreeHelper.GenerateSourceText (valueStack);
 
                     for (int i = 0; i < depth; i++)
                     {
@@ -1065,7 +1195,7 @@ namespace AnglrDebuggerBridge
                         }
                         else
                         {
-                            AnglrSelection nodeSpan = FindSourceSpan (symbol);
+                            AnglrSelection nodeSpan = AnglrSyntaxTreeHelper.FindSourceSpan (symbol);
                             if (!ReferenceEquals (nodeSpan, null))
                             {
                                 startSpan = nodeSpan.SelectionStart.Tuple;
@@ -1134,74 +1264,6 @@ namespace AnglrDebuggerBridge
                 Log (AnglrLogLevel.Error, ex.ToString ());
                 return null;
             }
-        }
-
-        private string GenerateSourceText (SyntaxTreeBase [] nodes)
-        {
-            StringBuilder stringBuilder = new StringBuilder ();
-            foreach (var node in nodes)
-            {
-                node?.Traverse<StringBuilder>
-                (
-                    (start, token, sb) =>
-                    {
-                        if (!start)
-                            return sb;
-                        if (!(token is SyntaxTreeToken))
-                            return sb;
-                        SyntaxTreeToken tokenNode = token as SyntaxTreeToken;
-                        int lineno = tokenNode.lineno;
-                        int column = tokenNode.column;
-                        if ((AnglrTuple) (lineno, column + tokenNode.text.Length) < (AnglrTuple) lastSpan)
-                            return sb;
-                        while (lastSpan.lineno < lineno)
-                        {
-                            ++lastSpan.lineno;
-                            lastSpan.column = 0;
-                            sb.AppendLine ();
-                        }
-                        while (lastSpan.column < column)
-                        {
-                            ++lastSpan.column;
-                            sb.Append (' ');
-                        }
-                        lastSpan.column += tokenNode.text.Length;
-                        sb.Append (tokenNode.text);
-                        return sb;
-                    },
-                    stringBuilder
-                );
-            }
-            return stringBuilder.ToString ();
-        }
-
-        private AnglrSelection FindSourceSpan (SyntaxTreeBase node)
-        {
-            bool empty = true;
-            (int lineno, int column) sPoint = (0, 0);
-            SyntaxTreeToken tokenNode = null;
-
-            node.Traverse
-            (
-                (start, token, appData) =>
-                {
-                    if (!start)
-                        return appData;
-                    if (!(token is SyntaxTreeToken))
-                        return appData;
-                    tokenNode = token as SyntaxTreeToken;
-                    if (empty)
-                    {
-                        sPoint = (tokenNode.lineno, tokenNode.column);
-                        empty = false;
-                    }
-                    return appData;
-                }
-            );
-
-            if (empty)
-                return null;
-            return new AnglrSelection (sPoint, (tokenNode.lineno, tokenNode.column + tokenNode.text.Length));
         }
     }
 

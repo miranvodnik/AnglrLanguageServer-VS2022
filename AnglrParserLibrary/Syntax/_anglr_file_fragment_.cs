@@ -4604,6 +4604,496 @@ namespace Anglr.Parser
 		public override void InvokeTraverse (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).Traverse (this);
 		public override void InvokeTraverseCommon (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).TraverseCommon (this);
 
+		//
+		// traverse syntax tree node associated with any production of syntax rule <anglr file fragment> with specified delegate
+		//
+
+		public override void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData)
+		{
+			_anglr_file_fragment_.production_kind kind = (_anglr_file_fragment_.production_kind) this.kind;
+			if (visitor (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, this, appData))
+			switch (kind)
+			{
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__1:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <attribute list terminal> <attribute list>
+
+						m__attribute_list_terminal_.Visit (visitor, appData);
+						m__attribute_list_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__2:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <attribute terminal> <attribute>
+
+						m__attribute_terminal_.Visit (visitor, appData);
+						m__attribute_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__3:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <name value list terminal> <name value list>
+
+						m__name_value_list_terminal_.Visit (visitor, appData);
+						m__name_value_list_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__4:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <name value pair terminal> <name value pair>
+
+						m__name_value_pair_terminal_.Visit (visitor, appData);
+						m__name_value_pair_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__5:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr file terminal> <anglr file>
+
+						m__anglr_file_terminal_.Visit (visitor, appData);
+						m__anglr_file_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__6:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr file part list terminal> <anglr file part list>
+
+						m__anglr_file_part_list_terminal_.Visit (visitor, appData);
+						m__anglr_file_part_list_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__7:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr file part terminal> <anglr file part>
+
+						m__anglr_file_part_terminal_.Visit (visitor, appData);
+						m__anglr_file_part_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__8:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <general part terminal> <general part>
+
+						m__general_part_terminal_.Visit (visitor, appData);
+						m__general_part_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__9:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <declaration part terminal> <declaration part>
+
+						m__declaration_part_terminal_.Visit (visitor, appData);
+						m__declaration_part_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__10:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr definition list terminal> <anglr definition list>
+
+						m__anglr_definition_list_terminal_.Visit (visitor, appData);
+						m__anglr_definition_list_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__11:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr definition with attribute list terminal> <anglr definition with attribute>
+
+						m__anglr_definition_with_attribute_list_terminal_.Visit (visitor, appData);
+						m__anglr_definition_with_attribute_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__12:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr definition terminal> <anglr definition>
+
+						m__anglr_definition_terminal_.Visit (visitor, appData);
+						m__anglr_definition_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__13:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <single terminal definition terminal> <single terminal definition>
+
+						m__single_terminal_definition_terminal_.Visit (visitor, appData);
+						m__single_terminal_definition_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__14:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <single regex definition terminal> <single regex definition>
+
+						m__single_regex_definition_terminal_.Visit (visitor, appData);
+						m__single_regex_definition_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__15:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <block of terminal definitions terminal> <block of terminal definitions>
+
+						m__block_of_terminal_definitions_terminal_.Visit (visitor, appData);
+						m__block_of_terminal_definitions_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__16:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <block of regex definitions terminal> <block of regex definitions>
+
+						m__block_of_regex_definitions_terminal_.Visit (visitor, appData);
+						m__block_of_regex_definitions_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__17:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <terminal definition terminal> <terminal definition>
+
+						m__terminal_definition_terminal_.Visit (visitor, appData);
+						m__terminal_definition_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__18:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <regex definition terminal> <regex definition>
+
+						m__regex_definition_terminal_.Visit (visitor, appData);
+						m__regex_definition_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__19:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <block terminal definitions terminal> <block terminal definitions>
+
+						m__block_terminal_definitions_terminal_.Visit (visitor, appData);
+						m__block_terminal_definitions_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__20:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <block terminal definition terminal> <block terminal definition>
+
+						m__block_terminal_definition_terminal_.Visit (visitor, appData);
+						m__block_terminal_definition_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__21:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <block regex definitions terminal> <block regex definitions>
+
+						m__block_regex_definitions_terminal_.Visit (visitor, appData);
+						m__block_regex_definitions_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__22:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <block regex definition terminal> <block regex definition>
+
+						m__block_regex_definition_terminal_.Visit (visitor, appData);
+						m__block_regex_definition_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__23:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <scanner part terminal> <scanner part>
+
+						m__scanner_part_terminal_.Visit (visitor, appData);
+						m__scanner_part_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__24:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <regular expression list terminal> <regular expression list>
+
+						m__regular_expression_list_terminal_.Visit (visitor, appData);
+						m__regular_expression_list_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__25:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <regular expression usage terminal> <regular expression usage>
+
+						m__regular_expression_usage_terminal_.Visit (visitor, appData);
+						m__regular_expression_usage_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__26:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <actions terminal> <actions>
+
+						m__actions_terminal_.Visit (visitor, appData);
+						m__actions_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__27:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <action terminal> <action>
+
+						m__action_terminal_.Visit (visitor, appData);
+						m__action_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__28:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <skip action terminal> <skip action>
+
+						m__skip_action_terminal_.Visit (visitor, appData);
+						m__skip_action_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__29:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <terminal action terminal> <terminal action>
+
+						m__terminal_action_terminal_.Visit (visitor, appData);
+						m__terminal_action_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__30:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <event action terminal> <event action>
+
+						m__event_action_terminal_.Visit (visitor, appData);
+						m__event_action_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__31:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <push action terminal> <push action>
+
+						m__push_action_terminal_.Visit (visitor, appData);
+						m__push_action_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__32:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <pop action terminal> <pop action>
+
+						m__pop_action_terminal_.Visit (visitor, appData);
+						m__pop_action_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__33:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <lexer part terminal> <lexer part>
+
+						m__lexer_part_terminal_.Visit (visitor, appData);
+						m__lexer_part_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__34:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <parser part terminal> <parser part>
+
+						m__parser_part_terminal_.Visit (visitor, appData);
+						m__parser_part_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__35:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr syntax rule list terminal> <anglr syntax rule list>
+
+						m__anglr_syntax_rule_list_terminal_.Visit (visitor, appData);
+						m__anglr_syntax_rule_list_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__36:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr syntax rule terminal> <anglr syntax rule>
+
+						m__anglr_syntax_rule_terminal_.Visit (visitor, appData);
+						m__anglr_syntax_rule_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__37:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr nested rule terminal> <anglr nested rule>
+
+						m__anglr_nested_rule_terminal_.Visit (visitor, appData);
+						m__anglr_nested_rule_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__38:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr syntax production list name terminal> <anglr syntax production list name>
+
+						m__anglr_syntax_production_list_name_terminal_.Visit (visitor, appData);
+						m__anglr_syntax_production_list_name_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__39:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr syntax production list terminal> <anglr syntax production list>
+
+						m__anglr_syntax_production_list_terminal_.Visit (visitor, appData);
+						m__anglr_syntax_production_list_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__40:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr syntax production terminal> <anglr syntax production>
+
+						m__anglr_syntax_production_terminal_.Visit (visitor, appData);
+						m__anglr_syntax_production_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__41:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <priority assoc specification terminal> <priority assoc specification>
+
+						m__priority_assoc_specification_terminal_.Visit (visitor, appData);
+						m__priority_assoc_specification_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__42:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <priority specification terminal> <priority specification>
+
+						m__priority_specification_terminal_.Visit (visitor, appData);
+						m__priority_specification_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__43:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <associativity specification terminal> <associativity specification>
+
+						m__associativity_specification_terminal_.Visit (visitor, appData);
+						m__associativity_specification_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__44:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <production name terminal> <production name>
+
+						m__production_name_terminal_.Visit (visitor, appData);
+						m__production_name_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__45:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <name list terminal> <name list>
+
+						m__name_list_terminal_.Visit (visitor, appData);
+						m__name_list_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__46:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <marker list terminal> <marker list>
+
+						m__marker_list_terminal_.Visit (visitor, appData);
+						m__marker_list_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__47:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <marker terminal> <marker>
+
+						m__marker_terminal_.Visit (visitor, appData);
+						m__marker_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__48:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <g name terminal> <g name>
+
+						m__g_name_terminal_.Visit (visitor, appData);
+						m__g_name_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__49:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <name terminal> <name>
+
+						m__name_terminal_.Visit (visitor, appData);
+						m__name_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__50:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <cardinality delimiter terminal> <cardinality delimiter>
+
+						m__cardinality_delimiter_terminal_.Visit (visitor, appData);
+						m__cardinality_delimiter_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__51:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <cardinality terminal> <cardinality>
+
+						m__cardinality_terminal_.Visit (visitor, appData);
+						m__cardinality_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__52:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <delimiter terminal> <delimiter>
+
+						m__delimiter_terminal_.Visit (visitor, appData);
+						m__delimiter_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__53:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <attribute list optional terminal> <attribute list optional>
+
+						m__attribute_list_optional_terminal_.Visit (visitor, appData);
+						m__attribute_list_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__54:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <name value list optional terminal> <name value list optional>
+
+						m__name_value_list_optional_terminal_.Visit (visitor, appData);
+						m__name_value_list_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__55:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr file part list optional terminal> <anglr file part list optional>
+
+						m__anglr_file_part_list_optional_terminal_.Visit (visitor, appData);
+						m__anglr_file_part_list_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__56:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr definition list optional terminal> <anglr definition list optional>
+
+						m__anglr_definition_list_optional_terminal_.Visit (visitor, appData);
+						m__anglr_definition_list_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__57:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <block terminal definitions optional terminal> <block terminal definitions optional>
+
+						m__block_terminal_definitions_optional_terminal_.Visit (visitor, appData);
+						m__block_terminal_definitions_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__58:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <block regex definitions optional terminal> <block regex definitions optional>
+
+						m__block_regex_definitions_optional_terminal_.Visit (visitor, appData);
+						m__block_regex_definitions_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__59:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <regular expression list optional terminal> <regular expression list optional>
+
+						m__regular_expression_list_optional_terminal_.Visit (visitor, appData);
+						m__regular_expression_list_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__60:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <actions optional terminal> <actions optional>
+
+						m__actions_optional_terminal_.Visit (visitor, appData);
+						m__actions_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__61:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr syntax rule list optional terminal> <anglr syntax rule list optional>
+
+						m__anglr_syntax_rule_list_optional_terminal_.Visit (visitor, appData);
+						m__anglr_syntax_rule_list_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__62:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <anglr syntax production list name optional terminal> <anglr syntax production list name optional>
+
+						m__anglr_syntax_production_list_name_optional_terminal_.Visit (visitor, appData);
+						m__anglr_syntax_production_list_name_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__63:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <production name optional terminal> <production name optional>
+
+						m__production_name_optional_terminal_.Visit (visitor, appData);
+						m__production_name_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__64:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <priority assoc specification optional terminal> <priority assoc specification optional>
+
+						m__priority_assoc_specification_optional_terminal_.Visit (visitor, appData);
+						m__priority_assoc_specification_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__65:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <marker list optional terminal> <marker list optional>
+
+						m__marker_list_optional_terminal_.Visit (visitor, appData);
+						m__marker_list_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__66:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <delimiter optional terminal> <delimiter optional>
+
+						m__delimiter_optional_terminal_.Visit (visitor, appData);
+						m__delimiter_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__67:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <cstring optional terminal> <cstring optional>
+
+						m__cstring_optional_terminal_.Visit (visitor, appData);
+						m__cstring_optional_.Visit (visitor, appData);
+				break;
+				case _anglr_file_fragment_.production_kind.g__anglr_file_fragment__68:
+					// traverse syntax tree node associated with production
+					// <anglr file fragment>: <number optional terminal> <number optional>
+
+						m__number_optional_terminal_.Visit (visitor, appData);
+						m__number_optional_.Visit (visitor, appData);
+				break;
+			}
+			visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, this, appData);
+		}
+
 		// reparent sub-tree
 
 		public override void reparent (SyntaxTreeBase parent)

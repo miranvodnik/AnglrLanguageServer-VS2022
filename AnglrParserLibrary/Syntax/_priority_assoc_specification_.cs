@@ -498,6 +498,62 @@ namespace Anglr.Parser
 		public override void InvokeTraverse (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).Traverse (this);
 		public override void InvokeTraverseCommon (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).TraverseCommon (this);
 
+		//
+		// traverse syntax tree node associated with any production of syntax rule <priority assoc specification> with specified delegate
+		//
+
+		public override void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData)
+		{
+			_priority_assoc_specification_.production_kind kind = (_priority_assoc_specification_.production_kind) this.kind;
+			if (visitor (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, this, appData))
+			switch (kind)
+			{
+				case _priority_assoc_specification_.production_kind.g__priority_assoc_specification__1:
+					// traverse syntax tree node associated with production
+					// <priority assoc specification>: <priority specification> <associativity specification>
+
+						m__priority_specification_.Visit (visitor, appData);
+						m__associativity_specification_.Visit (visitor, appData);
+				break;
+				case _priority_assoc_specification_.production_kind.g__priority_assoc_specification__2:
+					// traverse syntax tree node associated with production
+					// <priority assoc specification>: <associativity specification> <priority specification>
+
+						m__associativity_specification_.Visit (visitor, appData);
+						m__priority_specification_.Visit (visitor, appData);
+				break;
+				case _priority_assoc_specification_.production_kind.g__priority_assoc_specification__3:
+					// traverse syntax tree node associated with production
+					// <priority assoc specification>: <priority specification>
+
+						m__priority_specification_.Visit (visitor, appData);
+				break;
+				case _priority_assoc_specification_.production_kind.g__priority_assoc_specification__4:
+					// traverse syntax tree node associated with production
+					// <priority assoc specification>: <associativity specification>
+
+						m__associativity_specification_.Visit (visitor, appData);
+				break;
+				case _priority_assoc_specification_.production_kind.g__priority_assoc_specification__5:
+					// traverse syntax tree node associated with production
+					// <priority assoc specification>: <priority specification> ',' <associativity specification>
+
+						m__priority_specification_.Visit (visitor, appData);
+						m__comma_.Visit (visitor, appData);
+						m__associativity_specification_.Visit (visitor, appData);
+				break;
+				case _priority_assoc_specification_.production_kind.g__priority_assoc_specification__6:
+					// traverse syntax tree node associated with production
+					// <priority assoc specification>: <associativity specification> ',' <priority specification>
+
+						m__associativity_specification_.Visit (visitor, appData);
+						m__comma_.Visit (visitor, appData);
+						m__priority_specification_.Visit (visitor, appData);
+				break;
+			}
+			visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, this, appData);
+		}
+
 		// reparent sub-tree
 
 		public override void reparent (SyntaxTreeBase parent)

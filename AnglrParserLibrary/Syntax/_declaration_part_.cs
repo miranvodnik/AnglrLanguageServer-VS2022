@@ -219,6 +219,31 @@ namespace Anglr.Parser
 		public override void InvokeTraverse (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).Traverse (this);
 		public override void InvokeTraverseCommon (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).TraverseCommon (this);
 
+		//
+		// traverse syntax tree node associated with any production of syntax rule <declaration part> with specified delegate
+		//
+
+		public override void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData)
+		{
+			_declaration_part_.production_kind kind = (_declaration_part_.production_kind) this.kind;
+			if (visitor (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, this, appData))
+			switch (kind)
+			{
+				case _declaration_part_.production_kind.g__declaration_part__1:
+					// traverse syntax tree node associated with production
+					// <declaration part>: <attribute list optional> '%declarations' <identifier> '%{' <anglr definition list optional> '%}'
+
+						m__attribute_list_optional_.Visit (visitor, appData);
+						m__declarations_.Visit (visitor, appData);
+						m__identifier_.Visit (visitor, appData);
+						m__left_part_bracket_.Visit (visitor, appData);
+						m__anglr_definition_list_optional_.Visit (visitor, appData);
+						m__right_part_bracket_.Visit (visitor, appData);
+				break;
+			}
+			visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, this, appData);
+		}
+
 		// reparent sub-tree
 
 		public override void reparent (SyntaxTreeBase parent)

@@ -300,6 +300,40 @@ namespace Anglr.Parser
 		public override void InvokeTraverse (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).Traverse (this);
 		public override void InvokeTraverseCommon (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).TraverseCommon (this);
 
+		//
+		// traverse syntax tree node associated with any production of syntax rule <anglr syntax rule> with specified delegate
+		//
+
+		public override void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData)
+		{
+			_anglr_syntax_rule_.production_kind kind = (_anglr_syntax_rule_.production_kind) this.kind;
+			if (visitor (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, this, appData))
+			switch (kind)
+			{
+				case _anglr_syntax_rule_.production_kind.g__anglr_syntax_rule__1:
+					// traverse syntax tree node associated with production
+					// <anglr syntax rule>: <attribute list optional> <identifier> ':' <anglr syntax production list> ';'
+
+						m__attribute_list_optional_.Visit (visitor, appData);
+						m__identifier_.Visit (visitor, appData);
+						m__colon_.Visit (visitor, appData);
+						m__anglr_syntax_production_list_.Visit (visitor, appData);
+						m__semicolon_.Visit (visitor, appData);
+				break;
+				case _anglr_syntax_rule_.production_kind.g__anglr_syntax_rule__2:
+					// traverse syntax tree node associated with production
+					// <anglr syntax rule>: <attribute list optional> <identifier> '{' <anglr syntax rule list optional> '}'
+
+						m__attribute_list_optional_.Visit (visitor, appData);
+						m__identifier_.Visit (visitor, appData);
+						m__left_curly_bracket_.Visit (visitor, appData);
+						m__anglr_syntax_rule_list_optional_.Visit (visitor, appData);
+						m__right_curly_bracket_.Visit (visitor, appData);
+				break;
+			}
+			visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, this, appData);
+		}
+
 		// reparent sub-tree
 
 		public override void reparent (SyntaxTreeBase parent)

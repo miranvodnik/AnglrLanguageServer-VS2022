@@ -321,6 +321,46 @@ namespace Anglr.Parser
 		public override void InvokeTraverse (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).Traverse (this);
 		public override void InvokeTraverseCommon (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).TraverseCommon (this);
 
+		//
+		// traverse syntax tree node associated with any production of syntax rule <g name> with specified delegate
+		//
+
+		public override void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData)
+		{
+			if (visitor (SyntaxTreeCallbackReason.IterationPrologueCallbackReason, (int) this.kind, this, appData))
+				Iterate (null, (node, data) =>
+				{
+					_g_name_.production_kind kind = (_g_name_.production_kind) node.kind;
+					if (visitor (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, node, appData))
+						switch (kind)
+						{
+						case _g_name_.production_kind.g__g_name__1:
+							// traverse syntax tree node associated with production
+							// <g name>: <name>
+
+							node.m__name_.Visit (visitor, appData);
+							break;
+						case _g_name_.production_kind.g__g_name__2:
+							// traverse syntax tree node associated with production
+							// <g name>: '(' <anglr nested rule> ')'
+
+							node.m__left_bracket_.Visit (visitor, appData);
+							node.m__anglr_nested_rule_.Visit (visitor, appData);
+							node.m__right_bracket_.Visit (visitor, appData);
+							break;
+						case _g_name_.production_kind.g__g_name__3:
+							// traverse syntax tree node associated with production
+							// <g name>: <g name> <cardinality delimiter>
+
+							node.m__cardinality_delimiter_.Visit (visitor, appData);
+							break;
+						}
+					visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, node, appData);
+					return null;
+				});
+			visitor (SyntaxTreeCallbackReason.IterationEpilogueCallbackReason, (int) this.kind, this, appData);
+		}
+
 		// reparent sub-tree
 
 		public override void reparent (SyntaxTreeBase parent)

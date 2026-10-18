@@ -246,6 +246,38 @@ namespace Anglr.Parser
 		public override void InvokeTraverse (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).Traverse (this);
 		public override void InvokeTraverseCommon (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).TraverseCommon (this);
 
+		//
+		// traverse syntax tree node associated with any production of syntax rule <block regex definitions> with specified delegate
+		//
+
+		public override void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData)
+		{
+			if (visitor (SyntaxTreeCallbackReason.IterationPrologueCallbackReason, (int) this.kind, this, appData))
+				Iterate (null, (node, data) =>
+				{
+					_block_regex_definitions_.production_kind kind = (_block_regex_definitions_.production_kind) node.kind;
+					if (visitor (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, node, appData))
+						switch (kind)
+						{
+						case _block_regex_definitions_.production_kind.g__block_regex_definitions__1:
+							// traverse syntax tree node associated with production
+							// <block regex definitions>: <block regex definition>
+
+							node.m__block_regex_definition_.Visit (visitor, appData);
+							break;
+						case _block_regex_definitions_.production_kind.g__block_regex_definitions__2:
+							// traverse syntax tree node associated with production
+							// <block regex definitions>: <block regex definitions> <block regex definition>
+
+							node.m__block_regex_definition_.Visit (visitor, appData);
+							break;
+						}
+					visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, node, appData);
+					return null;
+				});
+			visitor (SyntaxTreeCallbackReason.IterationEpilogueCallbackReason, (int) this.kind, this, appData);
+		}
+
 		// reparent sub-tree
 
 		public override void reparent (SyntaxTreeBase parent)

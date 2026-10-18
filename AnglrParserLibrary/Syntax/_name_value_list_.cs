@@ -246,6 +246,38 @@ namespace Anglr.Parser
 		public override void InvokeTraverse (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).Traverse (this);
 		public override void InvokeTraverseCommon (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).TraverseCommon (this);
 
+		//
+		// traverse syntax tree node associated with any production of syntax rule <name value list> with specified delegate
+		//
+
+		public override void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData)
+		{
+			if (visitor (SyntaxTreeCallbackReason.IterationPrologueCallbackReason, (int) this.kind, this, appData))
+				Iterate (null, (node, data) =>
+				{
+					_name_value_list_.production_kind kind = (_name_value_list_.production_kind) node.kind;
+					if (visitor (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, node, appData))
+						switch (kind)
+						{
+						case _name_value_list_.production_kind.g__name_value_list__1:
+							// traverse syntax tree node associated with production
+							// <name value list>: <name value pair>
+
+							node.m__name_value_pair_.Visit (visitor, appData);
+							break;
+						case _name_value_list_.production_kind.g__name_value_list__2:
+							// traverse syntax tree node associated with production
+							// <name value list>: <name value list> <name value pair>
+
+							node.m__name_value_pair_.Visit (visitor, appData);
+							break;
+						}
+					visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, node, appData);
+					return null;
+				});
+			visitor (SyntaxTreeCallbackReason.IterationEpilogueCallbackReason, (int) this.kind, this, appData);
+		}
+
 		// reparent sub-tree
 
 		public override void reparent (SyntaxTreeBase parent)

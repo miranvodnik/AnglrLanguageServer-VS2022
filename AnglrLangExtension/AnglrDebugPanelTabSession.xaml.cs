@@ -60,14 +60,12 @@ namespace AnglrLangExtension
         private IAnglrLangService anglrLangService;
 
         private TabItemsSet tabItems;
-        private AnglrSelections anglrSelections;
 
         public AnglrDebugPanelTabSession (IAnglrLangService anglrLangService)
         {
             InitializeComponent ();
 
             tabItems = new TabItemsSet ();
-            anglrSelections = new AnglrSelections ();
 
             this.anglrLangService = anglrLangService;
             Logger = anglrLangService?.AnglrLogger ?? new VoidAnglrLogger ();
@@ -252,6 +250,8 @@ namespace AnglrLangExtension
                 TabItemsSet newTabItems = new TabItemsSet ();
                 foreach (var stack in getPDASnapshotResponse.PDAStackSet)
                 {
+                    if (stack == null)
+                        continue;
                     Logger?.InfoLine ($"stack ({stack.PDAStackId})");
                     Logger?.InfoLine ($"state\tcode\tname\t\tvalue");
                     foreach (var cell in stack.PDAStackCells)

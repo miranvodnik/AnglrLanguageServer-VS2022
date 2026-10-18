@@ -598,6 +598,84 @@ namespace Anglr.Parser
 		public override void InvokeTraverse (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).Traverse (this);
 		public override void InvokeTraverseCommon (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).TraverseCommon (this);
 
+		//
+		// traverse syntax tree node associated with any production of syntax rule <cardinality> with specified delegate
+		//
+
+		public override void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData)
+		{
+			_cardinality_.production_kind kind = (_cardinality_.production_kind) this.kind;
+			if (visitor (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, this, appData))
+			switch (kind)
+			{
+				case _cardinality_.production_kind.g__cardinality__1:
+					// traverse syntax tree node associated with production
+					// <cardinality>: '?'
+
+						m__question_mark_.Visit (visitor, appData);
+				break;
+				case _cardinality_.production_kind.g__cardinality__2:
+					// traverse syntax tree node associated with production
+					// <cardinality>: '+'
+
+						m__plus_sign_.Visit (visitor, appData);
+				break;
+				case _cardinality_.production_kind.g__cardinality__3:
+					// traverse syntax tree node associated with production
+					// <cardinality>: '-'
+
+						m__minus_sign_.Visit (visitor, appData);
+				break;
+				case _cardinality_.production_kind.g__cardinality__4:
+					// traverse syntax tree node associated with production
+					// <cardinality>: '*'
+
+						m__asterisk_.Visit (visitor, appData);
+				break;
+				case _cardinality_.production_kind.g__cardinality__5:
+					// traverse syntax tree node associated with production
+					// <cardinality>: '/'
+
+						m__slash_.Visit (visitor, appData);
+				break;
+				case _cardinality_.production_kind.g__cardinality__6:
+					// traverse syntax tree node associated with production
+					// <cardinality>: '~+'
+
+						m__inv_plus_sign_.Visit (visitor, appData);
+				break;
+				case _cardinality_.production_kind.g__cardinality__7:
+					// traverse syntax tree node associated with production
+					// <cardinality>: '~-'
+
+						m__inv_minus_sign_.Visit (visitor, appData);
+				break;
+				case _cardinality_.production_kind.g__cardinality__8:
+					// traverse syntax tree node associated with production
+					// <cardinality>: '~*'
+
+						m__inv_asterisk_.Visit (visitor, appData);
+				break;
+				case _cardinality_.production_kind.g__cardinality__9:
+					// traverse syntax tree node associated with production
+					// <cardinality>: '~/'
+
+						m__inv_slash_.Visit (visitor, appData);
+				break;
+				case _cardinality_.production_kind.g__cardinality__10:
+					// traverse syntax tree node associated with production
+					// <cardinality>: '{' <number optional> ',' <number optional> '}'
+
+						m__left_curly_bracket_.Visit (visitor, appData);
+						m__number_optional_.Visit (visitor, appData);
+						m__comma_.Visit (visitor, appData);
+						m__number_optional__1.Visit (visitor, appData);
+						m__right_curly_bracket_.Visit (visitor, appData);
+				break;
+			}
+			visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, this, appData);
+		}
+
 		// reparent sub-tree
 
 		public override void reparent (SyntaxTreeBase parent)

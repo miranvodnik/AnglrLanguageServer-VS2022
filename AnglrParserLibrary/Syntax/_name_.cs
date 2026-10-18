@@ -270,6 +270,38 @@ namespace Anglr.Parser
 		public override void InvokeTraverse (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).Traverse (this);
 		public override void InvokeTraverseCommon (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).TraverseCommon (this);
 
+		//
+		// traverse syntax tree node associated with any production of syntax rule <name> with specified delegate
+		//
+
+		public override void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData)
+		{
+			_name_.production_kind kind = (_name_.production_kind) this.kind;
+			if (visitor (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, this, appData))
+			switch (kind)
+			{
+				case _name_.production_kind.g__name__1:
+					// traverse syntax tree node associated with production
+					// <name>: <any>
+
+						m__any_.Visit (visitor, appData);
+				break;
+				case _name_.production_kind.g__name__2:
+					// traverse syntax tree node associated with production
+					// <name>: <cstring>
+
+						m__cstring_.Visit (visitor, appData);
+				break;
+				case _name_.production_kind.g__name__3:
+					// traverse syntax tree node associated with production
+					// <name>: <identifier>
+
+						m__identifier_.Visit (visitor, appData);
+				break;
+			}
+			visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, this, appData);
+		}
+
 		// reparent sub-tree
 
 		public override void reparent (SyntaxTreeBase parent)

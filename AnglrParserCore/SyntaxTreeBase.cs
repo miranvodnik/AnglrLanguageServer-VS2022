@@ -1,10 +1,11 @@
 //
 //	This file was generated with ANGLR compiler
 //
-using System;
-using System.Runtime.Serialization;
-using System.Collections.Generic;
+using Anglr.Parser.Core;
 using Anglr.Parser.Walker;
+using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Anglr.Parser.SyntaxTree
 {
@@ -86,6 +87,7 @@ namespace Anglr.Parser.SyntaxTree
         public abstract void InvokeTraverse (SyntaxTreeWalkerCore syntaxTreeWalker);
 
         public abstract void InvokeTraverseCommon (SyntaxTreeWalkerCore syntaxTreeWalker);
+        public abstract void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData);
 
         public static int g_created = 0;
         public static int g_deleted = 0;
@@ -136,6 +138,7 @@ namespace Anglr.Parser.SyntaxTree
         public override void reparent (SyntaxTreeBase parent) => this.parent = parent;
         public override void InvokeTraverse (SyntaxTreeWalkerCore syntaxTreeWalker) => syntaxTreeWalker.Traverse (this);
         public override void InvokeTraverseCommon (SyntaxTreeWalkerCore syntaxTreeWalker) => syntaxTreeWalker.TraverseCommon (this);
+        public override void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData) => visitor (0, (int) kind, this, appData);
 
         public static int g_tokens = 0;
         public static int g_counter = 0;

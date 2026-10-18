@@ -25,7 +25,7 @@ namespace AnglrDebuggerJsonRpcMessages
     public class AnglrDebuggerLogRequest : AnglrDebuggerBaseMessage
     {
         [DataMember (Name = "logLevel")] public int LogLevel { get; set; }
-        [DataMember (Name = "message")] public string Message{ get; set; }
+        [DataMember (Name = "message")] public string Message { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
@@ -326,15 +326,15 @@ namespace AnglrDebuggerJsonRpcMessages
             Debugger?.ConnectMessageHandler (this, connectMessage.ToObject<AnglrDebuggerConnectRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.SyntaxErrorMessageName)]
-        public void HandleSyntaxErrorMessage (JToken syntaxErrorMessage)=>
+        public void HandleSyntaxErrorMessage (JToken syntaxErrorMessage) =>
             Debugger?.SyntaxErrorMessageHandler (this, syntaxErrorMessage.ToObject<AnglrDebuggerSyntaxErrorRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.ShiftStepMessageName)]
-        public void HandleShiftStepMessage (JToken shiftStepMessage)=>
+        public void HandleShiftStepMessage (JToken shiftStepMessage) =>
             Debugger?.ShiftStepMessageHandler (this, shiftStepMessage.ToObject<AnglrDebuggerShiftStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.ReduceStepMessageName)]
-        public void HandleReduceStepMessage (JToken reduceStepMessage)=>
+        public void HandleReduceStepMessage (JToken reduceStepMessage) =>
             Debugger?.ReduceStepMessageHandler (this, reduceStepMessage.ToObject<AnglrDebuggerReduceStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.SplitStepMessageName)]
@@ -342,11 +342,11 @@ namespace AnglrDebuggerJsonRpcMessages
             Debugger?.SplitStepMessageHandler (this, splitStepMessage.ToObject<AnglrDebuggerSplitStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.LoopStepMessageName)]
-        public void HandleLoopStepMessage (JToken loopStepMessage)=>
+        public void HandleLoopStepMessage (JToken loopStepMessage) =>
             Debugger?.LoopStepMessageHandler (this, loopStepMessage.ToObject<AnglrDebuggerLoopStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.JoinMessageName)]
-        public void HandleJoinMessage (JToken joinMessage)=>
+        public void HandleJoinMessage (JToken joinMessage) =>
             Debugger?.JoinMessageHandler (this, joinMessage.ToObject<AnglrDebuggerJoinRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.FinalStepMessageName)]
@@ -354,7 +354,7 @@ namespace AnglrDebuggerJsonRpcMessages
             Debugger?.FinalStepMessageHandler (this, finalStepMessage.ToObject<AnglrDebuggerFinalStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.StopParserMessageName)]
-        public void HandleStopParserMessage (JToken stopParserMessage)=>
+        public void HandleStopParserMessage (JToken stopParserMessage) =>
             Debugger?.StopParserMessageHandler (this, stopParserMessage.ToObject<AnglrDebuggerStopParserRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.DbgBreakPointHitMessageName)]

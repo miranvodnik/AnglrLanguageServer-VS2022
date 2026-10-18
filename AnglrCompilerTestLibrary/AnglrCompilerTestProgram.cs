@@ -168,7 +168,7 @@ namespace anglr_cs
 
         public JsonRpc Rpc { get; set; }
 
-        public IAnglrLogger Logger {  get; private set; }
+        public IAnglrLogger Logger { get; private set; }
 
         public DbgProcessRpc ()
         {

@@ -344,6 +344,44 @@ namespace Anglr.Parser
 		public override void InvokeTraverse (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).Traverse (this);
 		public override void InvokeTraverseCommon (SyntaxTreeWalkerCore syntaxTreeWalker) => ((SyntaxTreeWalker) syntaxTreeWalker).TraverseCommon (this);
 
+		//
+		// traverse syntax tree node associated with any production of syntax rule <anglr definition> with specified delegate
+		//
+
+		public override void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData)
+		{
+			_anglr_definition_.production_kind kind = (_anglr_definition_.production_kind) this.kind;
+			if (visitor (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, this, appData))
+			switch (kind)
+			{
+				case _anglr_definition_.production_kind.g__anglr_definition__1:
+					// traverse syntax tree node associated with production
+					// <anglr definition>: <single terminal definition>
+
+						m__single_terminal_definition_.Visit (visitor, appData);
+				break;
+				case _anglr_definition_.production_kind.g__anglr_definition__2:
+					// traverse syntax tree node associated with production
+					// <anglr definition>: <single regex definition>
+
+						m__single_regex_definition_.Visit (visitor, appData);
+				break;
+				case _anglr_definition_.production_kind.g__anglr_definition__3:
+					// traverse syntax tree node associated with production
+					// <anglr definition>: <block of terminal definitions>
+
+						m__block_of_terminal_definitions_.Visit (visitor, appData);
+				break;
+				case _anglr_definition_.production_kind.g__anglr_definition__4:
+					// traverse syntax tree node associated with production
+					// <anglr definition>: <block of regex definitions>
+
+						m__block_of_regex_definitions_.Visit (visitor, appData);
+				break;
+			}
+			visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, this, appData);
+		}
+
 		// reparent sub-tree
 
 		public override void reparent (SyntaxTreeBase parent)

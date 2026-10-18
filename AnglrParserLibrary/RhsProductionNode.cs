@@ -835,6 +835,7 @@ namespace AnglrLibrary
             writer.WriteLine ($"\t\t#endregion");
             writer.WriteLine ($"\t\t#region Syntax tree traversal,  reperrent, init and iterator methods associated with the syntax rule {ProductionName.name}");
             GenerateCSInvokeTraverseMethod (writer);
+            GenerateCSSyntaxTreeWalkerFunctionVisitorMethod (writer, correctName);
             GenerateCSReparentMethod (writer);
             GenerateCSInitMethod (writer, correctName);
             GenerateCSIteratorMethods (writer, correctName);
@@ -2040,6 +2041,85 @@ namespace AnglrLibrary
             writer.WriteLine ("\t\t\tRaise_" + correctName + "_Event (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, kind, p_" + correctName + ");");
             writer.WriteLine ("\t\t\tp_" + correctName + ".unlock();");
             writer.WriteLine ("\t\t}");
+        }
+
+        private void GenerateCSSyntaxTreeWalkerFunctionVisitorMethod (TextWriter writer, string correctName)
+        {
+            writer.WriteLine ();
+            writer.WriteLine ($"\t\t//");
+            writer.WriteLine ($"\t\t// traverse syntax tree node associated with any production of syntax rule {ProductionName.name} with specified delegate");
+            writer.WriteLine ($"\t\t//");
+            writer.WriteLine ();
+            writer.WriteLine ($"\t\tpublic override void Visit (Func<SyntaxTreeCallbackReason, int, SyntaxTreeBase, object, bool> visitor, object appData)");
+            writer.WriteLine ($"\t\t{{");
+            if (ProductionName.IteratorFlag)
+            {
+                writer.WriteLine ($"\t\t\tif (visitor (SyntaxTreeCallbackReason.IterationPrologueCallbackReason, (int) this.kind, this, appData))");
+                writer.WriteLine ($"\t\t\t\tIterate (null, (node, data) =>");
+                writer.WriteLine ($"\t\t\t\t{{");
+                writer.WriteLine ($"\t\t\t\t\t{correctName}.production_kind kind = ({correctName}.production_kind) node.kind;");
+                writer.WriteLine ($"\t\t\t\t\tif (visitor (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, node, appData))");
+                writer.WriteLine ($"\t\t\t\t\t\tswitch (kind)");
+                writer.WriteLine ($"\t\t\t\t\t\t{{");
+
+                foreach (RhsProduction p_RhsProduction in Productions)
+                {
+                    writer.WriteLine ($"\t\t\t\t\t\tcase {correctName}.production_kind.g_{ProductionName.correctName}_{p_RhsProduction.index}:");
+                    writer.WriteLine ($"\t\t\t\t\t\t\t// traverse syntax tree node associated with production");
+                    writer.Write ($"\t\t\t\t\t\t\t// {ProductionName.name}:");
+                    p_RhsProduction.display (writer);
+                    writer.WriteLine ();
+                    int turn = -1;
+                    foreach (RhsNode p_RhsNode in p_RhsProduction.rhsNodes)
+                    {
+                        ++turn;
+                        SymbolToken p_SymbolToken = p_RhsNode.symbolToken;
+                        if (!(p_SymbolToken.name == ProductionName.name))
+                        {
+                            writer.Write ($"\t\t\t\t\t\t\tnode.m_{p_SymbolToken.correctName}");
+                            if (p_RhsNode.index > 0)
+                                writer.Write ($"_{p_RhsNode.index}");
+                            writer.WriteLine ($".Visit (visitor, appData);");
+                        }
+                    }
+                    writer.WriteLine ($"\t\t\t\t\t\t\tbreak;");
+                }
+                writer.WriteLine ($"\t\t\t\t\t\t}}");
+                writer.WriteLine ($"\t\t\t\t\tvisitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, node, appData);");
+                writer.WriteLine ($"\t\t\t\t\treturn null;");
+                writer.WriteLine ($"\t\t\t\t}});");
+                writer.WriteLine ($"\t\t\tvisitor (SyntaxTreeCallbackReason.IterationEpilogueCallbackReason, (int) this.kind, this, appData);");
+            }
+            else
+            {
+                writer.WriteLine ($"\t\t\t{correctName}.production_kind kind = ({correctName}.production_kind) this.kind;");
+                writer.WriteLine ($"\t\t\tif (visitor (SyntaxTreeCallbackReason.TraversalPrologueCallbackReason, (int) kind, this, appData))");
+                writer.WriteLine ($"\t\t\tswitch (kind)");
+                writer.WriteLine ($"\t\t\t{{");
+
+                foreach (RhsProduction p_RhsProduction in Productions)
+                {
+                    writer.WriteLine ($"\t\t\t\tcase {correctName}.production_kind.g_{ProductionName.correctName}_{p_RhsProduction.index}:");
+                    writer.WriteLine ($"\t\t\t\t\t// traverse syntax tree node associated with production");
+                    writer.Write ($"\t\t\t\t\t// {ProductionName.name}:");
+                    p_RhsProduction.display (writer);
+                    writer.WriteLine ();
+                    int turn = -1;
+                    foreach (RhsNode p_RhsNode in p_RhsProduction.rhsNodes)
+                    {
+                        ++turn;
+                        SymbolToken p_SymbolToken = p_RhsNode.symbolToken;
+                        writer.Write ($"\t\t\t\t\t\tm_{p_SymbolToken.correctName}");
+                        if (p_RhsNode.index > 0)
+                            writer.Write ($"_{p_RhsNode.index}");
+                        writer.WriteLine ($".Visit (visitor, appData);");
+                    }
+                    writer.WriteLine ($"\t\t\t\tbreak;");
+                }
+                writer.WriteLine ($"\t\t\t}}");
+                writer.WriteLine ($"\t\t\tvisitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, this, appData);");
+            }
+            writer.WriteLine ($"\t\t}}");
         }
 
         private void GenerateCSSyntaxTreeWalkerTraverseCommonMethod (TextWriter writer, string correctName)
