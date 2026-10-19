@@ -187,7 +187,6 @@ namespace AnglrDebuggerJsonRpcMessages
         [DataMember (Name = "state")] public int State { get; set; }
         [DataMember (Name = "name")] public string Name { get; set; }
         [DataMember (Name = "value")] public string Value { get; set; }
-        [DataMember (Name = "tree")] public string Tree { get; set; }
         [DataMember (Name = "startSpan")] public (int lineno, int column) StartSpan { get; set; }
         [DataMember (Name = "endSpan")] public (int lineno, int column) EndSpan { get; set; }
     }

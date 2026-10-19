@@ -3,6 +3,7 @@
 //
 using System;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
 
 using Anglr.Parser.Core;
 using Anglr.Parser.SyntaxTree;
@@ -304,10 +305,12 @@ namespace Anglr.Parser
 
 		public object Iterate (object appData, IteratorDelegate iteratorDelegate)
 		{
+			Stack<_attribute_list_> stack = new Stack<_attribute_list_> ();
 			_attribute_list_ p__attribute_list_;
-			for (p__attribute_list_ = this; p__attribute_list_.m__attribute_list_ != null; p__attribute_list_ = p__attribute_list_.m__attribute_list_);
-			for (SyntaxTreeBase parent = p__attribute_list_; (parent != null) && (parent is _attribute_list_); parent = parent.parent)
-				appData = iteratorDelegate ((_attribute_list_) parent, appData);
+			for (p__attribute_list_ = this; p__attribute_list_ != null; p__attribute_list_ = p__attribute_list_.m__attribute_list_)
+				stack.Push (p__attribute_list_);
+			foreach (var node in stack)
+				appData = iteratorDelegate (node, appData);
 			return appData;
 		}
 		#endregion

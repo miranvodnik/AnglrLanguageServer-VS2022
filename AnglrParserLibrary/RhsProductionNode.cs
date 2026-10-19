@@ -1757,10 +1757,12 @@ namespace AnglrLibrary
             writer.WriteLine ();
             writer.WriteLine ($"\t\tpublic object Iterate (object appData, IteratorDelegate iteratorDelegate)");
             writer.WriteLine ($"\t\t{{");
+            writer.WriteLine ($"\t\t\tStack<{correctName}> stack = new Stack<{correctName}> ();");
             writer.WriteLine ($"\t\t\t{correctName} p_{correctName};");
-            writer.WriteLine ($"\t\t\tfor (p_{correctName} = this; p_{correctName}.m_{correctName} != null; p_{correctName} = p_{correctName}.m_{correctName});");
-            writer.WriteLine ($"\t\t\tfor (SyntaxTreeBase parent = p_{correctName}; (parent != null) && (parent is {correctName}); parent = parent.parent)");
-            writer.WriteLine ($"\t\t\t\tappData = iteratorDelegate (({correctName}) parent, appData);");
+            writer.WriteLine ($"\t\t\tfor (p_{correctName} = this; p_{correctName} != null; p_{correctName} = p_{correctName}.m_{correctName})");
+            writer.WriteLine ($"\t\t\t\tstack.Push (p_{correctName});");
+            writer.WriteLine ($"\t\t\tforeach (var node in stack)");
+            writer.WriteLine ($"\t\t\t\tappData = iteratorDelegate (node, appData);");
             writer.WriteLine ($"\t\t\treturn appData;");
             writer.WriteLine ($"\t\t}}");
             if (false)

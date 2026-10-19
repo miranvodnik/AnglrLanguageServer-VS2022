@@ -72,16 +72,13 @@ namespace AnglrDebuggerBridge
     }
     public class AnglrSyntaxTreeHelper
     {
-        public AnglrSyntaxTreeHelper ()
-        {
-            lastSpan = (0, 0);
-        }
+        public (int lineno, int column) LastSpan { get => _lastSpan; }
+        private (int lineno, int column) _lastSpan;
+        public AnglrSyntaxTreeHelper () => _lastSpan = (0, 0);
 
-        private StringBuilder stringBuilder;
-        private (int lineno, int column) lastSpan;
         public string GenerateSourceText (SyntaxTreeBase [] nodes)
         {
-            stringBuilder = new StringBuilder ();
+            StringBuilder stringBuilder = new StringBuilder ();
 
             foreach (var node in nodes)
             {
@@ -94,23 +91,23 @@ namespace AnglrDebuggerBridge
                         SyntaxTreeToken tokenNode = nodeRef as SyntaxTreeToken;
                         int lineno = tokenNode.lineno;
                         int column = tokenNode.column;
-                        if ((AnglrTuple) (lineno, column + tokenNode.text.Length) <= (AnglrTuple) lastSpan)
+                        if ((AnglrTuple) (lineno, column + tokenNode.text.Length) <= (AnglrTuple) _lastSpan)
                             return true;
-                        while (lastSpan.lineno < lineno)
+                        while (_lastSpan.lineno < lineno)
                         {
-                            ++lastSpan.lineno;
-                            lastSpan.column = 0;
+                            ++_lastSpan.lineno;
+                            _lastSpan.column = 0;
                             stringBuilder.AppendLine ();
                         }
-                        while (lastSpan.column < column)
+                        while (_lastSpan.column < column)
                         {
-                            ++lastSpan.column;
+                            ++_lastSpan.column;
                             stringBuilder.Append (' ');
                         }
-                        lastSpan.column += tokenNode.text.Length;
+                        _lastSpan.column += tokenNode.text.Length;
                         stringBuilder.Append (tokenNode.text);
                         return true;
-                    }, 
+                    },
                     stringBuilder
                 );
             }
@@ -118,14 +115,11 @@ namespace AnglrDebuggerBridge
             return stringBuilder.ToString ();
         }
 
-        private bool empty;
-        private (int lineno, int column) sPoint;
-        private SyntaxTreeToken tokenNode;
         public AnglrSelection FindSourceSpan (SyntaxTreeBase node)
         {
-            empty = true;
-            sPoint = (0, 0);
-            tokenNode = null;
+            bool empty = true;
+            (int lineno, int column) sPoint = (0, 0);
+            SyntaxTreeToken tokenNode = null;
 
             node?.Visit
             (
@@ -1187,7 +1181,6 @@ namespace AnglrDebuggerBridge
                                 Name = "null",
                                 Value = "null",
                                 State = stateStack [i],
-                                Tree = "",
                                 StartSpan = startSpan,
                                 EndSpan = endSpan
                             };
@@ -1219,7 +1212,6 @@ namespace AnglrDebuggerBridge
                                     Name = name,
                                     Value = token.text,
                                     State = stateStack [i],
-                                    Tree = null,
                                     StartSpan = startSpan,
                                     EndSpan = endSpan
                                 };
@@ -1242,7 +1234,6 @@ namespace AnglrDebuggerBridge
                                     Name = name,
                                     Value = "",
                                     State = stateStack [i],
-                                    Tree = null,
                                     StartSpan = startSpan,
                                     EndSpan = endSpan
                                 };
