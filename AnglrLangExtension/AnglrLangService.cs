@@ -15,6 +15,10 @@ using Microsoft.VisualStudio;
 using AnglrJsonRpcMethods;
 using AnglrLogLibrary;
 using System.Runtime.CompilerServices;
+using Microsoft.VisualStudio.ComponentModelHost;
+using Microsoft.VisualStudio.Text.Editor;
+using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Utilities;
 
 namespace AnglrLangExtension
 {
@@ -32,6 +36,10 @@ namespace AnglrLangExtension
     {
         private HashSet<string> openAnglrFiles = new HashSet<string> ();
         private IAsyncServiceProvider _serviceProvider = null;
+        public IComponentModel ComponentModel {  get; }
+        public ITextEditorFactoryService TextEditorFactoryService {  get; }
+        public ITextBufferFactoryService TextBufferFactoryService {  get; }
+        public IContentTypeRegistryService ContentTypeRegistryService { get; }
         public IAnglrLogService AnglrLogService { get; private set; }
 
         public IAnglrLogger AnglrLogger { get; private set; }
@@ -47,6 +55,10 @@ namespace AnglrLangExtension
             AnglrLogger = AnglrLogService?.Logger ?? new VoidAnglrLogger ();
             //AnglrLogService = serviceProvider.GetServiceAsync (typeof (AnglrLogService)) as IAnglrLogService;
             dTE = Package.GetGlobalService (typeof (DTE)) as DTE2;
+            ComponentModel = (IComponentModel) Package.GetGlobalService (typeof (SComponentModel));
+            TextEditorFactoryService = ComponentModel?.GetService<ITextEditorFactoryService> ();
+            TextBufferFactoryService = ComponentModel?.GetService<ITextBufferFactoryService> ();
+            ContentTypeRegistryService = ComponentModel.GetService<IContentTypeRegistryService> ();
         }
 
         public async Task InitializeAsync (CancellationToken cancellationToken)
@@ -264,6 +276,10 @@ namespace AnglrLangExtension
 
     public interface IAnglrLangService
     {
+        IComponentModel ComponentModel { get; }
+        ITextEditorFactoryService TextEditorFactoryService { get; }
+        ITextBufferFactoryService TextBufferFactoryService { get; }
+        IContentTypeRegistryService ContentTypeRegistryService { get; }
         IAnglrLogger AnglrLogger { get; }
         AnglrGetGetHierarchyItemResult InvokeGetHierarchy (AnglrGetGetHierarchyItemParams request);
         AnglrGetDictionaryItemResult InvokeGetDictionary (AnglrGetDictionaryItemParams request);

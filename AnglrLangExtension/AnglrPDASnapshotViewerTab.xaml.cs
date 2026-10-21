@@ -44,11 +44,11 @@ namespace AnglrLangExtension
                    .ToImmutableArray ())
             .ToImmutableArray ();
         public static ImmutableArray<Color> OrangePalette { get; } = ColorPalettes [0];
-        public static readonly Color OrangePaletteUltraLightColor = OrangePalette [1];
-        public static readonly Color OrangePaletteLightColor = OrangePalette [2];
-        public static readonly Color OrangePaletteColor = OrangePalette [3];
-        public static readonly Color OrangePaletteDarkColor = OrangePalette [4];
-        public static readonly Color OrangePaletteUltraDarkColor = OrangePalette [5];
+        public static readonly Color OrangePaletteUltraLightColor = OrangePalette [0];
+        public static readonly Color OrangePaletteLightColor = OrangePalette [1];
+        public static readonly Color OrangePaletteColor = OrangePalette [2];
+        public static readonly Color OrangePaletteDarkColor = OrangePalette [3];
+        public static readonly Color OrangePaletteUltraDarkColor = OrangePalette [4];
 
         public static readonly SolidColorBrush OrangePaletteUltraLightBrush = new SolidColorBrush (OrangePaletteUltraLightColor);
         public static readonly SolidColorBrush OrangePaletteLightBrush = new SolidColorBrush (OrangePaletteLightColor);
@@ -56,11 +56,11 @@ namespace AnglrLangExtension
         public static readonly SolidColorBrush OrangePaletteDarkBrush = new SolidColorBrush (OrangePaletteDarkColor);
         public static readonly SolidColorBrush OrangePaletteUltraDarkBrush = new SolidColorBrush (OrangePaletteUltraDarkColor);
         public static ImmutableArray<Color> GreenPalette { get; } = ColorPalettes [1];
-        public static readonly Color GreenPaletteUltraLightColor = GreenPalette [1];
-        public static readonly Color GreenPaletteLightColor = GreenPalette [2];
-        public static readonly Color GreenPaletteColor = GreenPalette [3];
-        public static readonly Color GreenPaletteDarkColor = GreenPalette [4];
-        public static readonly Color GreenPaletteUltraDarkColor = GreenPalette [5];
+        public static readonly Color GreenPaletteUltraLightColor = GreenPalette [0];
+        public static readonly Color GreenPaletteLightColor = GreenPalette [1];
+        public static readonly Color GreenPaletteColor = GreenPalette [2];
+        public static readonly Color GreenPaletteDarkColor = GreenPalette [3];
+        public static readonly Color GreenPaletteUltraDarkColor = GreenPalette [4];
 
         public static readonly SolidColorBrush GreenPaletteUltraLightBrush = new SolidColorBrush (GreenPaletteUltraLightColor);
         public static readonly SolidColorBrush GreenPaletteLightBrush = new SolidColorBrush (GreenPaletteLightColor);
@@ -68,11 +68,11 @@ namespace AnglrLangExtension
         public static readonly SolidColorBrush GreenPaletteDarkBrush = new SolidColorBrush (GreenPaletteDarkColor);
         public static readonly SolidColorBrush GreenPaletteUltraDarkBrush = new SolidColorBrush (GreenPaletteUltraDarkColor);
         public static ImmutableArray<Color> LightBluePalette { get; } = ColorPalettes [2];
-        public static readonly Color LightBluePaletteUltraLightColor = LightBluePalette [1];
-        public static readonly Color LightBluePaletteLightColor = LightBluePalette [2];
-        public static readonly Color LightBluePaletteColor = LightBluePalette [3];
-        public static readonly Color LightBluePaletteDarkColor = LightBluePalette [4];
-        public static readonly Color LightBluePaletteUltraDarkColor = LightBluePalette [5];
+        public static readonly Color LightBluePaletteUltraLightColor = LightBluePalette [0];
+        public static readonly Color LightBluePaletteLightColor = LightBluePalette [1];
+        public static readonly Color LightBluePaletteColor = LightBluePalette [2];
+        public static readonly Color LightBluePaletteDarkColor = LightBluePalette [3];
+        public static readonly Color LightBluePaletteUltraDarkColor = LightBluePalette [4];
 
         public static readonly SolidColorBrush LightBluePaletteUltraLightBrush = new SolidColorBrush (LightBluePaletteUltraLightColor);
         public static readonly SolidColorBrush LightBluePaletteLightBrush = new SolidColorBrush (LightBluePaletteLightColor);
@@ -80,11 +80,11 @@ namespace AnglrLangExtension
         public static readonly SolidColorBrush LightBluePaletteDarkBrush = new SolidColorBrush (LightBluePaletteDarkColor);
         public static readonly SolidColorBrush LightBluePaletteUltraDarkBrush = new SolidColorBrush (LightBluePaletteUltraDarkColor);
         public static ImmutableArray<Color> SteelBluePalette { get; } = ColorPalettes [3];
-        public static readonly Color SteelBluePaletteUltraLightColor = SteelBluePalette [1];
-        public static readonly Color SteelBluePaletteLightColor = SteelBluePalette [2];
-        public static readonly Color SteelBluePaletteColor = SteelBluePalette [3];
-        public static readonly Color SteelBluePaletteDarkColor = SteelBluePalette [4];
-        public static readonly Color SteelBluePaletteUltraDarkColor = SteelBluePalette [5];
+        public static readonly Color SteelBluePaletteUltraLightColor = SteelBluePalette [0];
+        public static readonly Color SteelBluePaletteLightColor = SteelBluePalette [1];
+        public static readonly Color SteelBluePaletteColor = SteelBluePalette [2];
+        public static readonly Color SteelBluePaletteDarkColor = SteelBluePalette [3];
+        public static readonly Color SteelBluePaletteUltraDarkColor = SteelBluePalette [4];
 
         public static readonly SolidColorBrush SteelBluePaletteUltraLightBrush = new SolidColorBrush (SteelBluePaletteUltraLightColor);
         public static readonly SolidColorBrush SteelBluePaletteLightBrush = new SolidColorBrush (SteelBluePaletteLightColor);
@@ -92,11 +92,11 @@ namespace AnglrLangExtension
         public static readonly SolidColorBrush SteelBluePaletteDarkBrush = new SolidColorBrush (SteelBluePaletteDarkColor);
         public static readonly SolidColorBrush SteelBluePaletteUltraDarkBrush = new SolidColorBrush (SteelBluePaletteUltraDarkColor);
         public static ImmutableArray<Color> DarkBluePalette { get; } = ColorPalettes [4];
-        public static readonly Color DarkBluePaletteUltraLightColor = DarkBluePalette [1];
-        public static readonly Color DarkBluePaletteLightColor = DarkBluePalette [2];
-        public static readonly Color DarkBluePaletteColor = DarkBluePalette [3];
-        public static readonly Color DarkBluePaletteDarkColor = DarkBluePalette [4];
-        public static readonly Color DarkBluePaletteUltraDarkColor = DarkBluePalette [5];
+        public static readonly Color DarkBluePaletteUltraLightColor = DarkBluePalette [0];
+        public static readonly Color DarkBluePaletteLightColor = DarkBluePalette [1];
+        public static readonly Color DarkBluePaletteColor = DarkBluePalette [2];
+        public static readonly Color DarkBluePaletteDarkColor = DarkBluePalette [3];
+        public static readonly Color DarkBluePaletteUltraDarkColor = DarkBluePalette [4];
 
         public static readonly SolidColorBrush DarkBluePaletteUltraLightBrush = new SolidColorBrush (DarkBluePaletteUltraLightColor);
         public static readonly SolidColorBrush DarkBluePaletteLightBrush = new SolidColorBrush (DarkBluePaletteLightColor);
@@ -104,11 +104,11 @@ namespace AnglrLangExtension
         public static readonly SolidColorBrush DarkBluePaletteDarkBrush = new SolidColorBrush (DarkBluePaletteDarkColor);
         public static readonly SolidColorBrush DarkBluePaletteUltraDarkBrush = new SolidColorBrush (DarkBluePaletteUltraDarkColor);
         public static ImmutableArray<Color> PinkPalette { get; } = ColorPalettes [5];
-        public static readonly Color PinkPaletteUltraLightColor = PinkPalette [1];
-        public static readonly Color PinkPaletteLightColor = PinkPalette [2];
-        public static readonly Color PinkPaletteColor = PinkPalette [3];
-        public static readonly Color PinkPaletteDarkColor = PinkPalette [4];
-        public static readonly Color PinkPaletteUltraDarkColor = PinkPalette [5];
+        public static readonly Color PinkPaletteUltraLightColor = PinkPalette [0];
+        public static readonly Color PinkPaletteLightColor = PinkPalette [1];
+        public static readonly Color PinkPaletteColor = PinkPalette [2];
+        public static readonly Color PinkPaletteDarkColor = PinkPalette [3];
+        public static readonly Color PinkPaletteUltraDarkColor = PinkPalette [4];
 
         public static readonly SolidColorBrush PinkPaletteUltraLightBrush = new SolidColorBrush (PinkPaletteUltraLightColor);
         public static readonly SolidColorBrush PinkPaletteLightBrush = new SolidColorBrush (PinkPaletteLightColor);
@@ -116,11 +116,11 @@ namespace AnglrLangExtension
         public static readonly SolidColorBrush PinkPaletteDarkBrush = new SolidColorBrush (PinkPaletteDarkColor);
         public static readonly SolidColorBrush PinkPaletteUltraDarkBrush = new SolidColorBrush (PinkPaletteUltraDarkColor);
         public static ImmutableArray<Color> RedPalette { get; } = ColorPalettes [6];
-        public static readonly Color RedPaletteUltraLightColor = RedPalette [1];
-        public static readonly Color RedPaletteLightColor = RedPalette [2];
-        public static readonly Color RedPaletteColor = RedPalette [3];
-        public static readonly Color RedPaletteDarkColor = RedPalette [4];
-        public static readonly Color RedPaletteUltraDarkColor = RedPalette [5];
+        public static readonly Color RedPaletteUltraLightColor = RedPalette [0];
+        public static readonly Color RedPaletteLightColor = RedPalette [1];
+        public static readonly Color RedPaletteColor = RedPalette [2];
+        public static readonly Color RedPaletteDarkColor = RedPalette [3];
+        public static readonly Color RedPaletteUltraDarkColor = RedPalette [4];
 
         public static readonly SolidColorBrush RedPaletteUltraLightBrush = new SolidColorBrush (RedPaletteUltraLightColor);
         public static readonly SolidColorBrush RedPaletteLightBrush = new SolidColorBrush (RedPaletteLightColor);

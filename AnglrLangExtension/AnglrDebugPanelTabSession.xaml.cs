@@ -7,13 +7,15 @@ using AnglrDebuggerJsonRpcMessages;
 using AnglrJsonRpcMethods;
 using AnglrLibrary;
 using AnglrLogLibrary;
-using EnvDTE;
 using Microsoft.VisualStudio.GraphModel.CodeSchema;
 using Microsoft.VisualStudio.LanguageServer.Protocol;
+using Microsoft.VisualStudio.Package;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Editor;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 using StreamJsonRpc;
 using StreamJsonRpc.Protocol;
 using System;
@@ -22,8 +24,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Globalization;
+using System.Windows.Documents;
 using System.IO;
 using System.IO.Pipelines;
 using System.Linq;
@@ -60,17 +64,20 @@ namespace AnglrLangExtension
         private IAnglrLangService anglrLangService;
 
         private TabItemsSet tabItems;
+        private Paragraph pdaSnapshotTextParagraph;
 
         public AnglrDebugPanelTabSession (IAnglrLangService anglrLangService)
         {
             InitializeComponent ();
 
-            tabItems = new TabItemsSet ();
-
             this.anglrLangService = anglrLangService;
             Logger = anglrLangService?.AnglrLogger ?? new VoidAnglrLogger ();
 
             Logger?.InfoLine ($"AnglrDebugPanelSession created ");
+
+            tabItems = new TabItemsSet ();
+            pdaSnapshotText.Document = new FlowDocument ();
+            pdaSnapshotText.Document.Blocks.Add (pdaSnapshotTextParagraph = new Paragraph ());
         }
 
         public async Task InvokeRpcSessionAsync (int count, Stream pipe, CancellationToken token)
@@ -244,9 +251,9 @@ namespace AnglrLangExtension
             try
             {
                 Logger?.InfoLine ($"break-point hit ({dbgBreakPointHitRequest.SequenceNr})");
-                Logger?.InfoLine ($"*** START OF DELTA SOURCE TEXT ***\n");
-                Logger?.InfoRawLine ($"{getPDASnapshotResponse.DeltaSourceText}");
-                Logger?.InfoLine ($"\n*** END   OF DELTA SOURCE TEXT ***");
+                Logger?.DebugLine ($"*** START OF DELTA SOURCE TEXT ***\n");
+                Logger?.DebugRawLine ($"{getPDASnapshotResponse.DeltaSourceText}");
+                Logger?.DebugLine ($"\n*** END   OF DELTA SOURCE TEXT ***");
                 TabItemsSet newTabItems = new TabItemsSet ();
                 foreach (var stack in getPDASnapshotResponse.PDAStackSet)
                 {
@@ -293,6 +300,8 @@ namespace AnglrLangExtension
                             pdaShapshotDrawing.Offset = new Vector (0, 0);
                             pdaShapshotDrawing.ComputeVisualBounds ();
 
+                            AppendText (getPDASnapshotResponse.DeltaSourceText);
+
                             AnglrParserPartDrawingCanvas drawingCanvas = viewerTab.pdaSnapshotVisual;
                             drawingCanvas.Logger = Logger;
                             drawingCanvas.Clear ();
@@ -330,6 +339,13 @@ namespace AnglrLangExtension
             {
                 Logger?.ErrorLine (ex, $"break-point handler exception");
             }
+        }
+
+        private void AppendText (string text)
+        {
+            pdaSnapshotText.CaretPosition = pdaSnapshotText.Document.ContentEnd;
+            pdaSnapshotText.ScrollToEnd ();
+            pdaSnapshotTextParagraph.Inlines.Add (text);
         }
 
         private AnglrPDAViableSet AnalyzePDAStack (AnglrDebuggerGetPDAStack stack)
