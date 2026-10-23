@@ -362,7 +362,7 @@ namespace anglr_cs
                 return;
         }
 
-        public void DbgBreakPointHitMessageHandler (object sender, EventArgs e)
+        public async Task DbgBreakPointHitMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerDbgBreakPointHitRequest dbgBreakPointHitRequest = e as AnglrDebuggerDbgBreakPointHitRequest;
             if (dbgBreakPointHitRequest == null)

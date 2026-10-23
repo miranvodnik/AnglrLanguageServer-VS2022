@@ -10,58 +10,20 @@ namespace AnglrLibrary
     [Serializable]
     public class SymbolTable
     {
+        private symtab m_symtab = new symtab ();
+        public symtab.Enumerator enumerator { get => m_symtab.GetEnumerator (); }
+
         public SymbolTable () { }
         private void Dispose ()
         {
             init ();
         }
 
-        public void init ()
-        {
-            _init ();
-        }
-
-        public SymbolToken insert (SymbolToken symbol)
-        {
-            return _insert (symbol);
-        }
-
-        public SymbolToken find (SymbolToken symbol)
-        {
-            return _find (symbol);
-        }
-
-        public void print (IAnglrLogger logger)
-        {
-            _print (logger);
-        }
-
-        public int createSymbolList (tokvec p_tokvec, uint declarator, SymbolToken symbolToken = null)
-        {
-            return _createSymbolList (p_tokvec, declarator, symbolToken);
-        }
-
-        //public reftab getRefTab ()
-        //{
-        //	return _GetRefTab ();
-        //}
-
-        private void _init ()
-        {
-            m_symtab.Clear ();
-        }
-
-        private SymbolToken _insert (SymbolToken symbol)
-        {
-            SymbolToken symbolRef = null;
-            return (m_symtab.TryGetValue (symbol, out symbolRef)) ? symbolRef : (m_symtab [symbol] = symbol);
-        }
-
-        private SymbolToken _find (SymbolToken symbol)
-        {
-            SymbolToken symbolRef = null;
-            return (m_symtab.TryGetValue (symbol, out symbolRef)) ? symbolRef : null;
-        }
+        public void init () => m_symtab.Clear ();
+        public SymbolToken insert (SymbolToken symbol) => (m_symtab.TryGetValue (symbol, out var symbolRef)) ? symbolRef : (m_symtab [symbol] = symbol);
+        public SymbolToken find (SymbolToken symbol) => (m_symtab.TryGetValue (symbol, out var symbolRef)) ? symbolRef : null;
+        public void print (IAnglrLogger logger) => _print (logger);
+        public int createSymbolList (tokvec p_tokvec, uint declarator, SymbolToken symbolToken = null) => _createSymbolList (p_tokvec, declarator, symbolToken);
 
         private void _print (IAnglrLogger logger)
         {
@@ -135,27 +97,11 @@ namespace AnglrLibrary
                 if (p_SymbolToken.AliasFlag)
                     continue;
                 if ((symbolToken != null) && (p_SymbolToken.context != symbolToken))
-                        continue;
+                    continue;
                 p_tokvec.Add (p_SymbolToken);
                 ++index;
             }
             return index;
         }
-
-        //private reftab _GetRefTab ()
-        //{
-        //	reftab keys = new reftab ();
-        //	foreach (SymbolToken symbol in m_symtab.Keys)
-        //	{
-        //		foreach (SymbolReference reference in symbol.m_reflist)
-        //			keys [(reference.lineno, reference.column, reference.length, true)] = symbol;
-        //		foreach (SymbolReference reference in symbol.m_deflist)
-        //			keys [(reference.lineno, reference.column, reference.length, false)] = symbol;
-        //	}
-        //	return keys;
-        //}
-
-        symtab m_symtab = new symtab ();
-        public symtab.Enumerator enumerator { get { return m_symtab.GetEnumerator (); } }
     }
 }

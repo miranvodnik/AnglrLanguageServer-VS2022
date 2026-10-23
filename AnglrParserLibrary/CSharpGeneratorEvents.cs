@@ -268,6 +268,24 @@ namespace AnglrLibrary
             return result;
         }
 
+        internal bool Invoke__classifier_list__Callback (SyntaxTreeCallbackReason reason, _classifier_list_.production_kind kind, _classifier_list_ p__classifier_list_)
+        {
+            bool result = true;
+            switch (reason)
+            {
+                case SyntaxTreeCallbackReason.BuilderCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+                    p__classifier_list_.m__classifier_info_set_.Iterate (null, (node, data) => { return null; });
+                    break;
+            }
+            return result;
+        }
+
         internal bool Invoke__regex_definition__Callback (SyntaxTreeCallbackReason reason, _regex_definition_.production_kind kind, _regex_definition_ p__regex_definition_)
         {
             bool result = true;
@@ -1390,6 +1408,34 @@ namespace AnglrLibrary
                     }
                     break;
                 }
+            }
+            return result;
+        }
+
+        internal bool Invoke__classifier_list__Callback (SyntaxTreeCallbackReason reason, _classifier_list_.production_kind kind, _classifier_list_ p__classifier_list_)
+        {
+            bool result = true;
+            switch (reason)
+            {
+                case SyntaxTreeCallbackReason.BuilderCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+                {
+                    p__classifier_list_.m__classifier_info_set_.Iterate
+                    (
+                        null,
+                        (node, data) =>
+                        {
+                            _classifier_info_ info = node.m__classifier_info_;
+                            return null;
+                        }
+                    );
+                }
+                break;
             }
             return result;
         }

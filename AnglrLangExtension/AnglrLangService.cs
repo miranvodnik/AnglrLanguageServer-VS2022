@@ -1,24 +1,26 @@
-﻿using EnvDTE80;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.Shell;
-using IAsyncServiceProvider = Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
-using System.Threading;
-using Microsoft.VisualStudio.Shell.Interop;
-using EnvDTE;
-using Anglr.Parser;
-using Microsoft.VisualStudio;
+﻿using Anglr.Parser;
 using AnglrJsonRpcMethods;
 using AnglrLogLibrary;
-using System.Runtime.CompilerServices;
+using EnvDTE;
+using EnvDTE80;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.ComponentModelHost;
-using Microsoft.VisualStudio.Text.Editor;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using IAsyncServiceProvider = Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
 
 namespace AnglrLangExtension
 {
@@ -35,10 +37,10 @@ namespace AnglrLangExtension
     public class AnglrLangService : SAnglrLangService, IAnglrLangService
     {
         private HashSet<string> openAnglrFiles = new HashSet<string> ();
-        private IAsyncServiceProvider _serviceProvider = null;
-        public IComponentModel ComponentModel {  get; }
-        public ITextEditorFactoryService TextEditorFactoryService {  get; }
-        public ITextBufferFactoryService TextBufferFactoryService {  get; }
+        private AsyncPackage _serviceProvider = null;
+        public IComponentModel ComponentModel { get; }
+        public ITextEditorFactoryService TextEditorFactoryService { get; }
+        public ITextBufferFactoryService TextBufferFactoryService { get; }
         public IContentTypeRegistryService ContentTypeRegistryService { get; }
         public IAnglrLogService AnglrLogService { get; private set; }
 
@@ -48,7 +50,7 @@ namespace AnglrLangExtension
 
         public event AnglrProjectItemCallback anglrProjectItemEvent;
 
-        public AnglrLangService (IAsyncServiceProvider serviceProvider, IAnglrLogService anglrLogService)
+        public AnglrLangService (AsyncPackage serviceProvider, IAnglrLogService anglrLogService)
         {
             _serviceProvider = serviceProvider;
             AnglrLogService = anglrLogService;
@@ -69,6 +71,28 @@ namespace AnglrLangExtension
         public void Log (AnglrLogLevel logLevel, string message, string indent = null)
         {
             AnglrLogService?.Logger?.Log (logLevel, message);
+        }
+
+        public AnglrDetailsWindow CreateDetailsWindowInstance (UIElement content, string caption, Func<AnglrDetailsWindow, UIElement, IAnglrLangService, bool> init)
+        {
+            AnglrDetailsWindow window = null;
+            for (int i = 0; ; i++)
+            {
+                if (_serviceProvider.FindToolWindow (typeof (AnglrDetailsWindow), i, false) != null)
+                    continue;
+                window = _serviceProvider.JoinableTaskFactory.Run (() =>
+                    _serviceProvider.ShowToolWindowAsync (typeof (AnglrDetailsWindow), i, true, _serviceProvider.DisposalToken)) as AnglrDetailsWindow;
+                if ((null == window) || (null == window.Frame))
+                {
+                    throw new NotSupportedException ("Cannot create details window");
+                }
+                window.Caption = caption;
+                break;
+            }
+            if (content != null)
+                ((AnglrDetailsWindowControl) window.Content).Content = content;
+            init (window, content, this);
+            return window;
         }
 
         public AnglrGetGetHierarchyItemResult InvokeGetHierarchy (AnglrGetGetHierarchyItemParams anglrGetGetHierarchyItemParams)
@@ -262,7 +286,7 @@ namespace AnglrLangExtension
             openAnglrFiles.Remove (fileName);
             await anglrProjectItemEvent?.Invoke (fileName, AnglrItemOperation.Remove);
         }
-        
+
         public async Task GetOpenAnglrFilesAsync ()
         {
             foreach (var file in openAnglrFiles)
@@ -281,6 +305,7 @@ namespace AnglrLangExtension
         ITextBufferFactoryService TextBufferFactoryService { get; }
         IContentTypeRegistryService ContentTypeRegistryService { get; }
         IAnglrLogger AnglrLogger { get; }
+        AnglrDetailsWindow CreateDetailsWindowInstance (UIElement content, string caption, Func<AnglrDetailsWindow, UIElement, IAnglrLangService, bool> init);
         AnglrGetGetHierarchyItemResult InvokeGetHierarchy (AnglrGetGetHierarchyItemParams request);
         AnglrGetDictionaryItemResult InvokeGetDictionary (AnglrGetDictionaryItemParams request);
         AnglrGetParserStateItemResult InvokeGetParserState (AnglrGetParserStateItemParams request);

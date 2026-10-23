@@ -845,7 +845,7 @@ DECLARATION-PART-OF-ANGLR-FILE
 	Text='- followed by block of terminal symbol definitions enclosed between curly braces'
 ]
 <block of terminal definitions>
-	:	'%terminal' '{' <block terminal definitions> ? '}'
+	:	'%terminal' '{' <block terminal definitions> ? '}'  <classifier list> ?
 	;
 
 [
@@ -866,7 +866,7 @@ DECLARATION-PART-OF-ANGLR-FILE
 	Text='  name and string representation are interchangable'
 ]
 <terminal definition>
-	:	<identifier> <cstring> ?
+	:	<identifier> <cstring> ? <classifier list> ?
 	;
 
 [
@@ -914,6 +914,26 @@ DECLARATION-PART-OF-ANGLR-FILE
 ]
 <block regex definition>
 	:	<attribute list> ? <regex definition>
+	;
+
+[
+	Description Hover='true'
+	Text='classifier list which provides info'
+	Text='used by text rendering tools'
+]
+<classifier list>
+	:	'(' <classifier info> + ')'
+	;
+
+[
+	Description Hover='true'
+	Text='classifier definition. Its structure:'
+	Text='- classifier name'
+	Text='- followed by = sign'
+	Text='- and string representing its value'
+]
+<classifier info>
+	:	<identifier> '=' <cstring>
 	;
 
 }

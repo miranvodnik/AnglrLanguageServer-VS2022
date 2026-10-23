@@ -7,12 +7,17 @@ using AnglrDebuggerJsonRpcMessages;
 using AnglrJsonRpcMethods;
 using AnglrLibrary;
 using AnglrLogLibrary;
+using EnvDTE;
 using Microsoft.VisualStudio.GraphModel.CodeSchema;
 using Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Package;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
+using Microsoft.VisualStudio.Text.Tagging;
+using Microsoft.VisualStudio.Threading;
+using Microsoft.VisualStudio.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
@@ -24,10 +29,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Globalization;
-using System.Windows.Documents;
 using System.IO;
 using System.IO.Pipelines;
 using System.Linq;
@@ -39,6 +44,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -49,6 +55,20 @@ using static System.Windows.Forms.AxHost;
 
 namespace AnglrLangExtension
 {
+    [Export (typeof (EditorFormatDefinition))]
+    [Name ("MarkerFormatDefinition/AnglrSnapshot")]
+    [UserVisible (true)]
+    internal sealed class SnapshotFormat : MarkerFormatDefinition
+    {
+        public SnapshotFormat ()
+        {
+            BackgroundColor = Colors.LightYellow;
+            ForegroundColor = Colors.Black;
+            DisplayName = "Anglr Snapshot";
+            ZOrder = 5;
+        }
+    }
+
     public class TabItemsSet : Dictionary<int, TabItem> { }
     /// <summary>
     /// Interaction logic for AnglrDebugPanelTabSession.xaml
@@ -64,8 +84,13 @@ namespace AnglrLangExtension
         private IAnglrLangService anglrLangService;
 
         private TabItemsSet tabItems;
-        private Paragraph pdaSnapshotTextParagraph;
 
+        private ITextBuffer TextBuffer { get; }
+        private IWpfTextView WpfTextView { get; }
+        private IWpfTextViewHost WpfTextViewHost { get; }
+        private UIElement UIElement { get; }
+        private bool AutoScroll { get; }
+        private AnglrDetailsWindow AnglrDetailsWindow { get; }
         public AnglrDebugPanelTabSession (IAnglrLangService anglrLangService)
         {
             InitializeComponent ();
@@ -76,8 +101,16 @@ namespace AnglrLangExtension
             Logger?.InfoLine ($"AnglrDebugPanelSession created ");
 
             tabItems = new TabItemsSet ();
-            pdaSnapshotText.Document = new FlowDocument ();
-            pdaSnapshotText.Document.Blocks.Add (pdaSnapshotTextParagraph = new Paragraph ());
+
+            var contentType = anglrLangService.ContentTypeRegistryService.GetContentType ("text");
+            TextBuffer = anglrLangService?.TextBufferFactoryService?.CreateTextBuffer (contentType);
+            WpfTextView = anglrLangService?.TextEditorFactoryService?.CreateTextView (TextBuffer);
+            WpfTextView.Options.SetOptionValue (DefaultTextViewOptions.ViewProhibitUserInputId, false);
+            WpfTextViewHost = anglrLangService?.TextEditorFactoryService?.CreateTextViewHost (WpfTextView, true);
+            UIElement = WpfTextViewHost.HostControl;
+            pdaSnapshotText.Children.Add (UIElement);
+            AutoScroll = true;
+            //AnglrDetailsWindow = anglrLangService?.CreateDetailsWindowInstance (UIElement, "debugger details", (w, c, o) => true);
         }
 
         public async Task InvokeRpcSessionAsync (int count, Stream pipe, CancellationToken token)
@@ -219,7 +252,7 @@ namespace AnglrLangExtension
             Logger?.InfoLine ($"stop ({stopParserMessageRequest.SequenceNr})");
         }
 
-        public void DbgBreakPointHitMessageHandler (object sender, EventArgs e)
+        public async Task DbgBreakPointHitMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerDbgBreakPointHitRequest dbgBreakPointHitRequest = e as AnglrDebuggerDbgBreakPointHitRequest;
             if (dbgBreakPointHitRequest == null)
@@ -229,14 +262,14 @@ namespace AnglrLangExtension
             }
 
             AnglrDebuggerGetPDASnapshotResponse getPDASnapshotResponse =
-            Rpc.InvokeAsync<AnglrDebuggerGetPDASnapshotResponse>
+            await Rpc.InvokeAsync<AnglrDebuggerGetPDASnapshotResponse>
             (
                 AnglrDebuggerJsonRpcMessageNames.GetPDASnapshotMessageName,
                 new AnglrDebuggerGetPDASnapshotRequest ()
                 {
                     SequenceNr = dbgBreakPointHitRequest.SequenceNr
                 }
-            ).Result;
+            );
             if (getPDASnapshotResponse == null)
             {
                 Logger?.InfoLine ($"break-point hit (null snapshot)");
@@ -251,9 +284,16 @@ namespace AnglrLangExtension
             try
             {
                 Logger?.InfoLine ($"break-point hit ({dbgBreakPointHitRequest.SequenceNr})");
-                Logger?.DebugLine ($"*** START OF DELTA SOURCE TEXT ***\n");
-                Logger?.DebugRawLine ($"{getPDASnapshotResponse.DeltaSourceText}");
-                Logger?.DebugLine ($"\n*** END   OF DELTA SOURCE TEXT ***");
+                Logger?.InfoLine ($"*** START OF DELTA SOURCE TEXT POSITION = {getPDASnapshotResponse .StartSpan} ***\n");
+                Logger?.InfoLine ($"{getPDASnapshotResponse.DeltaSourceText}");
+                Logger?.InfoLine ($"\n*** END   OF DELTA SOURCE TEXT POSITION = {getPDASnapshotResponse.EndSpan} ***");
+
+                if(false)
+                {
+                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync ();
+                    AppendText (getPDASnapshotResponse.DeltaSourceText);
+                }
+
                 TabItemsSet newTabItems = new TabItemsSet ();
                 foreach (var stack in getPDASnapshotResponse.PDAStackSet)
                 {
@@ -279,48 +319,44 @@ namespace AnglrLangExtension
                         }
                     }
                     if (pdaSet != null)
-                        Dispatcher.Invoke (() =>
+                    {
+                        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync ();
+                        AnglrPDASnapshotViewerTab viewerTab = null;
+                        if (!tabItems.TryGetValue (stack.PDAStackId, out var tabItem))
                         {
-                            AnglrPDASnapshotViewerTab viewerTab = null;
-                            if (!tabItems.TryGetValue (stack.PDAStackId, out var tabItem))
-                            {
-                                tabItem = new TabItem ();
-                                viewerTab = new AnglrPDASnapshotViewerTab (Logger, stack);
-                                tabItem.Content = viewerTab;
-                                tabItem.Tag = stack.PDAStackId;
-                                tabItem.Header = $"PDA {stack.PDAStackId}";
-                                pdaSnapshotTabs.Items.Add (tabItem);
-                            }
-                            else
-                                viewerTab = tabItem.Content as AnglrPDASnapshotViewerTab;
-                            newTabItems [stack.PDAStackId] = tabItem;
+                            tabItem = new TabItem ();
+                            viewerTab = new AnglrPDASnapshotViewerTab (Logger, stack);
+                            tabItem.Content = viewerTab;
+                            tabItem.Tag = stack.PDAStackId;
+                            tabItem.Header = $"PDA {stack.PDAStackId}";
+                            pdaSnapshotTabs.Items.Add (tabItem);
+                        }
+                        else
+                            viewerTab = tabItem.Content as AnglrPDASnapshotViewerTab;
+                        newTabItems [stack.PDAStackId] = tabItem;
 
-                            AnglrPDASnapshotDrawing pdaShapshotDrawing = new AnglrPDASnapshotDrawing (Logger, pdaSet);
-                            pdaShapshotDrawing.Draw ();
-                            pdaShapshotDrawing.Offset = new Vector (0, 0);
-                            pdaShapshotDrawing.ComputeVisualBounds ();
+                        AnglrPDASnapshotDrawing pdaShapshotDrawing = new AnglrPDASnapshotDrawing (Logger, pdaSet);
+                        pdaShapshotDrawing.Draw ();
+                        pdaShapshotDrawing.Offset = new Vector (0, 0);
+                        pdaShapshotDrawing.ComputeVisualBounds ();
 
-                            AppendText (getPDASnapshotResponse.DeltaSourceText);
-
-                            AnglrParserPartDrawingCanvas drawingCanvas = viewerTab.pdaSnapshotVisual;
-                            drawingCanvas.Logger = Logger;
-                            drawingCanvas.Clear ();
-                            drawingCanvas.AddVisual (pdaShapshotDrawing);
-                            drawingCanvas.Width = pdaShapshotDrawing.Width;
-                            drawingCanvas.Height = pdaShapshotDrawing.Height;
-                            drawingCanvas.InvalidateVisual ();
-                        });
+                        AnglrParserPartDrawingCanvas drawingCanvas = viewerTab.pdaSnapshotVisual;
+                        drawingCanvas.Logger = Logger;
+                        drawingCanvas.Clear ();
+                        drawingCanvas.AddVisual (pdaShapshotDrawing);
+                        drawingCanvas.Width = pdaShapshotDrawing.Width;
+                        drawingCanvas.Height = pdaShapshotDrawing.Height;
+                        drawingCanvas.InvalidateVisual ();
+                    }
                 }
 
-                Dispatcher.Invoke (() =>
-                {
-                    foreach (var key in tabItems.Keys)
-                        if (!newTabItems.TryGetValue (key, out var item))
-                        {
-                            Logger?.InfoLine ($"remove tab item {key}");
-                            pdaSnapshotTabs.Items.Remove (tabItems [key]);
-                        }
-                });
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync ();
+                foreach (var key in tabItems.Keys)
+                    if (!newTabItems.TryGetValue (key, out var item))
+                    {
+                        Logger?.InfoLine ($"remove tab item {key}");
+                        pdaSnapshotTabs.Items.Remove (tabItems [key]);
+                    }
 
                 tabItems = newTabItems;
                 Logger?.InfoLine<TabItemsSet>
@@ -343,9 +379,21 @@ namespace AnglrLangExtension
 
         private void AppendText (string text)
         {
-            pdaSnapshotText.CaretPosition = pdaSnapshotText.Document.ContentEnd;
-            pdaSnapshotText.ScrollToEnd ();
-            pdaSnapshotTextParagraph.Inlines.Add (text);
+            using (var edit = TextBuffer.CreateEdit ())
+            {
+                edit.Insert (
+                    TextBuffer.CurrentSnapshot.Length,
+                    text ?? "");
+
+                edit.Apply ();
+            }
+
+            if (AutoScroll)
+            {
+                var point = new SnapshotPoint (TextBuffer.CurrentSnapshot, TextBuffer.CurrentSnapshot.Length);
+                WpfTextView.Caret.MoveTo (point);
+                WpfTextView.DisplayTextLineContainingBufferPosition (point, 0.0, ViewRelativePosition.Bottom);
+            }
         }
 
         private AnglrPDAViableSet AnalyzePDAStack (AnglrDebuggerGetPDAStack stack)

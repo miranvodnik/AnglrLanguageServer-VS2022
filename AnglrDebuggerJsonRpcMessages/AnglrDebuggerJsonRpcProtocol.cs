@@ -168,6 +168,8 @@ namespace AnglrDebuggerJsonRpcMessages
     {
         [DataMember (Name = "pdaStackSet")] public AnglrDebuggerGetPDAStack [] PDAStackSet { get; set; }
         [DataMember (Name = "deltaSourceText")] public string DeltaSourceText { get; set; }
+        [DataMember (Name = "startSpan")] public (int lineno, int column) StartSpan { get; set; }
+        [DataMember (Name = "endSpan")] public (int lineno, int column) EndSpan { get; set; }
     }
 
     [Obfuscation (Exclude = true)]
@@ -248,7 +250,7 @@ namespace AnglrDebuggerJsonRpcMessages
         void JoinMessageHandler (object sender, EventArgs e);
         void FinalStepMessageHandler (object sender, EventArgs e);
         void StopParserMessageHandler (object sender, EventArgs e);
-        void DbgBreakPointHitMessageHandler (object sender, EventArgs e);
+        Task DbgBreakPointHitMessageHandler (object sender, EventArgs e);
 
         IAnglrLogger Logger { get; }
     }

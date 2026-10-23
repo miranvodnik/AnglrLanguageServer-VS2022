@@ -593,19 +593,19 @@ namespace Anglr.Parser
 				currentValue = _anglr_definition__4 ((_block_of_regex_definitions_) valueStack [-1]);
 				break;
 			case 88:
-				currentValue = _single_terminal_definition__1 ((SyntaxTreeToken) valueStack [-2], (_terminal_definition_) valueStack [-1]);
+				currentValue = _single_terminal_definition__1 ((SyntaxTreeToken) valueStack [-3], (_terminal_definition_) valueStack [-2], (_classifier_list_optional_) valueStack [-1]);
 				break;
 			case 89:
 				currentValue = _single_regex_definition__1 ((SyntaxTreeToken) valueStack [-2], (_regex_definition_) valueStack [-1]);
 				break;
 			case 90:
-				currentValue = _block_of_terminal_definitions__1 ((SyntaxTreeToken) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_block_terminal_definitions_optional_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
+				currentValue = _block_of_terminal_definitions__1 ((SyntaxTreeToken) valueStack [-5], (SyntaxTreeToken) valueStack [-4], (_block_terminal_definitions_optional_) valueStack [-3], (SyntaxTreeToken) valueStack [-2], (_classifier_list_optional_) valueStack [-1]);
 				break;
 			case 91:
 				currentValue = _block_of_regex_definitions__1 ((SyntaxTreeToken) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_block_regex_definitions_optional_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
 			case 92:
-				currentValue = _terminal_definition__1 ((SyntaxTreeToken) valueStack [-2], (_cstring_optional_) valueStack [-1]);
+				currentValue = _terminal_definition__1 ((SyntaxTreeToken) valueStack [-3], (_cstring_optional_) valueStack [-2], (_classifier_list_optional_) valueStack [-1]);
 				break;
 			case 93:
 				currentValue = _regex_definition__1 ((SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
@@ -617,336 +617,354 @@ namespace Anglr.Parser
 				currentValue = _block_regex_definition__1 ((_attribute_list_optional_) valueStack [-2], (_regex_definition_) valueStack [-1]);
 				break;
 			case 98:
-				currentValue = _scanner_part__1 ((_attribute_list_optional_) valueStack [-6], (SyntaxTreeToken) valueStack [-5], (SyntaxTreeToken) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_regular_expression_list_optional_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
+				currentValue = _classifier_list__1 ((SyntaxTreeToken) valueStack [-3], (_classifier_info_set_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
+				break;
+			case 99:
+				currentValue = _classifier_info__1 ((SyntaxTreeToken) valueStack [-3], (SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
 			case 100:
-				currentValue = _regular_expression_usage__1 ((SyntaxTreeToken) valueStack [-2], (_actions_optional_) valueStack [-1]);
+				currentValue = _scanner_part__1 ((_attribute_list_optional_) valueStack [-6], (SyntaxTreeToken) valueStack [-5], (SyntaxTreeToken) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_regular_expression_list_optional_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
 			case 102:
-				currentValue = _action__1 ((_skip_action_) valueStack [-1]);
-				break;
-			case 103:
-				currentValue = _action__2 ((_terminal_action_) valueStack [-1]);
+				currentValue = _regular_expression_usage__1 ((SyntaxTreeToken) valueStack [-2], (_actions_optional_) valueStack [-1]);
 				break;
 			case 104:
-				currentValue = _action__3 ((_event_action_) valueStack [-1]);
+				currentValue = _action__1 ((_skip_action_) valueStack [-1]);
 				break;
 			case 105:
-				currentValue = _action__4 ((_push_action_) valueStack [-1]);
+				currentValue = _action__2 ((_terminal_action_) valueStack [-1]);
 				break;
 			case 106:
-				currentValue = _action__5 ((_pop_action_) valueStack [-1]);
+				currentValue = _action__3 ((_event_action_) valueStack [-1]);
 				break;
 			case 107:
-				currentValue = _skip_action__1 ((SyntaxTreeToken) valueStack [-1]);
+				currentValue = _action__4 ((_push_action_) valueStack [-1]);
 				break;
 			case 108:
-				currentValue = _terminal_action__1 ((SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
+				currentValue = _action__5 ((_pop_action_) valueStack [-1]);
 				break;
 			case 109:
-				currentValue = _event_action__1 ((SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
+				currentValue = _skip_action__1 ((SyntaxTreeToken) valueStack [-1]);
 				break;
 			case 110:
-				currentValue = _push_action__1 ((SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
+				currentValue = _terminal_action__1 ((SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
 			case 111:
-				currentValue = _pop_action__1 ((SyntaxTreeToken) valueStack [-1]);
+				currentValue = _event_action__1 ((SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
 			case 112:
-				currentValue = _lexer_part__1 ((_attribute_list_optional_) valueStack [-6], (SyntaxTreeToken) valueStack [-5], (SyntaxTreeToken) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_attribute_list_optional_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
+				currentValue = _push_action__1 ((SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
 			case 113:
-				currentValue = _parser_part__1 ((_attribute_list_optional_) valueStack [-6], (SyntaxTreeToken) valueStack [-5], (SyntaxTreeToken) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_anglr_syntax_rule_list_optional_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
+				currentValue = _pop_action__1 ((SyntaxTreeToken) valueStack [-1]);
+				break;
+			case 114:
+				currentValue = _lexer_part__1 ((_attribute_list_optional_) valueStack [-6], (SyntaxTreeToken) valueStack [-5], (SyntaxTreeToken) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_attribute_list_optional_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
 			case 115:
-				currentValue = _anglr_syntax_rule__1 ((_attribute_list_optional_) valueStack [-5], (SyntaxTreeToken) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_anglr_syntax_production_list_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
-				break;
-			case 116:
-				currentValue = _anglr_syntax_rule__2 ((_attribute_list_optional_) valueStack [-5], (SyntaxTreeToken) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_anglr_syntax_rule_list_optional_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
+				currentValue = _parser_part__1 ((_attribute_list_optional_) valueStack [-6], (SyntaxTreeToken) valueStack [-5], (SyntaxTreeToken) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_anglr_syntax_rule_list_optional_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
 			case 117:
-				currentValue = _anglr_nested_rule__1 ((_anglr_syntax_production_list_name_optional_) valueStack [-2], (_anglr_syntax_production_list_) valueStack [-1]);
+				currentValue = _anglr_syntax_rule__1 ((_attribute_list_optional_) valueStack [-5], (SyntaxTreeToken) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_anglr_syntax_production_list_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
 			case 118:
+				currentValue = _anglr_syntax_rule__2 ((_attribute_list_optional_) valueStack [-5], (SyntaxTreeToken) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_anglr_syntax_rule_list_optional_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
+				break;
+			case 119:
+				currentValue = _anglr_nested_rule__1 ((_anglr_syntax_production_list_name_optional_) valueStack [-2], (_anglr_syntax_production_list_) valueStack [-1]);
+				break;
+			case 120:
 				currentValue = _anglr_syntax_production_list_name__1 ((SyntaxTreeToken) valueStack [-3], (SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 121:
+			case 123:
 				currentValue = _anglr_syntax_production__1 ((_production_name_optional_) valueStack [-3], (_name_list_) valueStack [-2], (_priority_assoc_specification_optional_) valueStack [-1]);
 				break;
-			case 122:
+			case 124:
 				currentValue = _anglr_syntax_production__2 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 123:
+			case 125:
 				currentValue = _production_name__1 ((SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 124:
+			case 126:
 				currentValue = _priority_assoc_specification__1 ((_priority_specification_) valueStack [-2], (_associativity_specification_) valueStack [-1]);
 				break;
-			case 125:
+			case 127:
 				currentValue = _priority_assoc_specification__2 ((_associativity_specification_) valueStack [-2], (_priority_specification_) valueStack [-1]);
 				break;
-			case 126:
+			case 128:
 				currentValue = _priority_assoc_specification__3 ((_priority_specification_) valueStack [-1]);
 				break;
-			case 127:
+			case 129:
 				currentValue = _priority_assoc_specification__4 ((_associativity_specification_) valueStack [-1]);
 				break;
-			case 128:
+			case 130:
 				currentValue = _priority_assoc_specification__5 ((_priority_specification_) valueStack [-3], (SyntaxTreeToken) valueStack [-2], (_associativity_specification_) valueStack [-1]);
 				break;
-			case 129:
+			case 131:
 				currentValue = _priority_assoc_specification__6 ((_associativity_specification_) valueStack [-3], (SyntaxTreeToken) valueStack [-2], (_priority_specification_) valueStack [-1]);
 				break;
-			case 130:
+			case 132:
 				currentValue = _priority_specification__1 ((SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 131:
+			case 133:
 				currentValue = _priority_specification__2 ((SyntaxTreeToken) valueStack [-3], (SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 132:
+			case 134:
 				currentValue = _associativity_specification__1 ((SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 133:
+			case 135:
 				currentValue = _associativity_specification__2 ((SyntaxTreeToken) valueStack [-3], (SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 134:
+			case 136:
 				currentValue = _associativity_specification__3 ((SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 135:
+			case 137:
 				currentValue = _associativity_specification__4 ((SyntaxTreeToken) valueStack [-3], (SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 139:
+			case 141:
 				currentValue = _marker__1 ((SyntaxTreeToken) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 140:
+			case 142:
 				currentValue = _g_name__1 ((_name_) valueStack [-1]);
 				break;
-			case 141:
+			case 143:
 				currentValue = _g_name__2 ((SyntaxTreeToken) valueStack [-3], (_anglr_nested_rule_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 142:
+			case 144:
 				currentValue = _g_name__3 ((_g_name_) valueStack [-2], (_cardinality_delimiter_) valueStack [-1]);
 				break;
-			case 143:
+			case 145:
 				currentValue = _name__1 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 144:
+			case 146:
 				currentValue = _name__2 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 145:
+			case 147:
 				currentValue = _name__3 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 146:
+			case 148:
 				currentValue = _cardinality_delimiter__1 ((_cardinality_) valueStack [-2], (_delimiter_optional_) valueStack [-1]);
 				break;
-			case 147:
+			case 149:
 				currentValue = _cardinality__1 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 148:
+			case 150:
 				currentValue = _cardinality__2 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 149:
+			case 151:
 				currentValue = _cardinality__3 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 150:
+			case 152:
 				currentValue = _cardinality__4 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 151:
+			case 153:
 				currentValue = _cardinality__5 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 152:
+			case 154:
 				currentValue = _cardinality__6 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 153:
+			case 155:
 				currentValue = _cardinality__7 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 154:
+			case 156:
 				currentValue = _cardinality__8 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 155:
+			case 157:
 				currentValue = _cardinality__9 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 156:
+			case 158:
 				currentValue = _cardinality__10 ((SyntaxTreeToken) valueStack [-5], (_number_optional_) valueStack [-4], (SyntaxTreeToken) valueStack [-3], (_number_optional_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 157:
+			case 159:
 				currentValue = _delimiter__1 ((SyntaxTreeToken) valueStack [-3], (_anglr_nested_rule_) valueStack [-2], (SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 158:
+			case 160:
 				currentValue = _attribute_list_optional__1 ();
 				break;
-			case 159:
+			case 161:
 				currentValue = _attribute_list_optional__2 ((_attribute_list_) valueStack [-1]);
 				break;
-			case 160:
+			case 162:
 				currentValue = _name_value_list_optional__1 ();
 				break;
-			case 161:
+			case 163:
 				currentValue = _name_value_list_optional__2 ((_name_value_list_) valueStack [-1]);
 				break;
-			case 162:
+			case 164:
 				currentValue = _anglr_file_part_list_optional__1 ();
 				break;
-			case 163:
+			case 165:
 				currentValue = _anglr_file_part_list_optional__2 ((_anglr_file_part_list_) valueStack [-1]);
 				break;
-			case 164:
+			case 166:
 				currentValue = _anglr_definition_list_optional__1 ();
 				break;
-			case 165:
+			case 167:
 				currentValue = _anglr_definition_list_optional__2 ((_anglr_definition_list_) valueStack [-1]);
 				break;
-			case 166:
+			case 168:
 				currentValue = _block_terminal_definitions_optional__1 ();
 				break;
-			case 167:
+			case 169:
 				currentValue = _block_terminal_definitions_optional__2 ((_block_terminal_definitions_) valueStack [-1]);
 				break;
-			case 168:
+			case 170:
 				currentValue = _block_regex_definitions_optional__1 ();
 				break;
-			case 169:
+			case 171:
 				currentValue = _block_regex_definitions_optional__2 ((_block_regex_definitions_) valueStack [-1]);
 				break;
-			case 170:
+			case 172:
 				currentValue = _regular_expression_list_optional__1 ();
 				break;
-			case 171:
+			case 173:
 				currentValue = _regular_expression_list_optional__2 ((_regular_expression_list_) valueStack [-1]);
 				break;
-			case 172:
+			case 174:
 				currentValue = _actions_optional__1 ();
 				break;
-			case 173:
+			case 175:
 				currentValue = _actions_optional__2 ((_actions_) valueStack [-1]);
 				break;
-			case 174:
+			case 176:
 				currentValue = _anglr_syntax_rule_list_optional__1 ();
 				break;
-			case 175:
+			case 177:
 				currentValue = _anglr_syntax_rule_list_optional__2 ((_anglr_syntax_rule_list_) valueStack [-1]);
 				break;
-			case 176:
+			case 178:
 				currentValue = _anglr_syntax_production_list_name_optional__1 ();
 				break;
-			case 177:
+			case 179:
 				currentValue = _anglr_syntax_production_list_name_optional__2 ((_anglr_syntax_production_list_name_) valueStack [-1]);
 				break;
-			case 178:
+			case 180:
 				currentValue = _production_name_optional__1 ();
 				break;
-			case 179:
+			case 181:
 				currentValue = _production_name_optional__2 ((_production_name_) valueStack [-1]);
 				break;
-			case 180:
+			case 182:
 				currentValue = _priority_assoc_specification_optional__1 ();
 				break;
-			case 181:
+			case 183:
 				currentValue = _priority_assoc_specification_optional__2 ((_priority_assoc_specification_) valueStack [-1]);
 				break;
-			case 182:
+			case 184:
 				currentValue = _marker_list_optional__1 ();
 				break;
-			case 183:
+			case 185:
 				currentValue = _marker_list_optional__2 ((_marker_list_) valueStack [-1]);
 				break;
-			case 184:
+			case 186:
 				currentValue = _delimiter_optional__1 ();
 				break;
-			case 185:
+			case 187:
 				currentValue = _delimiter_optional__2 ((_delimiter_) valueStack [-1]);
 				break;
-			case 186:
+			case 188:
 				currentValue = _cstring_optional__1 ();
 				break;
-			case 187:
+			case 189:
 				currentValue = _cstring_optional__2 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 188:
+			case 190:
 				currentValue = _number_optional__1 ();
 				break;
-			case 189:
+			case 191:
 				currentValue = _number_optional__2 ((SyntaxTreeToken) valueStack [-1]);
 				break;
-			case 190:
+			case 192:
 				currentValue = _attribute_list__1 ((_attribute_) valueStack [-1]);
 				break;
-			case 191:
+			case 193:
 				currentValue = _attribute_list__2 ((_attribute_list_) valueStack [-2], (_attribute_) valueStack [-1]);
 				break;
-			case 194:
+			case 196:
 				currentValue = _name_value_list__1 ((_name_value_pair_) valueStack [-1]);
 				break;
-			case 195:
+			case 197:
 				currentValue = _name_value_list__2 ((_name_value_list_) valueStack [-2], (_name_value_pair_) valueStack [-1]);
 				break;
-			case 196:
+			case 198:
 				currentValue = _anglr_file__1 ();
 				break;
-			case 197:
+			case 199:
 				currentValue = _anglr_file__2 ((_anglr_file_part_list_) valueStack [-1]);
 				break;
-			case 198:
+			case 200:
 				currentValue = _anglr_file_part_list__1 ((_anglr_file_part_) valueStack [-1]);
 				break;
-			case 199:
+			case 201:
 				currentValue = _anglr_file_part_list__2 ((_anglr_file_part_list_) valueStack [-2], (_anglr_file_part_) valueStack [-1]);
 				break;
-			case 208:
+			case 210:
 				currentValue = _anglr_definition_list__1 ((_anglr_definition_with_attribute_) valueStack [-1]);
 				break;
-			case 209:
+			case 211:
 				currentValue = _anglr_definition_list__2 ((_anglr_definition_list_) valueStack [-2], (_anglr_definition_with_attribute_) valueStack [-1]);
 				break;
-			case 218:
+			case 214:
+				currentValue = _classifier_list_optional__1 ();
+				break;
+			case 215:
+				currentValue = _classifier_list_optional__2 ((_classifier_list_) valueStack [-1]);
+				break;
+			case 226:
 				currentValue = _block_terminal_definitions__1 ((_block_terminal_definition_) valueStack [-1]);
 				break;
-			case 219:
+			case 227:
 				currentValue = _block_terminal_definitions__2 ((_block_terminal_definitions_) valueStack [-2], (_block_terminal_definition_) valueStack [-1]);
 				break;
-			case 222:
+			case 230:
 				currentValue = _block_regex_definitions__1 ((_block_regex_definition_) valueStack [-1]);
 				break;
-			case 223:
+			case 231:
 				currentValue = _block_regex_definitions__2 ((_block_regex_definitions_) valueStack [-2], (_block_regex_definition_) valueStack [-1]);
 				break;
-			case 230:
-				currentValue = _regular_expression_list__1 ((_regular_expression_usage_) valueStack [-1]);
-				break;
-			case 231:
-				currentValue = _regular_expression_list__2 ((_regular_expression_list_) valueStack [-2], (_regular_expression_usage_) valueStack [-1]);
-				break;
 			case 234:
-				currentValue = _actions__1 ((_action_) valueStack [-1]);
+				currentValue = _classifier_info_set__1 ((_classifier_info_) valueStack [-1]);
 				break;
 			case 235:
-				currentValue = _actions__2 ((_actions_) valueStack [-2], (_action_) valueStack [-1]);
+				currentValue = _classifier_info_set__2 ((_classifier_info_set_) valueStack [-2], (_classifier_info_) valueStack [-1]);
+				break;
+			case 240:
+				currentValue = _regular_expression_list__1 ((_regular_expression_usage_) valueStack [-1]);
+				break;
+			case 241:
+				currentValue = _regular_expression_list__2 ((_regular_expression_list_) valueStack [-2], (_regular_expression_usage_) valueStack [-1]);
 				break;
 			case 244:
-				currentValue = _anglr_syntax_rule_list__1 ((_anglr_syntax_rule_) valueStack [-1]);
+				currentValue = _actions__1 ((_action_) valueStack [-1]);
 				break;
 			case 245:
-				currentValue = _anglr_syntax_rule_list__2 ((_anglr_syntax_rule_list_) valueStack [-2], (_anglr_syntax_rule_) valueStack [-1]);
+				currentValue = _actions__2 ((_actions_) valueStack [-2], (_action_) valueStack [-1]);
 				break;
 			case 254:
-				currentValue = _anglr_syntax_production_list__1 ((_anglr_syntax_production_) valueStack [-1]);
+				currentValue = _anglr_syntax_rule_list__1 ((_anglr_syntax_rule_) valueStack [-1]);
 				break;
 			case 255:
-				currentValue = _anglr_syntax_production_list__2 ((_anglr_syntax_production_list_) valueStack [-3], (SyntaxTreeToken) valueStack [-2], (_anglr_syntax_production_) valueStack [-1]);
-				break;
-			case 262:
-				currentValue = _name_list__1 ((_marker_list_optional_) valueStack [-1]);
-				break;
-			case 263:
-				currentValue = _name_list__2 ((_name_list_) valueStack [-3], (_g_name_) valueStack [-2], (_marker_list_optional_) valueStack [-1]);
+				currentValue = _anglr_syntax_rule_list__2 ((_anglr_syntax_rule_list_) valueStack [-2], (_anglr_syntax_rule_) valueStack [-1]);
 				break;
 			case 264:
-				currentValue = _marker_list__1 ((_marker_) valueStack [-1]);
+				currentValue = _anglr_syntax_production_list__1 ((_anglr_syntax_production_) valueStack [-1]);
 				break;
 			case 265:
-				currentValue = _marker_list__2 ((_marker_list_) valueStack [-2], (_marker_) valueStack [-1]);
+				currentValue = _anglr_syntax_production_list__2 ((_anglr_syntax_production_list_) valueStack [-3], (SyntaxTreeToken) valueStack [-2], (_anglr_syntax_production_) valueStack [-1]);
 				break;
 			case 272:
+				currentValue = _name_list__1 ((_marker_list_optional_) valueStack [-1]);
+				break;
+			case 273:
+				currentValue = _name_list__2 ((_name_list_) valueStack [-3], (_g_name_) valueStack [-2], (_marker_list_optional_) valueStack [-1]);
+				break;
+			case 274:
+				currentValue = _marker_list__1 ((_marker_) valueStack [-1]);
+				break;
+			case 275:
+				currentValue = _marker_list__2 ((_marker_list_) valueStack [-2], (_marker_) valueStack [-1]);
+				break;
+			case 282:
 			break;
 			}
 			return currentValue;
@@ -1000,6 +1018,10 @@ namespace Anglr.Parser
 				AnglrLogger?.DebugRawLine ("_block_regex_definitions_.g_counter = " + _block_regex_definitions_.g_counter);
 			if (_block_regex_definition_.g_counter != 0)
 				AnglrLogger?.DebugRawLine ("_block_regex_definition_.g_counter = " + _block_regex_definition_.g_counter);
+			if (_classifier_list_.g_counter != 0)
+				AnglrLogger?.DebugRawLine ("_classifier_list_.g_counter = " + _classifier_list_.g_counter);
+			if (_classifier_info_.g_counter != 0)
+				AnglrLogger?.DebugRawLine ("_classifier_info_.g_counter = " + _classifier_info_.g_counter);
 			if (_scanner_part_.g_counter != 0)
 				AnglrLogger?.DebugRawLine ("_scanner_part_.g_counter = " + _scanner_part_.g_counter);
 			if (_regular_expression_list_.g_counter != 0)
@@ -1092,6 +1114,10 @@ namespace Anglr.Parser
 				AnglrLogger?.DebugRawLine ("_cstring_optional_.g_counter = " + _cstring_optional_.g_counter);
 			if (_number_optional_.g_counter != 0)
 				AnglrLogger?.DebugRawLine ("_number_optional_.g_counter = " + _number_optional_.g_counter);
+			if (_classifier_list_optional_.g_counter != 0)
+				AnglrLogger?.DebugRawLine ("_classifier_list_optional_.g_counter = " + _classifier_list_optional_.g_counter);
+			if (_classifier_info_set_.g_counter != 0)
+				AnglrLogger?.DebugRawLine ("_classifier_info_set_.g_counter = " + _classifier_info_set_.g_counter);
 			if (SyntaxTreeToken.g_counter != 0)
 				AnglrLogger?.DebugRawLine ("SyntaxTreeToken.g_counter = " + SyntaxTreeToken.g_counter);
 		}
@@ -1133,7 +1159,7 @@ namespace Anglr.Parser
 		public stackset stackSet { get; private set; }
 		public parselist parseList { get; private set; }
 
-		internal readonly static int g_magicNumber = 3265532;
+		internal readonly static int g_magicNumber = 3303153;
 
 		internal readonly static int g_minTerminalCode = 258;
 		internal readonly static int[] g_terminalCodes = 
@@ -1277,7 +1303,8 @@ namespace Anglr.Parser
 			   400,    401,    402,    403,    404,    405,    406,    407,    408,    409, 
 			   410,    411,    412,    413,    414,    415,    416,    417,    418,    419, 
 			   420,    421,    422,    423,    424,    425,    426,    427,    428,    429, 
-			   430,    431,    432,    433,    434,    435,    436,    437,    438, 
+			   430,    431,    432,    433,    434,    435,    436,    437,    438,    439, 
+			   440,    441,    442, 
 		};
 
 		internal readonly static string[] g_nonTerminalNames = 
@@ -1305,6 +1332,8 @@ namespace Anglr.Parser
 			"<block terminal definition>",
 			"<block regex definitions>",
 			"<block regex definition>",
+			"<classifier list>",
+			"<classifier info>",
 			"<scanner part>",
 			"<regular expression list>",
 			"<regular expression usage>",
@@ -1351,18 +1380,81 @@ namespace Anglr.Parser
 			"<delimiter optional>",
 			"<cstring optional>",
 			"<number optional>",
+			"<classifier list optional>",
+			"<classifier info set>",
 		};
 
 		internal readonly static int[] g_glrcheck =
 		{
+			     0,      0,      1,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,    261,    262,      0,      0,    265,    266,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,    285,    286,      0,      0, 
+			   289, 
 		};
 
 		internal readonly static int[] g_glrstate =
 		{
+			     0,      0,      3,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      3,      0,      0,      0,      3,      3,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      3,      3,      0,      0, 
+			     3, 
 		};
 
 		internal readonly static int[] g_glrcells =
 		{
+			     3,    295,    214,      3,     -1,    214, 
 		};
 
 		internal readonly static int[] g_check =
@@ -1395,8 +1487,8 @@ namespace Anglr.Parser
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
 			     0,      0,      0,      0,      0,      0,      0,      0,    266,      0, 
 			     0,      0,      0,      0,      0,      0,      0,    266,    268,    259, 
-			   271,    260,    260,    268,    258,    269,    263,      0,    285,    270, 
-			   286,    286,    267,    289,    286,    289,    289,    285,    285,    284, 
+			   271,    260,    260,    268,    258,    269,    262,    264,    285,    270, 
+			   286,    286,    263,    289,    286,    289,    289,    285,    285,    284, 
 			   283,    271,    267,    302,    303,    304,    305,    306,    307,    308, 
 			   309,    310,    311,    312,    313,    314,    315,    316,    317,    318, 
 			   319,    320,    321,    322,    323,    324,    325,    326,    327,    328, 
@@ -1411,28 +1503,30 @@ namespace Anglr.Parser
 			   273,    274,    275,    276,    277,    278,    279,    280,    281,    291, 
 			   285,    292,    270,    285,    285,    270,    285,    285,    259,    285, 
 			   259,    283,    285,    260,    285,    285,    285,    262,    283,    285, 
-			   285,    296,    264,    283,    271,    285,    264,    264,    296,    264, 
-			   264,    261,    261,    258,    261,    261,    371,    282,    283,    373, 
-			   285,    260,    265,    294,    293,    265,    372,    272,    293,    294, 
-			   269,    265,    265,    265,    273,    274,    275,    276,    277,    278, 
-			   279,    280,    281,    374,    381,    383,    376,    386,    377,    389, 
-			   378,    392,    395,    379,    398,    380,    401,    405,    410,    421, 
-			   384,    412,    385,    419,    432,    387,    433,    437,      0,    388, 
-			   436,    434,    390,      0,      0,    423,    391,      0,      0,    393, 
-			     0,    394,    423,    423,      0,      0,    423,    396,      0,    397, 
-			   400,      0,    399,      0,      0,    423,    402,    423,    423,    403, 
-			     0,    376,      0,      0,    404,    423,    372,      0,    423,    423, 
-			   374,    408,    406,      0,    377,      0,      0,      0,      0,    423, 
-			   381,      0,    382,    423,      0,      0,    413,      0,    411,    423, 
-			   414,    390,    388,      0,    416,    387,    417,      0,      0,    418, 
-			     0,    392,    420,      0,      0,    422,      0,    423,      0,    423, 
-			   423,    423,      0,    423,    395,    397,      0,      0,    406,      0, 
-			     0,      0,    423,      0,    423,    409,      0,    435,      0,      0, 
-			     0,      0,    423,      0,      0,    423,    414,    430,    415,    407, 
-			   407,    417,    413,      0,    413,    410,      0,      0,    409,      0, 
-			     0,    414,      0,      0,    424,      0,      0,    423,      0,    423, 
-			     0,    427,      0,    438,    428,    423,    423,    423,    423,      0, 
-			   426,    423,      0,    435,    431,    429,      0,      0,    438,    431, 
+			   285,    296,    264,    283,    271,    285,    267,    264,    296,    264, 
+			   264,    261,    285,    261,    270,    261,    261,    282,    283,    283, 
+			   285,    260,    263,    294,    293,    265,    371,    265,    293,    294, 
+			   269,    258,    265,    265,    273,    274,    275,    276,    277,    278, 
+			   279,    280,    281,    265,    285,    272,    372,    376,    373,    377, 
+			   374,    381,    383,    390,    392,    378,    395,    379,    398,    400, 
+			   403,    380,    406,    414,    410,    419,    384,    415,    420,    424, 
+			   385,    434,    386,    435,    387,    441,    432,      0,    388,      0, 
+			   389,    425,      0,    391,      0,      0,    425,    425,    425,    396, 
+			     0,    397,      0,      0,      0,    425,      0,    401,      0,    399, 
+			     0,      0,    425,    425,    376,    402,    425,      0,      0,      0, 
+			   404,      0,      0,    372,      0,      0,    425,    425,    405,    377, 
+			     0,    374,      0,    407,      0,    408,      0,      0,      0,    381, 
+			   412,    382,      0,      0,    413,    416,      0,      0,    425,      0, 
+			   418,    425,    425,    390,    421,    387,    422,      0,    423,    392, 
+			     0,    425,    388,    397,      0,    425,      0,    425,      0,    425, 
+			     0,      0,    425,      0,    399,      0,      0,      0,      0,      0, 
+			     0,    408,      0,    425,      0,      0,      0,    437,    425,      0, 
+			   411,      0,    425,    417,    409,      0,    416,    415,    425,    409, 
+			   439,    394,      0,    419,      0,    412,      0,      0,    411,      0, 
+			   416,    415,      0,    426,    425,      0,      0,    425,    429,      0, 
+			     0,    440,    430,    425,    438,    425,    425,    436,    425,    428, 
+			   425,    433,    437,    431,      0,      0,      0,      0,    433,    440, 
+			     0,      0,      0,      0,      0,    441, 
 		};
 
 		internal readonly static int[] g_state =
@@ -1464,10 +1558,10 @@ namespace Anglr.Parser
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
 			     0,      0,      0,      0,      0,      0,      0,      0,     70,      0, 
-			     0,      0,      0,      0,      0,      0,      0,    204,    163,    308, 
-			   157,    247,    249,    163,    268,    177,    307,      0,     74,    237, 
-			    98,    105,    309,     99,    109,    107,    111,    113,    115,    162, 
-			   230,    298,    310,      5,      6,      7,      8,      9,     23,     24, 
+			     0,      0,      0,      0,      0,      0,      0,    204,    163,    312, 
+			   157,    247,    249,    163,    268,    177,    295,    315,     74,    237, 
+			    98,    105,    311,     99,    109,    107,    111,    113,    115,    162, 
+			   230,    302,    313,      5,      6,      7,      8,      9,     23,     24, 
 			    25,     26,     27,     28,     29,     30,     31,     32,     33,     34, 
 			     1,      2,      3,      4,     10,     11,     12,     13,     14,     15, 
 			    16,     17,     18,     19,     20,     21,     22,     35,     36,     39, 
@@ -1480,29 +1574,31 @@ namespace Anglr.Parser
 			   244,    247,    249,    242,    259,    260,    185,    186,    261,    187, 
 			   191,    192,    193,    194,    195,    196,    197,    198,    199,    243, 
 			   264,    244,    271,    265,    267,    273,    113,    115,    275,    279, 
-			   277,    288,    289,    297,    290,    291,    292,    184,    272,    293, 
-			   274,    301,    311,    302,    296,    303,    312,    313,    270,    314, 
-			   315,    316,    317,    268,    327,    328,     71,    185,    186,     75, 
-			   187,    200,    329,    170,    169,    330,     73,    326,    169,    170, 
-			   177,    331,    332,    333,    191,    192,    193,    194,    195,    196, 
-			   197,    198,    199,     77,     97,    106,     88,    112,     89,    117, 
-			    90,    124,    130,     92,    144,     94,    147,    153,    168,    203, 
-			   108,    171,    110,    190,    223,    114,    224,    251,      0,    116, 
-			   285,    300,    120,      0,      0,    155,    121,      0,      0,    125, 
-			     0,    128,    123,    119,      0,      0,     96,    136,      0,    143, 
-			   146,      0,    145,      0,      0,     91,    148,     93,     96,    149, 
-			     0,    210,      0,      0,    151,    119,    236,      0,    123,    126, 
-			   238,    161,    156,      0,    239,      0,      0,      0,      0,    150, 
-			   245,      0,    246,    152,      0,      0,    174,      0,    176,    155, 
-			   175,    253,    256,      0,    182,    254,    183,      0,      0,    188, 
-			     0,    255,    201,      0,      0,    205,      0,    206,      0,     96, 
-			   119,    123,      0,    155,    258,    262,      0,      0,    263,      0, 
-			     0,      0,     96,      0,    119,    266,      0,    227,      0,      0, 
-			     0,      0,    123,      0,      0,    155,    276,    257,    269,    282, 
-			   286,    281,    278,      0,    305,    299,      0,      0,    318,      0, 
-			     0,    304,      0,      0,    287,      0,      0,    119,      0,    123, 
-			     0,    294,      0,    284,    295,    321,    155,     96,    324,      0, 
-			   322,    155,      0,    306,    319,    323,      0,      0,    320,    325, 
+			   277,    288,    289,    301,    290,    291,    292,    184,    272,    293, 
+			   274,    305,    316,    306,    300,    307,    314,    317,    270,    318, 
+			   319,    320,    321,    324,    334,    338,    339,    185,    186,    345, 
+			   187,    200,    335,    170,    169,    340,     71,    341,    169,    170, 
+			   177,    268,    342,    343,    191,    192,    193,    194,    195,    196, 
+			   197,    198,    199,    344,    321,    337,     73,     88,     75,     89, 
+			    77,     97,    106,    120,    124,     90,    125,     92,    136,    144, 
+			   147,     94,    151,    171,    161,    183,    108,    174,    188,    205, 
+			   110,    223,    112,    224,    114,    299,    257,      0,    116,      0, 
+			   117,    152,      0,    121,      0,      0,    126,    123,    119,    128, 
+			     0,    130,      0,      0,      0,     96,      0,    145,      0,    143, 
+			     0,      0,     91,     93,    210,    146,     96,      0,      0,      0, 
+			   148,      0,      0,    236,      0,      0,    119,    123,    149,    239, 
+			     0,    238,      0,    153,      0,    156,      0,      0,      0,    245, 
+			   168,    246,      0,      0,    176,    175,      0,      0,    150,      0, 
+			   182,    155,    155,    253,    190,    254,    201,      0,    203,    255, 
+			     0,    206,    256,    258,      0,     96,      0,    119,      0,    123, 
+			     0,      0,    155,      0,    262,      0,      0,      0,      0,      0, 
+			     0,    263,      0,     96,      0,      0,      0,    227,    119,      0, 
+			   266,      0,    123,    269,    282,      0,    276,    278,    155,    286, 
+			   251,    336,      0,    281,      0,    303,      0,      0,    325,      0, 
+			   308,    309,      0,    287,    119,      0,      0,    123,    294,      0, 
+			     0,    284,    298,    155,    285,    328,     96,    304,    331,    329, 
+			   155,    326,    310,    330,      0,      0,      0,      0,    332,    327, 
+			     0,      0,      0,      0,      0,    333, 
 		};
 
 		internal readonly static int[] g_shiftDelta =
@@ -1531,54 +1627,56 @@ namespace Anglr.Parser
 			     2,      0,      2,      0,      2,      0,      2,      0,     76,      0, 
 			    75,      0,      2,      0,      0,      0,      0,      0,      0,      0, 
 			     0,      0,      0,      0,      0,      3,      0,    148,      0,      0, 
-			   147,    149,    150,    151,    154,      0,      0,      2,      0,      2, 
-			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			   147,    149,    150,    151,    154,      0,      0,      2,     24,      2, 
+			     0,     -1,      0,      0,      0,      0,      0,      0,      0,      0, 
 			     0,      0,      0,      0,    173,     30,     26,      0,     15,    175, 
 			     0,    145,      0,    160,      0,     91,      0,     90,      0,      0, 
-			   201,      0,     23,      0,     20,      0,     25,     35,      0,    178, 
-			   182,    183,    185,    186,    190,    191,     15,      2,      0,      0, 
-			     0,      0,      0,      0,      0,      0,      0,      0,     93,      0, 
-			     0,      2,      2,     76,      2,      2,      0,      0,    195,    193, 
-			   194,    197,    200,    206,    207,    208,      0,      0,      0,      0, 
-			     0,      0,      0,      0, 
+			   201,      0,     29,      0,     20,      0,     35,    179,      0,     23, 
+			   178,    183,    185,    186,    190,    167,      0,      0,    192,      0, 
+			    15,      2,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,     93,      0,      0,      2,      2,     76,      2,      2, 
+			    24,    184,    199,      0,      0,    213,    194,    195,    200,    202, 
+			   207,    208,    218,      0,    176,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0, 
 		};
 
 		internal readonly static int[] g_gotoDelta =
 		{
-			    24,     85,     94,     86,    109,     27,    110,    111,    112,    114, 
-			   115,    103,     28,    102,    116,    117,    101,    118,    121,    100, 
-			   122,    125,     99,    126,    127,     97,    131,    132,     96,    133, 
-			   130,     95,    134,    136,    140,     92,    146,     29,    143,     31, 
-			    88,     89,    153,    156,    157,     32,    158,    159,    161,     84, 
-			   162,     78,    163,    164,     33,    165,    166,    167,    168,     34, 
-			    36,    170,     72,     73,     37,    172,     38,     39,     40,      0, 
-			     0,    174,      0,      0,      0,    176,      0,      0,      0,    177, 
-			     0,      0,      0,      0,      0,      0,      0,    174,    177,      0, 
-			     0,      0,      0,      0,    179,      0,    180,      0,     42,     43, 
-			     0,      0,      0,      0,      0,     42,      0,     43,      0,      0, 
-			     0,      0,      0,     70,      0,      0,      0,    181,      0,    188, 
-			     0,    189,      0,    184,      0,      0,      0,    187,    199,      0, 
-			     0,      0,      0,      0,      0,      0,    198,      0,      0,      0, 
+			    25,     95,    114,    115,    116,     27,    111,    112,    117,    118, 
+			   121,    110,     28,    109,    122,    125,    126,    127,    130,    131, 
+			   103,    132,    102,    101,    133,    134,    100,    140,     99,    136, 
+			   143,     97,    146,    153,     96,    156,    157,     31,     94,     32, 
+			   158,     89,     92,    159,    161,     33,    162,     86,     88,    163, 
+			   164,    165,     85,    166,     34,    168,    170,    172,    174,     36, 
+			    37,    177,     77,     78,     38,    180,     39,     40,     41,      0, 
+			     0,    181,      0,      0,      0,    187,      0,      0,      0,    182, 
+			     0,      0,      0,      0,      0,      0,      0,    181,    182,      0, 
+			     0,      0,      0,      0,    188,      0,    189,      0,     43,     44, 
+			     0,      0,      0,      0,      0,     43,      0,     44,      0,      0, 
+			     0,      0,      0,    191,      0,      0,      0,    193,      0,    198, 
+			     0,    197,      0,    204,      0,      0,      0,     84,    196,      0, 
+			     0,      0,      0,      0,      0,      0,    205,      0,      0,      0, 
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
-			     0,      0,      0,    192,      0,      0,      0,      0,      0,    196, 
-			     0,      0,      0,      0,      0,      0,    203,      0,      0,      0, 
-			     0,      0,    202,    209,      0,      0,      0,      0,     44,      0, 
-			   204,      0,    204,      0,    212,      0,      0,      0,     45,      0, 
+			     0,      0,      0,    203,      0,      0,      0,      0,      0,    209, 
+			     0,      0,      0,      0,      0,      0,    206,      0,      0,      0, 
+			     0,      0,    210,    212,      0,      0,      0,      0,     45,      0, 
+			   214,      0,    214,      0,    215,      0,      0,      0,     46,      0, 
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
-			   205,      0,     74,      0,    213,      0,      0,      0,    176,      0, 
-			   177,      0,    179,      0,    181,      0,    189,      0,    199,      0, 
-			   198,      0,    192,      0,      0,      0,      0,      0,      0,      0, 
-			     0,      0,      0,      0,      0,    210,      0,      0,      0,      0, 
-			     0,      0,      0,      0,      0,      0,      0,    214,      0,    216, 
+			   211,      0,    216,      0,    220,      0,      0,      0,    187,      0, 
+			   182,      0,    188,      0,    193,      0,    197,      0,    196,      0, 
+			   205,      0,    203,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,    217,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,    219,     47,    222, 
+			     0,     74,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      0,      0,    223,    221, 
+			     0,      0,      0,      0,      0,    224,      0,    226,      0,      0, 
+			   225,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,     48,      0,      0,      0,      0, 
+			   227,    228,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,    229,      0,      0,    230,    231,    232,    233,    235, 
+			   234,      0,    237,      0,      0,      0,      0,      0,      0,      0, 
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
-			     0,      0,      0,      0,      0,      0,      0,      0,    215,     77, 
-			     0,      0,      0,      0,      0,    217,      0,    211,      0,      0, 
-			   218,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
-			     0,      0,      0,      0,      0,      0,    219,    223,      0,      0, 
-			     0,      0,      0,      0,      0,      0,      0,      0,    220,      0, 
-			     0,    222,    224,    226,    225,    228,      0,      0,      0,      0, 
-			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
-			     0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0, 
 		};
 
 		internal readonly static int[] g_productionLengths = 
@@ -1591,21 +1689,22 @@ namespace Anglr.Parser
 			     2,      2,      2,      2,      2,      2,      2,      2,      2,      2, 
 			     2,      2,      2,      2,      2,      2,      2,      2,      2,      0, 
 			     4,      0,      3,      0,      0,      1,      1,      1,      1,      1, 
-			     6,      6,      0,      2,      1,      1,      1,      1,      2,      2, 
-			     4,      4,      2,      2,      0,      2,      0,      2,      6,      0, 
-			     2,      0,      1,      1,      1,      1,      1,      1,      2,      2, 
-			     2,      1,      6,      6,      0,      5,      5,      2,      3,      0, 
-			     0,      3,      1,      2,      2,      2,      1,      1,      3,      3, 
-			     2,      3,      2,      3,      2,      3,      0,      0,      0,      2, 
-			     1,      3,      2,      1,      1,      1,      2,      1,      1,      1, 
-			     1,      1,      1,      1,      1,      1,      5,      3,      0,      1, 
+			     6,      6,      0,      2,      1,      1,      1,      1,      3,      2, 
+			     5,      4,      3,      2,      0,      2,      0,      2,      3,      3, 
+			     6,      0,      2,      0,      1,      1,      1,      1,      1,      1, 
+			     2,      2,      2,      1,      6,      6,      0,      5,      5,      2, 
+			     3,      0,      0,      3,      1,      2,      2,      2,      1,      1, 
+			     3,      3,      2,      3,      2,      3,      2,      3,      0,      0, 
+			     0,      2,      1,      3,      2,      1,      1,      1,      2,      1, 
+			     1,      1,      1,      1,      1,      1,      1,      1,      5,      3, 
 			     0,      1,      0,      1,      0,      1,      0,      1,      0,      1, 
 			     0,      1,      0,      1,      0,      1,      0,      1,      0,      1, 
 			     0,      1,      0,      1,      0,      1,      0,      1,      0,      1, 
-			     1,      2,      0,      0,      1,      2,      0,      1,      1,      2, 
-			     0,      0,      0,      0,      0,      0,      0,      0,      1,      2, 
-			     0,      0,      0,      0,      0,      0,      0,      0,      1,      2, 
-			     0,      0,      1,      2,      0,      0,      0,      0,      0,      0, 
+			     0,      1,      1,      2,      0,      0,      1,      2,      0,      1, 
+			     1,      2,      0,      0,      0,      0,      0,      0,      0,      0, 
+			     1,      2,      0,      0,      0,      1,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,      1,      2,      0,      0, 
+			     1,      2,      0,      0,      1,      2,      0,      0,      0,      0, 
 			     1,      2,      0,      0,      1,      2,      0,      0,      0,      0, 
 			     0,      0,      0,      0,      1,      2,      0,      0,      0,      0, 
 			     0,      0,      0,      0,      1,      3,      0,      0,      0,      0, 
@@ -1624,24 +1723,25 @@ namespace Anglr.Parser
 			   370,    370,    370,    370,    370,    370,    370,    370,    370,      0, 
 			   372,      0,    374,      0,      0,    377,    377,    377,    377,    377, 
 			   378,    379,      0,    381,    382,    382,    382,    382,    383,    384, 
-			   385,    386,    387,    388,      0,    390,      0,    392,    393,      0, 
-			   395,      0,    397,    397,    397,    397,    397,    398,    399,    400, 
-			   401,    402,    403,    404,      0,    406,    406,    407,    408,      0, 
-			     0,    410,    410,    411,    412,    412,    412,    412,    412,    412, 
-			   413,    413,    414,    414,    414,    414,      0,      0,      0,    417, 
-			   418,    418,    418,    419,    419,    419,    420,    421,    421,    421, 
-			   421,    421,    421,    421,    421,    421,    421,    422,    423,    423, 
-			   424,    424,    425,    425,    426,    426,    427,    427,    428,    428, 
-			   429,    429,    430,    430,    431,    431,    432,    432,    433,    433, 
-			   434,    434,    435,    435,    436,    436,    437,    437,    438,    438, 
-			   371,    371,      0,      0,    373,    373,    375,    375,    376,    376, 
-			     0,      0,      0,      0,      0,      0,      0,      0,    380,    380, 
-			     0,      0,      0,      0,      0,      0,      0,      0,    389,    389, 
-			     0,      0,    391,    391,      0,      0,      0,      0,      0,      0, 
-			   394,    394,      0,      0,    396,    396,      0,      0,      0,      0, 
-			     0,      0,      0,      0,    405,    405,      0,      0,      0,      0, 
-			     0,      0,      0,      0,    409,    409,      0,      0,      0,      0, 
-			     0,      0,    415,    415,    416,    416,      0,      0,      0,      0, 
+			   385,    386,    387,    388,      0,    390,      0,    392,    393,    394, 
+			   395,      0,    397,      0,    399,    399,    399,    399,    399,    400, 
+			   401,    402,    403,    404,    405,    406,      0,    408,    408,    409, 
+			   410,      0,      0,    412,    412,    413,    414,    414,    414,    414, 
+			   414,    414,    415,    415,    416,    416,    416,    416,      0,      0, 
+			     0,    419,    420,    420,    420,    421,    421,    421,    422,    423, 
+			   423,    423,    423,    423,    423,    423,    423,    423,    423,    424, 
+			   425,    425,    426,    426,    427,    427,    428,    428,    429,    429, 
+			   430,    430,    431,    431,    432,    432,    433,    433,    434,    434, 
+			   435,    435,    436,    436,    437,    437,    438,    438,    439,    439, 
+			   440,    440,    371,    371,      0,      0,    373,    373,    375,    375, 
+			   376,    376,      0,      0,      0,      0,      0,      0,      0,      0, 
+			   380,    380,      0,      0,    441,    441,      0,      0,      0,      0, 
+			     0,      0,      0,      0,      0,      0,    389,    389,      0,      0, 
+			   391,    391,      0,      0,    442,    442,      0,      0,      0,      0, 
+			   396,    396,      0,      0,    398,    398,      0,      0,      0,      0, 
+			     0,      0,      0,      0,    407,    407,      0,      0,      0,      0, 
+			     0,      0,      0,      0,    411,    411,      0,      0,      0,      0, 
+			     0,      0,    417,    417,    418,    418,      0,      0,      0,      0, 
 			     0,      0,      0, 
 		};
 
@@ -1686,11 +1786,12 @@ namespace Anglr.Parser
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
 			    69,     87,     72,    208,     76,     78,     79,     80,     81,     82, 
 			   212,     95,    100,    101,    102,    103,    104,    248,    250,    214, 
-			   118,    216,    122,     83,    218,    129,    220,    137,    138,    139, 
-			   140,    141,    142,     84,     85,    222,    154,    158,    160,    164, 
-			   165,    167,    226,    172,    173,    178,    180,    181,    280,    189, 
-			   283,    202,    229,     86,    207,    209,    211,    213,    215,    217, 
-			   219,    221,    159,    166,    225,    179,    228,    231,    233, 
+			   118,    216,    122,    297,    323,     83,    218,    129,    220,    137, 
+			   138,    139,    140,    141,    142,     84,     85,    222,    154,    158, 
+			   160,    164,    165,    167,    226,    172,    173,    178,    180,    181, 
+			   280,    189,    283,    202,    229,     86,    207,    209,    211,    213, 
+			   215,    217,    219,    221,    159,    166,    225,    179,    228,    231, 
+			   233,    296,    322, 
 		};
 
 		internal readonly static int[] g_rcheck =
@@ -1735,13 +1836,13 @@ namespace Anglr.Parser
 
 		internal readonly static int[] g_rstate =
 		{
-			     0,      0,    196,    166,      0,      0,    168,      0,    162,      0, 
-			     0,      0,    174,      0,      0,    164,      0,     19,    197,      0, 
+			     0,      0,    198,    168,      0,      0,    170,      0,    164,      0, 
+			     0,      0,    176,      0,      0,    166,      0,     19,    199,      0, 
 			     0,      0,     21,      0,      6,      0,      0,      0,     35,      0, 
-			     0,     10,      0,      0,    163,      0,      0,      0,      0,      0, 
-			     0,      0,    167,      0,      0,      0,      0,      0,      0,      0, 
-			     0,      0,      0,    165,      0,      0,      0,      0,    169,      0, 
-			     0,      0,      0,      0,      0,      0,      0,    175,      0,      0, 
+			     0,     10,      0,      0,    165,      0,      0,      0,      0,      0, 
+			     0,      0,    169,      0,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,    167,      0,      0,      0,      0,    171,      0, 
+			     0,      0,      0,      0,      0,      0,      0,    177,      0,      0, 
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
@@ -1763,52 +1864,53 @@ namespace Anglr.Parser
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
 			     0,      0,      0,      0,      0,      0,      0,      0,      0,      0, 
-			     0,      0,      0,      0,      0,      0,      0,    158,    158,    158, 
-			   158,    158,    158,    158,    158,    158,    158,    158,    158,    158, 
-			   158,    158,    167,    158,    158,    158,    158,    158,    158,    158, 
-			   158,    158,    158,    158,    158,    158,    158,    165,    169,    158, 
-			   158,    158,    166,    158,    158,    158,    158,    175,    168,    174, 
-			   174,    175,      0,      0,    164,      0,      0,      0,    158,      0, 
-			     0,    158,    158,      0,      0,      0,    158,      0,      0,      0, 
-			   158,    158,    158,    158,      0,    158,      0,      0,    158, 
+			     0,      0,      0,      0,      0,      0,      0,    160,    160,    160, 
+			   160,    160,    160,    160,    160,    160,    160,    160,    160,    160, 
+			   160,    160,    169,    160,    160,    160,    160,    160,    160,    160, 
+			   160,    160,    160,    160,    160,    160,    160,    167,    171,    160, 
+			   160,    160,    168,    160,    160,    160,    160,    177,    170,    176, 
+			   176,    177,      0,      0,    166,      0,      0,      0,    160,      0, 
+			     0,    160,    160,      0,      0,      0,    160,      0,      0,      0, 
+			   160,    160,    160,    160,      0,    160,      0,      0,    160, 
 		};
 
 		internal readonly static int[] g_reductions =
 		{
-			     0,      0,      0,      0,      0,     -1,    158,    158,    158,    158, 
-			   158,    158,      0,      0,      0,      0,      0,      0,      0,    158, 
-			   158,    158,    158,    158,      0,      0,      0,      0,      0,      0, 
-			     0,      0,      0,    158,    158,    158,    158,    176,      0,    178, 
-			   178,      0,      0,      0,      0,    182,      0,      0,      0,      0, 
-			     0,      0,      0,    158,    160,     -7,    -14,     -2,     -5,    170, 
-			   172,    -11,    176,    178,    180,    182,    184,    186,    188,      0, 
-			     0,      1,    190,      2,      0,      3,    194,      4,      5,    -17, 
-			   198,     75,     76,     77,     78,     79,      0,    159,    -23,      7, 
-			     8,      0,      9,      0,    -30,    208,      0,     11,      0,      0, 
+			     0,      0,      0,      0,      0,     -1,    160,    160,    160,    160, 
+			   160,    160,      0,      0,      0,      0,      0,      0,      0,    160, 
+			   160,    160,    160,    160,      0,      0,      0,      0,      0,      0, 
+			     0,      0,      0,    160,    160,    160,    160,    178,      0,    180, 
+			   180,      0,      0,      0,      0,    184,      0,      0,      0,      0, 
+			     0,      0,      0,    160,    162,     -7,    -14,     -2,     -5,    172, 
+			   174,    -11,    178,    180,    182,    184,    186,    188,    190,      0, 
+			     0,      1,    192,      2,      0,      3,    196,      4,      5,    -17, 
+			   200,     75,     76,     77,     78,     79,      0,    161,    -23,      7, 
+			     8,      0,      9,      0,    -30,    210,      0,     11,      0,      0, 
 			    12,     84,     85,     86,     87,      0,     13,      0,     14,      0, 
-			    15,      0,     16,    186,     17,      0,     18,    -16,    218,      0, 
-			    20,    -21,    222,      0,     22,     23,      0,    172,     24,    230, 
-			    25,    107,      0,      0,      0,    111,     26,    234,    102,    103, 
-			   104,    105,    106,     27,     28,     29,     30,     31,     32,     33, 
-			     0,     34,      0,    -27,    244,      0,     36,      0,     37,    178, 
-			   177,     38,    122,      0,     39,    254,    182,    179,     40,      0, 
-			     0,     41,    126,    127,     42,     43,     44,      0,     45,    262, 
-			   183,    264,     46,     47,    176,    143,    144,    145,     48,    140, 
-			    49,    147,    148,    149,    150,    151,    152,    153,    154,    155, 
-			   188,     50,    184,     51,    176,     52,     53,     54,    161,     55, 
-			   -33,     56,    -52,     57,    -41,     58,    -57,     59,    171,     60, 
-			   173,     61,    -66,     62,     63,     64,    181,     65,     66,    185, 
-			   187,     67,    189,     68,    272,    160,    191,      0,    195,    199, 
-			     0,      0,      0,      0,      0,    209,     83,    -61,     88,    -67, 
-			    89,     92,     93,    219,     95,    223,     97,    100,    231,    108, 
-			   109,    110,    235,    245,      0,      0,    117,    123,    178,    180, 
-			   130,      0,    132,      0,    134,      0,    124,      0,    125,    139, 
-			   182,    265,      0,    142,      0,    146,      0,      0,     72,      0, 
-			     0,      0,      0,      0,      0,      0,    178,    -68,    118,    255, 
-			   121,    131,    133,    135,    128,    129,    263,    141,    188,    157, 
-			    70,    158,    -69,    170,    158,    -65,     90,     91,      0,      0, 
-			     0,      0,      0,      0,      0,      0,    115,    116,    156,     80, 
-			    81,     98,    112,    113, 
+			    15,      0,     16,    188,     17,      0,     18,    -16,    226,      0, 
+			    20,    -21,    230,      0,     22,     23,      0,    174,     24,    240, 
+			    25,    109,      0,      0,      0,    113,     26,    244,    104,    105, 
+			   106,    107,    108,     27,     28,     29,     30,     31,     32,     33, 
+			     0,     34,      0,    -27,    254,      0,     36,      0,     37,    180, 
+			   179,     38,    124,      0,     39,    264,    184,    181,     40,      0, 
+			     0,     41,    128,    129,     42,     43,     44,      0,     45,    272, 
+			   185,    274,     46,     47,    178,    145,    146,    147,     48,    142, 
+			    49,    149,    150,    151,    152,    153,    154,    155,    156,    157, 
+			   190,     50,    186,     51,    178,     52,     53,     54,    163,     55, 
+			   -33,     56,    -52,     57,    -41,     58,    -57,     59,    173,     60, 
+			   175,     61,    -66,     62,     63,     64,    183,     65,     66,    187, 
+			   189,     67,    191,     68,    282,    162,    193,      0,    197,    201, 
+			     0,      0,      0,      0,      0,    211,     83,    -61,    214,    -67, 
+			    89,    214,     93,    227,     95,    231,     97,    102,    241,    110, 
+			   111,    112,    245,    255,      0,      0,    119,    125,    180,    182, 
+			   132,      0,    134,      0,    136,      0,    126,      0,    127,    141, 
+			   184,    275,      0,    144,      0,    148,      0,      0,     72,      0, 
+			     0,      0,      0,      0,      0,      0,     88,    215,      0,     92, 
+			   180,    -68,    120,    265,    123,    133,    135,    137,    130,    131, 
+			   273,    143,    190,    159,     70,    160,    -69,    172,    160,    -65, 
+			   214,      0,      0,    234,     91,      0,      0,      0,      0,      0, 
+			     0,      0,      0,     90,      0,     98,    235,    117,    118,    158, 
+			    80,     81,    100,    114,    115,     99, 
 		};
 
 	}
@@ -1841,52 +1943,56 @@ namespace Anglr.Parser
 		__block_terminal_definition__ID = 390,
 		__block_regex_definitions__ID = 391,
 		__block_regex_definition__ID = 392,
-		__scanner_part__ID = 393,
-		__regular_expression_list__ID = 394,
-		__regular_expression_usage__ID = 395,
-		__actions__ID = 396,
-		__action__ID = 397,
-		__skip_action__ID = 398,
-		__terminal_action__ID = 399,
-		__event_action__ID = 400,
-		__push_action__ID = 401,
-		__pop_action__ID = 402,
-		__lexer_part__ID = 403,
-		__parser_part__ID = 404,
-		__anglr_syntax_rule_list__ID = 405,
-		__anglr_syntax_rule__ID = 406,
-		__anglr_nested_rule__ID = 407,
-		__anglr_syntax_production_list_name__ID = 408,
-		__anglr_syntax_production_list__ID = 409,
-		__anglr_syntax_production__ID = 410,
-		__production_name__ID = 411,
-		__priority_assoc_specification__ID = 412,
-		__priority_specification__ID = 413,
-		__associativity_specification__ID = 414,
-		__name_list__ID = 415,
-		__marker_list__ID = 416,
-		__marker__ID = 417,
-		__g_name__ID = 418,
-		__name__ID = 419,
-		__cardinality_delimiter__ID = 420,
-		__cardinality__ID = 421,
-		__delimiter__ID = 422,
-		__attribute_list_optional__ID = 423,
-		__name_value_list_optional__ID = 424,
-		__anglr_file_part_list_optional__ID = 425,
-		__anglr_definition_list_optional__ID = 426,
-		__block_terminal_definitions_optional__ID = 427,
-		__block_regex_definitions_optional__ID = 428,
-		__regular_expression_list_optional__ID = 429,
-		__actions_optional__ID = 430,
-		__anglr_syntax_rule_list_optional__ID = 431,
-		__anglr_syntax_production_list_name_optional__ID = 432,
-		__production_name_optional__ID = 433,
-		__priority_assoc_specification_optional__ID = 434,
-		__marker_list_optional__ID = 435,
-		__delimiter_optional__ID = 436,
-		__cstring_optional__ID = 437,
-		__number_optional__ID = 438,
+		__classifier_list__ID = 393,
+		__classifier_info__ID = 394,
+		__scanner_part__ID = 395,
+		__regular_expression_list__ID = 396,
+		__regular_expression_usage__ID = 397,
+		__actions__ID = 398,
+		__action__ID = 399,
+		__skip_action__ID = 400,
+		__terminal_action__ID = 401,
+		__event_action__ID = 402,
+		__push_action__ID = 403,
+		__pop_action__ID = 404,
+		__lexer_part__ID = 405,
+		__parser_part__ID = 406,
+		__anglr_syntax_rule_list__ID = 407,
+		__anglr_syntax_rule__ID = 408,
+		__anglr_nested_rule__ID = 409,
+		__anglr_syntax_production_list_name__ID = 410,
+		__anglr_syntax_production_list__ID = 411,
+		__anglr_syntax_production__ID = 412,
+		__production_name__ID = 413,
+		__priority_assoc_specification__ID = 414,
+		__priority_specification__ID = 415,
+		__associativity_specification__ID = 416,
+		__name_list__ID = 417,
+		__marker_list__ID = 418,
+		__marker__ID = 419,
+		__g_name__ID = 420,
+		__name__ID = 421,
+		__cardinality_delimiter__ID = 422,
+		__cardinality__ID = 423,
+		__delimiter__ID = 424,
+		__attribute_list_optional__ID = 425,
+		__name_value_list_optional__ID = 426,
+		__anglr_file_part_list_optional__ID = 427,
+		__anglr_definition_list_optional__ID = 428,
+		__block_terminal_definitions_optional__ID = 429,
+		__block_regex_definitions_optional__ID = 430,
+		__regular_expression_list_optional__ID = 431,
+		__actions_optional__ID = 432,
+		__anglr_syntax_rule_list_optional__ID = 433,
+		__anglr_syntax_production_list_name_optional__ID = 434,
+		__production_name_optional__ID = 435,
+		__priority_assoc_specification_optional__ID = 436,
+		__marker_list_optional__ID = 437,
+		__delimiter_optional__ID = 438,
+		__cstring_optional__ID = 439,
+		__number_optional__ID = 440,
+		__classifier_list_optional__ID = 441,
+		__classifier_info_set__ID = 442,
 		LastProductionID
 	};
 
@@ -1963,6 +2069,10 @@ namespace Anglr.Parser
 			("<delimiter optional>", ProductionID.__delimiter_optional__ID, 66, 1, "_eof_token"),
 			("<cstring optional>", ProductionID.__cstring_optional__ID, 67, 1, "_eof_token"),
 			("<number optional>", ProductionID.__number_optional__ID, 68, 1, "_eof_token"),
+			("<classifier list optional>", ProductionID.__classifier_list_optional__ID, 248, 266, "_left_square_bracket_"),
+			("<classifier list>", ProductionID.__classifier_list__ID, 248, 266, "_left_square_bracket_"),
+			("<classifier info set>", ProductionID.__classifier_info_set__ID, 295, 263, "_right_bracket_"),
+			("<classifier info>", ProductionID.__classifier_info__ID, 322, 263, "_right_bracket_"),
 		};
 
 		public static Dictionary<string, (string fragmentName, ProductionID productionId, int initialState, int finalTokenId, string finalTokenName)> _FragmentsInfoDictionaryByName = FragmentsInfo.ToDictionary (x => x.fragmentName, x => (x.fragmentName, x.productionId, x.initialState, x.finalTokenId, x.finalTokenName));
@@ -2010,6 +2120,8 @@ namespace Anglr.Parser
 			_block_terminal_definition__Event += Invoke__block_terminal_definition__Callback;
 			_block_regex_definitions__Event += Invoke__block_regex_definitions__Callback;
 			_block_regex_definition__Event += Invoke__block_regex_definition__Callback;
+			_classifier_list__Event += Invoke__classifier_list__Callback;
+			_classifier_info__Event += Invoke__classifier_info__Callback;
 			_scanner_part__Event += Invoke__scanner_part__Callback;
 			_regular_expression_list__Event += Invoke__regular_expression_list__Callback;
 			_regular_expression_usage__Event += Invoke__regular_expression_usage__Callback;
@@ -2056,6 +2168,8 @@ namespace Anglr.Parser
 			_delimiter_optional__Event += Invoke__delimiter_optional__Callback;
 			_cstring_optional__Event += Invoke__cstring_optional__Callback;
 			_number_optional__Event += Invoke__number_optional__Callback;
+			_classifier_list_optional__Event += Invoke__classifier_list_optional__Callback;
+			_classifier_info_set__Event += Invoke__classifier_info_set__Callback;
 		}
 
 		//
@@ -2454,6 +2568,40 @@ namespace Anglr.Parser
 		}
 
 		private bool Invoke__block_regex_definition__Callback (SyntaxTreeCallbackReason reason, _block_regex_definition_.production_kind kind, _block_regex_definition_ p__block_regex_definition_)
+		{
+			bool status = true;
+			switch (reason)
+			{
+			case SyntaxTreeCallbackReason.BuilderCallbackReason:
+				break;
+			case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+				break;
+			case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
+				break;
+			case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+				break;
+			}
+			return status;
+		}
+
+		private bool Invoke__classifier_list__Callback (SyntaxTreeCallbackReason reason, _classifier_list_.production_kind kind, _classifier_list_ p__classifier_list_)
+		{
+			bool status = true;
+			switch (reason)
+			{
+			case SyntaxTreeCallbackReason.BuilderCallbackReason:
+				break;
+			case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+				break;
+			case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
+				break;
+			case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+				break;
+			}
+			return status;
+		}
+
+		private bool Invoke__classifier_info__Callback (SyntaxTreeCallbackReason reason, _classifier_info_.production_kind kind, _classifier_info_ p__classifier_info_)
 		{
 			bool status = true;
 			switch (reason)
@@ -3252,6 +3400,40 @@ namespace Anglr.Parser
 			return status;
 		}
 
+		private bool Invoke__classifier_list_optional__Callback (SyntaxTreeCallbackReason reason, _classifier_list_optional_.production_kind kind, _classifier_list_optional_ p__classifier_list_optional_)
+		{
+			bool status = true;
+			switch (reason)
+			{
+			case SyntaxTreeCallbackReason.BuilderCallbackReason:
+				break;
+			case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+				break;
+			case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
+				break;
+			case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+				break;
+			}
+			return status;
+		}
+
+		private bool Invoke__classifier_info_set__Callback (SyntaxTreeCallbackReason reason, _classifier_info_set_.production_kind kind, _classifier_info_set_ p__classifier_info_set_)
+		{
+			bool status = true;
+			switch (reason)
+			{
+			case SyntaxTreeCallbackReason.BuilderCallbackReason:
+				break;
+			case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+				break;
+			case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
+				break;
+			case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+				break;
+			}
+			return status;
+		}
+
 		//
 		// event fire templates
 		//
@@ -3392,6 +3574,18 @@ namespace Anglr.Parser
 		{
 			Traverse (p__block_regex_definition_);
 			TraverseCommon (p__block_regex_definition_);
+		}
+
+		public void InvokeTest (_classifier_list_ p__classifier_list_)
+		{
+			Traverse (p__classifier_list_);
+			TraverseCommon (p__classifier_list_);
+		}
+
+		public void InvokeTest (_classifier_info_ p__classifier_info_)
+		{
+			Traverse (p__classifier_info_);
+			TraverseCommon (p__classifier_info_);
 		}
 
 		public void InvokeTest (_scanner_part_ p__scanner_part_)
@@ -3668,6 +3862,18 @@ namespace Anglr.Parser
 		{
 			Traverse (p__number_optional_);
 			TraverseCommon (p__number_optional_);
+		}
+
+		public void InvokeTest (_classifier_list_optional_ p__classifier_list_optional_)
+		{
+			Traverse (p__classifier_list_optional_);
+			TraverseCommon (p__classifier_list_optional_);
+		}
+
+		public void InvokeTest (_classifier_info_set_ p__classifier_info_set_)
+		{
+			Traverse (p__classifier_info_set_);
+			TraverseCommon (p__classifier_info_set_);
 		}
 	}
 

@@ -72,6 +72,7 @@ namespace AnglrDebuggerBridge
     }
     public class AnglrSyntaxTreeHelper
     {
+        public (int lineno, int column) FirstSpan { get; private set; }
         public (int lineno, int column) LastSpan { get => _lastSpan; }
         private (int lineno, int column) _lastSpan;
         public AnglrSyntaxTreeHelper () => _lastSpan = (0, 0);
@@ -80,6 +81,7 @@ namespace AnglrDebuggerBridge
         {
             StringBuilder stringBuilder = new StringBuilder ();
 
+            FirstSpan = _lastSpan;
             foreach (var node in nodes)
             {
                 node?.Visit
@@ -1166,8 +1168,12 @@ namespace AnglrDebuggerBridge
                     (int lineno, int column) startSpan = (0, 0);
                     (int lineno, int column) endSpan = (0, 0);
 
-                    if (true && (stackCounter == 0))
+                    if (stackCounter == 0)
+                    {
                         getPDASnapshotResponse.DeltaSourceText = AnglrSyntaxTreeHelper.GenerateSourceText (valueStack);
+                        getPDASnapshotResponse.StartSpan = AnglrSyntaxTreeHelper.FirstSpan;
+                        getPDASnapshotResponse.EndSpan = AnglrSyntaxTreeHelper.LastSpan;
+                    }
 
                     for (int i = 0; i < depth; i++)
                     {

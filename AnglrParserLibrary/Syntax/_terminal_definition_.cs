@@ -20,17 +20,18 @@ namespace Anglr.Parser
 		#region enumerated production(s) of syntax rule <terminal definition>
 		public enum production_kind : ushort	// enumerated production(s) of syntax rule <terminal definition>
 		{
-			g__terminal_definition__1 = 1,	// <identifier> <cstring optional>
+			g__terminal_definition__1 = 1,	// <identifier> <cstring optional> <classifier list optional>
 
 		};
 		#endregion
 		#region production markers associated with the syntax rule <terminal definition>
 
-		// markers associated with production: <terminal definition> -> <identifier> <cstring optional>
+		// markers associated with production: <terminal definition> -> <identifier> <cstring optional> <classifier list optional>
 
 		public enum production_marker_1 : ushort
 		{
 			m__cstring_optional_,
+			m__classifier_list_optional_,
 			final
 		};
 		#endregion
@@ -40,17 +41,18 @@ namespace Anglr.Parser
 
 		//
 		// Constructor associated with the following production(s)
-		// <terminal definition> -> <identifier> <cstring optional>
+		// <terminal definition> -> <identifier> <cstring optional> <classifier list optional>
 
 		//
 
-		public _terminal_definition_ (SyntaxTreeToken p_token, _cstring_optional_ p__cstring_optional_) : base ((uint) ProductionID.__terminal_definition__ID, (uint) production_kind.g__terminal_definition__1)
+		public _terminal_definition_ (SyntaxTreeToken p_token, _cstring_optional_ p__cstring_optional_, _classifier_list_optional_ p__classifier_list_optional_) : base ((uint) ProductionID.__terminal_definition__ID, (uint) production_kind.g__terminal_definition__1)
 		{
 			++g_counter;
 			_init ();
-			children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+			children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
 			children[0] = m__identifier_ = p_token;
 			children[1] = m__cstring_optional_ = p__cstring_optional_;
+			children[2] = m__classifier_list_optional_ = p__classifier_list_optional_;
 		}
 
 		public _terminal_definition_ () { }
@@ -65,9 +67,10 @@ namespace Anglr.Parser
 			switch ((production_kind) p__terminal_definition_.kind)
 			{
 				case production_kind.g__terminal_definition__1:
-					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
 					if ((children [0] = m__identifier_ = (p__terminal_definition_.m__identifier_ != null) ? new SyntaxTreeToken (p__terminal_definition_.m__identifier_) : null) != null) m__identifier_.parent = this;
 					if ((children [1] = m__cstring_optional_ = (p__terminal_definition_.m__cstring_optional_ != null) ? new _cstring_optional_ (p__terminal_definition_.m__cstring_optional_) : null) != null) m__cstring_optional_.parent = this;
+					if ((children [2] = m__classifier_list_optional_ = (p__terminal_definition_.m__classifier_list_optional_ != null) ? new _classifier_list_optional_ (p__terminal_definition_.m__classifier_list_optional_) : null) != null) m__classifier_list_optional_.parent = this;
 					break;
 				default:
 				{
@@ -90,6 +93,7 @@ namespace Anglr.Parser
 
 			m__identifier_?.Dispose ();
 			m__cstring_optional_?.Dispose ();
+			m__classifier_list_optional_?.Dispose ();
 
 			_init ();
 		}
@@ -100,17 +104,18 @@ namespace Anglr.Parser
 
 		//
 		// Content changing function associated with following production(s)
-		// <terminal definition> -> <identifier> <cstring optional>
+		// <terminal definition> -> <identifier> <cstring optional> <classifier list optional>
 
 		//
 
-		public void change(SyntaxTreeToken p_token, _cstring_optional_ p__cstring_optional_)
+		public void change(SyntaxTreeToken p_token, _cstring_optional_ p__cstring_optional_, _classifier_list_optional_ p__classifier_list_optional_)
 		{
 			_init ();
 			this.kind = (uint) production_kind.g__terminal_definition__1;
-			children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+			children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
 			children [0] = m__identifier_ = p_token;
 			children [1] = m__cstring_optional_ = p__cstring_optional_;
+			children [2] = m__classifier_list_optional_ = p__classifier_list_optional_;
 			reparent (parent);
 		}
 
@@ -124,6 +129,7 @@ namespace Anglr.Parser
 				(element == this) ||
 				(m__identifier_ != null) && m__identifier_.checkInclusion (element) ||
 				(m__cstring_optional_ != null) && m__cstring_optional_.checkInclusion (element) ||
+				(m__classifier_list_optional_ != null) && m__classifier_list_optional_.checkInclusion (element) ||
 				false;
 		}
 		#endregion
@@ -141,11 +147,13 @@ namespace Anglr.Parser
 			{
 				case production_kind.g__terminal_definition__1:
 					// emit syntax tree node associated with production
-					// <terminal definition>: <identifier> <cstring optional>
+					// <terminal definition>: <identifier> <cstring optional> <classifier list optional>
 
 					s += m__identifier_.Emit (depth - 1);
 					s += " ";
 					s += m__cstring_optional_.Emit (depth - 1);
+					s += " ";
+					s += m__classifier_list_optional_.Emit (depth - 1);
 				break;
 			}
 			return s.Trim ();
@@ -163,11 +171,13 @@ namespace Anglr.Parser
 				{
 				case production_kind.g__terminal_definition__1:
 					// emit syntax tree node associated with production
-					// <terminal definition>: <identifier> <cstring optional>
+					// <terminal definition>: <identifier> <cstring optional> <classifier list optional>
 
 					s += "_identifier_";
 					s += ' ';
 					s += m__cstring_optional_.EmitProductionTree (depth - 1);
+					s += ' ';
+					s += m__classifier_list_optional_.EmitProductionTree (depth - 1);
 				break;
 			}
 			s += ")";
@@ -195,10 +205,11 @@ namespace Anglr.Parser
 			{
 				case _terminal_definition_.production_kind.g__terminal_definition__1:
 					// traverse syntax tree node associated with production
-					// <terminal definition>: <identifier> <cstring optional>
+					// <terminal definition>: <identifier> <cstring optional> <classifier list optional>
 
 						m__identifier_.Visit (visitor, appData);
 						m__cstring_optional_.Visit (visitor, appData);
+						m__classifier_list_optional_.Visit (visitor, appData);
 				break;
 			}
 			visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, this, appData);
@@ -212,6 +223,7 @@ namespace Anglr.Parser
 
 			m__identifier_?.reparent (this);
 			m__cstring_optional_?.reparent (this);
+			m__classifier_list_optional_?.reparent (this);
 		}
 
 		//
@@ -222,6 +234,7 @@ namespace Anglr.Parser
 		{
 			m__identifier_ = null;
 			m__cstring_optional_ = null;
+			m__classifier_list_optional_ = null;
 		}
 		#endregion
 		#region Fields and properties associated with the syntax rule <terminal definition>
@@ -232,6 +245,7 @@ namespace Anglr.Parser
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <terminal definition>
 		[DataMember (Name = "m__identifier_")] public SyntaxTreeToken m__identifier_ { get; private set; }
 		[DataMember (Name = "m__cstring_optional_")] public _cstring_optional_ m__cstring_optional_ { get; private set; }
+		[DataMember (Name = "m__classifier_list_optional_")] public _classifier_list_optional_ m__classifier_list_optional_ { get; private set; }
 		#endregion
 
 	};
@@ -270,10 +284,13 @@ namespace Anglr.Parser
 			{
 				case _terminal_definition_.production_kind.g__terminal_definition__1:
 					// traverse syntax tree node associated with production
-					// <terminal definition>: <identifier> <cstring optional>
+					// <terminal definition>: <identifier> <cstring optional> <classifier list optional>
 
 					if (Raise__terminal_definition__Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p__terminal_definition_))
 						Traverse (p__terminal_definition_.m__cstring_optional_);
+					p__terminal_definition_.turn_inc ();
+					if (Raise__terminal_definition__Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p__terminal_definition_))
+						Traverse (p__terminal_definition_.m__classifier_list_optional_);
 					p__terminal_definition_.turn_inc ();
 					Raise__terminal_definition__Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p__terminal_definition_);
 				break;
@@ -294,10 +311,11 @@ namespace Anglr.Parser
 			{
 				case _terminal_definition_.production_kind.g__terminal_definition__1:
 					// traverse syntax tree node associated with production
-					// <terminal definition>: <identifier> <cstring optional>
+					// <terminal definition>: <identifier> <cstring optional> <classifier list optional>
 
 						TraverseCommon (p__terminal_definition_.m__identifier_);
 						TraverseCommon (p__terminal_definition_.m__cstring_optional_);
+						TraverseCommon (p__terminal_definition_.m__classifier_list_optional_);
 				break;
 			}
 			Raise_Common_Event (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, p__terminal_definition_);
@@ -311,15 +329,16 @@ namespace Anglr.Parser
 
 		//
 		// create syntax tree node associated with production
-		// <terminal definition>: <identifier> <cstring optional>
+		// <terminal definition>: <identifier> <cstring optional> <classifier list optional>
 
 		//
 
-		public _terminal_definition_ _terminal_definition__1 (SyntaxTreeToken p_token, _cstring_optional_ p__cstring_optional_)
+		public _terminal_definition_ _terminal_definition__1 (SyntaxTreeToken p_token, _cstring_optional_ p__cstring_optional_, _classifier_list_optional_ p__classifier_list_optional_)
 		{
-			_terminal_definition_ p__terminal_definition__ref = new _terminal_definition_(p_token, p__cstring_optional_);
+			_terminal_definition_ p__terminal_definition__ref = new _terminal_definition_(p_token, p__cstring_optional_, p__classifier_list_optional_);
 			p_token.parent = p__terminal_definition__ref;
 			p__cstring_optional_.parent = p__terminal_definition__ref;
+			p__classifier_list_optional_.parent = p__terminal_definition__ref;
 			Raise__terminal_definition__Event (SyntaxTreeCallbackReason.BuilderCallbackReason, _terminal_definition_.production_kind.g__terminal_definition__1, p__terminal_definition__ref);
 			return p__terminal_definition__ref;
 		}

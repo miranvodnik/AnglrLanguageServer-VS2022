@@ -816,21 +816,7 @@ namespace AnglrLangExtension
                 }
                 if (userControl == null)
                     return;
-                for (int i = 0; ; i++)
-                {
-                    if (this.package.FindToolWindow (typeof (AnglrDetailsWindow), i, false) != null)
-                        continue;
-                    window = package.JoinableTaskFactory.Run (() =>
-                        package.ShowToolWindowAsync (typeof (AnglrDetailsWindow), i, true, package.DisposalToken)) as AnglrDetailsWindow;
-                    if ((null == window) || (null == window.Frame))
-                    {
-                        throw new NotSupportedException ("Cannot create details window");
-                    }
-                    window.Caption = anglrLangItem.Name;
-                    break;
-                }
-                if (userControl != null)
-                    ((AnglrDetailsWindowControl) window.Content).Content = userControl;
+                window = anglrLangService.CreateDetailsWindowInstance (userControl, anglrLangItem.Name, (w, c, s) => true);
             }
             catch (Exception exc)
             {

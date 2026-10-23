@@ -20,17 +20,18 @@ namespace Anglr.Parser
 		#region enumerated production(s) of syntax rule <single terminal definition>
 		public enum production_kind : ushort	// enumerated production(s) of syntax rule <single terminal definition>
 		{
-			g__single_terminal_definition__1 = 1,	// '%terminal' <terminal definition>
+			g__single_terminal_definition__1 = 1,	// '%terminal' <terminal definition> <classifier list optional>
 
 		};
 		#endregion
 		#region production markers associated with the syntax rule <single terminal definition>
 
-		// markers associated with production: <single terminal definition> -> '%terminal' <terminal definition>
+		// markers associated with production: <single terminal definition> -> '%terminal' <terminal definition> <classifier list optional>
 
 		public enum production_marker_1 : ushort
 		{
 			m__terminal_definition_,
+			m__classifier_list_optional_,
 			final
 		};
 		#endregion
@@ -40,17 +41,18 @@ namespace Anglr.Parser
 
 		//
 		// Constructor associated with the following production(s)
-		// <single terminal definition> -> '%terminal' <terminal definition>
+		// <single terminal definition> -> '%terminal' <terminal definition> <classifier list optional>
 
 		//
 
-		public _single_terminal_definition_ (SyntaxTreeToken p_token, _terminal_definition_ p__terminal_definition_) : base ((uint) ProductionID.__single_terminal_definition__ID, (uint) production_kind.g__single_terminal_definition__1)
+		public _single_terminal_definition_ (SyntaxTreeToken p_token, _terminal_definition_ p__terminal_definition_, _classifier_list_optional_ p__classifier_list_optional_) : base ((uint) ProductionID.__single_terminal_definition__ID, (uint) production_kind.g__single_terminal_definition__1)
 		{
 			++g_counter;
 			_init ();
-			children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+			children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
 			children[0] = m__terminal_ = p_token;
 			children[1] = m__terminal_definition_ = p__terminal_definition_;
+			children[2] = m__classifier_list_optional_ = p__classifier_list_optional_;
 		}
 
 		public _single_terminal_definition_ () { }
@@ -65,9 +67,10 @@ namespace Anglr.Parser
 			switch ((production_kind) p__single_terminal_definition_.kind)
 			{
 				case production_kind.g__single_terminal_definition__1:
-					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+					children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
 					if ((children [0] = m__terminal_ = (p__single_terminal_definition_.m__terminal_ != null) ? new SyntaxTreeToken (p__single_terminal_definition_.m__terminal_) : null) != null) m__terminal_.parent = this;
 					if ((children [1] = m__terminal_definition_ = (p__single_terminal_definition_.m__terminal_definition_ != null) ? new _terminal_definition_ (p__single_terminal_definition_.m__terminal_definition_) : null) != null) m__terminal_definition_.parent = this;
+					if ((children [2] = m__classifier_list_optional_ = (p__single_terminal_definition_.m__classifier_list_optional_ != null) ? new _classifier_list_optional_ (p__single_terminal_definition_.m__classifier_list_optional_) : null) != null) m__classifier_list_optional_.parent = this;
 					break;
 				default:
 				{
@@ -90,6 +93,7 @@ namespace Anglr.Parser
 
 			m__terminal_?.Dispose ();
 			m__terminal_definition_?.Dispose ();
+			m__classifier_list_optional_?.Dispose ();
 
 			_init ();
 		}
@@ -100,17 +104,18 @@ namespace Anglr.Parser
 
 		//
 		// Content changing function associated with following production(s)
-		// <single terminal definition> -> '%terminal' <terminal definition>
+		// <single terminal definition> -> '%terminal' <terminal definition> <classifier list optional>
 
 		//
 
-		public void change(SyntaxTreeToken p_token, _terminal_definition_ p__terminal_definition_)
+		public void change(SyntaxTreeToken p_token, _terminal_definition_ p__terminal_definition_, _classifier_list_optional_ p__classifier_list_optional_)
 		{
 			_init ();
 			this.kind = (uint) production_kind.g__single_terminal_definition__1;
-			children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 2);
+			children = (SyntaxTreeBase []) Array.CreateInstance (typeof (SyntaxTreeBase), 3);
 			children [0] = m__terminal_ = p_token;
 			children [1] = m__terminal_definition_ = p__terminal_definition_;
+			children [2] = m__classifier_list_optional_ = p__classifier_list_optional_;
 			reparent (parent);
 		}
 
@@ -124,6 +129,7 @@ namespace Anglr.Parser
 				(element == this) ||
 				(m__terminal_ != null) && m__terminal_.checkInclusion (element) ||
 				(m__terminal_definition_ != null) && m__terminal_definition_.checkInclusion (element) ||
+				(m__classifier_list_optional_ != null) && m__classifier_list_optional_.checkInclusion (element) ||
 				false;
 		}
 		#endregion
@@ -141,11 +147,13 @@ namespace Anglr.Parser
 			{
 				case production_kind.g__single_terminal_definition__1:
 					// emit syntax tree node associated with production
-					// <single terminal definition>: '%terminal' <terminal definition>
+					// <single terminal definition>: '%terminal' <terminal definition> <classifier list optional>
 
 					s += m__terminal_.Emit (depth - 1);
 					s += " ";
 					s += m__terminal_definition_.Emit (depth - 1);
+					s += " ";
+					s += m__classifier_list_optional_.Emit (depth - 1);
 				break;
 			}
 			return s.Trim ();
@@ -163,11 +171,13 @@ namespace Anglr.Parser
 				{
 				case production_kind.g__single_terminal_definition__1:
 					// emit syntax tree node associated with production
-					// <single terminal definition>: '%terminal' <terminal definition>
+					// <single terminal definition>: '%terminal' <terminal definition> <classifier list optional>
 
 					s += "_terminal_";
 					s += ' ';
 					s += m__terminal_definition_.EmitProductionTree (depth - 1);
+					s += ' ';
+					s += m__classifier_list_optional_.EmitProductionTree (depth - 1);
 				break;
 			}
 			s += ")";
@@ -195,10 +205,11 @@ namespace Anglr.Parser
 			{
 				case _single_terminal_definition_.production_kind.g__single_terminal_definition__1:
 					// traverse syntax tree node associated with production
-					// <single terminal definition>: '%terminal' <terminal definition>
+					// <single terminal definition>: '%terminal' <terminal definition> <classifier list optional>
 
 						m__terminal_.Visit (visitor, appData);
 						m__terminal_definition_.Visit (visitor, appData);
+						m__classifier_list_optional_.Visit (visitor, appData);
 				break;
 			}
 			visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, this, appData);
@@ -212,6 +223,7 @@ namespace Anglr.Parser
 
 			m__terminal_?.reparent (this);
 			m__terminal_definition_?.reparent (this);
+			m__classifier_list_optional_?.reparent (this);
 		}
 
 		//
@@ -222,6 +234,7 @@ namespace Anglr.Parser
 		{
 			m__terminal_ = null;
 			m__terminal_definition_ = null;
+			m__classifier_list_optional_ = null;
 		}
 		#endregion
 		#region Fields and properties associated with the syntax rule <single terminal definition>
@@ -232,6 +245,7 @@ namespace Anglr.Parser
 		// objects associated with terminal and non-terminal symbols within production(s) of syntax rule <single terminal definition>
 		[DataMember (Name = "m__terminal_")] public SyntaxTreeToken m__terminal_ { get; private set; }
 		[DataMember (Name = "m__terminal_definition_")] public _terminal_definition_ m__terminal_definition_ { get; private set; }
+		[DataMember (Name = "m__classifier_list_optional_")] public _classifier_list_optional_ m__classifier_list_optional_ { get; private set; }
 		#endregion
 
 	};
@@ -270,10 +284,13 @@ namespace Anglr.Parser
 			{
 				case _single_terminal_definition_.production_kind.g__single_terminal_definition__1:
 					// traverse syntax tree node associated with production
-					// <single terminal definition>: '%terminal' <terminal definition>
+					// <single terminal definition>: '%terminal' <terminal definition> <classifier list optional>
 
 					if (Raise__single_terminal_definition__Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p__single_terminal_definition_))
 						Traverse (p__single_terminal_definition_.m__terminal_definition_);
+					p__single_terminal_definition_.turn_inc ();
+					if (Raise__single_terminal_definition__Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p__single_terminal_definition_))
+						Traverse (p__single_terminal_definition_.m__classifier_list_optional_);
 					p__single_terminal_definition_.turn_inc ();
 					Raise__single_terminal_definition__Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p__single_terminal_definition_);
 				break;
@@ -294,10 +311,11 @@ namespace Anglr.Parser
 			{
 				case _single_terminal_definition_.production_kind.g__single_terminal_definition__1:
 					// traverse syntax tree node associated with production
-					// <single terminal definition>: '%terminal' <terminal definition>
+					// <single terminal definition>: '%terminal' <terminal definition> <classifier list optional>
 
 						TraverseCommon (p__single_terminal_definition_.m__terminal_);
 						TraverseCommon (p__single_terminal_definition_.m__terminal_definition_);
+						TraverseCommon (p__single_terminal_definition_.m__classifier_list_optional_);
 				break;
 			}
 			Raise_Common_Event (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, p__single_terminal_definition_);
@@ -311,15 +329,16 @@ namespace Anglr.Parser
 
 		//
 		// create syntax tree node associated with production
-		// <single terminal definition>: '%terminal' <terminal definition>
+		// <single terminal definition>: '%terminal' <terminal definition> <classifier list optional>
 
 		//
 
-		public _single_terminal_definition_ _single_terminal_definition__1 (SyntaxTreeToken p_token, _terminal_definition_ p__terminal_definition_)
+		public _single_terminal_definition_ _single_terminal_definition__1 (SyntaxTreeToken p_token, _terminal_definition_ p__terminal_definition_, _classifier_list_optional_ p__classifier_list_optional_)
 		{
-			_single_terminal_definition_ p__single_terminal_definition__ref = new _single_terminal_definition_(p_token, p__terminal_definition_);
+			_single_terminal_definition_ p__single_terminal_definition__ref = new _single_terminal_definition_(p_token, p__terminal_definition_, p__classifier_list_optional_);
 			p_token.parent = p__single_terminal_definition__ref;
 			p__terminal_definition_.parent = p__single_terminal_definition__ref;
+			p__classifier_list_optional_.parent = p__single_terminal_definition__ref;
 			Raise__single_terminal_definition__Event (SyntaxTreeCallbackReason.BuilderCallbackReason, _single_terminal_definition_.production_kind.g__single_terminal_definition__1, p__single_terminal_definition__ref);
 			return p__single_terminal_definition__ref;
 		}

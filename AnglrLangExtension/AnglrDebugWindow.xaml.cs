@@ -146,21 +146,21 @@ namespace AnglrLangExtension
         {
             try
             {
-                AnglrDebuggerClientBridge anglrDebuggerServerBridge = anglrDebugWindowGrid.SelectedItem as AnglrDebuggerClientBridge;
-                if (anglrDebuggerServerBridge == null)
+                AnglrDebuggerClientBridge anglrDebuggerClientBridge = anglrDebugWindowGrid.SelectedItem as AnglrDebuggerClientBridge;
+                if (anglrDebuggerClientBridge == null)
                 {
                     logger?.DebugLine ($"cannot start debugger, selected item is null");
                     return;
                 }
                 {
-                    string selectedAnglrFile = anglrDebuggerServerBridge.FileName;
+                    string selectedAnglrFile = anglrDebuggerClientBridge.FileName;
                     logger?.DebugLine ($"<AnglrDebugWindow>: BTN");
                     if (selectedAnglrFile == null)
                     {
                         logger?.DebugLine ($"<AnglrDebugWindow>: SEL");
                         return;
                     }
-                    if (anglrDebuggerServerBridge.IsRunning)
+                    if (anglrDebuggerClientBridge.IsRunning)
                     {
                         logger?.DebugLine ($"<AnglrDebugWindow>: RET");
                         return;
@@ -174,11 +174,11 @@ namespace AnglrLangExtension
                     }
                     window.AnglrDebugPanelControl.package = package;
                     logger?.DebugLine ($"Add debugger tab, 1: {selectedAnglrFile}");
-                    AnglrDebugPanelTab anglrDebugPanelTab = window.AnglrDebugPanelControl.AddDebugPanelTab (selectedAnglrFile, anglrDebuggerServerBridge);
+                    AnglrDebugPanelTab anglrDebugPanelTab = window.AnglrDebugPanelControl.AddDebugPanelTab (selectedAnglrFile, anglrDebuggerClientBridge);
                     logger?.DebugLine ($"Add debugger tab, 2: {selectedAnglrFile}");
 
                     logger?.DebugLine ($"<AnglrDebugWindow>: AWAIT START");
-                    _ = anglrDebuggerServerBridge.DebuggedProcessCtrlAsync (anglrDebugPanelTab);
+                    _ = anglrDebuggerClientBridge.DebuggedProcessCtrlAsync (anglrDebugPanelTab);
                     logger?.DebugLine ($"<AnglrDebugWindow>: AWAIT END");
                 }
             }
