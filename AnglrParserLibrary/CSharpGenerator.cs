@@ -85,7 +85,11 @@ namespace AnglrLibrary
             Common_Event += Invoke_Common_Callback;
             _anglr_file__Event += Invoke__anglr_file__Callback;
             _terminal_definition__Event += Invoke__terminal_definition__Callback;
-            _classifier_list__Event += Invoke__classifier_list__Callback;
+            _classifier_reference__Event += Invoke__classifier_reference__Callback;
+            _classifier_definition__Event += Invoke__classifier_definition__Callback;
+            _classifier_named_values__Event += Invoke__classifier_named_values__Callback;
+            _classifier_named_value_set__Event += Invoke__classifier_named_value_set__Callback;
+            _classifier_named_value__Event += Invoke__classifier_named_value__Callback;
             _regex_definition__Event += Invoke__regex_definition__Callback;
             _anglr_syntax_rule__Event += Invoke__anglr_syntax_rule__Callback;
             _anglr_syntax_production__Event += Invoke__anglr_syntax_production__Callback;
@@ -2266,7 +2270,11 @@ namespace AnglrLibrary
             Common_Event += Invoke_Common_Callback;
             _anglr_file__Event += Invoke__anglr_file__Callback;
             _terminal_definition__Event += Invoke__terminal_definition__Callback;
-            _classifier_list__Event += Invoke__classifier_list__Callback;
+            _classifier_reference__Event += Invoke__classifier_reference__Callback;
+            _classifier_definition__Event += Invoke__classifier_definition__Callback;
+            _classifier_named_values__Event += Invoke__classifier_named_values__Callback;
+            _classifier_named_value_set__Event += Invoke__classifier_named_value_set__Callback;
+            _classifier_named_value__Event += Invoke__classifier_named_value__Callback;
             _regex_definition__Event += Invoke__regex_definition__Callback;
             _anglr_syntax_rule__Event += Invoke__anglr_syntax_rule__Callback;
             _anglr_syntax_production__Event += Invoke__anglr_syntax_production__Callback;

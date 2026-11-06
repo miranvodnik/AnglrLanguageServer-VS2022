@@ -1,6 +1,6 @@
-﻿using AnglrJsonRpcMethods;
+﻿using AnglrBreakPointDBLibrary;
+using AnglrJsonRpcMethods;
 using AnglrLogLibrary;
-using AnglrBreakPointDBLibrary;
 using Microsoft.VisualStudio.LanguageServer.Protocol;
 using Microsoft.VisualStudio.Shell;
 using Newtonsoft.Json;
@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,7 +68,12 @@ namespace AnglrLangExtension
             AnglrLangItem = anglrLangItem;
             Logger = AnglrLangService?.AnglrLogger ?? new VoidAnglrLogger ();
 
-            AnglrGetParserMagicNumberResult anglrGetParserMagicNumberResult = AnglrLangService.InvokeGetParserMagicNumber
+            ThreadHelper.JoinableTaskFactory.Run (async () => await Init ());
+        }
+
+        private async Task Init()
+        {
+            AnglrGetParserMagicNumberResult anglrGetParserMagicNumberResult = await AnglrLangService.InvokeGetParserMagicNumber
             (
                 new AnglrGetParserMagicNumberParams ()
                 {
@@ -99,7 +105,7 @@ namespace AnglrLangExtension
                 ItemId = AnglrLangItem.Id,
                 ReportType = AnglrItemReportType.HtmlText
             };
-            AnglrGetGetHierarchyItemResult anglrGetGetHierarchyItemResult = AnglrLangService.InvokeGetHierarchy (anglrGetGetHierarchyItemParams);
+            AnglrGetGetHierarchyItemResult anglrGetGetHierarchyItemResult = await AnglrLangService.InvokeGetHierarchy (anglrGetGetHierarchyItemParams);
             webBrowser.NavigateToString ($"{AnglrLangWindowControl.anglrHtmlPrologue}{anglrGetGetHierarchyItemResult.ReportText}{AnglrLangWindowControl.anglrHtmlEpilogue}");
 
             AnglrGetParserSyntaxRuleParams anglrGetParserSyntaxRuleParams = new AnglrGetParserSyntaxRuleParams ()
@@ -111,7 +117,7 @@ namespace AnglrLangExtension
                 }
             };
 
-            AnglrGetParserSyntaxRuleResult anglrGetParserSyntaxRuleResult = AnglrLangService.InvokeGetParserSyntaxRule (anglrGetParserSyntaxRuleParams);
+            AnglrGetParserSyntaxRuleResult anglrGetParserSyntaxRuleResult = await AnglrLangService.InvokeGetParserSyntaxRule (anglrGetParserSyntaxRuleParams);
             if (anglrGetParserSyntaxRuleResult == null)
                 return;
 

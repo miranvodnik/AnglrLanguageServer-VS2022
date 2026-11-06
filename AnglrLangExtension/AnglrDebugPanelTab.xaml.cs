@@ -76,17 +76,17 @@ namespace AnglrLangExtension
         /// <param name="token">
         /// cancellation token which will destroy the session if something unexpected happened.
         /// </param>
-        public void InvokeRpcSession (int count, Stream pipe, CancellationToken token)
+        public async Task InvokeRpcSession (int count, Stream pipe, CancellationToken token)
         {
             AnglrDebugPanelTabSession anglrDebugPanelTabSession = null;
-            Dispatcher.Invoke (() =>
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync ();
             {
                 anglrDebugPanelTabSession = new AnglrDebugPanelTabSession (anglrLangService);
                 TabItem tabItem = new TabItem ();
                 tabItem.Content = anglrDebugPanelTabSession;
                 tabItem.Header = $"session {++sessionCounter}";
                 anglrDebugPanelSessions.Items.Add (tabItem);
-            });
+            }
             Logger?.InfoLine ($"starting session {sessionCounter}");
             // start detached task: this task will cover the entire debug session of single parsing procedure.
             // for a single process, several such sessions can take place sequentially or in parallel.

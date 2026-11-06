@@ -411,11 +411,11 @@ namespace AnglrLangExtension
             _ = AnglrLangExtensionPackage.Instance.RetrieveAnglrFilesAsync ();
         }
 
-        public void AddAnglrItem (string name)
+        public async void AddAnglrItem (string name)
         {
             try
             {
-                AnglrGetParserMagicNumberResult anglrGetParserMagicNumberResult = anglrLangService.InvokeGetParserMagicNumber
+                AnglrGetParserMagicNumberResult anglrGetParserMagicNumberResult = await anglrLangService.InvokeGetParserMagicNumber
                 (
                     new AnglrGetParserMagicNumberParams ()
                     {
@@ -427,7 +427,7 @@ namespace AnglrLangExtension
                 );
                 int? magicNr = anglrGetParserMagicNumberResult?.MagicNumber;
 
-                AnglrGetParserSyntaxRulesResult anglrGetParserSyntaxRulesResult = anglrLangService.InvokeGetParserSyntaxRules
+                AnglrGetParserSyntaxRulesResult anglrGetParserSyntaxRulesResult = await anglrLangService.InvokeGetParserSyntaxRules
                 (
                     new AnglrGetParserSyntaxRulesParams ()
                     {
@@ -438,7 +438,7 @@ namespace AnglrLangExtension
                     }
                 );
 
-                AnglrGetSyntaxTreeResult anglrGetSyntaxTreeResult = anglrLangService.InvokeGetSyntaxTree
+                AnglrGetSyntaxTreeResult anglrGetSyntaxTreeResult = await anglrLangService.InvokeGetSyntaxTree
                 (
                     new AnglrGetSyntaxTreeParams ()
                     {
@@ -550,7 +550,7 @@ namespace AnglrLangExtension
         {
         }
 
-        private void anglrSyntaxTree_SelectedItemChanged (object sender, RoutedPropertyChangedEventArgs<object> e)
+        private async void anglrSyntaxTree_SelectedItemChanged (object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             try
             {
@@ -570,7 +570,7 @@ namespace AnglrLangExtension
                     ReportType = AnglrItemReportType.HtmlText
                 };
 
-                AnglrGetGetHierarchyItemResult anglrGetGetHierarchyItemResult = anglrLangService.InvokeGetHierarchy (anglrGetGetHierarchyItemParams);
+                AnglrGetGetHierarchyItemResult anglrGetGetHierarchyItemResult = await anglrLangService.InvokeGetHierarchy (anglrGetGetHierarchyItemParams);
                 //anglrLangService.Log ($"SELECTED ITEM CHANGED\n{JsonConvert.SerializeObject (anglrGetGetHierarchyItemResult)}");
 
                 string nodeType = AnglrLangWindowControl.anglrNodeTypes
@@ -601,7 +601,7 @@ namespace AnglrLangExtension
             }
         }
 
-        private void Edit_MenuItem_Click (object sender, RoutedEventArgs e)
+        private async void Edit_MenuItem_Click (object sender, RoutedEventArgs e)
         {
             if (((rightButtonSource == null) || !(rightButtonSource is AnglrLangItem)) && ((rightButtonSource = anglrSyntaxTree.SelectedItem) == null))
                 return;
@@ -618,7 +618,7 @@ namespace AnglrLangExtension
                         Uri = new System.Uri ((string) anglrLangItem.Name)
                     }
                 };
-                AnglrGetItemNavigationInfoResponse anglrGetItemNavigationInfoResponse = anglrLangService.InvokeGetItemNavigationInfo (request);
+                AnglrGetItemNavigationInfoResponse anglrGetItemNavigationInfoResponse = await anglrLangService.InvokeGetItemNavigationInfo (request);
                 anglrLangService.NavigateAnglrFile (anglrLangItem.Name, anglrGetItemNavigationInfoResponse.ItemLineno, anglrGetItemNavigationInfoResponse.ItemColumn + 1);
             }
             catch (Exception exc)
@@ -630,7 +630,7 @@ namespace AnglrLangExtension
             rightButtonSource = null;
         }
 
-        private void Compile_MenuItem_Click (object sender, RoutedEventArgs e)
+        private async void Compile_MenuItem_Click (object sender, RoutedEventArgs e)
         {
             if (((rightButtonSource == null) || !(rightButtonSource is AnglrLangItem)) && ((rightButtonSource = anglrSyntaxTree.SelectedItem) == null))
                 return;
@@ -647,7 +647,7 @@ namespace AnglrLangExtension
                         Uri = new System.Uri ((string) anglrLangItem.Name)
                     }
                 };
-                AnglrGetCompileFragmentResponse anglrGetItemNavigationInfoResponse = anglrLangService.InvokeGetCompileFragment (request);
+                AnglrGetCompileFragmentResponse anglrGetItemNavigationInfoResponse = await anglrLangService.InvokeGetCompileFragment (request);
                 logger?.InfoLine ($"Compile fragment returns: {anglrGetItemNavigationInfoResponse.Result}");
                 logger?.InfoLine ($"{anglrGetItemNavigationInfoResponse.Fragment}");
             }
@@ -816,7 +816,21 @@ namespace AnglrLangExtension
                 }
                 if (userControl == null)
                     return;
-                window = anglrLangService.CreateDetailsWindowInstance (userControl, anglrLangItem.Name, (w, c, s) => true);
+                for (int i = 0; ; i++)
+                {
+                    if (this.package.FindToolWindow (typeof (AnglrDetailsWindow), i, false) != null)
+                        continue;
+                    window = package.JoinableTaskFactory.Run (() =>
+                        package.ShowToolWindowAsync (typeof (AnglrDetailsWindow), i, true, package.DisposalToken)) as AnglrDetailsWindow;
+                    if ((null == window) || (null == window.Frame))
+                    {
+                        throw new NotSupportedException ("Cannot create details window");
+                    }
+                    window.Caption = anglrLangItem.Name;
+                    break;
+                }
+                if (userControl != null)
+                    ((AnglrDetailsWindowControl) window.Content).Content = userControl;
             }
             catch (Exception exc)
             {
@@ -832,7 +846,7 @@ namespace AnglrLangExtension
             rightButtonSource = e.Source;
         }
 
-        private void anglrSyntaxTree_KeyDown (object sender, KeyEventArgs e)
+        private async void anglrSyntaxTree_KeyDown (object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Enter)
                 return;
@@ -854,7 +868,7 @@ namespace AnglrLangExtension
                         Uri = new System.Uri ((string) anglrLangItem.Name)
                     }
                 };
-                AnglrGetItemNavigationInfoResponse anglrGetItemNavigationInfoResponse = anglrLangService.InvokeGetItemNavigationInfo (request);
+                AnglrGetItemNavigationInfoResponse anglrGetItemNavigationInfoResponse = await anglrLangService.InvokeGetItemNavigationInfo (request);
                 anglrLangService.NavigateAnglrFile (anglrLangItem.Name, anglrGetItemNavigationInfoResponse.ItemLineno, anglrGetItemNavigationInfoResponse.ItemColumn + 1);
             }
             catch (Exception exc)
@@ -908,7 +922,7 @@ namespace AnglrLangExtension
             return;
         }
 
-        private void anglrParserStates_SelectedItemChanged (object sender, RoutedPropertyChangedEventArgs<object> e)
+        private async void anglrParserStates_SelectedItemChanged (object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             try
             {
@@ -926,7 +940,7 @@ namespace AnglrLangExtension
                         },
                         MagicNr = 0
                     };
-                    AnglrGetParserStateItemResult anglrGetParserStateItemResult = anglrLangService.InvokeGetParserState (anglrGetParserStateItemParams);
+                    AnglrGetParserStateItemResult anglrGetParserStateItemResult = await anglrLangService.InvokeGetParserState (anglrGetParserStateItemParams);
                     anglrStateItem.DefineText (anglrGetParserStateItemResult);
 
                     foreach (var item in anglrGetParserStateItemResult.ShiftSet)
@@ -1104,7 +1118,7 @@ namespace AnglrLangExtension
             treeViewItem.BringIntoView ();
         }
 
-        private void stateBrowser_Navigating (object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
+        private async void stateBrowser_Navigating (object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
         {
             try
             {
@@ -1141,7 +1155,7 @@ namespace AnglrLangExtension
                         Uri = new System.Uri (stateItem.RootItem.Name)
                     }
                 };
-                AnglrGetParserStateLinkResult anglrGetParserStateLinkResult = anglrLangService.InvokeGetParserStateLink (anglrGetParserStateLinkParams);
+                AnglrGetParserStateLinkResult anglrGetParserStateLinkResult = await anglrLangService.InvokeGetParserStateLink (anglrGetParserStateLinkParams);
 
                 // for each state in viable prefix leading from the beginning of pushdown
                 // automata (state 0) to the selected state: realize that state if it has not
@@ -1180,7 +1194,7 @@ namespace AnglrLangExtension
                         },
                         MagicNr = 0
                     };
-                    AnglrGetParserStateItemResult anglrGetParserStateItemResult = anglrLangService.InvokeGetParserState (anglrGetParserStateItemParams);
+                    AnglrGetParserStateItemResult anglrGetParserStateItemResult = await anglrLangService.InvokeGetParserState (anglrGetParserStateItemParams);
 
                     //anglrLangService.Log ($"expand {stateNr}", "\t");
 

@@ -268,19 +268,83 @@ namespace AnglrLibrary
             return result;
         }
 
-        internal bool Invoke__classifier_list__Callback (SyntaxTreeCallbackReason reason, _classifier_list_.production_kind kind, _classifier_list_ p__classifier_list_)
+        internal bool Invoke__classifier_reference__Callback (SyntaxTreeCallbackReason reason, _classifier_reference_.production_kind kind, _classifier_reference_ p__classifier_reference_)
         {
             bool result = true;
             switch (reason)
             {
-                case SyntaxTreeCallbackReason.BuilderCallbackReason:
-                    break;
                 case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
                     break;
                 case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
                     break;
                 case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                    p__classifier_list_.m__classifier_info_set_.Iterate (null, (node, data) => { return null; });
+                    break;
+            }
+            return result;
+        }
+
+        internal bool Invoke__classifier_definition__Callback (SyntaxTreeCallbackReason reason, _classifier_definition_.production_kind kind, _classifier_definition_ p__classifier_definition_)
+        {
+            bool result = true;
+            switch (reason)
+            {
+                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+                    break;
+            }
+            return result;
+        }
+
+        internal bool Invoke__classifier_named_values__Callback (SyntaxTreeCallbackReason reason, _classifier_named_values_.production_kind kind, _classifier_named_values_ p__classifier_named_values_)
+        {
+            bool result = true;
+            switch (reason)
+            {
+                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+                    break;
+            }
+            return result;
+        }
+
+        internal bool Invoke__classifier_named_value_set__Callback (SyntaxTreeCallbackReason reason, _classifier_named_value_set_.production_kind kind, _classifier_named_value_set_ p__classifier_named_value_set_)
+        {
+            bool result = true;
+            switch (reason)
+            {
+                case SyntaxTreeCallbackReason.IterationPrologueCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.IterationEpilogueCallbackReason:
+                    p__classifier_named_value_set_.Iterate
+                    (
+                        null,
+                        (node, data) =>
+                        {
+                            _classifier_named_value_ value = p__classifier_named_value_set_.m__classifier_named_value_;
+                            return data;
+                        }
+                    );
+                    break;
+            }
+            return result;
+        }
+
+        internal bool Invoke__classifier_named_value__Callback (SyntaxTreeCallbackReason reason, _classifier_named_value_.production_kind kind, _classifier_named_value_ p__classifier_named_value_)
+        {
+            bool result = true;
+            switch (reason)
+            {
+                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
                     break;
             }
             return result;
@@ -845,6 +909,51 @@ namespace AnglrLibrary
                     break;
                 case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
                 {
+                    p__declaration_part_.m__anglr_definition_list_optional_?.m__anglr_definition_list_.Iterate
+                    (
+                        null,
+                        (node, data) =>
+                        {
+                            _anglr_definition_ definition = node.m__anglr_definition_with_attribute_.m__anglr_definition_;
+                            switch ((_anglr_definition_.production_kind) definition.kind)
+                            {
+                                case _anglr_definition_.production_kind.g__anglr_definition__1:
+                                    break;
+                                case _anglr_definition_.production_kind.g__anglr_definition__2:
+                                {
+                                    _terminal_definition_ terminal = definition.m__single_terminal_definition_.m__terminal_definition_;
+                                    _classifier_reference_ classifier = terminal.m__classifier_reference_optional_.m__classifier_reference_;
+                                    if (classifier == null)
+                                        break;
+                                }
+                                break;
+                                case _anglr_definition_.production_kind.g__anglr_definition__3:
+                                    break;
+                                case _anglr_definition_.production_kind.g__anglr_definition__4:
+                                {
+                                    _block_of_terminal_definitions_ block = definition.m__block_of_terminal_definitions_;
+                                    _classifier_reference_ classifier = block.m__classifier_reference_optional_.m__classifier_reference_;
+                                    block.m__block_terminal_definitions_optional_?.m__block_terminal_definitions_.Iterate
+                                    (
+                                        null,
+                                        (_node, _data) =>
+                                        {
+                                            _terminal_definition_ terminal = _node.m__block_terminal_definition_.m__terminal_definition_;
+                                            _classifier_reference_ _classifier = terminal.m__classifier_reference_optional_.m__classifier_reference_ ?? classifier;
+                                            if (_classifier == null)
+                                                return _data;
+                                            return _data;
+                                        }
+                                    );
+                                }
+                                break;
+                                case _anglr_definition_.production_kind.g__anglr_definition__5:
+                                    break;
+                            }
+                            return data;
+                        }
+                    );
+
                     try
                     {
                         StringBuilder stringBuilder = declarationPart.Generate ();
@@ -1412,30 +1521,84 @@ namespace AnglrLibrary
             return result;
         }
 
-        internal bool Invoke__classifier_list__Callback (SyntaxTreeCallbackReason reason, _classifier_list_.production_kind kind, _classifier_list_ p__classifier_list_)
+        internal bool Invoke__classifier_reference__Callback (SyntaxTreeCallbackReason reason, _classifier_reference_.production_kind kind, _classifier_reference_ p__classifier_reference_)
         {
             bool result = true;
             switch (reason)
             {
-                case SyntaxTreeCallbackReason.BuilderCallbackReason:
-                    break;
                 case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
                     break;
                 case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
                     break;
                 case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                {
-                    p__classifier_list_.m__classifier_info_set_.Iterate
+                    break;
+            }
+            return result;
+        }
+
+        internal bool Invoke__classifier_definition__Callback (SyntaxTreeCallbackReason reason, _classifier_definition_.production_kind kind, _classifier_definition_ p__classifier_definition_)
+        {
+            bool result = true;
+            switch (reason)
+            {
+                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+                    break;
+            }
+            return result;
+        }
+
+        internal bool Invoke__classifier_named_values__Callback (SyntaxTreeCallbackReason reason, _classifier_named_values_.production_kind kind, _classifier_named_values_ p__classifier_named_values_)
+        {
+            bool result = true;
+            switch (reason)
+            {
+                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+                    break;
+            }
+            return result;
+        }
+
+        internal bool Invoke__classifier_named_value_set__Callback (SyntaxTreeCallbackReason reason, _classifier_named_value_set_.production_kind kind, _classifier_named_value_set_ p__classifier_named_value_set_)
+        {
+            bool result = true;
+            switch (reason)
+            {
+                case SyntaxTreeCallbackReason.IterationPrologueCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.IterationEpilogueCallbackReason:
+                    p__classifier_named_value_set_.Iterate
                     (
                         null,
                         (node, data) =>
                         {
-                            _classifier_info_ info = node.m__classifier_info_;
-                            return null;
+                            _classifier_named_value_ value = p__classifier_named_value_set_.m__classifier_named_value_;
+                            return data;
                         }
                     );
-                }
-                break;
+                    break;
+            }
+            return result;
+        }
+
+        internal bool Invoke__classifier_named_value__Callback (SyntaxTreeCallbackReason reason, _classifier_named_value_.production_kind kind, _classifier_named_value_ p__classifier_named_value_)
+        {
+            bool result = true;
+            switch (reason)
+            {
+                case SyntaxTreeCallbackReason.TraversalPrologueCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
+                    break;
+                case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
+                    break;
             }
             return result;
         }
@@ -1998,7 +2161,52 @@ namespace AnglrLibrary
                 case SyntaxTreeCallbackReason.TraversalMidTermCallbackReason:
                     break;
                 case SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason:
-                    break;
+                {
+                    p__declaration_part_.m__anglr_definition_list_optional_?.m__anglr_definition_list_.Iterate
+                    (
+                        null,
+                        (node, data) =>
+                        {
+                            _anglr_definition_ definition = node.m__anglr_definition_with_attribute_.m__anglr_definition_;
+                            switch ((_anglr_definition_.production_kind) definition.kind)
+                            {
+                                case _anglr_definition_.production_kind.g__anglr_definition__1:
+                                    break;
+                                case _anglr_definition_.production_kind.g__anglr_definition__2:
+                                {
+                                    _terminal_definition_ terminal = definition.m__single_terminal_definition_.m__terminal_definition_;
+                                    _classifier_reference_ classifier = terminal.m__classifier_reference_optional_.m__classifier_reference_;
+                                    if (classifier == null)
+                                        break;
+                                }
+                                break;
+                                case _anglr_definition_.production_kind.g__anglr_definition__3:
+                                    break;
+                                case _anglr_definition_.production_kind.g__anglr_definition__4:
+                                {
+                                    _block_of_terminal_definitions_ block = definition.m__block_of_terminal_definitions_;
+                                    block.m__block_terminal_definitions_optional_?.m__block_terminal_definitions_.Iterate
+                                    (
+                                        null,
+                                        (_node, _data) =>
+                                        {
+                                            _terminal_definition_ terminal = _node.m__block_terminal_definition_.m__terminal_definition_;
+                                            _classifier_reference_ classifier = terminal.m__classifier_reference_optional_.m__classifier_reference_;
+                                            if (classifier == null)
+                                                return _data;
+                                            return _data;
+                                        }
+                                    );
+                                }
+                                break;
+                                case _anglr_definition_.production_kind.g__anglr_definition__5:
+                                    break;
+                            }
+                            return data;
+                        }
+                    );
+                }
+                break;
             }
             return status;
         }

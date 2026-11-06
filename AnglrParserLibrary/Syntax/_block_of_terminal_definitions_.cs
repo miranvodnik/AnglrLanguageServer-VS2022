@@ -20,18 +20,18 @@ namespace Anglr.Parser
 		#region enumerated production(s) of syntax rule <block of terminal definitions>
 		public enum production_kind : ushort	// enumerated production(s) of syntax rule <block of terminal definitions>
 		{
-			g__block_of_terminal_definitions__1 = 1,	// '%terminal' '{' <block terminal definitions optional> '}' <classifier list optional>
+			g__block_of_terminal_definitions__1 = 1,	// '%terminal' '{' <block terminal definitions optional> '}' <classifier reference optional>
 
 		};
 		#endregion
 		#region production markers associated with the syntax rule <block of terminal definitions>
 
-		// markers associated with production: <block of terminal definitions> -> '%terminal' '{' <block terminal definitions optional> '}' <classifier list optional>
+		// markers associated with production: <block of terminal definitions> -> '%terminal' '{' <block terminal definitions optional> '}' <classifier reference optional>
 
 		public enum production_marker_1 : ushort
 		{
 			m__block_terminal_definitions_optional_,
-			m__classifier_list_optional_,
+			m__classifier_reference_optional_,
 			final
 		};
 		#endregion
@@ -41,11 +41,11 @@ namespace Anglr.Parser
 
 		//
 		// Constructor associated with the following production(s)
-		// <block of terminal definitions> -> '%terminal' '{' <block terminal definitions optional> '}' <classifier list optional>
+		// <block of terminal definitions> -> '%terminal' '{' <block terminal definitions optional> '}' <classifier reference optional>
 
 		//
 
-		public _block_of_terminal_definitions_ (SyntaxTreeToken p_token, SyntaxTreeToken p_token_1, _block_terminal_definitions_optional_ p__block_terminal_definitions_optional_, SyntaxTreeToken p_token_2, _classifier_list_optional_ p__classifier_list_optional_) : base ((uint) ProductionID.__block_of_terminal_definitions__ID, (uint) production_kind.g__block_of_terminal_definitions__1)
+		public _block_of_terminal_definitions_ (SyntaxTreeToken p_token, SyntaxTreeToken p_token_1, _block_terminal_definitions_optional_ p__block_terminal_definitions_optional_, SyntaxTreeToken p_token_2, _classifier_reference_optional_ p__classifier_reference_optional_) : base ((uint) ProductionID.__block_of_terminal_definitions__ID, (uint) production_kind.g__block_of_terminal_definitions__1)
 		{
 			++g_counter;
 			_init ();
@@ -54,7 +54,7 @@ namespace Anglr.Parser
 			children[1] = m__left_curly_bracket_ = p_token_1;
 			children[2] = m__block_terminal_definitions_optional_ = p__block_terminal_definitions_optional_;
 			children[3] = m__right_curly_bracket_ = p_token_2;
-			children[4] = m__classifier_list_optional_ = p__classifier_list_optional_;
+			children[4] = m__classifier_reference_optional_ = p__classifier_reference_optional_;
 		}
 
 		public _block_of_terminal_definitions_ () { }
@@ -74,7 +74,7 @@ namespace Anglr.Parser
 					if ((children [1] = m__left_curly_bracket_ = (p__block_of_terminal_definitions_.m__left_curly_bracket_ != null) ? new SyntaxTreeToken (p__block_of_terminal_definitions_.m__left_curly_bracket_) : null) != null) m__left_curly_bracket_.parent = this;
 					if ((children [2] = m__block_terminal_definitions_optional_ = (p__block_of_terminal_definitions_.m__block_terminal_definitions_optional_ != null) ? new _block_terminal_definitions_optional_ (p__block_of_terminal_definitions_.m__block_terminal_definitions_optional_) : null) != null) m__block_terminal_definitions_optional_.parent = this;
 					if ((children [3] = m__right_curly_bracket_ = (p__block_of_terminal_definitions_.m__right_curly_bracket_ != null) ? new SyntaxTreeToken (p__block_of_terminal_definitions_.m__right_curly_bracket_) : null) != null) m__right_curly_bracket_.parent = this;
-					if ((children [4] = m__classifier_list_optional_ = (p__block_of_terminal_definitions_.m__classifier_list_optional_ != null) ? new _classifier_list_optional_ (p__block_of_terminal_definitions_.m__classifier_list_optional_) : null) != null) m__classifier_list_optional_.parent = this;
+					if ((children [4] = m__classifier_reference_optional_ = (p__block_of_terminal_definitions_.m__classifier_reference_optional_ != null) ? new _classifier_reference_optional_ (p__block_of_terminal_definitions_.m__classifier_reference_optional_) : null) != null) m__classifier_reference_optional_.parent = this;
 					break;
 				default:
 				{
@@ -99,7 +99,7 @@ namespace Anglr.Parser
 			m__left_curly_bracket_?.Dispose ();
 			m__block_terminal_definitions_optional_?.Dispose ();
 			m__right_curly_bracket_?.Dispose ();
-			m__classifier_list_optional_?.Dispose ();
+			m__classifier_reference_optional_?.Dispose ();
 
 			_init ();
 		}
@@ -110,11 +110,11 @@ namespace Anglr.Parser
 
 		//
 		// Content changing function associated with following production(s)
-		// <block of terminal definitions> -> '%terminal' '{' <block terminal definitions optional> '}' <classifier list optional>
+		// <block of terminal definitions> -> '%terminal' '{' <block terminal definitions optional> '}' <classifier reference optional>
 
 		//
 
-		public void change(SyntaxTreeToken p_token, SyntaxTreeToken p_token_1, _block_terminal_definitions_optional_ p__block_terminal_definitions_optional_, SyntaxTreeToken p_token_2, _classifier_list_optional_ p__classifier_list_optional_)
+		public void change(SyntaxTreeToken p_token, SyntaxTreeToken p_token_1, _block_terminal_definitions_optional_ p__block_terminal_definitions_optional_, SyntaxTreeToken p_token_2, _classifier_reference_optional_ p__classifier_reference_optional_)
 		{
 			_init ();
 			this.kind = (uint) production_kind.g__block_of_terminal_definitions__1;
@@ -123,7 +123,7 @@ namespace Anglr.Parser
 			children [1] = m__left_curly_bracket_ = p_token_1;
 			children [2] = m__block_terminal_definitions_optional_ = p__block_terminal_definitions_optional_;
 			children [3] = m__right_curly_bracket_ = p_token_2;
-			children [4] = m__classifier_list_optional_ = p__classifier_list_optional_;
+			children [4] = m__classifier_reference_optional_ = p__classifier_reference_optional_;
 			reparent (parent);
 		}
 
@@ -139,7 +139,7 @@ namespace Anglr.Parser
 				(m__left_curly_bracket_ != null) && m__left_curly_bracket_.checkInclusion (element) ||
 				(m__block_terminal_definitions_optional_ != null) && m__block_terminal_definitions_optional_.checkInclusion (element) ||
 				(m__right_curly_bracket_ != null) && m__right_curly_bracket_.checkInclusion (element) ||
-				(m__classifier_list_optional_ != null) && m__classifier_list_optional_.checkInclusion (element) ||
+				(m__classifier_reference_optional_ != null) && m__classifier_reference_optional_.checkInclusion (element) ||
 				false;
 		}
 		#endregion
@@ -157,7 +157,7 @@ namespace Anglr.Parser
 			{
 				case production_kind.g__block_of_terminal_definitions__1:
 					// emit syntax tree node associated with production
-					// <block of terminal definitions>: '%terminal' '{' <block terminal definitions optional> '}' <classifier list optional>
+					// <block of terminal definitions>: '%terminal' '{' <block terminal definitions optional> '}' <classifier reference optional>
 
 					s += m__terminal_.Emit (depth - 1);
 					s += " ";
@@ -167,7 +167,7 @@ namespace Anglr.Parser
 					s += " ";
 					s += m__right_curly_bracket_.Emit (depth - 1);
 					s += " ";
-					s += m__classifier_list_optional_.Emit (depth - 1);
+					s += m__classifier_reference_optional_.Emit (depth - 1);
 				break;
 			}
 			return s.Trim ();
@@ -185,7 +185,7 @@ namespace Anglr.Parser
 				{
 				case production_kind.g__block_of_terminal_definitions__1:
 					// emit syntax tree node associated with production
-					// <block of terminal definitions>: '%terminal' '{' <block terminal definitions optional> '}' <classifier list optional>
+					// <block of terminal definitions>: '%terminal' '{' <block terminal definitions optional> '}' <classifier reference optional>
 
 					s += "_terminal_";
 					s += ' ';
@@ -195,7 +195,7 @@ namespace Anglr.Parser
 					s += ' ';
 					s += "_right_curly_bracket_";
 					s += ' ';
-					s += m__classifier_list_optional_.EmitProductionTree (depth - 1);
+					s += m__classifier_reference_optional_.EmitProductionTree (depth - 1);
 				break;
 			}
 			s += ")";
@@ -223,13 +223,13 @@ namespace Anglr.Parser
 			{
 				case _block_of_terminal_definitions_.production_kind.g__block_of_terminal_definitions__1:
 					// traverse syntax tree node associated with production
-					// <block of terminal definitions>: '%terminal' '{' <block terminal definitions optional> '}' <classifier list optional>
+					// <block of terminal definitions>: '%terminal' '{' <block terminal definitions optional> '}' <classifier reference optional>
 
 						m__terminal_.Visit (visitor, appData);
 						m__left_curly_bracket_.Visit (visitor, appData);
 						m__block_terminal_definitions_optional_.Visit (visitor, appData);
 						m__right_curly_bracket_.Visit (visitor, appData);
-						m__classifier_list_optional_.Visit (visitor, appData);
+						m__classifier_reference_optional_.Visit (visitor, appData);
 				break;
 			}
 			visitor (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, this, appData);
@@ -245,7 +245,7 @@ namespace Anglr.Parser
 			m__left_curly_bracket_?.reparent (this);
 			m__block_terminal_definitions_optional_?.reparent (this);
 			m__right_curly_bracket_?.reparent (this);
-			m__classifier_list_optional_?.reparent (this);
+			m__classifier_reference_optional_?.reparent (this);
 		}
 
 		//
@@ -258,7 +258,7 @@ namespace Anglr.Parser
 			m__left_curly_bracket_ = null;
 			m__block_terminal_definitions_optional_ = null;
 			m__right_curly_bracket_ = null;
-			m__classifier_list_optional_ = null;
+			m__classifier_reference_optional_ = null;
 		}
 		#endregion
 		#region Fields and properties associated with the syntax rule <block of terminal definitions>
@@ -271,7 +271,7 @@ namespace Anglr.Parser
 		[DataMember (Name = "m__left_curly_bracket_")] public SyntaxTreeToken m__left_curly_bracket_ { get; private set; }
 		[DataMember (Name = "m__block_terminal_definitions_optional_")] public _block_terminal_definitions_optional_ m__block_terminal_definitions_optional_ { get; private set; }
 		[DataMember (Name = "m__right_curly_bracket_")] public SyntaxTreeToken m__right_curly_bracket_ { get; private set; }
-		[DataMember (Name = "m__classifier_list_optional_")] public _classifier_list_optional_ m__classifier_list_optional_ { get; private set; }
+		[DataMember (Name = "m__classifier_reference_optional_")] public _classifier_reference_optional_ m__classifier_reference_optional_ { get; private set; }
 		#endregion
 
 	};
@@ -310,13 +310,13 @@ namespace Anglr.Parser
 			{
 				case _block_of_terminal_definitions_.production_kind.g__block_of_terminal_definitions__1:
 					// traverse syntax tree node associated with production
-					// <block of terminal definitions>: '%terminal' '{' <block terminal definitions optional> '}' <classifier list optional>
+					// <block of terminal definitions>: '%terminal' '{' <block terminal definitions optional> '}' <classifier reference optional>
 
 					if (Raise__block_of_terminal_definitions__Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p__block_of_terminal_definitions_))
 						Traverse (p__block_of_terminal_definitions_.m__block_terminal_definitions_optional_);
 					p__block_of_terminal_definitions_.turn_inc ();
 					if (Raise__block_of_terminal_definitions__Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p__block_of_terminal_definitions_))
-						Traverse (p__block_of_terminal_definitions_.m__classifier_list_optional_);
+						Traverse (p__block_of_terminal_definitions_.m__classifier_reference_optional_);
 					p__block_of_terminal_definitions_.turn_inc ();
 					Raise__block_of_terminal_definitions__Event (SyntaxTreeCallbackReason.TraversalMidTermCallbackReason, kind, p__block_of_terminal_definitions_);
 				break;
@@ -337,13 +337,13 @@ namespace Anglr.Parser
 			{
 				case _block_of_terminal_definitions_.production_kind.g__block_of_terminal_definitions__1:
 					// traverse syntax tree node associated with production
-					// <block of terminal definitions>: '%terminal' '{' <block terminal definitions optional> '}' <classifier list optional>
+					// <block of terminal definitions>: '%terminal' '{' <block terminal definitions optional> '}' <classifier reference optional>
 
 						TraverseCommon (p__block_of_terminal_definitions_.m__terminal_);
 						TraverseCommon (p__block_of_terminal_definitions_.m__left_curly_bracket_);
 						TraverseCommon (p__block_of_terminal_definitions_.m__block_terminal_definitions_optional_);
 						TraverseCommon (p__block_of_terminal_definitions_.m__right_curly_bracket_);
-						TraverseCommon (p__block_of_terminal_definitions_.m__classifier_list_optional_);
+						TraverseCommon (p__block_of_terminal_definitions_.m__classifier_reference_optional_);
 				break;
 			}
 			Raise_Common_Event (SyntaxTreeCallbackReason.TraversalEpilogueCallbackReason, (int) kind, p__block_of_terminal_definitions_);
@@ -357,18 +357,18 @@ namespace Anglr.Parser
 
 		//
 		// create syntax tree node associated with production
-		// <block of terminal definitions>: '%terminal' '{' <block terminal definitions optional> '}' <classifier list optional>
+		// <block of terminal definitions>: '%terminal' '{' <block terminal definitions optional> '}' <classifier reference optional>
 
 		//
 
-		public _block_of_terminal_definitions_ _block_of_terminal_definitions__1 (SyntaxTreeToken p_token, SyntaxTreeToken p_token_1, _block_terminal_definitions_optional_ p__block_terminal_definitions_optional_, SyntaxTreeToken p_token_2, _classifier_list_optional_ p__classifier_list_optional_)
+		public _block_of_terminal_definitions_ _block_of_terminal_definitions__1 (SyntaxTreeToken p_token, SyntaxTreeToken p_token_1, _block_terminal_definitions_optional_ p__block_terminal_definitions_optional_, SyntaxTreeToken p_token_2, _classifier_reference_optional_ p__classifier_reference_optional_)
 		{
-			_block_of_terminal_definitions_ p__block_of_terminal_definitions__ref = new _block_of_terminal_definitions_(p_token, p_token_1, p__block_terminal_definitions_optional_, p_token_2, p__classifier_list_optional_);
+			_block_of_terminal_definitions_ p__block_of_terminal_definitions__ref = new _block_of_terminal_definitions_(p_token, p_token_1, p__block_terminal_definitions_optional_, p_token_2, p__classifier_reference_optional_);
 			p_token.parent = p__block_of_terminal_definitions__ref;
 			p_token_1.parent = p__block_of_terminal_definitions__ref;
 			p__block_terminal_definitions_optional_.parent = p__block_of_terminal_definitions__ref;
 			p_token_2.parent = p__block_of_terminal_definitions__ref;
-			p__classifier_list_optional_.parent = p__block_of_terminal_definitions__ref;
+			p__classifier_reference_optional_.parent = p__block_of_terminal_definitions__ref;
 			Raise__block_of_terminal_definitions__Event (SyntaxTreeCallbackReason.BuilderCallbackReason, _block_of_terminal_definitions_.production_kind.g__block_of_terminal_definitions__1, p__block_of_terminal_definitions__ref);
 			return p__block_of_terminal_definitions__ref;
 		}

@@ -1,6 +1,7 @@
 ﻿using AnglrDebuggerBridge;
 using AnglrDebuggerJsonRpcMessages;
 using AnglrLogLibrary;
+using MessagePack;
 using Newtonsoft.Json.Linq;
 using StreamJsonRpc;
 using System;
@@ -186,18 +187,18 @@ namespace anglr_cs
         {
         }
 
-        public void LogMessageHandler (object sender, EventArgs e)
+        public async Task LogMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerLogRequest logMessageRequest = e as AnglrDebuggerLogRequest;
             if (logMessageRequest == null)
                 return;
         }
 
-        public AnglrDebuggerConnectResponse ConnectMessageHandler (object sender, EventArgs e)
+        public async Task <AnglrDebuggerConnectResponse> ConnectMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerConnectRequest connectMessageRequest = e as AnglrDebuggerConnectRequest;
             if (connectMessageRequest == null)
-                return new AnglrDebuggerConnectResponse () { SequenceNr = -1, Valid = false };
+                return await new Task< AnglrDebuggerConnectResponse > (() => new AnglrDebuggerConnectResponse () { SequenceNr = -1, Valid = false });
 
             try
             {
@@ -213,10 +214,10 @@ namespace anglr_cs
                 Logger?.ErrorLine ($"ConnectMessageInvoker exception: {ex.Message}");
                 Logger?.ErrorLine ($"\t{ex.StackTrace}");
             }
-            return new AnglrDebuggerConnectResponse () { SequenceNr = connectMessageRequest.SequenceNr, Valid = true };
+            return await new Task<AnglrDebuggerConnectResponse> (() => new AnglrDebuggerConnectResponse () { SequenceNr = connectMessageRequest.SequenceNr, Valid = true });
         }
 
-        public void SyntaxErrorMessageHandler (object sender, EventArgs e)
+        public async Task SyntaxErrorMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerSyntaxErrorRequest syntaxErrorMessageRequest = e as AnglrDebuggerSyntaxErrorRequest;
             if (syntaxErrorMessageRequest == null)
@@ -233,7 +234,7 @@ namespace anglr_cs
             }
         }
 
-        public void ShiftStepMessageHandler (object sender, EventArgs e)
+        public async Task ShiftStepMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerShiftStepRequest shiftStepMessageRequest = e as AnglrDebuggerShiftStepRequest;
             if (shiftStepMessageRequest == null)
@@ -259,7 +260,7 @@ namespace anglr_cs
             }
         }
 
-        public void ReduceStepMessageHandler (object sender, EventArgs e)
+        public async Task ReduceStepMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerReduceStepRequest reduceStepMessageRequest = e as AnglrDebuggerReduceStepRequest;
             if (reduceStepMessageRequest == null)
@@ -288,7 +289,7 @@ namespace anglr_cs
             }
         }
 
-        public void SplitStepMessageHandler (object sender, EventArgs e)
+        public async Task SplitStepMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerSplitStepRequest splitStepMessageRequest = e as AnglrDebuggerSplitStepRequest;
             if (splitStepMessageRequest == null)
@@ -314,7 +315,7 @@ namespace anglr_cs
             }
         }
 
-        public void LoopStepMessageHandler (object sender, EventArgs e)
+        public async Task LoopStepMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerLoopStepRequest loopStepMessageRequest = e as AnglrDebuggerLoopStepRequest;
             if (loopStepMessageRequest == null)
@@ -331,7 +332,7 @@ namespace anglr_cs
             }
         }
 
-        public void JoinMessageHandler (object sender, EventArgs e)
+        public async Task JoinMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerJoinRequest joinMessageRequest = e as AnglrDebuggerJoinRequest;
             if (joinMessageRequest == null)
@@ -348,14 +349,14 @@ namespace anglr_cs
             }
         }
 
-        public void FinalStepMessageHandler (object sender, EventArgs e)
+        public async Task FinalStepMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerFinalStepRequest finalStepRequest = e as AnglrDebuggerFinalStepRequest;
             if ((finalStepRequest == null))
                 return;
         }
 
-        public void StopParserMessageHandler (object sender, EventArgs e)
+        public async Task StopParserMessageHandler (object sender, EventArgs e)
         {
             AnglrDebuggerStopParserRequest stopParserRequest = e as AnglrDebuggerStopParserRequest;
             if (stopParserRequest == null)
@@ -370,16 +371,16 @@ namespace anglr_cs
         }
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.ConnectMessageName)]
-        public AnglrDebuggerConnectResponse HandleConnectMessage (JToken connectMessage) =>
-            ConnectMessageHandler (this, connectMessage.ToObject<AnglrDebuggerConnectRequest> ());
+        public async Task<AnglrDebuggerConnectResponse> HandleConnectMessage (JToken connectMessage) =>
+            await ConnectMessageHandler (this, connectMessage.ToObject<AnglrDebuggerConnectRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.SyntaxErrorMessageName)]
-        public void HandleSyntaxErrorMessage (JToken syntaxErrorMessage) =>
-            SyntaxErrorMessageHandler (this, syntaxErrorMessage.ToObject<AnglrDebuggerSyntaxErrorRequest> ());
+        public async Task HandleSyntaxErrorMessage (JToken syntaxErrorMessage) =>
+            await SyntaxErrorMessageHandler (this, syntaxErrorMessage.ToObject<AnglrDebuggerSyntaxErrorRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.ShiftStepMessageName)]
-        public void HandleShiftStepMessage (JToken shiftStepMessage) =>
-            ShiftStepMessageHandler (this, shiftStepMessage.ToObject<AnglrDebuggerShiftStepRequest> ());
+        public async Task HandleShiftStepMessage (JToken shiftStepMessage) =>
+            await ShiftStepMessageHandler (this, shiftStepMessage.ToObject<AnglrDebuggerShiftStepRequest> ());
 
         [JsonRpcMethod (AnglrDebuggerJsonRpcMessageNames.ReduceStepMessageName)]
         public void HandleReduceStepMessage (JToken reduceStepMessage) =>
@@ -421,21 +422,18 @@ namespace anglr_cs
             Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: RPC disconnected, reason: {e.Reason}");
         }
 
-        public void InvokeRpcSession (int counter, Stream pipe, CancellationToken token)
+        public async Task InvokeRpcSession (int counter, Stream pipe, CancellationToken token)
         {
-            _ = Task.Run (() =>
-            {
-                Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: rpc channel {counter} trying to attach");
-                DbgProcessRpc dbgProcessRpc = new DbgProcessRpc ();
-                Rpc = dbgProcessRpc.Rpc = JsonRpc.Attach (pipe, pipe, dbgProcessRpc);
-                Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: rpc channel {counter} created");
-                Rpc.Disconnected += Rpc_Disconnected;
-                Rpc.Completion.ConfigureAwait (false).GetAwaiter ().GetResult ();
-                Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: rpc channel {counter} completed");
-                Rpc.Dispose ();
-                Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: rpc channel {counter} disposed");
-                Rpc = null;
-            });
+            Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: rpc channel {counter} trying to attach");
+            DbgProcessRpc dbgProcessRpc = new DbgProcessRpc ();
+            Rpc = dbgProcessRpc.Rpc = JsonRpc.Attach (pipe, pipe, dbgProcessRpc);
+            Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: rpc channel {counter} created");
+            Rpc.Disconnected += Rpc_Disconnected;
+            await Rpc.Completion;
+            Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: rpc channel {counter} completed");
+            Rpc.Dispose ();
+            Logger?.InfoLine ($"<AnglrDebuggerClientBridge>: rpc channel {counter} disposed");
+            Rpc = null;
         }
     }
 

@@ -58,13 +58,15 @@
 	%regex
 	{
 		empty         %[ \t]*empty
-		terminal      %[ \t]*terminal
-		general       %[ \t]*general
-		declarations  %[ \t]*declarations
-		rregex        %[ \t]*regex
-		scanner       %[ \t]*scanner
-		lexer         %[ \t]*lexer
-		parser        %[ \t]*parser
+		classifier    %[ \t]*c(lassifier)?
+		use           %[ \t]*u(se)?
+		terminal      %[ \t]*t(erminal)?
+		general       %[ \t]*g(eneral)?
+		declarations  %[ \t]*d(eclarations)?
+		rregex        %[ \t]*r(egex)?
+		scanner       %[ \t]*s(canner)?
+		lexer         %[ \t]*l(exer)?
+		parser        %[ \t]*p(arser)?
 		priority      %[ \t]*prio(rity)?
 		associativity %[ \t]*assoc(iativity)?
 		skip          skip
@@ -137,6 +139,8 @@
 		<empty>	'%empty'
 		<identifier>
 		<terminal>	'%terminal'
+		<classifier>	'%classifier'
+		<use>	'%use'
 		<general> '%general'
 		<declarations> '%declarations'
 		<regex> '%regex'
@@ -492,6 +496,10 @@
 		terminal <inv slash>
 {empty}
 		terminal <empty>
+{classifier}
+		terminal <classifier>
+{use}
+		terminal <use>
 {terminal}
 		terminal <terminal>
 {general}
@@ -812,7 +820,8 @@ DECLARATION-PART-OF-ANGLR-FILE
 	Text='- block of regular expression declarations'
 ]
 <anglr definition>
-	:	<single terminal definition>
+	:	<classifier definition>
+	|	<single terminal definition>
 	|	<single regex definition>
 	|	<block of terminal definitions>
 	|	<block of regex definitions>
@@ -845,7 +854,7 @@ DECLARATION-PART-OF-ANGLR-FILE
 	Text='- followed by block of terminal symbol definitions enclosed between curly braces'
 ]
 <block of terminal definitions>
-	:	'%terminal' '{' <block terminal definitions> ? '}'  <classifier list> ?
+	:	'%terminal' '{' <block terminal definitions> ? '}'  <classifier reference> ?
 	;
 
 [
@@ -866,7 +875,7 @@ DECLARATION-PART-OF-ANGLR-FILE
 	Text='  name and string representation are interchangable'
 ]
 <terminal definition>
-	:	<identifier> <cstring> ? <classifier list> ?
+	:	<identifier> <cstring> ? <classifier reference> ?
 	;
 
 [
@@ -916,23 +925,31 @@ DECLARATION-PART-OF-ANGLR-FILE
 	:	<attribute list> ? <regex definition>
 	;
 
-[
-	Description Hover='true'
-	Text='classifier list which provides info'
-	Text='used by text rendering tools'
-]
-<classifier list>
-	:	'(' <classifier info> + ')'
+<classifier reference>
+	:	'%use' <identifier>
+	;
+
+<classifier definition>
+	:	'%classifier' <identifier> '=' <classifier named values>
 	;
 
 [
 	Description Hover='true'
-	Text='classifier definition. Its structure:'
+	Text='classifier list of named values which'
+	Text='provides info used by text rendering tools'
+]
+<classifier named values>
+	:	'{' <classifier named value> + '}'
+	;
+
+[
+	Description Hover='true'
+	Text='classifier named value. Its structure:'
 	Text='- classifier name'
 	Text='- followed by = sign'
 	Text='- and string representing its value'
 ]
-<classifier info>
+<classifier named value>
 	:	<identifier> '=' <cstring>
 	;
 

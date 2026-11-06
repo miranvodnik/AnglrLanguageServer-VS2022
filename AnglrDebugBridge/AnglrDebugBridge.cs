@@ -52,7 +52,13 @@ namespace AnglrDebuggerBridge
             if (SelectionEnd < SelectionStart)
                 throw new InvalidOperationException ($"end position {end} < then start position {start}");
         }
-        public AnglrSelection (AnglrTuple x, AnglrTuple y) => new AnglrSelection (x.Tuple, y.Tuple);
+        public AnglrSelection (AnglrTuple x, AnglrTuple y)
+        {
+            SelectionStart = x;
+            SelectionEnd = y;
+            if (SelectionEnd < SelectionStart)
+                throw new InvalidOperationException ($"end position {y} < then start position {x}");
+        }
         public static bool operator < (AnglrSelection x, AnglrSelection y) => x.SelectionEnd <= y.SelectionStart;
         public static bool operator > (AnglrSelection x, AnglrSelection y) => y < x;
         public static bool operator == (AnglrSelection x, AnglrSelection y) => (x.SelectionStart == y.SelectionStart) && (x.SelectionEnd == y.SelectionEnd);
@@ -161,6 +167,7 @@ namespace AnglrDebuggerBridge
         private bool DetailedNotifications { get; }
         private bool SingleStepBreakPoint { get; set; }
         private bool BreakBreakPoint { get; set; }
+        private SemaphoreSlim Semaphore { get; }
         private int SequenceCount;
         private AnglrSyntaxTreeHelper AnglrSyntaxTreeHelper;
         private StreamWriter outWriter;
@@ -175,6 +182,7 @@ namespace AnglrDebuggerBridge
             LogLevel = AnglrLogLevel.Info;
             ParserInterface = parserInterface;
             AnglrDebugger = new AnglrServerSideDebuggerJsonRpcMessagesHandler (this);
+            Semaphore = new SemaphoreSlim (1);
 
             ParserStepEvent = new AutoResetEvent (false);
 
@@ -357,7 +365,7 @@ namespace AnglrDebuggerBridge
             }
             if (check)
             {
-                Log (AnglrLogLevel.Info, $"parser step event: notify");
+                Log (AnglrLogLevel.Debug, $"parser step event: notify");
                 if (true)
                 {
                     _ = Rpc.NotifyAsync
@@ -369,9 +377,9 @@ namespace AnglrDebuggerBridge
                         }
                     );
                 }
-                Log (AnglrLogLevel.Info, $"parser step event: wait");
+                Log (AnglrLogLevel.Debug, $"parser step event: wait");
                 ParserStepEvent.WaitOne ();
-                Log (AnglrLogLevel.Info, $"parser step event: continue");
+                Log (AnglrLogLevel.Debug, $"parser step event: continue");
             }
             return check;
         }
@@ -441,7 +449,8 @@ namespace AnglrDebuggerBridge
             try
             {
                 outWriter?.WriteLine ($"start parser");
-                ParserStepEvent.WaitOne ();
+                BreakBreakPoint = true;
+                CheckBreakPoint ();
 
                 Log (AnglrLogLevel.Info, $"<AnglrDebuggerServerBridge>: client connection request task created");
                 AnglrDebuggerConnectResponse anglrDebuggerConnectResponse = Rpc.InvokeAsync<AnglrDebuggerConnectResponse>
@@ -496,8 +505,8 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client syntax error response received");
-                    CheckBreakPoint ();
                 }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -532,8 +541,8 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client shift step response received");
-                    CheckBreakPoint ();
                 }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -616,8 +625,8 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client split step response received");
-                    CheckBreakPoint ();
                 }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -648,8 +657,8 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client loop step response received");
-                    CheckBreakPoint ();
                 }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -680,8 +689,8 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client join response received");
-                    CheckBreakPoint ();
                 }
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -710,9 +719,8 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client final step response received");
-                    CheckBreakPoint ();
                 }
-                ParserStepEvent.WaitOne ();
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -742,8 +750,9 @@ namespace AnglrDebuggerBridge
                         }
                     );
                     Log (AnglrLogLevel.Trace, $"<AnglrDebuggerServerBridge>: client stop parser response received");
-                    CheckBreakPoint ();
                 }
+                BreakBreakPoint = true;
+                CheckBreakPoint ();
             }
             catch (Exception e)
             {
@@ -1147,10 +1156,7 @@ namespace AnglrDebuggerBridge
             try
             {
                 int step = 0;
-                JsonSerializerSettings settings = new JsonSerializerSettings
-                {
-                    TypeNameHandling = TypeNameHandling.Objects
-                };
+                Semaphore.Wait ();
                 AnglrDebuggerGetPDASnapshotResponse getPDASnapshotResponse = new AnglrDebuggerGetPDASnapshotResponse ()
                 {
                     SequenceNr = getPDASnapshotRequest.SequenceNr,
@@ -1260,6 +1266,10 @@ namespace AnglrDebuggerBridge
             {
                 Log (AnglrLogLevel.Error, ex.ToString ());
                 return null;
+            }
+            finally
+            {
+                Semaphore.Release ();
             }
         }
     }

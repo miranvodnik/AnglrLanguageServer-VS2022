@@ -1,4 +1,6 @@
-﻿using AnglrDebuggerJsonRpcMessages;
+﻿using AnglrDebuggerBridge;
+using AnglrDebuggerJsonRpcMessages;
+using AnglrLibrary;
 using AnglrLogLibrary;
 using Microsoft.NET.StringTools;
 using System;
@@ -130,19 +132,38 @@ namespace AnglrLangExtension
 
         static AnglrMonoChromaticColors () { }
     }
+    public class PDAStackCellComparer : IComparer<AnglrDebuggerGetPDAStackCell>
+    {
+        public int Compare (AnglrDebuggerGetPDAStackCell x, AnglrDebuggerGetPDAStackCell y)
+        {
+            if (x.Code != y.Code)
+                return x.Code - y.Code;
+            if (x.State != y.State)
+                return x.State - y.State;
+            if ((AnglrTuple) x.StartSpan < (AnglrTuple) y.StartSpan)
+                return -1;
+            if ((AnglrTuple) x.StartSpan > (AnglrTuple) y.StartSpan)
+                return 1;
+            if ((AnglrTuple) x.EndSpan < (AnglrTuple) y.EndSpan)
+                return -1;
+            if ((AnglrTuple) x.EndSpan > (AnglrTuple) y.EndSpan)
+                return 1;
+            return 0;
+        }
+    }
     public partial class AnglrPDASnapshotViewerTab : UserControl
     {
         public IAnglrLogger Logger { get; }
-        public AnglrDebuggerGetPDAStack PdaSnapshot { get; }
-        public ObservableCollection<AnglrDebuggerGetPDAStackCell> PDAStackCells { get; }
+        public AnglrDebugPanelTabSession AnglrDebugPanel { get; }
+        public ObservableCollection<AnglrDebuggerGetPDAStackCell> PDAStackCells { get; private set; }
         public static ColumnWidths ColWidths { get; } = new ColumnWidths ();
-        public AnglrPDASnapshotViewerTab (IAnglrLogger logger, AnglrDebuggerGetPDAStack pdaSnapshot)
+        public AnglrPDASnapshotViewerTab (IAnglrLogger logger, AnglrDebuggerGetPDAStack pdaSnapshot, AnglrDebugPanelTabSession anglrDebugPanel)
         {
             InitializeComponent ();
             Logger = logger;
-            PdaSnapshot = pdaSnapshot;
+            Refresh (pdaSnapshot, true);
+            AnglrDebugPanel = anglrDebugPanel;
             DataContext = this;
-            PDAStackCells = new ObservableCollection<AnglrDebuggerGetPDAStackCell> (PdaSnapshot.PDAStackCells);
             foreach (var column in pdaList.Columns)
             {
                 if (ColWidths.TryGetValue (column.DisplayIndex, out double value))
@@ -162,22 +183,58 @@ namespace AnglrLangExtension
             }
         }
 
+        public void Refresh (AnglrDebuggerGetPDAStack pdaSnapshot, bool create)
+        {
+            if (create)
+                PDAStackCells = new ObservableCollection<AnglrDebuggerGetPDAStackCell> (pdaSnapshot.PDAStackCells);
+            else
+            {
+                int count = PDAStackCells.Count;
+                foreach (var cell in pdaSnapshot.PDAStackCells)
+                {
+                    if (count-- > 0)
+                        continue;
+                    PDAStackCells.Add (cell);
+                }
+                return;
+                count = 0;
+                PDAStackCellComparer cmp = new PDAStackCellComparer ();
+                IEnumerator<AnglrDebuggerGetPDAStackCell> oldEnum = PDAStackCells.GetEnumerator ();
+                System.Collections.IEnumerator newEnum = pdaSnapshot.PDAStackCells.GetEnumerator ();
+                while (newEnum.MoveNext () && oldEnum.MoveNext ())
+
+                {
+                    AnglrDebuggerGetPDAStackCell newItem = newEnum.Current as AnglrDebuggerGetPDAStackCell;
+                    AnglrDebuggerGetPDAStackCell oldItem = oldEnum.Current;
+                    if (cmp.Compare (newItem, oldItem) != 0)
+                        break;
+                    ++count;
+                }
+                while (PDAStackCells.Count > count)
+                    PDAStackCells.RemoveAt (count);
+                while (pdaSnapshot.PDAStackCells.Length > count)
+                    PDAStackCells.Add (pdaSnapshot.PDAStackCells [count++]);
+            }
+        }
+
         private void pdaList_SelectionChanged (object sender, SelectionChangedEventArgs e)
         {
             Logger?.InfoLine ($"selection changed, item count = {pdaList.SelectedItems.Count}");
-            foreach (var item in e.AddedItems)
-            {
-                AnglrDebuggerGetPDAStackCell pDAStackCell = item as AnglrDebuggerGetPDAStackCell;
-                if (pDAStackCell == null)
-                    continue;
-                Logger?.InfoLine ($"\tadded   item: {pDAStackCell.State}, {pDAStackCell.Code}, {pDAStackCell.Name}");
-            }
             foreach (var item in e.RemovedItems)
             {
                 AnglrDebuggerGetPDAStackCell pDAStackCell = item as AnglrDebuggerGetPDAStackCell;
                 if (pDAStackCell == null)
                     continue;
                 Logger?.InfoLine ($"\tremoved item: {pDAStackCell.State}, {pDAStackCell.Code}, {pDAStackCell.Name}");
+                AnglrDebugPanel.RemoveAdornment (pDAStackCell);
+            }
+            foreach (var item in e.AddedItems)
+            {
+                AnglrDebuggerGetPDAStackCell pDAStackCell = item as AnglrDebuggerGetPDAStackCell;
+                if (pDAStackCell == null)
+                    continue;
+                Logger?.InfoLine ($"\tadded   item: {pDAStackCell.State}, {pDAStackCell.Code}, {pDAStackCell.Name}");
+                AnglrDebugPanel.AddAdornment (pDAStackCell);
             }
         }
     }

@@ -411,6 +411,18 @@ namespace AnglrLangExtension
         [BaseDefinition (CodeRemoteContentDefinition.CodeRemoteContentTypeName)]
         internal static ContentTypeDefinition AnglrContentTypeDefinition;
 
+        [Export (typeof (AdornmentLayerDefinition))]
+        [Name ("PdaCellAdornment")]
+        [Order (After = PredefinedAdornmentLayers.Selection, Before = PredefinedAdornmentLayers.Text)]
+        private AdornmentLayerDefinition pdaCellAdornmentLayer;
+
+        [Export]
+        [Name ("anglr-dbg")]
+        [BaseDefinition (CodeRemoteContentDefinition.CodeRemoteContentTypeName)]
+        [TextViewRole (PredefinedTextViewRoles.Document)]
+        [TextViewRole (PredefinedTextViewRoles.Editable)]
+        internal static ContentTypeDefinition AnglrDbgContentTypeDefinition;
+
         [Export]
         [FileExtension (".anglr")]
         [ContentType ("anglr")]

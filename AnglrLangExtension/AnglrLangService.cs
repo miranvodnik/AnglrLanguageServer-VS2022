@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
+using Microsoft.VisualStudio.Text.Outlining;
 using Microsoft.VisualStudio.Utilities;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.ComponentModel.Composition;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using IAsyncServiceProvider = Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
 
@@ -34,15 +36,19 @@ namespace AnglrLangExtension
 
     public delegate Task AnglrProjectItemCallback (string fileName, AnglrItemOperation operation);
 
-    public class AnglrLangService : SAnglrLangService, IAnglrLangService
+    [Export(typeof(IAnglrLangService))]
+    [PartCreationPolicy(CreationPolicy.Shared)]
+    public sealed class AnglrLangService : SAnglrLangService, IAnglrLangService
     {
         private HashSet<string> openAnglrFiles = new HashSet<string> ();
         private AsyncPackage _serviceProvider = null;
+        public IAnglrLogService AnglrLogService { get; private set; }
+
         public IComponentModel ComponentModel { get; }
         public ITextEditorFactoryService TextEditorFactoryService { get; }
         public ITextBufferFactoryService TextBufferFactoryService { get; }
         public IContentTypeRegistryService ContentTypeRegistryService { get; }
-        public IAnglrLogService AnglrLogService { get; private set; }
+        public IOutliningManagerService OutliningManagerService { get; }
 
         public IAnglrLogger AnglrLogger { get; private set; }
 
@@ -61,6 +67,7 @@ namespace AnglrLangExtension
             TextEditorFactoryService = ComponentModel?.GetService<ITextEditorFactoryService> ();
             TextBufferFactoryService = ComponentModel?.GetService<ITextBufferFactoryService> ();
             ContentTypeRegistryService = ComponentModel.GetService<IContentTypeRegistryService> ();
+            OutliningManagerService = ComponentModel.GetService<IOutliningManagerService> ();
         }
 
         public async Task InitializeAsync (CancellationToken cancellationToken)
@@ -95,103 +102,60 @@ namespace AnglrLangExtension
             return window;
         }
 
-        public AnglrGetGetHierarchyItemResult InvokeGetHierarchy (AnglrGetGetHierarchyItemParams anglrGetGetHierarchyItemParams)
+        public async Task<AnglrGetGetHierarchyItemResult> InvokeGetHierarchy (AnglrGetGetHierarchyItemParams anglrGetGetHierarchyItemParams)
         {
-            return
-                    ThreadHelper.JoinableTaskFactory.Run
-                    (
-                        () => AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetGetHierarchyItemResult> (AnglrMethods.AnglrGetGetHierarchyItemName, anglrGetGetHierarchyItemParams)
-                    );
+            return await AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetGetHierarchyItemResult>
+                (AnglrMethods.AnglrGetGetHierarchyItemName, anglrGetGetHierarchyItemParams);
         }
 
-        public AnglrGetDictionaryItemResult InvokeGetDictionary (AnglrGetDictionaryItemParams anglrGetDictionaryItemParams)
+        public async Task<AnglrGetDictionaryItemResult> InvokeGetDictionary (AnglrGetDictionaryItemParams anglrGetDictionaryItemParams)
         {
-            return
-                    ThreadHelper.JoinableTaskFactory.Run
-                    (
-                        () => AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetDictionaryItemResult> (AnglrMethods.AnglrGetDictionaryItemName, anglrGetDictionaryItemParams)
-                    );
+            return await AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetDictionaryItemResult> (AnglrMethods.AnglrGetDictionaryItemName, anglrGetDictionaryItemParams);
         }
 
-        public AnglrGetParserStateItemResult InvokeGetParserState (AnglrGetParserStateItemParams anglrGetParserStateItemParams)
+        public async Task<AnglrGetParserStateItemResult> InvokeGetParserState (AnglrGetParserStateItemParams anglrGetParserStateItemParams)
         {
-            return
-                    ThreadHelper.JoinableTaskFactory.Run
-                    (
-                        () => AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetParserStateItemResult> (AnglrMethods.AnglrGetParserStateItemName, anglrGetParserStateItemParams)
-                    );
+            return await AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetParserStateItemResult> (AnglrMethods.AnglrGetParserStateItemName, anglrGetParserStateItemParams);
         }
 
-        public AnglrGetParserStatesInfoResult InvokeGetParserStatesInfo (AnglrGetParserStatesInfoParams anglrGetParserStatesInfoParams)
+        public async Task<AnglrGetParserStatesInfoResult> InvokeGetParserStatesInfo (AnglrGetParserStatesInfoParams anglrGetParserStatesInfoParams)
         {
-            return
-                    ThreadHelper.JoinableTaskFactory.Run
-                    (
-                        () => AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetParserStatesInfoResult> (AnglrMethods.AnglrGetParserStatesInfoName, anglrGetParserStatesInfoParams)
-                    );
+            return await AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetParserStatesInfoResult> (AnglrMethods.AnglrGetParserStatesInfoName, anglrGetParserStatesInfoParams);
         }
 
-        public AnglrGetParserStateLinkResult InvokeGetParserStateLink (AnglrGetParserStateLinkParams anglrGetParserStateLinkParams)
+        public async Task<AnglrGetParserStateLinkResult> InvokeGetParserStateLink (AnglrGetParserStateLinkParams anglrGetParserStateLinkParams)
         {
-            return
-                    ThreadHelper.JoinableTaskFactory.Run
-                    (
-                        () => AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetParserStateLinkResult> (AnglrMethods.AnglrGetParserStateLinkName, anglrGetParserStateLinkParams)
-                    );
+            return await AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetParserStateLinkResult> (AnglrMethods.AnglrGetParserStateLinkName, anglrGetParserStateLinkParams);
         }
 
-        public AnglrGetParserMagicNumberResult InvokeGetParserMagicNumber (AnglrGetParserMagicNumberParams anglrGetParserMagicNumberParams)
+        public async Task<AnglrGetParserMagicNumberResult> InvokeGetParserMagicNumber (AnglrGetParserMagicNumberParams anglrGetParserMagicNumberParams)
         {
-            return
-                    ThreadHelper.JoinableTaskFactory.Run
-                    (
-                        () => AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetParserMagicNumberResult> (AnglrMethods.AnglrGetParserMagicNumberName, anglrGetParserMagicNumberParams)
-                    );
+            return await AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetParserMagicNumberResult> (AnglrMethods.AnglrGetParserMagicNumberName, anglrGetParserMagicNumberParams);
         }
 
-        public AnglrGetSyntaxTreeResult InvokeGetSyntaxTree (AnglrGetSyntaxTreeParams anglrGetSyntaxTreeParams)
+        public async Task<AnglrGetSyntaxTreeResult> InvokeGetSyntaxTree (AnglrGetSyntaxTreeParams anglrGetSyntaxTreeParams)
         {
-            return
-                    ThreadHelper.JoinableTaskFactory.Run
-                    (
-                        () => AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetSyntaxTreeResult> (AnglrMethods.AnglrGetSyntaxTreeName, anglrGetSyntaxTreeParams)
-                    );
+            return await AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetSyntaxTreeResult> (AnglrMethods.AnglrGetSyntaxTreeName, anglrGetSyntaxTreeParams);
         }
 
-        public AnglrGetParserSyntaxRuleResult InvokeGetParserSyntaxRule (AnglrGetParserSyntaxRuleParams anglrGetParserSyntaxRuleParams)
+        public async Task<AnglrGetParserSyntaxRuleResult> InvokeGetParserSyntaxRule (AnglrGetParserSyntaxRuleParams anglrGetParserSyntaxRuleParams)
         {
-            return
-                    ThreadHelper.JoinableTaskFactory.Run
-                    (
-                        () => AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetParserSyntaxRuleResult> (AnglrMethods.AnglrGetParserSyntaxRuleName, anglrGetParserSyntaxRuleParams)
-                    );
+            return await AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetParserSyntaxRuleResult> (AnglrMethods.AnglrGetParserSyntaxRuleName, anglrGetParserSyntaxRuleParams);
         }
 
-        public AnglrGetParserSyntaxRulesResult InvokeGetParserSyntaxRules (AnglrGetParserSyntaxRulesParams anglrGetParserSyntaxRulesParams)
+        public async Task<AnglrGetParserSyntaxRulesResult> InvokeGetParserSyntaxRules (AnglrGetParserSyntaxRulesParams anglrGetParserSyntaxRulesParams)
         {
-            return
-                    ThreadHelper.JoinableTaskFactory.Run
-                    (
-                        () => AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetParserSyntaxRulesResult> (AnglrMethods.AnglrGetParserSyntaxRulesName, anglrGetParserSyntaxRulesParams)
-                    );
+            return await AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetParserSyntaxRulesResult> (AnglrMethods.AnglrGetParserSyntaxRulesName, anglrGetParserSyntaxRulesParams);
         }
 
-        public AnglrGetItemNavigationInfoResponse InvokeGetItemNavigationInfo (AnglrGetItemNavigationInfoRequest anglrGetItemNavigationInfoRequest)
+        public async Task<AnglrGetItemNavigationInfoResponse> InvokeGetItemNavigationInfo (AnglrGetItemNavigationInfoRequest anglrGetItemNavigationInfoRequest)
         {
-            return
-                    ThreadHelper.JoinableTaskFactory.Run
-                    (
-                        () => AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetItemNavigationInfoResponse> (AnglrMethods.AnglrGetItemNavigationInfoName, anglrGetItemNavigationInfoRequest)
-                    );
+            return await AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetItemNavigationInfoResponse> (AnglrMethods.AnglrGetItemNavigationInfoName, anglrGetItemNavigationInfoRequest);
         }
 
-        public AnglrGetCompileFragmentResponse InvokeGetCompileFragment (AnglrGetCompileFragmentRequest anglrGetCompileFragmentRequest)
+        public async Task<AnglrGetCompileFragmentResponse> InvokeGetCompileFragment (AnglrGetCompileFragmentRequest anglrGetCompileFragmentRequest)
         {
-            return
-                    ThreadHelper.JoinableTaskFactory.Run
-                    (
-                        () => AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetCompileFragmentResponse> (AnglrMethods.AnglrGetCompileFragmentName, anglrGetCompileFragmentRequest)
-                    );
+            return await AnglrLspClientAccessPoint.Instance.InvokeAsync<AnglrGetCompileFragmentResponse> (AnglrMethods.AnglrGetCompileFragmentName, anglrGetCompileFragmentRequest);
         }
 
         public void FindAllDocumentsInSolution (AnglrProjectItemCallback func, string extension)
@@ -304,19 +268,20 @@ namespace AnglrLangExtension
         ITextEditorFactoryService TextEditorFactoryService { get; }
         ITextBufferFactoryService TextBufferFactoryService { get; }
         IContentTypeRegistryService ContentTypeRegistryService { get; }
+        IOutliningManagerService OutliningManagerService { get; }
         IAnglrLogger AnglrLogger { get; }
         AnglrDetailsWindow CreateDetailsWindowInstance (UIElement content, string caption, Func<AnglrDetailsWindow, UIElement, IAnglrLangService, bool> init);
-        AnglrGetGetHierarchyItemResult InvokeGetHierarchy (AnglrGetGetHierarchyItemParams request);
-        AnglrGetDictionaryItemResult InvokeGetDictionary (AnglrGetDictionaryItemParams request);
-        AnglrGetParserStateItemResult InvokeGetParserState (AnglrGetParserStateItemParams request);
-        AnglrGetParserStatesInfoResult InvokeGetParserStatesInfo (AnglrGetParserStatesInfoParams request);
-        AnglrGetParserStateLinkResult InvokeGetParserStateLink (AnglrGetParserStateLinkParams request);
-        AnglrGetParserMagicNumberResult InvokeGetParserMagicNumber (AnglrGetParserMagicNumberParams request);
-        AnglrGetSyntaxTreeResult InvokeGetSyntaxTree (AnglrGetSyntaxTreeParams request);
-        AnglrGetParserSyntaxRuleResult InvokeGetParserSyntaxRule (AnglrGetParserSyntaxRuleParams request);
-        AnglrGetParserSyntaxRulesResult InvokeGetParserSyntaxRules (AnglrGetParserSyntaxRulesParams request);
-        AnglrGetItemNavigationInfoResponse InvokeGetItemNavigationInfo (AnglrGetItemNavigationInfoRequest request);
-        AnglrGetCompileFragmentResponse InvokeGetCompileFragment (AnglrGetCompileFragmentRequest request);
+        Task<AnglrGetGetHierarchyItemResult> InvokeGetHierarchy (AnglrGetGetHierarchyItemParams request);
+        Task<AnglrGetDictionaryItemResult> InvokeGetDictionary (AnglrGetDictionaryItemParams request);
+        Task<AnglrGetParserStateItemResult> InvokeGetParserState (AnglrGetParserStateItemParams request);
+        Task<AnglrGetParserStatesInfoResult> InvokeGetParserStatesInfo (AnglrGetParserStatesInfoParams request);
+        Task<AnglrGetParserStateLinkResult> InvokeGetParserStateLink (AnglrGetParserStateLinkParams request);
+        Task<AnglrGetParserMagicNumberResult> InvokeGetParserMagicNumber (AnglrGetParserMagicNumberParams request);
+        Task<AnglrGetSyntaxTreeResult> InvokeGetSyntaxTree (AnglrGetSyntaxTreeParams request);
+        Task<AnglrGetParserSyntaxRuleResult> InvokeGetParserSyntaxRule (AnglrGetParserSyntaxRuleParams request);
+        Task<AnglrGetParserSyntaxRulesResult> InvokeGetParserSyntaxRules (AnglrGetParserSyntaxRulesParams request);
+        Task<AnglrGetItemNavigationInfoResponse> InvokeGetItemNavigationInfo (AnglrGetItemNavigationInfoRequest request);
+        Task<AnglrGetCompileFragmentResponse> InvokeGetCompileFragment (AnglrGetCompileFragmentRequest request);
         void RegisterAnglrFileEventHandler (AnglrProjectItemCallback func);
         Task OpenAnglrFileAsync (string fileName);
         Task CloseAnglrFileAsync (string fileName);
@@ -391,9 +356,9 @@ namespace AnglrLangExtension
             _pane = pane;
         }
 
-        protected override async void Write (AnglrLogLevel level, string message, uint flags = 0)
+        protected override void Write (AnglrLogLevel level, string message, uint flags = 0)
         {
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync ();
+            //await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync ();
             try
             {
                 if ((flags & WriteOnlyMsg) != 0)
