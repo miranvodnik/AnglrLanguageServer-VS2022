@@ -2,7 +2,6 @@
 using AnglrDebuggerJsonRpcMessages;
 using AnglrLibrary;
 using AnglrLogLibrary;
-using Microsoft.NET.StringTools;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;

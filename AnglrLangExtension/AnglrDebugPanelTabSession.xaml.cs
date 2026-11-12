@@ -45,8 +45,10 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Forms;
@@ -56,9 +58,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using static System.Windows.Forms.AxHost;
-
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using Color = System.Windows.Media.Color;
+using Timer = System.Timers.Timer;
+using ToolTip = System.Windows.Controls.ToolTip;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace AnglrLangExtension
@@ -75,9 +81,7 @@ namespace AnglrLangExtension
     internal sealed class PdaOutliningMarginProvider : IWpfTextViewMarginProvider
     {
         internal IAnglrLangService anglrLangService = ThreadHelper.JoinableTaskFactory.Run (() => AnglrLangExtensionPackage.Instance.GetServiceAsync (typeof (SAnglrLangService))) as IAnglrLangService;
-        public IWpfTextViewMargin CreateMargin (
-            IWpfTextViewHost host,
-            IWpfTextViewMargin marginContainer)
+        public IWpfTextViewMargin CreateMargin (IWpfTextViewHost host, IWpfTextViewMargin marginContainer)
         {
             return new PdaOutliningMargin (host.TextView, anglrLangService);
         }
@@ -188,32 +192,33 @@ namespace AnglrLangExtension
         {
             MarginControl.Clear ();
             layer.RemoveAllAdornments ();
-            Logger?.InfoLine ($"*** CREATE VISUALS ***");
+            Logger?.DebugLine ($"*** CREATE VISUALS ***");
             GeneralTransform transform = SourceView.VisualElement.TransformToVisual (MarginControl);
-            IWpfTextViewLineCollection textViewLines = SourceView.TextViewLines;
-            Geometry viewGeometry = textViewLines.GetLineMarkerGeometry (textViewLines.FormattedSpan);
-            Rect viewBounds = new Rect ();
-            if (viewGeometry != null)
+            if (transform == null)
             {
-                viewBounds = transform.TransformBounds (viewGeometry.Bounds);
-                Logger?.InfoLine ($"view old bounds: {viewGeometry.Bounds}");
-                Logger?.InfoLine ($"view new bounds: {viewBounds}");
-                //Canvas.SetTop (MarginControl, viewBounds.Top);
-                //Canvas.SetBottom (MarginControl, viewBounds.Bottom);
-            }
-            else
-            {
-                Logger?.InfoLine ($"cannot access viewport geometry");
+                Logger?.ErrorLine ($"cannot access transform");
                 return;
             }
-                snapshot = SourceView.TextBuffer.CurrentSnapshot;
+            IWpfTextViewLineCollection textViewLines = SourceView.TextViewLines;
+            snapshot = SourceView.TextBuffer.CurrentSnapshot;
+            int firstLineNr = snapshot.GetLineNumberFromPosition (textViewLines.FormattedSpan.Start);
+            int lineCount = textViewLines.Count;
+
             foreach (var stack in PDASnapshotResponse?.PDAStackSet)
             {
                 foreach (var cell in stack.PDAStackCells)
                 {
                     (int lineno, int column) StartSpan = cell.StartSpan;
                     (int lineno, int column) EndSpan = cell.EndSpan;
-                    Logger?.InfoLine ($"\tspan: {StartSpan} - {EndSpan}");
+                    Logger?.DebugLine ($"\tspan: {StartSpan} - {EndSpan}");
+
+                    if (EndSpan.lineno < firstLineNr)
+                        continue;
+                    if (firstLineNr + lineCount < StartSpan.lineno)
+                        continue;
+
+                    int lineNr = Math.Max (0, StartSpan.lineno - firstLineNr);
+                    IWpfTextViewLine line = textViewLines [lineNr];
                     ITextSnapshotLine startSnapshotLine = snapshot.GetLineFromLineNumber (StartSpan.lineno);
                     ITextSnapshotLine endSnapshotLine = snapshot.GetLineFromLineNumber (EndSpan.lineno);
                     SnapshotPoint startSnapshotPoint = startSnapshotLine.Start + StartSpan.column;
@@ -223,19 +228,16 @@ namespace AnglrLangExtension
                     if (geometry == null)
                         continue;
 
-                    Rect bounds = transform.TransformBounds (geometry.Bounds);
-                    Logger?.InfoLine ($"\told bounds: {geometry.Bounds}");
-                    Logger?.InfoLine ($"\tnew bounds: {bounds}");
-
                     var icon = new PDAStateIcon (this, cell, geometry);
 
-                    Canvas.SetLeft (icon, 0.0);
+                    Canvas.SetLeft (icon, geometry.Bounds.Left);
                     Canvas.SetTop (icon, geometry.Bounds.Top);
 
-                    icon.DrawingVisual.Offset = new Vector (0.0, bounds.Top - viewBounds.Top);
-                    MarginControl.AddVisual (icon.DrawingVisual);
+                    Point offset = transform.Transform (new Point (0.0, line.Top - SourceView.ViewportTop));
+                    icon.DrawingVisual.Offset = new Vector (0.0, offset.Y);
 
-                    layer.AddAdornment (AdornmentPositioningBehavior.TextRelative, snapshotSpan, null, icon, null);
+                    MarginControl.AddVisual (icon.DrawingVisual);
+                    layer.AddAdornment (AdornmentPositioningBehavior.ViewportRelative, snapshotSpan, null, icon, null);
                 }
             }
         }
@@ -251,6 +253,8 @@ namespace AnglrLangExtension
         public Geometry Geometry { get; }
         public DrawingVisual DrawingVisual { get; private set; }
         internal IAnglrLogger Logger { get; }
+        internal DispatcherTimer MouseMoveTimer { get; }
+        internal ToolTip PdaAdornmentToolTip { get; }
         public PDAStateIcon (PdaOutliningMargin margin, AnglrDebuggerGetPDAStackCell cell, Geometry geometry)
         {
             Margin = margin;
@@ -258,7 +262,7 @@ namespace AnglrLangExtension
             Geometry = geometry;
             Logger = margin?.Logger;
 
-            IconBrush = new SolidColorBrush (Color.FromArgb (0x20, 0x00, 0x00, 0xff));
+            IconBrush = new SolidColorBrush (Color.FromArgb (0x20, 0x7f, 0x7f, 0x7f));
             IconBrush.Freeze ();
 
             var penBrush = new SolidColorBrush (Colors.Red);
@@ -271,40 +275,64 @@ namespace AnglrLangExtension
             Source = CreateMarginIcon ();
             CreateBubbleIcon ();
 
-            MouseLeftButtonDown += PDAStateIcon_MouseLeftButtonDown;
-            MouseRightButtonDown += PDAStateIcon_MouseRightButtonDown;
-            MouseEnter += PDAStateIcon_MouseEnter;
-            MouseLeave += PDAStateIcon_MouseLeave;
-        }
+            PdaAdornmentToolTip = new ToolTip ();
 
-        private void PDAStateIcon_MouseLeave (object sender, System.Windows.Input.MouseEventArgs e)
-        {
-        }
+            MouseMoveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds (500) };
+            MouseMoveTimer.Tick += MouseMoveTimer_Tick;
 
-        private void PDAStateIcon_MouseEnter (object sender, System.Windows.Input.MouseEventArgs e)
-        {
-        }
-
-        private void PDAStateIcon_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
-        {
-            ITextSnapshot snapshot = Margin.SourceView.TextBuffer.CurrentSnapshot;
-            for (int i = PDAStackCell.StartSpan.lineno; i <= PDAStackCell.EndSpan.lineno; ++i)
+            MouseMove += (s, e) => { CloseTip (); MouseMoveTimer.Stop (); MouseMoveTimer.Start (); };
+            MouseLeave += (s, e) => { MouseMoveTimer.Stop (); CloseTip (); };
+            MouseRightButtonUp += (s, e) =>
             {
-                ITextSnapshotLine line = snapshot.GetLineFromLineNumber (i);
-            }
+                ContextMenu.PlacementTarget = this;
+                ContextMenu.IsOpen = true;
+                e.Handled = true;
+            };
+
+            ContextMenu = BuildContextMenu ();
+            ContextMenuOpening += OnContextMenuOpening;
         }
 
-        private void PDAStateIcon_MouseRightButtonDown (object sender, MouseButtonEventArgs e)
+        private System.Windows.Controls.ContextMenu BuildContextMenu ()
         {
-            Logger?.InfoLine ($"right mouse down: state = {PDAStackCell.State}");
+            var menu = new System.Windows.Controls.ContextMenu ();
+
+            var inspect = new System.Windows.Controls.MenuItem { Header = "Inspect PDA stack" };
+            inspect.Click += (s, e) => { };
+            menu.Items.Add (inspect);
+
+            var copy = new System.Windows.Controls.MenuItem { Header = "Copy" };
+            copy.Click += (s, e) => { };
+            menu.Items.Add (copy);
+
+            menu.Items.Add (new Separator ());
+
+            var hide = new System.Windows.Controls.MenuItem { Header = "Hide", IsCheckable = true };
+            hide.Click += (s, e) => { };
+            menu.Items.Add (hide);
+
+            return menu;
         }
+
+        private void OnContextMenuOpening (object sender, ContextMenuEventArgs e)
+        {
+            // Enable/disable or rebuild items based on the adornment's current state.
+            // Set e.Handled = true to suppress the menu entirely.
+        }
+
+        private void MouseMoveTimer_Tick (object sender, EventArgs e)
+        {
+            MouseMoveTimer.Stop ();
+            PdaAdornmentToolTip.Content = $"state: {PDAStackCell.State}";
+            PdaAdornmentToolTip.PlacementTarget = this;
+            PdaAdornmentToolTip.Placement = PlacementMode.Mouse;
+            PdaAdornmentToolTip.IsOpen = true;
+        }
+        private void CloseTip () => PdaAdornmentToolTip.IsOpen = false;
 
         private DrawingImage CreateMarginIcon ()
         {
-            Rect bounds = Geometry.Bounds;
-            bounds.X = 0;
-            bounds.Width = 10;
-            RectangleGeometry rectangleGeometry = new RectangleGeometry (bounds, 3.0, 3.0);
+            RectangleGeometry rectangleGeometry = new RectangleGeometry (Geometry.Bounds, 3.0, 3.0);
             var drawing = new GeometryDrawing (IconBrush, IconPen, rectangleGeometry);
             drawing.Freeze ();
 
@@ -347,6 +375,180 @@ namespace AnglrLangExtension
             var drawingImage = new DrawingImage (DrawingVisual.Drawing);
             drawingImage.Freeze ();
             return drawingImage;
+        }
+    }
+
+    [Export (typeof (IViewTaggerProvider))]
+    [ContentType ("anglr-dbg")]
+    [TextViewRole (PredefinedTextViewRoles.Document)]
+    [TagType (typeof (SpaceNegotiatingAdornmentTag))]
+    [Name ("PdaInterLineSpaceTaggerProvider")]
+    internal sealed class PdaSpaceTaggerProvider : IViewTaggerProvider
+    {
+        // Shared between tagger and drawer: lets the drawer ask a line "do you carry one of our tags?"
+        internal static readonly object ProviderTag = new object ();
+        internal IAnglrLangService anglrLangService = ThreadHelper.JoinableTaskFactory.Run (() => AnglrLangExtensionPackage.Instance.GetServiceAsync (typeof (SAnglrLangService))) as IAnglrLangService;
+
+        public ITagger<T> CreateTagger<T> (ITextView textView, ITextBuffer buffer) where T : ITag
+        {
+            return buffer.Properties.GetOrCreateSingletonProperty (
+                () => new PdaSpaceTagger (textView, buffer, anglrLangService)) as ITagger<T>;
+        }
+    }
+
+    internal sealed class PdaSpaceTagger : ITagger<SpaceNegotiatingAdornmentTag>
+    {
+        internal const double ReservedHeight = 50.0; // pixels of extra room below the line
+
+        internal ITextView SourceView { get; }
+        internal ITextBuffer TextBuffer { get; }
+        public event EventHandler<SnapshotSpanEventArgs> TagsChanged;
+        internal IAnglrLangService AnglrLangService { get; }
+        internal IAnglrLogger Logger { get; }
+        internal AnglrDebugPanelTabSession AnglrDebugPanel { get; private set; }
+        internal AnglrDebuggerGetPDASnapshotResponse PDASnapshotResponse { get; private set; }
+
+        public PdaSpaceTagger (ITextView textView, ITextBuffer buffer, IAnglrLangService anglrLangService)
+        {
+            SourceView = textView;
+            TextBuffer = buffer;
+            AnglrLangService = anglrLangService;
+            Logger = AnglrLangService?.AnglrLogger;
+
+            TextBuffer.Changed += (s, e) =>
+            {
+                var snap = e.After;
+                TagsChanged?.Invoke (this, new SnapshotSpanEventArgs (new SnapshotSpan (snap, 0, snap.Length)));
+            };
+            SourceView.LayoutChanged += OnLayoutChanged;
+            SourceView.Properties.TryGetProperty<AnglrDebugPanelTabSession> ("AnglrDebugPanelTabSession", out var anglrDebugPanelTabSession);
+            if ((AnglrDebugPanel = anglrDebugPanelTabSession) != null)
+            {
+                Logger?.DebugLine ($"created PDA cpace negotiating adornment, granted access to AnglrDebugPanelTabSession instance");
+                AnglrDebugPanel.SnapshotChanged += AnglrDebugPanel_SnapshotChanged;
+            }
+            else
+                Logger?.WarnLine ($"created PDA cpace negotiating adornment, cannot access AnglrDebugPanelTabSession instance");
+        }
+
+        private void OnLayoutChanged (object sender, TextViewLayoutChangedEventArgs e)
+        {
+            Logger?.DebugLine ($"PDA cpace negotiating adornment: layout changed");
+            //Redraw (e.NewSnapshot);
+        }
+
+        private void AnglrDebugPanel_SnapshotChanged (object sender, EventArgs e)
+        {
+            Logger?.DebugLine ($"PDA cpace negotiating adornment: snapshot changed");
+            PDASnapshotResponse = e as AnglrDebuggerGetPDASnapshotResponse;
+            //Redraw (SourceView.TextBuffer.CurrentSnapshot);
+        }
+
+        public IEnumerable<ITagSpan<SpaceNegotiatingAdornmentTag>> GetTags (NormalizedSnapshotSpanCollection spans)
+        {
+            Logger?.DebugLine ($"*** GET SPACE TAGS ***");
+            if (AnglrDebugPanel == null)
+            {
+                SourceView.Properties.TryGetProperty<AnglrDebugPanelTabSession> ("AnglrDebugPanelTabSession", out var anglrDebugPanelTabSession);
+                if ((AnglrDebugPanel = anglrDebugPanelTabSession) != null)
+                {
+                    Logger?.DebugLine ($"created PDA cpace negotiating adornment, granted access to AnglrDebugPanelTabSession instance");
+                    AnglrDebugPanel.SnapshotChanged += AnglrDebugPanel_SnapshotChanged;
+                }
+                else
+                    Logger?.WarnLine ($"created PDA cpace negotiating adornment, cannot access AnglrDebugPanelTabSession instance");
+            }
+            ITextSnapshot snapshot = TextBuffer.CurrentSnapshot;
+            foreach (var stack in PDASnapshotResponse?.PDAStackSet)
+            {
+                foreach (var cell in stack.PDAStackCells)
+                {
+                    (int lineno, int column) StartSpan = cell.StartSpan;
+                    (int lineno, int column) EndSpan = cell.EndSpan;
+                    if (StartSpan == EndSpan)
+                        continue;
+                    ITextSnapshotLine startSnapshotLine = snapshot.GetLineFromLineNumber (StartSpan.lineno);
+                    ITextSnapshotLine endSnapshotLine = snapshot.GetLineFromLineNumber (EndSpan.lineno);
+                    SnapshotPoint startSnapshotPoint = startSnapshotLine.Start + StartSpan.column;
+                    SnapshotPoint endSnapshotPoint = endSnapshotLine.Start + EndSpan.column;
+                    SnapshotSpan snapshotSpan = new SnapshotSpan (startSnapshotPoint, endSnapshotPoint);
+                    if (!spans.IntersectsWith (snapshotSpan))
+                        continue;
+                    Logger?.DebugLine ($"\tspace tag at: {StartSpan} - {EndSpan}");
+                    var tag = new SpaceNegotiatingAdornmentTag (
+                        width: 0,
+                        topSpace: ReservedHeight,
+                        baseline: 0,
+                        textHeight: 0,
+                        bottomSpace: 0,
+                        affinity: PositionAffinity.Predecessor,
+                        identityTag: new object (),
+                        providerTag: PdaSpaceTaggerProvider.ProviderTag);
+
+                    yield return new TagSpan<SpaceNegotiatingAdornmentTag> (new SnapshotSpan (startSnapshotPoint, 0), tag);
+                }
+            }
+        }
+    }
+
+    [Export (typeof (IWpfTextViewCreationListener))]
+    [ContentType ("anglr-dbg")]
+    [TextViewRole (PredefinedTextViewRoles.Document)]
+    internal sealed class DrawerListener : IWpfTextViewCreationListener
+    {
+        [Import] // MEF hands us the layer definition's registry (not needed here), kept for clarity
+        internal IEditorFormatMapService FormatMapService = null;
+
+        public void TextViewCreated (IWpfTextView textView)
+        {
+            new Drawer (textView);
+        }
+    }
+
+    internal sealed class Drawer
+    {
+        private readonly IWpfTextView _view;
+        private readonly IAdornmentLayer _layer;
+
+        public Drawer (IWpfTextView view)
+        {
+            _view = view;
+            _layer = view.GetAdornmentLayer ("PdaCellAdornment");
+            _view.LayoutChanged += OnLayoutChanged;
+            _view.Closed += (s, e) => _view.LayoutChanged -= OnLayoutChanged;
+        }
+
+        private void OnLayoutChanged (object sender, TextViewLayoutChangedEventArgs e)
+        {
+            _layer.RemoveAllAdornments ();
+
+            foreach (ITextViewLine line in _view.TextViewLines)
+            {
+                // Does this line carry a tag created by our tagger?
+                if (line.GetAdornmentTags (PdaSpaceTaggerProvider.ProviderTag).Count == 0)
+                    continue;
+
+                double gap = line.Bottom - line.TextBottom; // the room we reserved
+                if (gap <= 0)
+                    continue;
+
+                var note = new TextBlock
+                {
+                    Text = "\u21B3 note shown between the lines",
+                    FontSize = 11,
+                    Foreground = Brushes.Gray,
+                    Height = gap
+                };
+                Canvas.SetLeft (note, line.TextLeft);
+                Canvas.SetTop (note, line.TextBottom);
+
+                _layer.AddAdornment (
+                    AdornmentPositioningBehavior.TextRelative,
+                    line.Extent,
+                    tag: null,
+                    adornment: note,
+                    removedCallback: null);
+            }
         }
     }
 
@@ -407,8 +609,8 @@ namespace AnglrLangExtension
             WpfTextView = anglrLangService?.TextEditorFactoryService?.CreateTextView (TextBuffer);
             WpfTextView.Properties.AddProperty ("AnglrDebugPanelTabSession", this);
             WpfTextView.LayoutChanged += WpfTextView_LayoutChanged;
-            WpfTextViewHost = anglrLangService?.TextEditorFactoryService?.CreateTextViewHost (WpfTextView, true);
-            UIElement = WpfTextViewHost.HostControl;
+                    WpfTextViewHost = anglrLangService?.TextEditorFactoryService?.CreateTextViewHost (WpfTextView, true);
+                    UIElement = WpfTextViewHost.HostControl;
             pdaSnapshotText.Children.Add (UIElement);
 
             WpfTextView.Options.SetOptionValue (DefaultTextViewOptions.ViewProhibitUserInputId, false);
