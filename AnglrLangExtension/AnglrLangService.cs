@@ -10,6 +10,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Outlining;
+using Microsoft.VisualStudio.Text.Projection;
 using Microsoft.VisualStudio.Utilities;
 using System;
 using System.Collections.Generic;
@@ -49,13 +50,14 @@ namespace AnglrLangExtension
         public ITextBufferFactoryService TextBufferFactoryService { get; }
         public IContentTypeRegistryService ContentTypeRegistryService { get; }
         public IOutliningManagerService OutliningManagerService { get; }
+        public IProjectionBufferFactoryService ProjectionBufferFactoryService { get; }
 
         public IAnglrLogger AnglrLogger { get; private set; }
 
         private DTE2 dTE = null;
 
         public event AnglrProjectItemCallback anglrProjectItemEvent;
-
+        [ImportingConstructor]
         public AnglrLangService (AsyncPackage serviceProvider, IAnglrLogService anglrLogService)
         {
             _serviceProvider = serviceProvider;
@@ -66,8 +68,9 @@ namespace AnglrLangExtension
             ComponentModel = (IComponentModel) Package.GetGlobalService (typeof (SComponentModel));
             TextEditorFactoryService = ComponentModel?.GetService<ITextEditorFactoryService> ();
             TextBufferFactoryService = ComponentModel?.GetService<ITextBufferFactoryService> ();
-            ContentTypeRegistryService = ComponentModel.GetService<IContentTypeRegistryService> ();
-            OutliningManagerService = ComponentModel.GetService<IOutliningManagerService> ();
+            ContentTypeRegistryService = ComponentModel?.GetService<IContentTypeRegistryService> ();
+            OutliningManagerService = ComponentModel?.GetService<IOutliningManagerService> ();
+            ProjectionBufferFactoryService = ComponentModel?.GetService<IProjectionBufferFactoryService>();
         }
 
         public async Task InitializeAsync (CancellationToken cancellationToken)
@@ -269,6 +272,7 @@ namespace AnglrLangExtension
         ITextBufferFactoryService TextBufferFactoryService { get; }
         IContentTypeRegistryService ContentTypeRegistryService { get; }
         IOutliningManagerService OutliningManagerService { get; }
+        IProjectionBufferFactoryService ProjectionBufferFactoryService { get; }
         IAnglrLogger AnglrLogger { get; }
         AnglrDetailsWindow CreateDetailsWindowInstance (UIElement content, string caption, Func<AnglrDetailsWindow, UIElement, IAnglrLangService, bool> init);
         Task<AnglrGetGetHierarchyItemResult> InvokeGetHierarchy (AnglrGetGetHierarchyItemParams request);
@@ -296,6 +300,7 @@ namespace AnglrLangExtension
         private DTE2 dTE = null;
         public IAnglrLogger Logger { get; private set; }
 
+        [ImportingConstructor]
         public AnglrLogService (IAsyncServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
